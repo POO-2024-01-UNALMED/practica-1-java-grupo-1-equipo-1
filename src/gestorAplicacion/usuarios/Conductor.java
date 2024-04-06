@@ -12,12 +12,14 @@ public class Conductor extends Persona {
 	private Transportadora transportadora;
 	private ArrayList <Viaje> horario = new ArrayList<>();
 	
-	
-	public Conductor() {
-		
+	/*Constructor*/
+	public Conductor(Vehiculo vehiculo, Transportadora transportadora, ArrayList<Viaje> horario) {
+		super();
+		this.vehiculo = vehiculo;
+		this.transportadora = transportadora;
+		this.horario = horario;
 	}
-	
-	
+
 	public void conducir() {
 		
 		
