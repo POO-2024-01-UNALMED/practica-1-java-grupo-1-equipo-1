@@ -4,14 +4,14 @@ import gestorAplicacion.administrativo.Viaje;
 
 public class Persona {
 	
-	private int id;
-	private int edad;
-	private String nombre;
-	private char genero;
-	private ArrayList <Viaje> historial = new ArrayList<>();
-	private boolean estadoLicencia;
-	private int experienciaConduciendo;
-	private int dinero;
+	protected int id;
+	protected int edad;
+	protected String nombre;
+	protected char genero;
+	protected ArrayList <Viaje> historial = new ArrayList<>();
+	protected boolean estadoLicencia;
+	protected int experiencia;
+	protected int dinero;
 	
 	
 	public Persona() {
@@ -129,13 +129,13 @@ public class Persona {
 	
 	public void setExperienciaConduciendo(int experienciaConduciendo) {
 		
-		this.experienciaConduciendo = experienciaConduciendo;
+		this.experiencia = experienciaConduciendo;
 		
 	}
 	
 	public int getExperienciaConduciendo() {
 		
-		return experienciaConduciendo;
+		return experiencia;
 	
 	}
 	
