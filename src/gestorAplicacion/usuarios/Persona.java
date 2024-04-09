@@ -18,6 +18,21 @@ public class Persona {
 		
 	}
 	
+	public Persona(int id, int edad, String nombre, char genero, ArrayList<Viaje> historial, boolean estadoLicencia,
+			int experiencia, int dinero) {
+		super();
+		this.id = id;
+		this.edad = edad;
+		this.nombre = nombre;
+		this.genero = genero;
+		this.historial = historial;
+		this.estadoLicencia = estadoLicencia;
+		this.experiencia = experiencia;
+		this.dinero = dinero;
+	}
+
+
+
 	public ArrayList<Viaje> verHistorialViajes() {
 		
 		return historial;
