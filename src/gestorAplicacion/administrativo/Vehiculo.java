@@ -1,7 +1,10 @@
 package gestorAplicacion.administrativo;
 import gestorAplicacion.constantes.TipoVehiculo;
-import gestorAplicacion.administrativo.Transportadora;
 import gestorAplicacion.usuarios.Conductor;
+import java.util.ArrayList;
+import java.util.Random;
+import java.lang.Math; 
+
 
 public class Vehiculo {
 	
@@ -12,7 +15,7 @@ public class Vehiculo {
 	private int velocidadPromedio;
 	private TipoVehiculo tipo;
 	private TipoVehiculo capacidad;
-	private Conductor conductor;
+	private ArrayList <Conductor> conductores;
 	private Transportadora transportadora;
 	
 	
@@ -21,27 +24,66 @@ public class Vehiculo {
 		
 	}
 	
-	public void reduccionIntegridad() {
+	public Vehiculo (String placa, String modelo, int precio, int velocidadPromedio, TipoVehiculo tipo, TipoVehiculo capacidad, Transportadora transportadora ) {
+		
+		this.integridad = 100;
+		this.placa = placa; this.modelo = modelo; this.precio = precio; this.velocidadPromedio = velocidadPromedio; this.tipo = tipo; this.capacidad = capacidad; this.transportadora = transportadora;
+		
+	}
+	
+	public void reduccionIntegridad(int duracionViaje) {
+		
+		this.integridad = Math.round(this.integridad - (duracionViaje * new Random().nextFloat(2) / 10));
 		
 		
 	}
 	
-	public void asociarConductor() {
+	public void asociarConductor(Conductor conductor) {
+		
+		this.conductores.add(conductor);
 		
 		
 	}
 	
-	public void quitarConductor() {
+	public void quitarConductor(String nombre) {
+		
+		for (Conductor i : conductores) {
+			
+			if (i.getNombre().equals(nombre)) {
+				
+				conductores.remove(i);
+				
+				System.out.println(nombre + " ha sido eliminado de los conductores asociados");
+				
+				return;
+				
+			}
+			
+		}	
+				
+		System.out.println("Ningun conductor con ese nombre esta asociado al vehiculo");
+			
+		
+		
 		
 		
 	}
 	
 	public void reparacion() {
 		
+		this.integridad = 100;
+		
 		
 	}
 	
 	public boolean verificarConductor() {
+		
+		if (conductores.size() == 0) {
+			
+			return (false);
+		}
+		
+		return (true);
 			
 		
 	}
@@ -118,15 +160,15 @@ public class Vehiculo {
 		
 	}
 	
-	public void setConductor(Conductor conductor) {
+	public void setConductores(ArrayList<Conductor> conductores) {
 		
-		this.conductor = conductor;
+		this.conductores = conductores;
 		
 	}
 	
-	public Conductor getConductor() {
+	public ArrayList<Conductor> getConductores() {
 		
-		return conductor;
+		return conductores;
 		
 	}
 	
@@ -141,7 +183,18 @@ public class Vehiculo {
 		return transportadora;
 		
 	}
-	
+	//Testeos
+	/*public static void main (String[] Args) {
+		
+		Vehiculo v = new Vehiculo();
+		
+		v.setIntegridad(100);
+		
+		v.reduccionIntegridad(70);
+		
+		System.out.println(v.getIntegridad());
+		
+	}*/
 	
 	
 	
