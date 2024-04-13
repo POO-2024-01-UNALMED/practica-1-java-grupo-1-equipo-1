@@ -2,7 +2,7 @@ package gestorAplicacion.usuarios;
 import java.util.ArrayList;
 import gestorAplicacion.administrativo.Viaje;
 
-public class Persona {
+public abstract class Persona {
 	
 	protected int id;
 	protected int edad;
@@ -39,10 +39,10 @@ public class Persona {
 		
 	}
 	
-	public String identificarse() {
+	public abstract String identificarse();
 		
 		
-	}
+	
 	
 	public int consultarDinero() {
 		
