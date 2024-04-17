@@ -4,92 +4,150 @@ import gestorAplicacion.usuarios.Conductor;
 import gestorAplicacion.usuarios.Pasajero;
 import gestorAplicacion.constantes.Destino;
 
+/**
+ * 	Autores: Jaime Luis Osorio Gómez, Santiago Ochoa Cardona, Juan Camilo Marín Valencia, Johan Ramírez Marín, Jonathan David Osorio Restrepo.
+ *  Esta clase representa a una transportadora, la cuál tiene su respectivo nombre, dinero, una lista de conductores, pasajeros, vehículos, viajes,
+ *  un destino asiginado y una terminal, esta clase nos servirá para organizar los distitnos viajes, asociar a los conductores, hacerle su respectivo
+ *  pago y monitorear a los distintos vehículos asociados a esta.
+ */
+
 public class Transportadora {
 	
-	private String nombre;
-	private int dinero;
-	private ArrayList <Conductor> conductores = new ArrayList<>();
-	private ArrayList <Pasajero> pasajeros = new ArrayList<>();
-	private ArrayList <Vehiculo> vehiculos = new ArrayList<>();
-	private ArrayList <Viaje> viajeAsignado = new ArrayList<>();
-	private Destino destinoAsignado;
-	private Terminal terminal;
+	// Atributos
+	
+	private String nombre; // Nombre de la transportadora
+	private int dinero; // Dinero de la transportadora 
+	private ArrayList <Conductor> conductores = new ArrayList<>(); // Lista de conductores de la transportadora
+	private ArrayList <Pasajero> pasajeros = new ArrayList<>(); // Lista de pasajeros de la transportadora
+	private ArrayList <Vehiculo> vehiculos = new ArrayList<>(); // Lista de vehículos asociados a la transportadora
+	private ArrayList <Viaje> viajeAsignado = new ArrayList<>(); // Viajes de la transportadora
+	private Destino destinoAsignado; // Destino asignado a la transportadora, lugar hacia donde esta viajará
+	private Terminal terminal; // Terminal en donde opera la transportadora 
 	
 	
 	public Transportadora() {
+		
+		// Implementación pendiente
 		
 		
 	}
 	
 	public void contratarConductor() {
 		
+		// Implementación pendiente
+		
 		
 	}
 	
 	public void despedirConductor() {
+		
+		// Implementación pendiente
 		
 		
 	}
 	
 	public void pagarTerminal() {
 		
+		// Implementación pendiente
+		
 		
 	}
 	
 	public Vehiculo agregarVehiculo() {
+		
+		// Implementación pendiente
+		
+		return null;
 		
 		
 	}
 	
 	public void removerVehiculo() {
 		
+		// Implementación pendiente
+		
 		
 	}
 	
 	public void realizarMantenimiento() {
+		
+		// Implementación pendiente
 		
 		
 	}
 	
 	public ArrayList <Vehiculo> disponibilidadVehiculos(){
 		
+		// Implementación pendiente
+		
+		return null;
+		
 		
 	}
 	
 	public ArrayList <Factura> reporteFinanciero(){
+		
+		// Implementación pendiente
+		
+		return null;
 		
 		
 	}
 	
 	public void pagarConductor() {
 		
+		// Implementación pendiente 
+		
 		
 	}
 	
 	public boolean realizarRevision() {
+		
+		// Implementación pendiente
+		
+		return false;
 	
 		
 	}
 	
 	public boolean estadoVehiculo() {
 		
+		// Implementación pendiente
+		
+		return false;
+		
 		
 	}
 	
 	public void asignarVehiculo() {
+		
+		// Implementación pendiente
 		
 		
 	}
 	
 	public void designarVehiculo() {
 		
+		// Implementación pendiente
+		
 		
 	}
 	
 	public Factura ventaViaje() {
 		
+		// Implementación pendiente
+		
+		return null;
+		
 		
 	}
+	
+	// METODOS GETTERS Y SETTERS
+	
+	/**
+	 * Establece o modifica el nombre de la transportadora.
+	 * @param nombre, el nombre de la transportadora.
+	 */
 	
 	public void setNombre(String nombre) {
 		
@@ -97,11 +155,21 @@ public class Transportadora {
 		
 	}
 	
+	/**
+	 *Método para obtener el nombre de la transportadora.
+	 * @return el nombre de la transportadora.
+	 */
+	
 	public String getNombre() {
 		
 		return nombre;
 		
 	}
+	
+	/**
+	 * Establece o modifica el dinero de la transportadora.
+	 * @param dinero, el dinero de la trasnportadora.
+	 */
 	
 	public void setDinero(int dinero) {
 		
@@ -109,10 +177,20 @@ public class Transportadora {
 		
 	}
 	
+	/**
+	 * Método para obtener el dinero de la transportadora.
+	 * @return el dinero de la transportadora.
+	 */
+	
 	public int getDinero() {
 		
 		return dinero;
 	}
+	
+	/**
+	 * Establece o modifica los conductores asociados a la transportadora.
+	 * @param conductores, lista de conductores de la transportadora.
+	 */
 	
 	public void setConductores(ArrayList <Conductor> conductores) {
 		
@@ -120,11 +198,21 @@ public class Transportadora {
 		
 	}
 	
+	/**
+	 * Método para obtener la lista de los conductores de la transportadora.
+	 * @return lista de conductores asociados a la transportadora.
+	 */
+	
 	public ArrayList <Conductor> getConductores(){
 		
 		return conductores;
 		
 	}
+	
+	/**
+	 * Establece o modifica la lista de pasajeros asociados a la transportadora.
+	 * @param pasajeros, la lista de pasajeros asociados a la transportadors.
+	 */
 	
 	public void setPasajeros(ArrayList <Pasajero> pasajeros) {
 		
@@ -132,11 +220,21 @@ public class Transportadora {
 		
 	}
 	
+	/**
+	 * Método para obtener la lista de pasajeros asociados a la transportadora.
+	 * @return la lista de pasajeros asociados a la transportadora.
+	 */
+	
 	public ArrayList <Pasajero> getPasajeros(){
 		
 		return pasajeros;
 		
 	}
+	
+	/**
+	 * Establece o modifica la lista de vehículos asociados a la transportadora.
+	 * @param vehiculos, la lista de vehículos asociados a la transportadora.
+	 */
 	
 	public void setVehiculos(ArrayList <Vehiculo> vehiculos) {
 		
@@ -144,11 +242,20 @@ public class Transportadora {
 		
 	}
 	
+	/**
+	 * Método para obtener la lista de vehículos asociados a la transportadora.
+	 * @return la lista de vehículos asociados a la transportadora.
+	 */
+	
 	public ArrayList <Vehiculo> getVehiculo(){
 		
 		return vehiculos;
 		
 	}
+	/**
+	 * Establece o modifica la lista de los viajes asignados a la transportadora.
+	 * @param viajeAsignado, lista con los viajes asignados a la transportadora.
+	 */
 	
 	public void setViajeAsignado(ArrayList <Viaje> viajeAsignado) {
 		
@@ -156,11 +263,22 @@ public class Transportadora {
 		
 	}
 	
+	/**
+	 * Método para obtener la lista de los viajes asignados a la transportadora.
+	 * @return lista de los viajes asignados a la transportadora.
+	 */
+	
 	public ArrayList <Viaje> getViajeAsignado(){
 		
 		return viajeAsignado;
 		
 	}
+	
+	/**
+	 * Método para obtener el destino asignado a la transportadora.
+	 * @return el destino asignado a la transportadora.
+	 */
+	
 	
 	public Destino getDestinoAsignado() {
 		
@@ -168,11 +286,20 @@ public class Transportadora {
 		
 	}
 	
+	/**
+	 * Establece o modifica la terminla asociada a la tranportadora.
+	 * @param terminal, la terminal asociada a la transportadora.
+	 */
+	
 	public void setTerminal(Terminal terminal) {
 		
 		this.terminal = terminal;
 		
 	}
+	/**
+	 * Método para obtener la terminal a la cuál está asociada la transportadora.
+	 * @return la terminal asociada a la transportadora.
+	 */
 	
 	public Terminal getTerminal() {
 		
