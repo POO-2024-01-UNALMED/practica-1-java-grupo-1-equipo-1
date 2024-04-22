@@ -15,7 +15,7 @@ public class Terminal {
 	private String nombre; // Nombre de la terminal
 	private int dinero; // Dinero de la terminal 
 	private int capacidadVehiculos; // capacidad de vehículos en la terminal
-	private int cantidadSedes; // cantidad de sedes de la terminal
+	private static int cantidadSedes = 0; // cantidad de sedes de la terminal
 	private int cantidadVehiculos; // cantidad de vehículos que hay en la terminal 
 	private ArrayList <Transportadora> transportadoras = new ArrayList<>(); // transportadoras asociadas a la terminal 
 	private ArrayList <Viaje> reservas = new ArrayList<>(); // reservas de viaje de la terminal
@@ -24,9 +24,21 @@ public class Terminal {
 	private Destino ubicacion; // ubuicación de la terminal 
 	private Persona administrador; // Administrador de la terminal 
 	
-	
-	public Terminal() {
-	
+	// Constructor Clase Terminal
+	public Terminal(String nombre, int dinero, int capacidadVehiculos, int cantidadSedes, int cantidadVehiculos, ArrayList <Transportadora> transportadoras, 
+			        ArrayList <Viaje> reservas, ArrayList <Viaje> viajes, ArrayList <Destino> destinos, Destino ubicacion, Persona administrador) {
+		
+		this.nombre = nombre;
+		this.dinero = dinero;
+		this.capacidadVehiculos = capacidadVehiculos;
+		this.cantidadVehiculos = cantidadVehiculos;
+		this.transportadoras = transportadoras;
+		this.reservas = reservas;
+		this.viajes = viajes;
+		this.destinos = destinos;
+		this.ubicacion = ubicacion;
+		this.administrador = administrador;
+		Terminal.cantidadSedes++;
 	}
 	
 	
@@ -54,19 +66,29 @@ public class Terminal {
 		
 	}
 	
-	public Boolean consultarCapacidad() {
-		
-		// Implementación pendiente 
-		
-		return false;
-		
-		
+	/**
+	 * Método para saber si hay asientosDisponibles para un viaje.
+	 * @return Boolean, dependiendo la condición.
+	 */
+	public Boolean consultarCapacidad(Viaje viaje) {
+		int capacidadVehiculo = viaje.getVehiculo().getTipo().getCapacidad(); // Valor de la cantidad de Asientos del Vehiculo.
+		int asientosOcupados = viaje.getPasajeros().size(); // Determinara la cantidad de pasajeros que tiene el viaje actualmente.
+		int disponibles = capacidadVehiculo - asientosOcupados;
+		Boolean capacidad;
+		if (capacidadVehiculo >= asientosOcupados) {
+			capacidad = true;
+			System.out.println("El número de asientos disponibles es: " + disponibles + "/" + capacidadVehiculo);
+		}
+		else {
+			capacidad = false;
+			System.out.println("No hay asientos disponibles. ");
+		}
+		return capacidad;
 	}
 	
 	public void realizarReserva() {
 		
 		// Implementación pendiente
-		
 		
 	}
 	
@@ -184,7 +206,7 @@ public class Terminal {
 	
 	public void setCantidadSedes(int cantidadSedes) {
 		
-		this.cantidadSedes = cantidadSedes;
+		Terminal.cantidadSedes = cantidadSedes;
 		
 	}
 	
@@ -195,7 +217,7 @@ public class Terminal {
 	
 	public int getCantidadSedes() {
 		
-		return cantidadSedes;
+		return Terminal.cantidadSedes;
 		
 	}
 	

@@ -266,4 +266,20 @@ public abstract class Persona {
 		return factura;
 		
 	}
+	
+	/**
+	 * Método para obtener la experiencia de la persona.
+	 * @return la experiencia de la persona.
+	 */
+    public int getExperiencia() {
+        return experiencia;
+    }
+
+	/**
+	 * Establece o modifica la experiencia de la persona.
+	 * @param experiencia, la experiencia de la persona.
+	 */
+    public void setExperiencia(int experiencia) {
+        this.experiencia = experiencia;
+    }
 }

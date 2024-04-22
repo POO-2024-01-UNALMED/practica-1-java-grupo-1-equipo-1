@@ -2,8 +2,7 @@ package gestorAplicacion.administrativo;
 
 import java.util.ArrayList;
 import gestorAplicacion.constantes.Destino;
-import gestorAplicacion.usuarios.Pasajero;
-import gestorAplicacion.usuarios.Conductor;
+import gestorAplicacion.usuarios.*;
 import gestorAplicacion.constantes.Dia;
 
 /**
@@ -18,7 +17,7 @@ public class Viaje {
     private int id; // Identificador del viaje
     private int tarifa; // Tarifa del viaje
     private int duracion; // Duración del viaje en minutos
-    private int totalViajes; // Número total de viajes realizados
+    private static int totalViajes; // Número total de viajes realizados
     private String hora; // Hora de inicio del viaje
     private ArrayList<Pasajero> pasajeros = new ArrayList<>(); // Lista de pasajeros del viaje
     private Vehiculo vehiculo; // Vehículo utilizado en el viaje
@@ -27,17 +26,61 @@ public class Viaje {
     private Dia dia; // Día en que se realiza el viaje
     private Destino destino; // Destino actual del viaje
     
-    public Viaje() {
-    	
-    	// Implementación pendiente
-        
+    // Constructor de la clase Viaje
+    public Viaje(int id, String hora, Vehiculo vehiculo, Conductor conductor, Destino finalDestino, Dia dia, Destino destino) {
+        this.id = id;
+        this.duracion = calcularDuracion(finalDestino, vehiculo, conductor);
+        this.tarifa = calcularTarifa(this.duracion, vehiculo);
+        Viaje.totalViajes++;
+        this.hora = hora;
+        this.vehiculo = vehiculo;
+        this.conductor = conductor;
+        this.finalDestino = finalDestino;
+        this.dia = dia;
+        this.destino = destino;
     }
     
+	/**
+	 * Método para obtener la duración del Viaje.
+	 * @return int, dependiendo las condiciones establecidas: Destino, Vehiculo y Experiencia del Conductor.
+	 */
+    public int calcularDuracion(Destino Final, Vehiculo vehiculo, Conductor conductor) {
+    	int tiempo =  (Final.getDistancia())/(vehiculo.getVelocidadPromedio());
+    	if (conductor.getExperiencia()> 0.5) { // Verificar si la experiencia del conductor es mayor que 0.5
+    		double factorReduccion = 0.9; // Reducción del 10%
+            tiempo *= factorReduccion;
+    	}
+    	return tiempo;
+    }
     
-    public int calcularTarifa() {
-        // Implementación pendiente
-    	
-    	return 0;
+	/**
+	 * Método para obtener la tarica del Viaje.
+	 * @return int, dependiendo las condiciones establecidas: duración y tipo de vehiculo.
+	 */
+    public int calcularTarifa(int duracion, Vehiculo vehiculo) {
+        int costoPorMinuto = 0;
+        // Establecer el costo por minuto según el tipo de vehículo.
+        switch (vehiculo.getTipo()) {
+            case TAXI:
+                costoPorMinuto = 400;
+                break;
+            case VANS:
+                costoPorMinuto = 300;
+                break;
+            case ESCALERA:
+                costoPorMinuto = 200;
+                break;
+            case BUS:
+                costoPorMinuto = 100;
+                break;
+            default:
+                System.out.println("Tipo de vehículo no válido.");
+                return -1; // Valor de retorno inválido
+        }
+        // Calcular la tarifa total
+        int total =  (costoPorMinuto * duracion);
+        
+        return total;
     }
     
     
@@ -109,7 +152,7 @@ public class Viaje {
      * @param totalViajes El número total de viajes realizados.
      */
     public void setTotalViajes(int totalViajes) {
-        this.totalViajes = totalViajes;
+        Viaje.totalViajes = totalViajes;
     }
 
     /**
@@ -117,7 +160,7 @@ public class Viaje {
      * @return El número total de viajes realizados.
      */
     public int getTotalViajes() {
-        return totalViajes;
+        return Viaje.totalViajes;
     }
 
     /**
