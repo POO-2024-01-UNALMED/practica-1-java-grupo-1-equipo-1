@@ -1,5 +1,7 @@
 package gestorAplicacion.usuarios;
 import java.util.ArrayList;
+import java.util.Map;
+
 import gestorAplicacion.administrativo.Viaje;
 import gestorAplicacion.administrativo.Factura;
 
@@ -19,6 +21,7 @@ public abstract class Persona {
 	protected int experiencia; // Este atributo será utilizado por las clases que heredan de persona y tendrá diferentes implementaciones en estas
 	protected int dinero; // Dinero de la persona
 	protected Factura factura; // Factura asociada a la persona
+	protected Map<String, Integer> contrato;
 	
 	public Persona() {
 		

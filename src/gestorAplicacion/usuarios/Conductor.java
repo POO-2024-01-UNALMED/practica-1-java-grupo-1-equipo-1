@@ -43,7 +43,7 @@ public class Conductor extends Persona {
 	
 	public String notificarLllegada() {
 		
-		// Implementación pendiente
+		// Implementación pendiente (falta el tiempo)
 		
 		return null;
 		
@@ -65,16 +65,20 @@ public class Conductor extends Persona {
 		
 	}
 	
+	/** 
+	 * Metodo para renovar el contrato del conductor en el 
+	 * cual se modifica el diccionario contrato en la clave conductor 
+	 * @return void*/
+	
 	public void renovarContraro() {
 		
-		// Implementación pendiente
-		
+		contrato.put("conductor",1); //Todavia no se tiene claro si se va a hacer un contrato por viajes o por tiempo
 		
 	}
 	
 	public ArrayList <Viaje> consultarHorario(){
 		
-		// Implementación pendiente
+		// Implementación pendiente. Nota: es similar a un get
 		
 		return null;
 		
@@ -88,16 +92,32 @@ public class Conductor extends Persona {
 		
 	}
 	
-	public void tomarVehiculo() {
+	/** 
+	 * Metodo para asociar un conductor al vehiculo que
+	 * va de parametro si el vehiculo tiene menos de 5 conductores.
+	 * @param Vehiculo, vehiculo al que se quiere asociar un conductor*/
+	
+	
+	public void tomarVehiculo(Vehiculo vehiculo) {
 		
-		// Implementación pendiente
-		
+		//Se le pone momentaneamente un limite de 5 conductores por vehiculo
+		if (vehiculo.getConductores().size() < 5) {
+			vehiculo.asociarConductor(this);
+			this.vehiculo=vehiculo;
+		}
 		
 	}
 	
+	/** 
+	 * Metodo para quitar el vehiculo si no tiene viajes programados
+	 * @return void*/
+	
 	public void quitarVehiculo() {
 		
-		// Implementación pendiente
+		if (this.horario.size() == 0) {
+			this.vehiculo.quitarConductor(this.nombre);
+			this.vehiculo=null;
+		}
 		
 		
 	}
