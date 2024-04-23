@@ -285,4 +285,23 @@ public abstract class Persona {
     public void setExperiencia(int experiencia) {
         this.experiencia = experiencia;
     }
+
+    /** 
+     * Metodo para obtener el diccionario contrato
+     * @return diccionario contrato
+     * */
+    
+	public Map<String, Integer> getContrato() {
+		return contrato;
+	}
+	
+	/** 
+	 * Metodo para establecer el contrato para conductor y mecanico
+	 * @param diccionaro con los contratos*/
+
+	public void setContrato(Map<String, Integer> contrato) {
+		this.contrato = contrato;
+	}
+    
+    
 }
