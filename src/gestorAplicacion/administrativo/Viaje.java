@@ -1,5 +1,7 @@
 package gestorAplicacion.administrativo;
 
+import gestorAplicacion.administrativo.Terminal;
+
 import java.util.ArrayList;
 import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.usuarios.*;
@@ -15,37 +17,45 @@ import gestorAplicacion.constantes.Dia;
 public class Viaje {
     
     private int id; // Identificador del viaje
-    private int tarifa; // Tarifa del viaje
-    private int duracion; // Duración del viaje en minutos
+    private double tarifa; // Tarifa del viaje
+    private double duracion; // Duración del viaje en minutos
     private static int totalViajes; // Número total de viajes realizados
     private String hora; // Hora de inicio del viaje
+    private String fecha; // Fecha del viaje
     private ArrayList<Pasajero> pasajeros = new ArrayList<>(); // Lista de pasajeros del viaje
     private Vehiculo vehiculo; // Vehículo utilizado en el viaje
     private Conductor conductor; // Conductor del vehículo en el viaje
     private Destino finalDestino; // Destino final del viaje
     private Dia dia; // Día en que se realiza el viaje
     private Destino destino; // Destino actual del viaje
+    private Boolean estado;
     
     // Constructor de la clase Viaje
-    public Viaje(int id, String hora, Vehiculo vehiculo, Conductor conductor, Destino finalDestino, Dia dia, Destino destino) {
+    public Viaje(int id, String hora, String fecha, Vehiculo vehiculo, Conductor conductor, Destino finalDestino, Dia dia, Destino destino) {
         this.id = id;
         this.duracion = calcularDuracion(finalDestino, vehiculo, conductor);
         this.tarifa = calcularTarifa(this.duracion, vehiculo);
         Viaje.totalViajes++;
         this.hora = hora;
+        this.fecha = fecha;
         this.vehiculo = vehiculo;
         this.conductor = conductor;
         this.finalDestino = finalDestino;
         this.dia = dia;
         this.destino = destino;
+        this.estado = false; // Solo se coloca en true mientras el viaje esta en curso
+        
+        // Falta Añadir viaje a la lista de la terminal.
     }
     
 	/**
 	 * Método para obtener la duración del Viaje.
 	 * @return int, dependiendo las condiciones establecidas: Destino, Vehiculo y Experiencia del Conductor.
 	 */
-    public int calcularDuracion(Destino Final, Vehiculo vehiculo, Conductor conductor) {
-    	int tiempo =  (Final.getDistancia())/(vehiculo.getVelocidadPromedio());
+    public double calcularDuracion(Destino Final, Vehiculo vehiculo, Conductor conductor) {
+    	double distancia = Final.getDistancia();
+    	double velocidad = vehiculo.getVelocidadPromedio();
+    	double tiempo =  distancia/velocidad;
     	if (conductor.getExperiencia()> 0.5) { // Verificar si la experiencia del conductor es mayor que 0.5
     		double factorReduccion = 0.9; // Reducción del 10%
             tiempo *= factorReduccion;
@@ -57,7 +67,7 @@ public class Viaje {
 	 * Método para obtener la tarica del Viaje.
 	 * @return int, dependiendo las condiciones establecidas: duración y tipo de vehiculo.
 	 */
-    public int calcularTarifa(int duracion, Vehiculo vehiculo) {
+    public double calcularTarifa(double duracion, Vehiculo vehiculo) {
         int costoPorMinuto = 0;
         // Establecer el costo por minuto según el tipo de vehículo.
         switch (vehiculo.getTipo()) {
@@ -78,16 +88,30 @@ public class Viaje {
                 return -1; // Valor de retorno inválido
         }
         // Calcular la tarifa total
-        int total =  (costoPorMinuto * duracion);
+        double total =  (costoPorMinuto * duracion);
         
         return total;
     }
     
     
-    public String validacion() {
-        // Implementación pendiente
-    	
-    	return null;
+    public String validacion(Viaje viaje, ArrayList<Viaje> viajesEnCurso,  ArrayList<Viaje> viajes) {
+    	if (viajes.contains(viaje)) {
+    		viajesEnCurso.add(viaje);
+    		viaje.setEstado(true);
+    		if (viajesEnCurso.contains(viaje)) {
+    			System.out.println("El viaje está en curso.");
+				viajes.remove(viaje);
+				System.out.println(viajes);
+				System.out.println(viajesEnCurso);
+    			return "El viaje está en curso.";
+            } else {
+            	System.out.println("El viaje no está en curso.");
+                return "Viaje perdido...";
+                }
+            } else {
+            	System.out.println("El viaje no está en curso.");
+                return "El viaje no está en curso.";
+            }
     }
     
    
@@ -127,7 +151,7 @@ public class Viaje {
      * Obtiene la tarifa del viaje.
      * @return La tarifa del viaje.
      */
-    public int getTarifa() {
+    public double getTarifa() {
         return tarifa;
     }
 
@@ -143,7 +167,7 @@ public class Viaje {
      * Obtiene la duración del viaje.
      * @return La duración del viaje en minutos.
      */
-    public int getDuracion() {
+    public double getDuracion() {
         return duracion;
     }
 
@@ -177,6 +201,22 @@ public class Viaje {
      */
     public String getHora() {
         return hora;
+    }
+    
+    /**
+     * Establece o modifica la fecha de inicio del viaje.
+     * @param fecha La fecha de inicio del viaje.
+     */
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    /**
+     * Obtiene la fecha de inicio del viaje.
+     * @return La fecha de inicio del viaje.
+     */
+    public String getFecha() {
+        return fecha;
     }
 
     /**
@@ -249,5 +289,21 @@ public class Viaje {
      */
     public Destino getDestino() {
         return destino;
+    }
+    
+    /**
+     * Establece o modifica el estado utilizado en el viaje.
+     * @param estado el estado del viaje.
+     */
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    /**
+     * Obtiene el estado  del viaje.
+     * @return El estado  del viaje. (false "Estacionado" y True "Viaje en curso")
+     */
+    public Boolean getEstado() {
+        return estado;
     }
 }

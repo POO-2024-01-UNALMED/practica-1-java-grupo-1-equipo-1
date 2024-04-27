@@ -20,13 +20,14 @@ public class Terminal {
 	private ArrayList <Transportadora> transportadoras = new ArrayList<>(); // transportadoras asociadas a la terminal 
 	private ArrayList <Viaje> reservas = new ArrayList<>(); // reservas de viaje de la terminal
 	private ArrayList <Viaje> viajes = new ArrayList<>(); // viajes disponibles en la terminal
+	private ArrayList <Viaje> viajesEnCurso = new ArrayList<>(); // viajes disponibles en la terminal
 	private ArrayList <Destino> destinos = new ArrayList<>(); // destinos de la terminal 
 	private Destino ubicacion; // ubuicación de la terminal 
 	private Persona administrador; // Administrador de la terminal 
 	
 	// Constructor Clase Terminal
 	public Terminal(String nombre, int dinero, int capacidadVehiculos, int cantidadSedes, int cantidadVehiculos, ArrayList <Transportadora> transportadoras, 
-			        ArrayList <Viaje> reservas, ArrayList <Viaje> viajes, ArrayList <Destino> destinos, Destino ubicacion, Persona administrador) {
+			        ArrayList <Viaje> reservas, ArrayList <Viaje> viajes, ArrayList <Viaje> viajesEnCurso, ArrayList <Destino> destinos, Destino ubicacion, Persona administrador) {
 		
 		this.nombre = nombre;
 		this.dinero = dinero;
@@ -35,6 +36,7 @@ public class Terminal {
 		this.transportadoras = transportadoras;
 		this.reservas = reservas;
 		this.viajes = viajes;
+		this.viajesEnCurso = viajesEnCurso;
 		this.destinos = destinos;
 		this.ubicacion = ubicacion;
 		this.administrador = administrador;
@@ -306,6 +308,28 @@ public class Terminal {
 	public ArrayList <Viaje> getViajes(){
 		
 		return viajes;
+	
+	}
+	
+	/**
+	 * Establece o modifica los viajes en curso asocaidos a la terminal.
+	 * @param viajes, lista con los viajes en curso asociados a la terminal
+	 */
+	
+	public void setViajesEnCurso(ArrayList <Viaje> viajesEnCurso) {
+		
+		this.viajesEnCurso = viajesEnCurso;
+		
+	}
+	
+	/**
+	 * Método para obtener la lista con los viajes en curso asociados a la terminal.
+	 * @retunr lista de viajes en curso asociados a la terminal.
+	 */
+	
+	public ArrayList <Viaje> getViajesEnCurso(){
+		
+		return viajesEnCurso;
 	
 	}
 	
