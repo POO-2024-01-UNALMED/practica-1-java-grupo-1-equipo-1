@@ -12,7 +12,8 @@ import java.lang.Math;
  */
 public class Vehiculo {
 
-    private int integridad; // Nivel de integridad del vehículo
+    private boolean estado; //Disponibilidad para viajar del vehiculo
+	private int integridad; // Nivel de integridad del vehículo
     private String placa; // Placa del vehículo
     private String modelo; // Modelo del vehículo
     private int precio; // Precio del vehículo
@@ -43,6 +44,67 @@ public class Vehiculo {
         this.capacidad = capacidad;
         this.transportadora = transportadora;
     }
+    
+	public Vehiculo() {
+		
+		
+	}
+	
+	/**
+	 * Metodo que representa el viaje del vehiculo, en este se ejecutan otros metodos como la reduccion de la integridad del vehiculo,
+	 *se calcula la posibilidad de sufrir un accidente. etc.
+	 * @param kilometros; Cantidad de km del viaje
+	 */
+	public void viaje (int kilometros) {
+		
+		if (disponibilidad()) {
+			
+			this.reduccionIntegridad(kilometros);
+			this.accidente();
+				
+		}
+	}
+	
+	/**
+	 * Verifica si el vehiculo esta disponible para viajar o no
+	 * @return
+	 */
+	public boolean disponibilidad () {
+		
+		if (integridad > 0 && verificarConductor()) {
+			this.estado = true;
+			return (this.estado);
+			
+		}
+		
+		this.estado = false;
+		return(this.estado);
+	}
+	
+	/**
+	 * Informa que el vehiculo fue destruido
+	 * @return
+	 */
+	
+	public String vehiculoDestruido () {
+		
+		return("El vehiculo ha quedado inutilizado");
+		
+	}
+	
+	/**
+	 * Basandose en un random calcula si el vehiculo sufrira un accidente o no en alguna parte del viaje
+	 */
+	
+	public void accidente () {
+		
+		if (new Random().nextInt(100) <= 5) {
+			
+			this.integridad = 0;
+			this.vehiculoDestruido();
+		}
+ 		
+	}
 
     /**
      * Reduce la integridad del vehículo según la duración de un viaje.
@@ -225,6 +287,14 @@ public class Vehiculo {
      */
     public Transportadora getTransportadora() {
         return transportadora;
+    }
+    
+    public boolean getEstado () {
+    	return (this.estado);
+    }
+    
+    public void setEstado (boolean estado) {
+    	this.estado = estado;
     }
     
   //Testeos
