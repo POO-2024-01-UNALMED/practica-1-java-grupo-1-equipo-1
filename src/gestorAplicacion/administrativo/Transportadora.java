@@ -32,17 +32,36 @@ public class Transportadora {
 		
 	}
 	
-	public void contratarConductor() {
+	/*
+	 * Metodo para contratar un conductor el cual se agregara
+	 * a la lista de conductores de la transportadora.
+	 * @param Conductor a contratar
+	 */
+	
+	public void contratarConductor(Conductor conductor) {
 		
-		// Implementación pendiente
-		
+		this.getConductores().add(conductor);
 		
 	}
 	
-	public void despedirConductor() {
+	/* 
+	 * Metodo para despedir conductor al cual se le remueve el vehiculo,
+	 *  se le remueve de la lista de conductores de la transportadora y 
+	 * se elimina el conductor.
+	 * Para esto, primero se verifica que no tenga viajes programados y 
+	 * que su vehiculo tenga almenos 2 conductores.
+	 * @param Conductor a despedir*/
+	
+	public void despedirConductor(Conductor conductor) {
 		
-		// Implementación pendiente
-		
+		if (conductor.getHorario().size() == 0) {
+			if (conductor.getVehiculo().getConductores().size() >= 2 || conductor.getVehiculo() == null) {
+				conductor.quitarVehiculo();
+				int indiceConductor = this.getConductores().indexOf(conductor);
+				this.getConductores().remove(indiceConductor);
+				conductor = null;
+			}
+		}
 		
 	}
 	
