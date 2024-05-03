@@ -1,4 +1,7 @@
 package gestorAplicacion.usuarios;
+import java.util.ArrayList;
+
+import gestorAplicacion.administrativo.Viaje;
 import gestorAplicacion.constantes.TipoPasajero;
 
 /**
@@ -12,11 +15,20 @@ public class Pasajero extends Persona {
 	
 	private TipoPasajero tipo; // Tipo de pasajero asociado al pasajero
 	
+	//Constructor con todos los parámetros
+	
+	public Pasajero(TipoPasajero tipo, int id, int edad, String nombre, char genero, ArrayList<Viaje> historial, int experiencia,
+			int dinero) {
+		super(id, edad, nombre, genero, historial, experiencia, dinero);
+		
+		this.tipo = tipo;
+	}
+
+	
+	//constructor sin parámetros
 	
 	public Pasajero() {
-		
-		// Implementación pendiente
-		
+				
 	}
 	
 	public String identificarse() {

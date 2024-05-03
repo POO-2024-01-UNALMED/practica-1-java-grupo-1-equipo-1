@@ -41,7 +41,6 @@ public abstract class Persona {
 	
 	public Persona(int id, int edad, String nombre, char genero, ArrayList<Viaje> historial,
 			int experiencia, int dinero) {
-		super();
 		this.id = id;
 		this.edad = edad;
 		this.nombre = nombre;

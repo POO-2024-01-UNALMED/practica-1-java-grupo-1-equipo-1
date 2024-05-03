@@ -24,13 +24,28 @@ public class Transportadora {
 	private Destino destinoAsignado; // Destino asignado a la transportadora, lugar hacia donde esta viajará
 	private Terminal terminal; // Terminal en donde opera la transportadora 
 	
+	//Constructor con todos los parámetros
 	
-	public Transportadora() {
+	public Transportadora(String nombre, int dinero, ArrayList<Conductor> conductores, ArrayList<Pasajero> pasajeros,
+			ArrayList<Vehiculo> vehiculos, ArrayList<Viaje> viajeAsignado, Destino destinoAsignado, Terminal terminal) {
 		
-		// Implementación pendiente
-		
+		this.nombre = nombre;
+		this.dinero = dinero;
+		this.conductores = conductores;
+		this.pasajeros = pasajeros;
+		this.vehiculos = vehiculos;
+		this.viajeAsignado = viajeAsignado;
+		this.destinoAsignado = destinoAsignado;
+		this.terminal = terminal;
+	}
+
+    //Constructor sin parámetros
+
+	public Transportadora() {		
 		
 	}
+	
+	
 	
 	/*
 	 * Metodo para contratar un conductor el cual se agregara
