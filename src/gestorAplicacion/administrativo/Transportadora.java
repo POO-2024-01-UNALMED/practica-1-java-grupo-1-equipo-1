@@ -23,11 +23,12 @@ public class Transportadora {
 	private ArrayList <Viaje> viajeAsignado = new ArrayList<>(); // Viajes de la transportadora
 	private Destino destinoAsignado; // Destino asignado a la transportadora, lugar hacia donde esta viajará
 	private Terminal terminal; // Terminal en donde opera la transportadora 
+	private ArrayList <Destino> destinos = new ArrayList<>();
 	
 	//Constructor con todos los parámetros
 	
 	public Transportadora(String nombre, int dinero, ArrayList<Conductor> conductores, ArrayList<Pasajero> pasajeros,
-			ArrayList<Vehiculo> vehiculos, ArrayList<Viaje> viajeAsignado, Destino destinoAsignado, Terminal terminal) {
+			ArrayList<Vehiculo> vehiculos, ArrayList<Viaje> viajeAsignado, Destino destinoAsignado, Terminal terminal, ArrayList<Destino> destinos) {
 		
 		this.nombre = nombre;
 		this.dinero = dinero;
@@ -37,6 +38,8 @@ public class Transportadora {
 		this.viajeAsignado = viajeAsignado;
 		this.destinoAsignado = destinoAsignado;
 		this.terminal = terminal;
+		this.destinos = destinos;
+		
 	}
 
     //Constructor sin parámetros
@@ -341,9 +344,24 @@ public class Transportadora {
 		
 	}
 	
+	/**
+	 * Método para obtener los destinos a la cuál está asociada la transportadora.
+	 * @return los destinos asociados a la transportadora.
+	 */
+
+	public ArrayList<Destino> getDestinos() {
+		return destinos;
+	}
 	
+	/**
+	 * Establece o modifica los destinos asociados a la tranportadora.
+	 * @param destinos.
+	 */
 	
-	
+
+	public void setDestinos(ArrayList<Destino> destinos) {
+		this.destinos = destinos;
+	}
 	
 	
 

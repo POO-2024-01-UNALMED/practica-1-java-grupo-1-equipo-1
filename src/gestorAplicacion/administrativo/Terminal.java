@@ -1,5 +1,6 @@
 package gestorAplicacion.administrativo;
 import java.util.ArrayList;
+
 import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.usuarios.Persona;
 
@@ -43,6 +44,32 @@ public class Terminal {
 		Terminal.cantidadSedes++;
 	}
 	
+	public ArrayList<Transportadora> viajesDisponiblesTransportadora(String destinoDeseado) {
+		ArrayList <Transportadora> transportadorasConDestino = new ArrayList<>();
+		for (Transportadora transportadora : transportadoras) {
+			boolean esta = false;
+			
+			for (Destino destino:transportadora.getDestinos()) {
+				if (destino.name().equals(destinoDeseado)) {
+					esta = true;					
+				}
+			}
+			
+			if (esta) {
+				transportadorasConDestino.add(transportadora);
+			}
+		}
+		
+		return transportadorasConDestino;
+	}
+	
+	/**
+	 * Este método verifica la disponibilidad de cada una de 
+	 * las transportadoras dentro de la terminal para realizar 
+	 * un viaje con un destino selecionado
+	 * @input String, Nombre del destino deseado.
+	 * @return ArrayList<Transportadora>, transporatadoras con disponibilidad.
+	 */
 	
 	public Viaje programarViaje() {
 		
@@ -72,6 +99,7 @@ public class Terminal {
 	 * Método para saber si hay asientosDisponibles para un viaje.
 	 * @return Boolean, dependiendo la condición.
 	 */
+	
 	public Boolean consultarCapacidad(Viaje viaje) {
 		int capacidadVehiculo = viaje.getVehiculo().getTipo().getCapacidad(); // Valor de la cantidad de Asientos del Vehiculo.
 		int asientosOcupados = viaje.getPasajeros().size(); // Determinara la cantidad de pasajeros que tiene el viaje actualmente.
@@ -132,6 +160,9 @@ public class Terminal {
 		
 		
 	}
+	
+
+			
 	
 	// METODOS GETTERS Y SETTERS
 	

@@ -25,7 +25,6 @@ public abstract class Persona {
 	
 	public Persona() {
 		
-		
 	}
 	
 	/**
@@ -70,10 +69,7 @@ public abstract class Persona {
 	
 	public int consultarDinero() {
 		
-		// Implementación pendiente
-		
-		return 0;
-		
+		return dinero;
 		
 	}
 	
