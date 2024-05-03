@@ -19,7 +19,7 @@ public class Vehiculo {
     private int precio; // Precio del vehículo
     private int velocidadPromedio; // Velocidad promedio del vehículo
     private TipoVehiculo tipo; // Tipo de vehículo 
-    private TipoVehiculo capacidad; // Capacidad pasajeros del vehículo
+    private int capacidad; // Capacidad pasajeros del vehículo
     private ArrayList<Conductor> conductores; // Lista de conductores asociados al vehículo
     private Transportadora transportadora; // Transportadora asociada al vehículo
 
@@ -34,14 +34,14 @@ public class Vehiculo {
      * @param capacidad, la capacidad de pasajeros del vehículo.
      * @param transportadora, la transportadora asociada al vehículo.
      */
-    public Vehiculo(String placa, String modelo, int precio, int velocidadPromedio, TipoVehiculo tipo, TipoVehiculo capacidad, Transportadora transportadora) {
+    public Vehiculo(String placa, String modelo, int precio, int velocidadPromedio, TipoVehiculo tipo, Transportadora transportadora) {
         this.integridad = 100;
         this.placa = placa;
         this.modelo = modelo;
         this.precio = precio;
         this.velocidadPromedio = velocidadPromedio;
         this.tipo = tipo;
-        this.capacidad = capacidad;
+        this.capacidad = tipo.getCapacidad();
         this.transportadora = transportadora;
     }
     
@@ -253,7 +253,7 @@ public class Vehiculo {
      * Obtiene la capacidad del vehículo.
      * @return La capacidad del vehículo.
      */
-    public TipoVehiculo getCapacidad() {
+    public int getCapacidad() {
         return capacidad;
     }
 

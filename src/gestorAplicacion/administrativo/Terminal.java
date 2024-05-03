@@ -21,7 +21,7 @@ public class Terminal {
 	private ArrayList <Transportadora> transportadoras = new ArrayList<>(); // transportadoras asociadas a la terminal 
 	private ArrayList <Viaje> reservas = new ArrayList<>(); // reservas de viaje de la terminal
 	private ArrayList <Viaje> viajes = new ArrayList<>(); // viajes disponibles en la terminal
-	private ArrayList <Viaje> viajesEnCurso = new ArrayList<>(); // viajes disponibles en la terminal
+	private ArrayList <Viaje> viajesEnCurso = new ArrayList<>(); // viajes en curso en la terminal
 	private ArrayList <Destino> destinos = new ArrayList<>(); // destinos de la terminal 
 	private Destino ubicacion; // ubuicación de la terminal 
 	private Persona administrador; // Administrador de la terminal 
@@ -292,7 +292,7 @@ public class Terminal {
 	 * @return lista de las transportadoras asociadas a la terminal.
 	 */
 	
-	public ArrayList <Transportadora> obtenerTransportadoras(){
+	public ArrayList <Transportadora> getTransportadoras(){
 		
 		return transportadoras;
 	}

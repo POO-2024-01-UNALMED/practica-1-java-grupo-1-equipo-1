@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import gestorAplicacion.usuarios.Conductor;
 import gestorAplicacion.usuarios.Pasajero;
 import gestorAplicacion.constantes.Destino;
+import gestorAplicacion.usuarios.Persona;
 
 /**
  * 	Autores: Jaime Luis Osorio Gómez, Santiago Ochoa Cardona, Juan Camilo Marín Valencia, Johan Ramírez Marín, Jonathan David Osorio Restrepo.
@@ -20,10 +21,11 @@ public class Transportadora {
 	private ArrayList <Conductor> conductores = new ArrayList<>(); // Lista de conductores de la transportadora
 	private ArrayList <Pasajero> pasajeros = new ArrayList<>(); // Lista de pasajeros de la transportadora
 	private ArrayList <Vehiculo> vehiculos = new ArrayList<>(); // Lista de vehículos asociados a la transportadora
-	private ArrayList <Viaje> viajeAsignado = new ArrayList<>(); // Viajes de la transportadora
+	private ArrayList <Viaje> viajesAsignados = new ArrayList<>(); // Viajes de la transportadora
 	private Destino destinoAsignado; // Destino asignado a la transportadora, lugar hacia donde esta viajará
 	private Terminal terminal; // Terminal en donde opera la transportadora 
 	private ArrayList <Destino> destinos = new ArrayList<>();
+	private Persona dueño; // Dueño de la transportadora
 	
 	//Constructor con todos los parámetros
 	
@@ -35,7 +37,7 @@ public class Transportadora {
 		this.conductores = conductores;
 		this.pasajeros = pasajeros;
 		this.vehiculos = vehiculos;
-		this.viajeAsignado = viajeAsignado;
+		this.viajesAsignados = viajeAsignado;
 		this.destinoAsignado = destinoAsignado;
 		this.terminal = terminal;
 		this.destinos = destinos;
@@ -48,7 +50,27 @@ public class Transportadora {
 		
 	}
 	
-	
+	/**
+	 * Método que nos sirve para mostrar un String con la información de una factura que esté asociada 
+	 * con el dueño de una transportadora.
+	 * @param factura, la factura que se quiere mostarr 
+	 * @return String con la información de la factura en caso de que sea encontrada, de lo contrario se retorna que el objeto no posee la factura
+	 */
+
+	public String mostrarFactura(Factura factura) {
+				
+				// hablar para que la transportadora tenga dueño y ese dueño sea el encargado de las facturas
+			if (dueño.getFacturas().contains(factura)) {
+					
+					return "Numero de su factura: " + factura.getNumeroFactura() + 
+							"\nTotal:" + factura.getTotal() +
+							"\nTerminal: " + factura.getTerminal();
+					
+				}
+				
+				return this.dueño.getNombre() + "no tiene dicha factura";
+			}
+		
 	
 	/*
 	 * Metodo para contratar un conductor el cual se agregara
@@ -294,9 +316,9 @@ public class Transportadora {
 	 * @param viajeAsignado, lista con los viajes asignados a la transportadora.
 	 */
 	
-	public void setViajeAsignado(ArrayList <Viaje> viajeAsignado) {
+	public void setViajesAsignados(ArrayList <Viaje> viajesAsignados) {
 		
-		this.viajeAsignado = viajeAsignado;
+		this.viajesAsignados = viajesAsignados;
 		
 	}
 	
@@ -305,9 +327,9 @@ public class Transportadora {
 	 * @return lista de los viajes asignados a la transportadora.
 	 */
 	
-	public ArrayList <Viaje> getViajeAsignado(){
+	public ArrayList <Viaje> getViajesAsignados(){
 		
-		return viajeAsignado;
+		return viajesAsignados;
 		
 	}
 	
@@ -324,7 +346,7 @@ public class Transportadora {
 	}
 	
 	/**
-	 * Establece o modifica la terminla asociada a la tranportadora.
+	 * Establece o modifica la terminal asociada a la tranportadora.
 	 * @param terminal, la terminal asociada a la transportadora.
 	 */
 	
@@ -362,6 +384,29 @@ public class Transportadora {
 	public void setDestinos(ArrayList<Destino> destinos) {
 		this.destinos = destinos;
 	}
+	
+	/**
+	 * Establece o modifica el dueño de la transportadora.
+	 * @param dueño, el dueño de la transportadora.
+	 */
+	
+	public void setDueño(Persona dueño) {
+		
+		this.dueño = dueño;
+		
+	}
+	
+	/**
+	 * Método para obtener el dueño de la tranportadora.
+	 * @return el dueño de la transportadora.
+	 */
+	
+	public Persona getDueño() {
+		
+		return dueño;
+		
+	}
+	
 	
 	
 

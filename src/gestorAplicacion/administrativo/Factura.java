@@ -1,18 +1,22 @@
 package gestorAplicacion.administrativo;
 import gestorAplicacion.usuarios.*;
+import java.util.ArrayList;
+import gestorAplicacion.constantes.Destino;
 
 /**
  * 	Autores: Jaime Luis Osorio Gómez, Santiago Ochoa Cardona, Juan Camilo Marín Valencia, Johan Ramírez Marín, Jonathan David Osorio Restrepo.
  *  Esta clase representa a una factura, la cuál tiene un numero, total, el total de facturas, la terminal, pasajero, conductor, viaje, vehículo
- *  y transportadora asociada respectivamente a la factura, es decir dependiendo el objeto asociado, este tendrá su respectiva factura. 
+ *  y transportadora asociada respectivamente a la factura, esta es útil ya que nos ayudará a llevar un registro de los diferentes pasajeros que 
+ *  hayan comprado un ticket para un viaje, también nos servirá para llevar el registro de pago a los conductores, mecánicos y las transportadoras
+ *  que hayan cancelado su respectivo monto a la terminal.
  */
 
-public class Factura {
+	public class Factura {
 	
 	//Atributos 
 	
 	private int numeroFactura; // Número de la factura (Identificador)
-	private int total; // Valor total 
+	private int total; // Valor total de la factura
 	public static int totalFacturas; // Número total de obejtos factura creados
 	private Terminal terminal; // Terminal asociada en la factura
 	private Pasajero pasajero; // Pasajero asociado en la factura
@@ -20,29 +24,96 @@ public class Factura {
 	private Viaje viaje; // Viaje asocioado a la factura 
 	private Vehiculo vehiculo; // Vehículo asociado a la factura 
 	private Transportadora transportadora; // Transportadora asociada a la factura
+	private Taller taller; // Taller asociado a la factura
 	
+	/**
+	 * Constructor para la clase factura, este objeto estará asociado con un pasajero
+     * @param total, el total de la factura.
+     * @param pasajero, el pasajero asociado a la factura.
+     * @param terminal, la terminal donde se generó dicha factura.
+     * @param conductor, el conductor asociado al viaje en la factura.
+     * @param viaje, el viaje al cual pertenece la factura.
+     * @param vehiculo, el vehículo asociado a la factura.
+     * @param transportadora, la transportadora que genera la factura.
+     */
 	
-	
-	public Factura() {
+	public Factura(int total, Pasajero pasajero, Terminal terminal, Conductor conductor, Viaje viaje, Vehiculo vehiculo, Transportadora transportadora) {
 		
-		// Implementación pendiente
-		
+		numeroFactura = (int)(Math.random()*10000);
+		this.total = total;
+		this.pasajero = pasajero;
+		this.terminal = terminal;
+		this.conductor = conductor;
+		this.viaje = viaje;
+		this.vehiculo = vehiculo;
+		this.transportadora = transportadora;
+		pasajero.getFacturas().add(this);
+		totalFacturas++;
 		
 	}
 	
-	public void imprimirFactura() {
+	
+	/**
+	 * Constructor para la clase factura, este objeto estará asociado con el dueño de una transportadora
+     * @param total, el valor total de la factura.
+     * @param terminal, la terminal a la cual está asociada la transportadora.
+     */
+	
+	public Factura(int total, Terminal terminal) {
 		
-		// Implementación pendiente
-		
+		numeroFactura = (int)(Math.random()*10000);
+		this.total = total;
+		this.terminal = terminal;
+		totalFacturas++;
 		
 	}
+
+	/**
+	 * Constructor para la clase factura, este objeto estará asociado con un conductor de una transportadora en específico
+     * @param total, el valor total de la factura.
+     * @param transportadora, la transportadora de la cual el conductor hace parte.
+     * @param vehiculo, el vehículo que ha conducido el conductor
+     */
+	
+	
+	public Factura(int total, Transportadora transportadora, Vehiculo vehiculo) {
+		
+		numeroFactura = (int)(Math.random()*10000);
+		this.total = total;
+		this.transportadora = transportadora;
+		this.vehiculo = vehiculo;
+		totalFacturas++;
+		
+	}
+	
+	/**
+	 * Constructor para la clase factura, este objeto estará asociado con un mecánico que hace parte de un taller
+     * @param total, el valor total de la factura.
+     * @param transportadora, la transportadora en la cual el taller en el que trabaja el mecánico hace parte.
+     * @param taller, el taller asociado con el mecánico
+     */
+	 
+	public Factura(int total, Transportadora transportadora, Taller taller) {
+		
+		numeroFactura = (int)(Math.random()*10000);
+		this.total = total;
+		this.transportadora = transportadora;
+		this.taller = taller;
+		totalFacturas++;
+			
+	}
+	
 	
 	public void modificarFactura() {
 		
-		// Implementación pendiente
 		
-		
-		
+		// Idea de la interfaz : Calcular bonificaciones a los empleados de la terminal según su tipo y calcular el pasaje de un pasajero
+		// El método modificar factura modificará una factura en base a las distintas modificaciones que se le hayan hecho a esta, es decir si un
+		// pasajero compro un pasaje y se le aplicó un descuento, dicho método modificará dicha factura antes de ser entregada, lo mismo
+		// con los conductores y los mecánicos por las diversas bonificaciones que pueden tener, aplica también para las transportadoras, 
+		// en las transportadoras tener en cuenta que si esta es puntual con su pago o lleva muchos pasajeros se le hará un descuento de lo que le 
+		// tenía que pagar a la terminal
+	
 	}
 	
 	
@@ -246,11 +317,25 @@ public class Factura {
 	}
 	
 	
+	/**
+	 * Establece o modifica el taller asociado a una factura.
+	 * @param taller, el taller asociado a una factura.
+	 */
 	
+	public void setTaller(Taller taller) {
+		
+		this.taller = taller;
+		
+	}
 	
+	/**
+	 * Método para obtener el taller asociado a una factura.
+	 * @return el taller asociado a una factura.
+	 */
 	
+	public Taller getTaller() {
+		
+		return taller;
+	}
 	
-	
-	
-
 }

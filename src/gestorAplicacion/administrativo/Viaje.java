@@ -143,7 +143,7 @@ public class Viaje {
      * Establece o modifica la tarifa del viaje.
      * @param tarifa La tarifa del viaje.
      */
-    public void setTarifa(int tarifa) {
+    public void setTarifa(double tarifa) {
         this.tarifa = tarifa;
     }
 

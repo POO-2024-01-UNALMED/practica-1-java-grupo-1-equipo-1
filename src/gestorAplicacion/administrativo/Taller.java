@@ -80,7 +80,10 @@ public class Taller {
 	// METODOS GETTERS Y SETTERS
 	// Implementación pendiente
 	
-	
+	public String getNombre() {
+		
+		return nombre;
+	}
 	
 
 }
