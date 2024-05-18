@@ -19,6 +19,7 @@ public class Transportadora {
 	private String nombre; // Nombre de la transportadora
 	private int dinero; // Dinero de la transportadora 
 	private ArrayList <Conductor> conductores = new ArrayList<>(); // Lista de conductores de la transportadora
+	private ArrayList <Persona> conductoresDespedidos = new ArrayList<>(); // Lista de conductores despedidos de la transportadora 
 	private ArrayList <Pasajero> pasajeros = new ArrayList<>(); // Lista de pasajeros de la transportadora
 	private ArrayList <Vehiculo> vehiculos = new ArrayList<>(); // Lista de vehículos asociados a la transportadora
 	private ArrayList <Viaje> viajesAsignados = new ArrayList<>(); // Viajes de la transportadora
@@ -72,7 +73,7 @@ public class Transportadora {
 			}
 		
 	
-	/*
+	/**
 	 * Metodo para contratar un conductor el cual se agregara
 	 * a la lista de conductores de la transportadora.
 	 * @param Conductor a contratar
@@ -84,10 +85,10 @@ public class Transportadora {
 		
 	}
 	
-	/* 
+	/**
 	 * Metodo para despedir conductor al cual se le remueve el vehiculo,
 	 *  se le remueve de la lista de conductores de la transportadora y 
-	 * se elimina el conductor.
+	 * se agrega a la lista de conductores despedidos elimina el conductor.
 	 * Para esto, primero se verifica que no tenga viajes programados y 
 	 * que su vehiculo tenga almenos 2 conductores.
 	 * @param Conductor a despedir*/
@@ -95,11 +96,13 @@ public class Transportadora {
 	public void despedirConductor(Conductor conductor) {
 		
 		if (conductor.getHorario().size() == 0) {
+			
 			if (conductor.getVehiculo().getConductores().size() >= 2 || conductor.getVehiculo() == null) {
 				conductor.quitarVehiculo();
 				int indiceConductor = this.getConductores().indexOf(conductor);
 				this.getConductores().remove(indiceConductor);
-				conductor = null;
+				this.conductoresDespedidos.add(conductor);
+				
 			}
 		}
 		
@@ -306,7 +309,7 @@ public class Transportadora {
 	 * @return la lista de vehículos asociados a la transportadora.
 	 */
 	
-	public ArrayList <Vehiculo> getVehiculo(){
+	public ArrayList <Vehiculo> getVehiculos(){
 		
 		return vehiculos;
 		
@@ -346,6 +349,17 @@ public class Transportadora {
 	}
 	
 	/**
+	 * Establece o modifica el destino asignado a la transportadora.
+	 * @param destinoAsignado.
+	 */
+	
+	public void setDestinoAsignado(Destino destinoAsignado) {
+		
+		this.destinoAsignado = destinoAsignado;
+		
+	}
+	
+	/**
 	 * Establece o modifica la terminal asociada a la tranportadora.
 	 * @param terminal, la terminal asociada a la transportadora.
 	 */
@@ -377,7 +391,7 @@ public class Transportadora {
 	
 	/**
 	 * Establece o modifica los destinos asociados a la tranportadora.
-	 * @param destinos.
+	 * @param los destinos asociados a la transportadora.
 	 */
 	
 
@@ -406,6 +420,31 @@ public class Transportadora {
 		return dueño;
 		
 	}
+
+	/**
+	 * Método para obtener los conductores despedidos.
+	 * @return conductores despedidos de la transportadora
+	 */
+	
+	public ArrayList<Persona> getConductoresDespedidos() {
+		
+		return conductoresDespedidos;
+		
+	}
+
+	/**
+	 * Establece o modifica los conductores despedidos.
+	 * @param conductores despedidos de la transportadora.
+	 */
+	
+	public void setConductoresDespedidos(ArrayList<Persona> conductoresDespedidos) {
+		
+		this.conductoresDespedidos = conductoresDespedidos;
+		
+	}
+
+	
+	
 	
 	
 	
