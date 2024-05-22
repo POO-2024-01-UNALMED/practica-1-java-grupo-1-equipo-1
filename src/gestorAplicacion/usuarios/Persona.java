@@ -24,7 +24,6 @@ public abstract class Persona {
 	protected int experiencia; // Este atributo será utilizado por las clases que heredan de persona y tendrá diferentes implementaciones en estas
 	protected int dinero; // Dinero de la persona
 	protected ArrayList <Factura> facturas = new ArrayList<>(); // Facturas asociadas a la persona
-
 	
 	public Persona() {
 		
@@ -588,8 +587,9 @@ public abstract class Persona {
 	 * @param experiencia, la experiencia de la persona.
 	 */
     public void setExperiencia(int experiencia) {
-        this.experiencia = experiencia;
-    }
+		
+		this.experiencia = experiencia;
+	}
 
     
 	

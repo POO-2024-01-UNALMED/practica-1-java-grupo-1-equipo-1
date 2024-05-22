@@ -18,21 +18,62 @@ public class Conductor extends Persona {
 	private Vehiculo vehiculo; // Vehículo asociado al conductor
 	private Transportadora transportadora; // Transportadora asociada al conductor 
 	private ArrayList <Viaje> horario = new ArrayList<>(); // Horario de viajes del conductor
+
+	/*Constructor por defecto*/
 	
-	/*Constructor*/
+	public Conductor() {
+		
+		
+	}
+	
 	
 	/**
+	 * Constructor con parametros de Conductor.
+	 * @param estadoLicencia, el estado de licencia asociado al conductor.
      * @param vehiculo, el vehiculo asociado al conductor.
      * @param transportadora, la transportadora asociada al conductor.
      * @param horario, la lista con el horario de viajes asociados al conductor
      * 
      */
-	public Conductor(Vehiculo vehiculo, Transportadora transportadora, ArrayList<Viaje> horario) {
+	
+	public Conductor(boolean estadoLicencia, Vehiculo vehiculo, Transportadora transportadora, ArrayList<Viaje> horario) {
+		
 		super();
+		this.estadoLicencia = estadoLicencia;
 		this.vehiculo = vehiculo;
 		this.transportadora = transportadora;
 		this.horario = horario;
+		
 	}
+	
+	
+	/**
+	 * Constructor con parametros de Persona y Conducto
+	 * @param id del conductor.
+	 * @param edad del conductor.
+	 * @param nombre del conductor.
+	 * @param genero del conductor.
+	 * @param historial del conductor.
+	 * @param experiencia del conductor.
+	 * @param dinero del conductor.
+	 * @param estadoLicencia del conductor
+	 * @param vehiculo del conductor
+	 * @param transportadora del conductor.
+	 * @param horario del conductor.
+	 */
+
+	public Conductor(int id, int edad, String nombre, char genero, ArrayList<Viaje> historial, int experiencia,
+			int dinero, boolean estadoLicencia, Vehiculo vehiculo, Transportadora transportadora, ArrayList<Viaje> horario ) {
+		super(id, edad, nombre, genero, historial, experiencia, dinero);
+		
+		this.estadoLicencia = estadoLicencia;
+		this.vehiculo = vehiculo;
+		this.transportadora = transportadora;
+		this.horario = horario;
+		
+	}
+	
+	
 
 	public void conducir() {
 		
@@ -72,7 +113,7 @@ public class Conductor extends Persona {
 	
 	public void renovarContraro() {
 		
-		contrato.put("conductor",1); //Todavia no se tiene claro si se va a hacer un contrato por viajes o por tiempo
+		//Implementación pendiente
 		
 	}
 	
