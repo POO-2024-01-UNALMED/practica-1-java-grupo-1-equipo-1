@@ -24,8 +24,7 @@ public abstract class Persona {
 	protected int experiencia; // Este atributo será utilizado por las clases que heredan de persona y tendrá diferentes implementaciones en estas
 	protected int dinero; // Dinero de la persona
 	protected ArrayList <Factura> facturas = new ArrayList<>(); // Facturas asociadas a la persona
-	protected Map<String, Integer> contrato;
-	
+
 	
 	public Persona() {
 		
@@ -592,22 +591,7 @@ public abstract class Persona {
         this.experiencia = experiencia;
     }
 
-    /** 
-     * Metodo para obtener el diccionario contrato
-     * @return diccionario contrato
-     * */
     
-	public Map<String, Integer> getContrato() {
-		return contrato;
-	}
 	
-	/** 
-	 * Metodo para establecer el contrato para conductor y mecanico
-	 * @param diccionaro con los contratos*/
-
-	public void setContrato(Map<String, Integer> contrato) {
-		this.contrato = contrato;
-	}
-    
-    
+	
 }

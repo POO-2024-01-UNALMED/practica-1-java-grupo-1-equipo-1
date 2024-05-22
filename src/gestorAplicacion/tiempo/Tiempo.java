@@ -14,6 +14,7 @@ import gestorAplicacion.administrativo.Viaje;
 import gestorAplicacion.constantes.*;
 import gestorAplicacion.usuarios.Conductor;
 import gestorAplicacion.usuarios.Pasajero;
+import gestorAplicacion.administrativo.*;
 
 public class Tiempo {
 	private Timer timer;
@@ -199,8 +200,8 @@ public class Tiempo {
 
         Transportadora transportadora = new Transportadora();
         
-        Vehiculo vehiculo1 = new Vehiculo("MARCOPOLO A800", "Modelo1", 100, 60, tipo1, tipo1, transportadora);
-        Vehiculo vehiculo2 = new Vehiculo("FORD F600", "Modelo2", 150, 70, tipo2, tipo2, transportadora);
+        Vehiculo vehiculo1 = new Vehiculo("MARCOPOLO A800", "Modelo1", 100, 60, tipo1, transportadora);
+        Vehiculo vehiculo2 = new Vehiculo("FORD F600", "Modelo2", 150, 70, tipo2, transportadora);
         
 
         //////////////////////////////////////// DIAS OBJETOS PRUEBA /////////////////////////////////////// 
@@ -244,29 +245,28 @@ public class Tiempo {
         //System.out.println(Tiempo.salidaFecha + "   " + Tiempo.salidaHora);
         //System.out.println(viaje1.getFecha() + "   " + viaje1.getHora());
         
-        System.out.println(viaje1.getFinalDestino().getDistancia());
-        System.out.println(vehiculo1.getVelocidadPromedio());
-        System.out.println(vehiculo1.getVelocidadPromedio());
-        System.out.println(viaje2.getDuracion());
-        System.out.println(viaje3.getDuracion());
-        System.out.println(viaje4.getDuracion());
-
+       System.out.println(viaje1.getFinalDestino().getDistancia());
+       System.out.println(vehiculo1.getVelocidadPromedio());
+       System.out.println(vehiculo1.getVelocidadPromedio());
+       System.out.println(viaje2.getDuracion());
+       System.out.println(viaje3.getDuracion());
+       System.out.println(viaje4.getDuracion());
+       
+        
 
         
-        if(viaje1.getHora().equals(Tiempo.salidaHora)) {
+       if(viaje1.getHora().equals(Tiempo.salidaHora)) {
         	System.out.println("OK");
         }
         
-        Scanner lectura = new Scanner (System.in);
-        System.out.println("Ingrese su nombre: ");
-        String nombre = lectura.next();
-        System.out.println("Ingrese su edad: ");
-        int edad = lectura.nextInt();
-        System.out.println("Su nombre es: " + nombre + " y su edad es: " + edad);
-    	System.out.println("\n----------------------------------------------------------------------------------------------");
-        System.out.print("Fecha: " + dias + "/" + meses + "/" + año + "     Hora: " + horas + ":" + minutos + "   Hoy es: " + diaNombre);
-        System.out.println("\n----------------------------------------------------------------------------------------------");
-        
-        System.out.println(Tiempo.salidaFecha + "   " + Tiempo.salidaHora);
+       Scanner lectura = new Scanner (System.in);
+       System.out.println("Ingrese su nombre: ");
+       String nombre = lectura.next();
+       System.out.println("Ingrese su edad: ");
+       int edad = lectura.nextInt();
+       System.out.println("Su nombre es: " + nombre + " y su edad es: " + edad);
+       System.out.println("\n----------------------------------------------------------------------------------------------");
+       System.out.print("Fecha: " + dias + "/" + meses + "/" + año + "     Hora: " + horas + ":" + minutos + "   Hoy es: " + diaNombre);
+       System.out.println("\n----------------------------------------------------------------------------------------------");
     }
 }

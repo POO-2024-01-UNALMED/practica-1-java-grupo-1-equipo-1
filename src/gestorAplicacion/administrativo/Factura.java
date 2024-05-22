@@ -2,6 +2,7 @@ package gestorAplicacion.administrativo;
 import gestorAplicacion.usuarios.*;
 import java.util.ArrayList;
 import gestorAplicacion.constantes.Destino;
+import java.time.LocalDate;
 
 /**
  * 	Autores: Jaime Luis Osorio Gómez, Santiago Ochoa Cardona, Juan Camilo Marín Valencia, Johan Ramírez Marín, Jonathan David Osorio Restrepo.
@@ -25,6 +26,7 @@ import gestorAplicacion.constantes.Destino;
 	private Vehiculo vehiculo; // Vehículo asociado a la factura 
 	private Transportadora transportadora; // Transportadora asociada a la factura
 	private Taller taller; // Taller asociado a la factura
+	private LocalDate fecha; // Fecha en la que adquirió la factura
 	
 	/**
 	 * Constructor para la clase factura, este objeto estará asociado con un pasajero
@@ -47,6 +49,7 @@ import gestorAplicacion.constantes.Destino;
 		this.viaje = viaje;
 		this.vehiculo = vehiculo;
 		this.transportadora = transportadora;
+		this.fecha = LocalDate.now();
 		pasajero.getFacturas().add(this);
 		totalFacturas++;
 		
@@ -64,6 +67,7 @@ import gestorAplicacion.constantes.Destino;
 		numeroFactura = (int)(Math.random()*10000);
 		this.total = total;
 		this.terminal = terminal;
+		this.fecha = LocalDate.now();
 		totalFacturas++;
 		
 	}
@@ -82,6 +86,7 @@ import gestorAplicacion.constantes.Destino;
 		this.total = total;
 		this.transportadora = transportadora;
 		this.vehiculo = vehiculo;
+		this.fecha = LocalDate.now();
 		totalFacturas++;
 		
 	}
@@ -99,6 +104,7 @@ import gestorAplicacion.constantes.Destino;
 		this.total = total;
 		this.transportadora = transportadora;
 		this.taller = taller;
+		this.fecha = LocalDate.now();
 		totalFacturas++;
 			
 	}
@@ -336,6 +342,28 @@ import gestorAplicacion.constantes.Destino;
 	public Taller getTaller() {
 		
 		return taller;
+	}
+	
+	/**
+	 * Establece o modifica la fecha asociada a una factura.
+	 * @param fecha, la fecha asociada a una factura.
+	 */
+	
+	public void setFecha(LocalDate fecha) {
+		
+		this.fecha = fecha;
+		
+	}
+	
+	/**
+	 * Método para obtener la fecha asociada a una factura.
+	 * @return fecha asociada a dicha factura.
+	 */
+	
+	public LocalDate getFecha() {
+		
+		return fecha;
+		
 	}
 	
 }
