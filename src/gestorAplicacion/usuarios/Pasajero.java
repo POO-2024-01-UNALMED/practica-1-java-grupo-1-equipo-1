@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import gestorAplicacion.administrativo.Viaje;
 import gestorAplicacion.constantes.TipoPasajero;
+import gestorAplicacion.administrativo.Terminal;
 
 /**
  * 	Autores: Jaime Luis Osorio Gómez, Santiago Ochoa Cardona, Juan Camilo Marín Valencia, Johan Ramírez Marín, Jonathan David Osorio Restrepo.
@@ -30,6 +31,27 @@ public class Pasajero extends Persona {
 	public Pasajero() {
 				
 	}
+	
+	public Viaje masEconomico(String destinoDeseado, int cantidad){
+
+		Viaje viajeMasBarato = null;
+
+	   	//Suponiendo que "viajes" es una arrayList con los viajes que se 
+		//encuentran disponibles en la terminal y que "finalDestino" de transportadora es hacia donde se dirige
+
+		for (Viaje viaje : Terminal.getViajes()) {
+	        // Verificar si el viaje tiene el destino deseado y suficientes asientos disponibles
+	        if (viaje.getFinalDestino().name().equals(destinoDeseado) && viaje.getAsientosDisponibles() >= cantidad) {
+	            // elegir el mas varato
+	            if (viajeMasBarato == null || viaje.getTarifa() < viajeMasBarato.getTarifa()) {
+	                viajeMasBarato = viaje;
+	            }
+	        }
+	    }
+
+	    return viajeMasBarato;
+	}
+
 	
 	public String identificarse() {
 		

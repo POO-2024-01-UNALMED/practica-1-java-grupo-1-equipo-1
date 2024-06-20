@@ -29,6 +29,7 @@ public class Viaje {
     private Dia dia; // Día en que se realiza el viaje
     private Destino destino; // Destino actual del viaje
     private Boolean estado;
+    private int asientosDisponibles;
     
     // Constructor de la clase Viaje
     public Viaje(int id, String hora, String fecha, Vehiculo vehiculo, Conductor conductor, Destino finalDestino, Dia dia, Destino destino) {
@@ -44,6 +45,7 @@ public class Viaje {
         this.dia = dia;
         this.destino = destino;
         this.estado = false; // Solo se coloca en true mientras el viaje esta en curso
+        asientosDisponibles = vehiculo.getTipo().getCapacidad()-pasajeros.size();
         
         // Falta Añadir viaje a la lista de la terminal.
     }
@@ -68,7 +70,10 @@ public class Viaje {
 	 * @return int, dependiendo las condiciones establecidas: duración y tipo de vehiculo.
 	 */
     public double calcularTarifa(double duracion, Vehiculo vehiculo) {
-        int costoPorMinuto = 0;
+    	
+    	int costoPorMinuto = 0;
+        double total = 0;
+
         // Establecer el costo por minuto según el tipo de vehículo.
         switch (vehiculo.getTipo()) {
             case TAXI:
@@ -81,14 +86,14 @@ public class Viaje {
                 costoPorMinuto = 200;
                 break;
             case BUS:
-                costoPorMinuto = 100;
-                break;
+            	total = vehiculo.getTransportadora().getEstrellas()*finalDestino.getDistancia()*5;
+                return total;
             default:
                 System.out.println("Tipo de vehículo no válido.");
                 return -1; // Valor de retorno inválido
         }
         // Calcular la tarifa total
-        double total =  (costoPorMinuto * duracion);
+        total =  (costoPorMinuto * duracion);
         
         return total;
     }
@@ -306,4 +311,14 @@ public class Viaje {
     public Boolean getEstado() {
         return estado;
     }
+
+	public int getAsientosDisponibles() {
+		return asientosDisponibles;
+	}
+
+	public void setAsientosDisponibles(int asientosDisponibles) {
+		this.asientosDisponibles = asientosDisponibles;
+	}
+    
+    
 }

@@ -27,11 +27,13 @@ public class Transportadora {
 	private Terminal terminal; // Terminal en donde opera la transportadora 
 	private ArrayList <Destino> destinos = new ArrayList<>();
 	private Persona dueño; // Dueño de la transportadora
+	private final double estrellas; // Permite calcular la tarifa de los buses
 	
 	//Constructor con todos los parámetros
 	
 	public Transportadora(String nombre, int dinero, ArrayList<Conductor> conductores, ArrayList<Pasajero> pasajeros,
-			ArrayList<Vehiculo> vehiculos, ArrayList<Viaje> viajeAsignado, Destino destinoAsignado, Terminal terminal, ArrayList<Destino> destinos) {
+			ArrayList<Vehiculo> vehiculos, ArrayList<Viaje> viajeAsignado, Destino destinoAsignado, Terminal terminal,
+			ArrayList<Destino> destinos, double estrellas) {
 		
 		this.nombre = nombre;
 		this.dinero = dinero;
@@ -42,15 +44,10 @@ public class Transportadora {
 		this.destinoAsignado = destinoAsignado;
 		this.terminal = terminal;
 		this.destinos = destinos;
+		this.estrellas = estrellas;
 		
 	}
 
-    //Constructor sin parámetros
-
-	public Transportadora() {		
-		
-	}
-	
 	/**
 	 * Método que nos sirve para mostrar un String con la información de una factura que esté asociada 
 	 * con el dueño de una transportadora.
@@ -443,6 +440,12 @@ public class Transportadora {
 		
 	}
 
+	public double getEstrellas() {
+	
+		return estrellas;
+	}
+	
+	
 	
 	
 	
