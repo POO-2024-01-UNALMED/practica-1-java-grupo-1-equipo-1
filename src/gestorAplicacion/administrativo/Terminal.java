@@ -16,33 +16,54 @@ public class Terminal {
 	private String nombre; // Nombre de la terminal
 	private int dinero; // Dinero de la terminal 
 	private int capacidadVehiculos; // capacidad de vehículos en la terminal
-	private static int cantidadSedes = 0; // cantidad de sedes de la terminal
+	public static int cantidadSedes = 0; // cantidad de sedes de la terminal
 	private int cantidadVehiculos; // cantidad de vehículos que hay en la terminal 
 	private ArrayList <Transportadora> transportadoras = new ArrayList<>(); // transportadoras asociadas a la terminal 
 	private ArrayList <Viaje> reservas = new ArrayList<>(); // reservas de viaje de la terminal
-	private static ArrayList <Viaje> viajes = new ArrayList<>(); // viajes disponibles en la terminal
+	private ArrayList <Viaje> viajes = new ArrayList<>(); // viajes disponibles en la terminal
+	private ArrayList <Viaje> historial = new ArrayList<>(); // viajes realizados por la terminal
 	private ArrayList <Viaje> viajesEnCurso = new ArrayList<>(); // viajes en curso en la terminal
 	private ArrayList <Destino> destinos = new ArrayList<>(); // destinos de la terminal 
-	private Destino ubicacion; // ubuicación de la terminal 
+	private Destino ubicacion; // ubicación de la terminal 
 	private Persona administrador; // Administrador de la terminal 
 	
 	// Constructor Clase Terminal
-	public Terminal(String nombre, int dinero, int capacidadVehiculos, int cantidadSedes, int cantidadVehiculos, ArrayList <Transportadora> transportadoras, 
-			        ArrayList <Viaje> reservas, ArrayList <Viaje> viajes, ArrayList <Viaje> viajesEnCurso, ArrayList <Destino> destinos, Destino ubicacion, Persona administrador) {
-		
+	public Terminal(String nombre, int dinero, int capacidadVehiculos, int cantidadSedes, int cantidadVehiculos, ArrayList <Transportadora> transportadoras,
+					ArrayList <Viaje> viajes, ArrayList <Viaje> viajesEnCurso, ArrayList <Destino> destinos, Destino ubicacion, Persona administrador) {
+	
 		this.nombre = nombre;
 		this.dinero = dinero;
 		this.capacidadVehiculos = capacidadVehiculos;
 		this.cantidadVehiculos = cantidadVehiculos;
 		this.transportadoras = transportadoras;
-		this.reservas = reservas;
 		this.viajes = viajes;
+		this.reservas = new ArrayList<Viaje>();
+		this.historial = new ArrayList<Viaje>();
 		this.viajesEnCurso = viajesEnCurso;
 		this.destinos = destinos;
 		this.ubicacion = ubicacion;
 		this.administrador = administrador;
 		Terminal.cantidadSedes++;
 	}
+	
+	// Constructor sobrecarga
+	public Terminal(String nombre, int dinero, int capacidadVehiculos, int cantidadSedes, int cantidadVehiculos, ArrayList <Transportadora> transportadoras,
+			       ArrayList <Destino> destinos, Destino ubicacion) {
+		
+		this.nombre = nombre;
+		this.dinero = dinero;
+		this.capacidadVehiculos = capacidadVehiculos;
+		this.cantidadVehiculos = cantidadVehiculos;
+		this.transportadoras = transportadoras;
+		this.viajes = new ArrayList<Viaje>();
+		this.reservas = new ArrayList<Viaje>();
+		this.historial = new ArrayList<Viaje>();
+		this.viajesEnCurso = new ArrayList<Viaje>();
+		this.destinos = destinos;
+		this.ubicacion = ubicacion;
+		//this.administrador = administrador;
+		Terminal.cantidadSedes++;
+}
 	
 	public ArrayList<Transportadora> viajesDisponiblesTransportadora(String destinoDeseado) {
 		ArrayList <Transportadora> transportadorasConDestino = new ArrayList<>();
@@ -325,9 +346,9 @@ public class Terminal {
 	 * @param viajes, lista con los viajes asociados a la terminal
 	 */
 	
-	public static void setViajes(ArrayList <Viaje> viajes) {
+	public void setViajes(ArrayList <Viaje> viajes) {
 		
-		Terminal.viajes = viajes;
+		this.viajes = viajes;
 		
 	}
 	
@@ -336,7 +357,7 @@ public class Terminal {
 	 * @retunr lista de viajes asociados a la terminal.
 	 */
 	
-	public static ArrayList <Viaje> getViajes(){
+	public ArrayList <Viaje> getViajes(){
 		
 		return viajes;
 	
@@ -361,6 +382,28 @@ public class Terminal {
 	public ArrayList <Viaje> getViajesEnCurso(){
 		
 		return viajesEnCurso;
+	
+	}
+	
+	/**
+	 * Establece o modifica la lista del historial de Viajes asociado a la terminal.
+	 * @param destinos, lista con los destinos asociados a la terminal.
+	 */
+	
+public void setHistorial(ArrayList <Viaje> historial) {
+		
+		this.historial = viajesEnCurso;
+		
+	}
+	
+	/**
+	 * Método para obtener la lista con el Historial de viajes de la terminal.
+	 * @retunr lista de viajes realizados por la terminal.
+	 */
+	
+	public ArrayList <Viaje> getHistorial(){
+		
+		return historial;
 	
 	}
 	
@@ -401,10 +444,8 @@ public class Terminal {
 	 * @param administrador, el administrador de la terminal.
 	 */
 	
-	public void setAdministrador(Persona administrador) {
-		
+	 public void setAdministrador(Persona administrador) {
 		this.administrador = administrador;
-		
 	}
 	
 	/**
@@ -413,14 +454,7 @@ public class Terminal {
 	 */
 	
 	public Persona getAdministrador() {
-		
 		return administrador;
-		
 	}
 	
-	
-	
-	
-	
-
 }

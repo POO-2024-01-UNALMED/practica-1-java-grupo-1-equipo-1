@@ -47,6 +47,11 @@ public class Transportadora {
 		this.estrellas = estrellas;
 		
 	}
+	
+	//Dejarlo mientras las Pruebas 
+	public Transportadora() {
+		this.estrellas = 1;		
+	}
 
 	/**
 	 * Método que nos sirve para mostrar un String con la información de una factura que esté asociada 
