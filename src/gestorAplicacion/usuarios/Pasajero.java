@@ -41,16 +41,23 @@ public class Pasajero extends Persona {
 
 		for (Viaje viaje : Terminal.getViajes()) {
 	        // Verificar si el viaje tiene el destino deseado y suficientes asientos disponibles
-	        if (viaje.getFinalDestino().name().equals(destinoDeseado) && viaje.getAsientosDisponibles() >= cantidad) {
-	            // elegir el mas varato
+	        if (viaje.getLlegada().name().equals(destinoDeseado) && viaje.getAsientosDisponibles() >= cantidad&&viaje.getEstado()==false) {
 	            if (viajeMasBarato == null || viaje.getTarifa() < viajeMasBarato.getTarifa()) {
 	                viajeMasBarato = viaje;
+	                
 	            }
 	        }
 	    }
 
 	    return viajeMasBarato;
 	}
+	
+	/**
+	 * Este método elige el viaje con la tarifa más económica.
+	 * @param destinoDeseado Nombre del destino deseado.
+	 * @param cantidad Asientos solicitados.
+	 * @return El viaje más barato que cumple con los criterios.
+	 */
 
 	
 	public String identificarse() {

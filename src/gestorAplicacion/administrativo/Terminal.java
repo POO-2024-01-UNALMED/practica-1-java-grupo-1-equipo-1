@@ -20,7 +20,7 @@ public class Terminal {
 	private int cantidadVehiculos; // cantidad de vehículos que hay en la terminal 
 	private ArrayList <Transportadora> transportadoras = new ArrayList<>(); // transportadoras asociadas a la terminal 
 	private ArrayList <Viaje> reservas = new ArrayList<>(); // reservas de viaje de la terminal
-	private ArrayList <Viaje> viajes = new ArrayList<>(); // viajes disponibles en la terminal
+	private static ArrayList <Viaje> viajes = new ArrayList<>(); // viajes disponibles en la terminal
 	private ArrayList <Viaje> historial = new ArrayList<>(); // viajes realizados por la terminal
 	private ArrayList <Viaje> viajesEnCurso = new ArrayList<>(); // viajes en curso en la terminal
 	private ArrayList <Destino> destinos = new ArrayList<>(); // destinos de la terminal 
@@ -346,9 +346,9 @@ public class Terminal {
 	 * @param viajes, lista con los viajes asociados a la terminal
 	 */
 	
-	public void setViajes(ArrayList <Viaje> viajes) {
+	public static void setViajes(ArrayList <Viaje> viajes) {
 		
-		this.viajes = viajes;
+		Terminal.viajes = viajes;
 		
 	}
 	
@@ -357,7 +357,7 @@ public class Terminal {
 	 * @retunr lista de viajes asociados a la terminal.
 	 */
 	
-	public ArrayList <Viaje> getViajes(){
+	public static ArrayList <Viaje> getViajes(){
 		
 		return viajes;
 	
