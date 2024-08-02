@@ -65,8 +65,8 @@ public abstract class Persona {
 				
 				resultado += "Id : " + v.getId() + 
 						"\nTarifa : " + v.getTarifa() +
-						"\nOrigen : " + v.getDestino() +
-						"\nDestino : " + v.getFinalDestino() + 
+						"\nOrigen : " + v.getSalida() +
+						"\nDestino : " + v.getLlegada() + 
 						"\nHora de inicio : " + v.getHora() +
 						"\nDuración : " + v.getDuracion() + 
 						"\nFecha : " + v.getFecha()+ "\n\n";
@@ -100,7 +100,7 @@ public abstract class Persona {
 						"\nPasajero: " + factura.getPasajero() + 
 						"\nTerminal: " + factura.getTerminal().getNombre() +
 						"\nConductor: " + factura.getConductor().getNombre() +
-						"\nViaje: " + factura.getViaje().getFinalDestino() + 
+						"\nViaje: " + factura.getViaje().getLlegada() + 
 						"\nVehículo: " + factura.getVehiculo().getModelo() +
 						"\nTransportadora: " + factura.getTransportadora().getNombre();		
 			}
@@ -201,7 +201,7 @@ public abstract class Persona {
 			
 			for (Transportadora transportadora : terminal.getTransportadoras()) {
 				
-				if (transportadora.getDestinoAsignado().equals(viajeElegido.getFinalDestino())) {
+				if (transportadora.getDestinoAsignado().equals(viajeElegido.getLlegada())) {
 					
 					for (Pasajero pasajero: transportadora.getPasajeros()) {
 						
@@ -246,12 +246,12 @@ public abstract class Persona {
 			// Se comprueba que el destino del viaje sea igual al destino al cuál viajará la persona con los acompañantes, lo mismo se hace con la fecha
 			// Y al final se comprueba se el viaje cuenta con la capacidad necesaria para transportar a los pasajeros
 			
-			if (viaje.getFinalDestino().equals(destino) && viaje.getFecha().equals(fecha) && viaje.getVehiculo().getCapacidad() >= pasajeros.size()) {
+			if (viaje.getLlegada().equals(destino) && viaje.getFecha().equals(fecha) && viaje.getVehiculo().getCapacidad() >= pasajeros.size()) {
 					
 				viajesReservables.add(viaje);
 				
 					
-			}else if (viaje.getFinalDestino().equals(destino)&& !viaje.getFecha().equals(fecha) 
+			}else if (viaje.getLlegada().equals(destino)&& !viaje.getFecha().equals(fecha) 
 					&& viaje.getVehiculo().getCapacidad() >= pasajeros.size())   {
 				
 				viajesReservablesOtraFecha.add(viaje);
@@ -320,7 +320,7 @@ public abstract class Persona {
 		
 		for (Transportadora transportadora : terminal.getTransportadoras()){
 			
-			if (transportadora.getDestinoAsignado().equals(viajeReservado.getFinalDestino())) {
+			if (transportadora.getDestinoAsignado().equals(viajeReservado.getLlegada())) {
 				
 				for (Viaje v: transportadora.getViajesAsignados()) {
 					
@@ -356,12 +356,12 @@ public abstract class Persona {
 		for (Viaje viaje : terminal.getViajes()) {
 			
 			// Se compara el destino, la fecha y se evalúa si la capacidad del viaje no ha llegado a su tope
-			if (viaje.getFinalDestino().equals(destino) && viaje.getFecha().equals(fecha) && viaje.getPasajeros().size() < viaje.getVehiculo().getCapacidad()) {
+			if (viaje.getLlegada().equals(destino) && viaje.getFecha().equals(fecha) && viaje.getPasajeros().size() < viaje.getVehiculo().getCapacidad()) {
 				
 				viajesDisponibles.add(viaje);
 				
 				
-			}else if (viaje.getFinalDestino().equals(destino)&& (!viaje.getFecha().equals(fecha))&& viaje.getPasajeros().size() < viaje.getVehiculo().getCapacidad()) {
+			}else if (viaje.getLlegada().equals(destino)&& (!viaje.getFecha().equals(fecha))&& viaje.getPasajeros().size() < viaje.getVehiculo().getCapacidad()) {
 				
 				viajesDisponiblesEnOtraFecha.add(viaje);
 				
