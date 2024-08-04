@@ -1,6 +1,5 @@
 package gestorAplicacion.usuarios;
 import java.util.ArrayList;
-import java.util.Map;
 import gestorAplicacion.administrativo.Viaje;
 import gestorAplicacion.administrativo.Factura;
 import gestorAplicacion.constantes.Destino;
@@ -22,7 +21,7 @@ public abstract class Persona {
 	protected char genero; // Género de la persona
 	protected ArrayList <Viaje> historial = new ArrayList<>(); // Historial de viajes de la persona
 	protected int experiencia; // Este atributo será utilizado por las clases que heredan de persona y tendrá diferentes implementaciones en estas
-	protected int dinero; // Dinero de la persona
+	protected double dinero; // Dinero de la persona
 	protected ArrayList <Factura> facturas = new ArrayList<>(); // Facturas asociadas a la persona
 	
 	public Persona() {
@@ -40,7 +39,7 @@ public abstract class Persona {
      * @param dinero, dinero de la persona
      */
 	
-	public Persona(int id, int edad, String nombre, char genero, ArrayList<Viaje> historial, int experiencia, int dinero) {
+	public Persona(int id, int edad, String nombre, char genero, ArrayList<Viaje> historial, int experiencia, double dinero) {
 		this.id = id;
 		this.edad = edad;
 		this.nombre = nombre;
@@ -55,7 +54,7 @@ public abstract class Persona {
 	 * @param Cantidad de dinero a aumentar
 	**/
 	
-	public void aumentarDinero(int dinero) {
+	public void aumentarDinero(double dinero) {
 		
 		this.dinero = this.dinero + dinero;
 	}
@@ -65,7 +64,7 @@ public abstract class Persona {
 	 * @param Cantidad de dinero a reducir
  	 */
 	
-	public void reducirDinero(int dinero) {
+	public void reducirDinero(double dinero) {
 		
 		this.dinero = this.dinero - dinero;
 	}
@@ -160,9 +159,9 @@ public abstract class Persona {
 	 * @return El dinero que le quedó
 	 */
 	
-	public int consultarDinero() {
+	public double consultarDinero() {
 		
-		int dinero_gastado = 0;
+		double dinero_gastado = 0;
 		
 		// Se verifica que la lista de las facturas no esté vacia
 		
@@ -215,7 +214,7 @@ public abstract class Persona {
 			
 			viajeElegido.getPasajeros().add((Pasajero)this); // Se añade a la lista de pasajeros del viaje
 			this.historial.add(viajeElegido); // Se añade el viaje a su historial 
-			this.dinero = dinero - (int)viajeElegido.getTarifa(); // Se le descuenta el dinero
+			this.dinero = dinero - viajeElegido.getTarifa(); // Se le descuenta el dinero
 			
 			// Se crea el for para eliminar al pasajero de la lista de pasajeros de la transportadora a la cuál estaba asociado, esto por que ya está en un viaje
 			
@@ -305,7 +304,7 @@ public abstract class Persona {
 				
 				viajeReservado.setPasajeros(pasajeros); 
 				terminal.getViajes().remove(viajeReservado); // Se elimina el viaje, ya que esté no admitirá más pasajeros
-				this.dinero = dinero - (int) costo;
+				this.dinero = dinero - costo;
 			}
 			
 			
@@ -555,7 +554,7 @@ public abstract class Persona {
 	 * @param dinero, el dinero de la persona.
 	 */
 	
-	public void setDinero(int dinero) {
+	public void setDinero(double dinero) {
 		
 		this.dinero = dinero;
 		
@@ -566,7 +565,7 @@ public abstract class Persona {
 	 * @return el dinero de la persona.
 	 */
 	
-	public int getDinero() {
+	public double getDinero() {
 		
 		return dinero;
 	

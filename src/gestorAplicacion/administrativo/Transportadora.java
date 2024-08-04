@@ -17,23 +17,24 @@ public class Transportadora {
 	// Atributos
 	
 	private String nombre; // Nombre de la transportadora
-	private int dinero; // Dinero de la transportadora 
+	private double dinero; // Dinero de la transportadora 
 	private ArrayList <Conductor> conductores = new ArrayList<>(); // Lista de conductores de la transportadora
 	private ArrayList <Persona> conductoresDespedidos = new ArrayList<>(); // Lista de conductores despedidos de la transportadora 
 	private ArrayList <Pasajero> pasajeros = new ArrayList<>(); // Lista de pasajeros de la transportadora
 	private ArrayList <Vehiculo> vehiculos = new ArrayList<>(); // Lista de vehículos asociados a la transportadora
 	private ArrayList <Viaje> viajesAsignados = new ArrayList<>(); // Viajes de la transportadora
 	private Destino destinoAsignado; // Destino asignado a la transportadora, lugar hacia donde esta viajará
-	private Terminal terminal; // Terminal en donde opera la transportadora 
+	private Terminal terminal; // Terminal en donde opera la transportadora
 	private ArrayList <Destino> destinos = new ArrayList<>();
+	private ArrayList <Viaje> viajesTerminados = new ArrayList<>(); // Viajes que ha concluido la terminal
 	private Persona dueño; // Dueño de la transportadora
 	private final double estrellas; // Permite calcular la tarifa de los buses
 	
 	//Constructor con todos los parámetros
 	
-	public Transportadora(String nombre, int dinero, ArrayList<Conductor> conductores, ArrayList<Pasajero> pasajeros,
+	public Transportadora(String nombre, double dinero, ArrayList<Conductor> conductores, ArrayList<Pasajero> pasajeros,
 			ArrayList<Vehiculo> vehiculos, ArrayList<Viaje> viajeAsignado, Destino destinoAsignado, Terminal terminal,
-			ArrayList<Destino> destinos, double estrellas) {
+			ArrayList<Destino> destinos, ArrayList<Viaje> viajesTerminados, double estrellas) {
 		
 		this.nombre = nombre;
 		this.dinero = dinero;
@@ -44,6 +45,7 @@ public class Transportadora {
 		this.destinoAsignado = destinoAsignado;
 		this.terminal = terminal;
 		this.destinos = destinos;
+		this.viajesTerminados = viajesTerminados;
 		this.estrellas = estrellas;
 		
 	}
@@ -110,12 +112,73 @@ public class Transportadora {
 		
 	}
 	
-	public void pagarTerminal() {
+
+	/**
+	 * Metodo para calcular el dinero de la transportadora
+	 * teniendo en cuenta la cantidad de pasajeros transportados y la tarifa asociada al viaje
+	 * 
+	 */
+	
+	public void calcularDineroTransportadora() { 
 		
-		// Implementación pendiente
+		int cantPasajerosTransportados = 0; 
+		int tarifaViajes = 0; 
 		
+		for (Viaje v: viajesTerminados) {
+			
+			if (v.getPasajeros().size()>0) { 
+				
+			cantPasajerosTransportados += v.getPasajeros().size(); 
+			tarifaViajes += v.getTarifa(); 
+			
+			} 
+		} 
+		
+		this.dinero = cantPasajerosTransportados * tarifaViajes; 
 		
 	}
+	
+
+	/**
+	 * Metodo que nos permite calcular el dinero que la transportadora le debe pagar a la terminal
+	 * dicha terminal cobra cierta comisión por cada viaje que realiza la transportadora
+	 * por ende se contarán los viajes que realizó exitosamente la terminal 
+	 * y ese valor se multiplicará por la comisión
+	 */
+	
+	public boolean pagarTerminal() {
+		
+		boolean pago = false; // Nos servirá para saber si el pago fué efectuado o no
+		
+		double calcularValorAPagar = this.terminal.getComision()*this.getViajesTerminados().size();
+		
+		if (this.getDinero() > calcularValorAPagar) {
+			
+			this.dinero -= calcularValorAPagar;
+			
+			this.terminal.setDinero(calcularValorAPagar); // Se le pasa el dinero a la Terminal ya que la transportadora pagó su comisión
+			
+			pago = true;
+			
+			return pago;
+		}
+		
+		else {
+			
+			 
+			return false;
+			
+		}
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+	
 	
 	/**
 	 * Verifica la capacidad de la terminal y el dinero de la transportadora para poder agregar un vehiculo
@@ -232,7 +295,7 @@ public class Transportadora {
 	 * @param dinero a aumentar
 	 */
 	
-	public void aumentarDinero (int dinero) {
+	public void aumentarDinero (double dinero) {
 		
 		this.dinero = this.dinero + dinero;
 	}
@@ -242,7 +305,7 @@ public class Transportadora {
 	 * @param dinero a reducir
 	 */
 	
-	public void reducirDinero (int dinero) {
+	public void reducirDinero (double dinero) {
 		
 		this.dinero = this.dinero - dinero;
 	}
@@ -276,7 +339,7 @@ public class Transportadora {
 	 * @param dinero, el dinero de la trasnportadora.
 	 */
 	
-	public void setDinero(int dinero) {
+	public void setDinero(double dinero) {
 		
 		this.dinero = dinero;
 		
@@ -287,7 +350,7 @@ public class Transportadora {
 	 * @return el dinero de la transportadora.
 	 */
 	
-	public int getDinero() {
+	public double getDinero() {
 		
 		return dinero;
 	}
@@ -494,6 +557,17 @@ public class Transportadora {
 	public double getEstrellas() {
 	
 		return estrellas;
+	}
+	
+	/**
+	 * Devuelve la cantidad de viajes terminados de la transportadora
+	 * @return Cantidad de viajes de la transportadora
+	 */
+	
+	public ArrayList<Viaje> getViajesTerminados(){
+		
+		return viajesTerminados;
+		
 	}
 	
 	

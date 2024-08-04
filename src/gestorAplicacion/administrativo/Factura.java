@@ -17,7 +17,7 @@ import java.time.LocalDate;
 	//Atributos 
 	
 	private int numeroFactura; // Número de la factura (Identificador)
-	private int total; // Valor total de la factura
+	private double total; // Valor total de la factura
 	public static int totalFacturas; // Número total de obejtos factura creados
 	private Terminal terminal; // Terminal asociada en la factura
 	private Pasajero pasajero; // Pasajero asociado en la factura
@@ -39,7 +39,7 @@ import java.time.LocalDate;
      * @param transportadora, la transportadora que genera la factura.
      */
 	
-	public Factura(int total, Pasajero pasajero, Terminal terminal, Conductor conductor, Viaje viaje, Vehiculo vehiculo, Transportadora transportadora) {
+	public Factura(double total, Pasajero pasajero, Terminal terminal, Conductor conductor, Viaje viaje, Vehiculo vehiculo, Transportadora transportadora) {
 		
 		numeroFactura = (int)(Math.random()*10000);
 		this.total = total;
@@ -62,7 +62,7 @@ import java.time.LocalDate;
      * @param terminal, la terminal a la cual está asociada la transportadora.
      */
 	
-	public Factura(int total, Terminal terminal) {
+	public Factura(double total, Terminal terminal) {
 		
 		numeroFactura = (int)(Math.random()*10000);
 		this.total = total;
@@ -80,7 +80,7 @@ import java.time.LocalDate;
      */
 	
 	
-	public Factura(int total, Transportadora transportadora, Vehiculo vehiculo) {
+	public Factura(double total, Transportadora transportadora, Vehiculo vehiculo) {
 		
 		numeroFactura = (int)(Math.random()*10000);
 		this.total = total;
@@ -98,7 +98,7 @@ import java.time.LocalDate;
      * @param taller, el taller asociado con el mecánico
      */
 	 
-	public Factura(int total, Transportadora transportadora, Taller taller) {
+	public Factura(double total, Transportadora transportadora, Taller taller) {
 		
 		numeroFactura = (int)(Math.random()*10000);
 		this.total = total;
@@ -151,7 +151,7 @@ import java.time.LocalDate;
 	 * @param total, el total de la factura.
 	 */
 	
-	public void setTotal(int total) {
+	public void setTotal(double total) {
 		
 		this.total = total;
 		
@@ -162,7 +162,7 @@ import java.time.LocalDate;
 	 * @return total de la factura.
 	 */
 	
-	public int getTotal() {
+	public double getTotal() {
 		
 		return total;
 		

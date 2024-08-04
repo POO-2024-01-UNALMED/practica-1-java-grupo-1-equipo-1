@@ -16,8 +16,8 @@ public class Vehiculo {
 	private int integridad; // Nivel de integridad del vehículo
     private String placa; // Placa del vehículo
     private String modelo; // Modelo del vehículo
-    private int precio; // Precio del vehículo
-    private int velocidadPromedio; // Velocidad promedio del vehículo
+    private double precio; // Precio del vehículo
+    private double velocidadPromedio; // Velocidad promedio del vehículo
     private TipoVehiculo tipo; // Tipo de vehículo 
     private int capacidad; // Capacidad pasajeros del vehículo
     private ArrayList<Conductor> conductores; // Lista de conductores asociados al vehículo
@@ -34,7 +34,7 @@ public class Vehiculo {
      * @param capacidad, la capacidad de pasajeros del vehículo.
      * @param transportadora, la transportadora asociada al vehículo.
      */
-    public Vehiculo(String placa, String modelo, int precio, int velocidadPromedio, TipoVehiculo tipo, Transportadora transportadora) {
+    public Vehiculo(String placa, String modelo, double precio, double velocidadPromedio, TipoVehiculo tipo, Transportadora transportadora) {
         this.integridad = 100;
         this.placa = placa;
         this.modelo = modelo;
@@ -213,7 +213,7 @@ public class Vehiculo {
      * Establece o modifica el precio del vehículo.
      * @param precio El precio del vehículo.
      */
-    public void setPrecio(int precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
@@ -221,7 +221,7 @@ public class Vehiculo {
      * Obtiene el precio del vehículo.
      * @return El precio del vehículo.
      */
-    public int getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
@@ -229,7 +229,7 @@ public class Vehiculo {
      * Establece o modifica la velocidad promedio del vehículo.
      * @param velocidadPromedio La velocidad promedio del vehículo.
      */
-    public void setVelocidadPromedio(int velocidadPromedio) {
+    public void setVelocidadPromedio(double velocidadPromedio) {
         this.velocidadPromedio = velocidadPromedio;
     }
 
@@ -237,7 +237,7 @@ public class Vehiculo {
      * Obtiene la velocidad promedio del vehículo.
      * @return La velocidad promedio del vehículo.
      */
-    public int getVelocidadPromedio() {
+    public double getVelocidadPromedio() {
         return velocidadPromedio;
     }
 

@@ -16,7 +16,7 @@ import gestorAplicacion.usuarios.Persona;
 public class Terminal {
 	
 	private String nombre; // Nombre de la terminal
-	private int dinero; // Dinero de la terminal 
+	private double dinero; // Dinero de la terminal 
 	private int capacidadVehiculos; // capacidad de vehículos en la terminal
 	public static int cantidadSedes = 0; // cantidad de sedes de la terminal
 	private int cantidadVehiculos; // cantidad de vehículos que hay en la terminal 
@@ -27,12 +27,13 @@ public class Terminal {
 	private ArrayList <Viaje> viajesEnCurso = new ArrayList<>(); // viajes en curso en la terminal
 	private ArrayList <Destino> destinos = new ArrayList<>(); // destinos de la terminal 
 	private ArrayList <Vehiculo> vehiculosTerminal;
+	public final double comision; // comision que cobra la terminal a las transportadoras por dejarle prestar sus servicios, está será por cada viaje que realicen las transportadoras
 	private Destino ubicacion; // ubicación de la terminal 
 	private Persona administrador; // Administrador de la terminal 
 	
 	// Constructor Clase Terminal
-	public Terminal(String nombre, int dinero, int capacidadVehiculos, int cantidadSedes, int cantidadVehiculos, ArrayList <Transportadora> transportadoras,
-					ArrayList <Viaje> viajes, ArrayList <Viaje> viajesEnCurso, ArrayList <Destino> destinos, Destino ubicacion, Persona administrador) {
+	public Terminal(String nombre, double dinero, int capacidadVehiculos, int cantidadSedes, int cantidadVehiculos, ArrayList <Transportadora> transportadoras,
+					ArrayList <Viaje> viajes, ArrayList <Viaje> viajesEnCurso, ArrayList <Destino> destinos, double comision, Destino ubicacion, Persona administrador) {
 	
 		this.nombre = nombre;
 		this.dinero = dinero;
@@ -44,6 +45,7 @@ public class Terminal {
 		this.historial = new ArrayList<Viaje>();
 		this.viajesEnCurso = viajesEnCurso;
 		this.destinos = destinos;
+		this.comision = comision;
 		this.ubicacion = ubicacion;
 		this.administrador = administrador;
 		this.vehiculosTerminal = new ArrayList<> (); //Inicialización de la lista de vehiculos
@@ -51,8 +53,8 @@ public class Terminal {
 	}
 	
 	// Constructor sobrecarga
-	public Terminal(String nombre, int dinero, int capacidadVehiculos, int cantidadSedes, int cantidadVehiculos, ArrayList <Transportadora> transportadoras,
-			       ArrayList <Destino> destinos, Destino ubicacion) {
+	public Terminal(String nombre, double dinero, int capacidadVehiculos, int cantidadSedes, int cantidadVehiculos, ArrayList <Transportadora> transportadoras,
+			       ArrayList <Destino> destinos, double comision, Destino ubicacion) {
 		
 		this.nombre = nombre;
 		this.dinero = dinero;
@@ -64,6 +66,7 @@ public class Terminal {
 		this.historial = new ArrayList<Viaje>();
 		this.viajesEnCurso = new ArrayList<Viaje>();
 		this.destinos = destinos;
+		this.comision = comision;
 		this.ubicacion = ubicacion;
 		this.vehiculosTerminal = new ArrayList<> (); //Inicialización de la lista de vehiculos
 		//this.administrador = administrador;
@@ -227,6 +230,7 @@ public class Terminal {
 		
 		
 	}
+	 
 	
 	/**
 	 * Agrega un nuevo vehiculo a la lista de la terminal
@@ -299,7 +303,7 @@ public class Terminal {
 	 * @param dinero, el dinero de la terminal.
 	 */
 	
-	public void setDinero (int dinero) {
+	public void setDinero (double dinero) {
 		
 		this.dinero = dinero;
 		
@@ -310,7 +314,7 @@ public class Terminal {
 	 * @return el dinero de la terminal.
 	 */
 	
-	public int getDinero() {
+	public double getDinero() {
 		
 		return dinero;
 		
@@ -540,6 +544,18 @@ public void setHistorial(ArrayList <Viaje> historial) {
 	
 	public Persona getAdministrador() {
 		return administrador;
+	}
+	
+	/**
+	 * Método para obtener el valor de la comisión que le cobra la terminal a la transportadora.
+	 * @return la comisión que le cobra la terminal a la transportadora.
+	 */
+	
+	public double getComision() {
+		
+		return this.comision;
+		
+		
 	}
 	
 }

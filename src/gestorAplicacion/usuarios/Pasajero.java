@@ -19,7 +19,7 @@ public class Pasajero extends Persona {
 	//Constructor con todos los parámetros
 	
 	public Pasajero(TipoPasajero tipo, int id, int edad, String nombre, char genero, ArrayList<Viaje> historial, int experiencia,
-			int dinero) {
+			double dinero) {
 		super(id, edad, nombre, genero, historial, experiencia, dinero);
 		
 		this.tipo = tipo;
