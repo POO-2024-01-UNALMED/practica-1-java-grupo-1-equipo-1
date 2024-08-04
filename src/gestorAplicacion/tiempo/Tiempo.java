@@ -78,7 +78,7 @@ public class Tiempo {
             
     		// Formatos de Salida
     		//mostrarTiempo(); // Formato de salida General para pruebas 
-
+            //comprobarUbicacion(); // Solo para pruebas 
     		
     		// Comprobaciones y actualizaciones
         	//comprobarViajes(viajes); // Verifica el momento de salida de los viajes
@@ -153,6 +153,18 @@ public class Tiempo {
             System.out.print("Fecha: " + dias + "/" + meses + "/" + año + "     Hora: " + horas + ":" + minutos + "   Hoy es: " + diaNombre);
             System.out.println("\n----------------------------------------------------------------------------------------------");
             System.out.println(salidaHora);
+    	}
+    	
+    	public static void comprobarUbicacion() {
+    		if (viajesEnCurso != null) {
+    			for (Viaje viaje : viajesEnCurso) {
+    				if(viaje.getSalida().getEjeX() == 0 && viaje.getSalida().getEjeY() == 0) {
+    					System.out.println("Viaje "+ viaje.getId() + "  Coor: " + viaje.ubicacion() + " Hora Actual " + Tiempo.salidaHora + "   Hora de Inicio " + viaje.getHora());
+    				}
+    				
+
+    			}
+    		}
     	}
     	
     	public static boolean comprobarHora() {
@@ -256,7 +268,7 @@ public class Tiempo {
         Viaje viaje3 = new Viaje(terminal1,"7:17", "2/1/2024" ,vehiculo1, conductor, destino1, dia3, destino5);
         Viaje viaje4 = new Viaje(terminal1,"10:12", "2/1/2024" ,vehiculo2, conductor, destino2, dia4, destino1);
         Viaje viaje5 = new Viaje(terminal1,"19:24", "4/1/2024" ,vehiculo1, conductor, destino1, dia5, destino2);
-        Viaje viaje6 = new Viaje(terminal1,"23:57", "4/1/2024" ,vehiculo2, conductor, destino3, dia6, destino1);
+        //Viaje viaje6 = new Viaje(terminal1,"23:57", "4/1/2024" ,vehiculo2, conductor, destino3, dia6, destino1);
         
         //////////////////////////////////////// PRUEBA DE SALIDAS //////////////////////////////////////////
         

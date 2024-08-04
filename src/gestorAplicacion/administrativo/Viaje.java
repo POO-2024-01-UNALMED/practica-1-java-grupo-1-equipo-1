@@ -21,6 +21,7 @@ public class Viaje {
     private int id; // Identificador del viaje
     private double tarifa; // Tarifa del viaje
     private double duracion; // Duración del viaje en minutos
+    private double distancia; // Distancia del viaje en Km.
     private static int totalViajes; // Número total de viajes realizados
     private String hora; // Hora de inicio del viaje
     private String horaLlegada; // Hora de fin del viaje
@@ -40,10 +41,7 @@ public class Viaje {
     public Viaje(Terminal terminal, String hora, String fecha, Vehiculo vehiculo, Conductor conductor, Destino llegada, Dia dia, Destino salida) {
         this.terminal = terminal;
     	this.id = Viaje.totalViajes;
-        this.duracion = calcularDuracion(salida, llegada, vehiculo, conductor);
-        this.tarifa = calcularTarifa(this.duracion, vehiculo);
         this.hora = hora;
-        this.horaLlegada = calcularHoraLlegada(this.duracion, hora, fecha);
         this.fecha = fecha;
         this.vehiculo = vehiculo;
         this.conductor = conductor;
@@ -51,9 +49,14 @@ public class Viaje {
         this.dia = dia;
         this.salida = salida;
         this.estado = false; // Solo se coloca en true mientras el viaje esta en curso
-        asientosDisponibles = vehiculo.getTipo().getCapacidad()-pasajeros.size();
+    	this.distancia = calcularDistancia(salida, llegada);  // Se deja con parametros a proposito para su implementacion en otras funcionalidades 
+        this.duracion = calcularDuracion();
+        this.tarifa = calcularTarifa();
+        this.horaLlegada = calcularHoraLlegada();
+        this.asientosDisponibles = verificarAsientos();
         Viaje.totalViajes++;
         terminal.getViajes().add(this);
+        vehiculo.getTransportadora().getViajesAsignados().add(this);
     }
     
     
@@ -62,10 +65,12 @@ public class Viaje {
 	 * @return double, la distancia entre dos lugares.
 	 */
     public double calcularDistancia(Destino salida ,Destino llegada) {
+    	// Coordenadas de la Salida (INICIO)
     	double x1 = salida.getEjeX();
-    	double x2 = llegada.getEjeX();
     	double y1 = salida.getEjeY();
+       	// Coordenadas de la llegada (FIN)
     	double y2 = llegada.getEjeY();
+    	double x2 = llegada.getEjeX();
     	
     	double distancia = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
     	
@@ -77,11 +82,11 @@ public class Viaje {
 	 * Método para obtener la duración del Viaje.
 	 * @return int, dependiendo las condiciones establecidas: Destino, Vehiculo y Experiencia del Conductor.
 	 */
-    public double calcularDuracion(Destino salida ,Destino llegada, Vehiculo vehiculo, Conductor conductor) {
-    	double distancia = this.calcularDistancia(salida, llegada);
-    	double velocidad = vehiculo.getVelocidadPromedio();
+    public double calcularDuracion() {
+    	double distancia = this.distancia;
+    	double velocidad = this.getVehiculo().getVelocidadPromedio();
     	double tiempo =  distancia/velocidad;
-    	if (conductor.getExperiencia()> 0.5) { // Verificar si la experiencia del conductor es mayor que 0.5
+    	if (this.getConductor().getExperiencia()> 0.5) { // Verificar si la experiencia del conductor es mayor que 0.5
     		double factorReduccion = 0.9; // Reducción del 10%
             tiempo *= factorReduccion;
     	}	
@@ -92,16 +97,16 @@ public class Viaje {
 	 * Método para calcular la hora de llegada del Viaje.
 	 * @return String, dependiendo las condiciones establecidas: Destino, Vehiculo y Experiencia del Conductor.
 	 */
-    public String calcularHoraLlegada(double duracion, String hora, String fecha) {
+    public String calcularHoraLlegada() {
     	
-    	double tiempoHorasDuracion = duracion;
-    	String horaSalida = hora;
+    	double tiempoHorasDuracion = this.duracion;
+    	String horaSalida = this.hora;
     	
     	String [] partes = horaSalida.split(":");
         int horasSalida = Integer.parseInt(partes[0]);
         int minutosSalida = Integer.parseInt(partes[1]);
         
-    	String [] fechapartes = fecha.split("/");
+    	String [] fechapartes = this.fecha.split("/");
     	
     	int dia = Integer.parseInt(fechapartes[0]);
     	int mes = Integer.parseInt(fechapartes[1]);
@@ -142,30 +147,30 @@ public class Viaje {
 	 * Método para obtener la tarica del Viaje.
 	 * @return int, dependiendo las condiciones establecidas: duración y tipo de vehiculo.
 	 */
-    public double calcularTarifa(double duracion, Vehiculo vehiculo) {
+    public double calcularTarifa() {
         int costoPorMinuto = 0;
         double total;
         // Establecer el costo por minuto según el tipo de vehículo.
-        switch (vehiculo.getTipo()) {
+        switch (this.getVehiculo().getTipo()) {
             case TAXI:
-                costoPorMinuto = 400;
-                break;
-            case VANS:
-                costoPorMinuto = 300;
-                break;
-            case ESCALERA:
                 costoPorMinuto = 200;
                 break;
+            case VANS:
+                costoPorMinuto = 1700;
+                break;
+            case ESCALERA:
+                costoPorMinuto = 66;
+                break;
             case BUS:
-                costoPorMinuto = 100;
+                costoPorMinuto = 88;
                 break;
             default:
                 System.out.println("Tipo de vehículo no válido.");
                 return -1; // Valor de retorno inválido
         }
         // Calcular la tarifa total
-        total = vehiculo.getTransportadora().getEstrellas()*5;  // Falta agregar el factor de la distancia // Método calcularDistancia
-        total *=  (costoPorMinuto * (duracion*60));
+        total = this.getVehiculo().getTransportadora().getEstrellas()*0.0005*(int)this.getDistancia();  // Falta agregar el factor de la distancia // Método calcularDistancia
+        total *=  (costoPorMinuto * (this.duracion*60));
         
         return total;
     }
@@ -233,8 +238,9 @@ public class Viaje {
     		this.getTerminal().getViajesEnCurso().remove(this);
     		new Viaje(this.getTerminal(), this.getHora(), this.ajusteFecha(), this.getVehiculo(), this.getConductor(), this.getLlegada(), this.getDia(), this.getSalida());
     		System.out.println("Fecha Nueva: " + this.ajusteFecha() + " Fecha Actual: " +Tiempo.salidaFecha);
-    	} else {
-    		System.out.println("El viaje ha sido intervenido");
+    	} else { // Siginifica que el viaje fue cancelado antes de Salir.
+			Terminal.getViajes().remove(this);
+    		new Viaje(this.getTerminal(), this.getHora(), this.ajusteFecha(), this.getVehiculo(), this.getConductor(), this.getLlegada(), this.getDia(), this.getSalida());
     	}
     	
     }
@@ -283,6 +289,66 @@ public class Viaje {
         // Implementación pendiente
     	
     	return null;
+    }
+    
+    public String ubicacion() {
+    	double duracion = this.getDuracion();
+    	String horaSalida = this.getHora();
+    	String horaLlegada = this.getHoraLlegada();
+    	String horaActual = Tiempo.salidaHora;
+    	
+    	String [] partesSalida = horaSalida.split(":");
+        int horasSalida = Integer.parseInt(partesSalida[0]);
+        int minutosSalida = Integer.parseInt(partesSalida[1]);
+        
+    	String [] partesLlegada = horaLlegada.split(":");
+        int horasLlegada = Integer.parseInt(partesLlegada[0]);
+        int minutosLlegada = Integer.parseInt(partesLlegada[1]);
+        
+    	String [] partesActual = horaActual.split(":");
+        int horasActual = Integer.parseInt(partesActual[0]);
+        int minutosActual = Integer.parseInt(partesActual[1]);
+        
+        
+        double enMarcha = (horasActual-horasSalida)+((double)(minutosActual-minutosSalida)/60);
+        System.out.println("En marcha:  " + enMarcha + " Porcentaje " + (enMarcha/duracion));
+  
+    	double salidax1 = this.getSalida().getEjeX();
+    	double saliday1 = this.getSalida().getEjeY();
+    	
+    	double llegadax2 = this.getLlegada().getEjeX();
+    	double llegaday2 = this.getLlegada().getEjeY();
+    	
+    	String ubicacion = salidax1 + "," + saliday1; // Ubicación por defecto - - - La tendra asignada el viaje mientras no esta en movimiento
+    	
+		double ubiX; 
+		double ubiY;
+		
+    	
+		if (this.getEstado() == true) { // La variable estado = true implica que el viaje esta en curso por lo tanto las fechas del sistema concuerdan con las de inicio del viaje y cuando termina automaticamente pasa a ser false por lo que no existiran errores de continuidad. No hay necesidad de pensar en si la duración es mayor a 24 porque el estado determina el inicio y fin. 
+	    	double porcentaje = (enMarcha/duracion);
+			// Caso vectores desde el Origen	
+			if (salidax1 ==0 && saliday1 == 0) {
+		    	ubiX = porcentaje * llegadax2;
+		    	ubiY = porcentaje * llegaday2;	
+		    	ubicacion = ubiX + "," + ubiY;  			
+		    } else { // Falta implementar para vectores libres
+	            ubiX = salidax1 + porcentaje * (llegadax2 - salidax1);  // Planteamos la solucion como una ecuación escalar parametrica donde nos basamos en los punto de salida y llegada para plantearla.
+	            ubiY = saliday1 + porcentaje * (llegaday2 - saliday1);
+	            ubicacion = ubiX + "," + ubiY;  
+		    	}
+		}
+    	return ubicacion;
+    }
+
+    
+    public int verificarAsientos() {
+    	int total;
+    	
+    	total = this.getVehiculo().getTipo().getCapacidad()-this.pasajeros.size();
+        
+    	return total;
+    	
     }
     
     // Getters y Setters
@@ -517,6 +583,22 @@ public class Viaje {
      */
     public Boolean getEstado() {
         return estado;
+    }
+    
+    /**
+     * Establece o modifica la distancia del viaje.
+     * @param estado el estado del viaje.
+     */
+    public void setDistancia(double distancia) {
+        this.distancia = distancia;
+    }
+
+    /**
+     * Obtiene la Distancia del viaje.
+     * @return La distancia en Km del viaje.
+     */
+    public double getDistancia() {
+        return distancia;
     }
     
     /**

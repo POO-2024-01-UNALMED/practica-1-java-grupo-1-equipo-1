@@ -2,6 +2,8 @@ package gestorAplicacion.administrativo;
 import java.util.ArrayList;
 
 import gestorAplicacion.constantes.Destino;
+import gestorAplicacion.usuarios.Conductor;
+import gestorAplicacion.usuarios.Pasajero;
 import gestorAplicacion.usuarios.Persona;
 
 /**
@@ -95,19 +97,60 @@ public class Terminal {
 	 * @return ArrayList<Transportadora>, transporatadoras con disponibilidad.
 	 */
 	
-	public Viaje programarViaje() {
-		
-		// Implementación pendiente
-		
-		return null;
-		
-		
+	public Viaje programarViaje (Destino destino, Vehiculo vehiculo, String fecha, String hora, Destino salida) {  // Teniendo en cuenta el tipo de Vehiculo --- Habra otro que tiene en cuenta cierta capacidad y el costo del vaje
+		for (Transportadora t : this.getTransportadoras()) { 		// Verfificar las transportadoras que ofrecen este destino 
+			for (Destino d : t.getDestinos()) {
+				if (d.equals(destino)) {
+					for (Vehiculo v : t.getVehiculos()) {		    // Verfificar el tipo de vehiculo requerido
+						if(vehiculo.getTipo().equals(v.getTipo()) && v.disponibilidad()) {
+							Conductor conductorSeleccionado = null;  // Se pueden agregar mas condiciones para esta selección 
+							for (Conductor c : v.getConductores()) { // Añadir la verificacion de la lista de horario del conductor para verificar loa disponiblidad Formato String "8:30 4/08/2024"
+								String cadena = hora+fecha;
+								if (c.getEstadoLicencia() ) {  // && c.getHorario().contains(cadena) Cambiar la manera de asignar el horario al conductor automaticamente esta cadena cuando se crea un viaje puede ser un metodo
+									conductorSeleccionado = c;
+									break;  // Selecciona el primer conductor disponible
+								}
+							}
+							
+							if (conductorSeleccionado != null) {
+								Viaje nuevoViaje = new Viaje(t.getTerminal(), hora, fecha, v, conductorSeleccionado, d, null, salida); // Creacion del Viaje // --- plantear la posibilidad de eliminar el dia del constructor y que las transportadoras tengan un destino como ubicacion
+								return nuevoViaje;  //El viaje no se perdera pues este ya tiene apunadores desde la clase Vehiculo, Transportadora, Conductor, Viaje. 
+								
+							} else {return null; } // Hay un problema con el conductor asignado --- Volver a programar automaticamente 
+
+						} else {return null; } // No hay del mismo tipo de vehiculo
+					}
+					
+				} else { return null; }  // No hay Transportadoras con ese destino
+			}
+		}
+		return null; // No hay ese destino
 	}
 	
-	public void cancelarViaje() {
-		// Implementación pendiente
-		
-		
+	public void cancelarViaje(Viaje viaje) {  // Puede devolver un String con una retroalimentacion de la operacion que se realizo
+		 ArrayList <Pasajero> pasajeros = viaje.getPasajeros(); // Debemos tener en cuenta que el viaje debe ser reprogramado, reubicar sus pasajeros o la devolucion del dinero. 
+		 boolean reubicados = false; // Permitira saber cual proceso fue exitoso 
+		 
+		 for (Viaje v : Terminal.viajes) { //Buscar en la lista de viajes disponibles un viaje que cumpla las caracteristicas para reubicar
+			 if (viaje.equals(v) == false) { // Primero debemos excluir el viaje que se va a cancelar
+				 if (v.getSalida().equals(viaje.getSalida()) && v.getLlegada().equals(viaje.getLlegada()) &&  viaje.getAsientosDisponibles() <= v.getAsientosDisponibles()) { // Verificar que la salida y la llegada sean las mismas y Verificar la capacidad de los vehiculos 
+					 v.setTarifa(viaje.getTarifa()); // Respeta la tarifa del viaje anterior 
+					 v.getPasajeros().addAll(pasajeros); // Mover los pasajeros al nuevo viaje y elminar
+					 
+					 viaje.programacionAutomatica(); // Ejecutar la autoprogramación para no perder la continuidad y eliminar el viaje
+					 reubicados = true;
+					 break; // Terminar la operacion despues de finalizar el proceso
+				 } 
+			 }
+		 }
+		 
+		 if (reubicados == false) {  // Devolución del dinero debido a que no se encontro un viaje con las condiciones requeridas 
+			 for (Pasajero p : pasajeros) {
+				 p.aumentarDinero((int)viaje.getTarifa()); // DEFINIR EL DINERO COMO DOUBLE O IMPLEMENTAR ALGUNA REGLA PARA DEDONDEAR
+			 }
+			 
+		 }
+		 viaje.programacionAutomatica();
 	}
 	
 	public ArrayList <Viaje> verificarDisponibilidad(){
