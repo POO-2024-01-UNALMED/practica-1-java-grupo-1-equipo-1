@@ -117,21 +117,34 @@ public class Transportadora {
 		
 	}
 	
-	public Vehiculo agregarVehiculo() {
+	/**
+	 * Verifica la capacidad de la terminal y el dinero de la transportadora para poder agregar un vehiculo
+	 * @param vehiculo a comprar
+	 */
+	
+	public void agregarVehiculo(Vehiculo vehiculo) {
 		
-		// Implementación pendiente
-		
-		return null;
-		
+		if (vehiculo.getPrecio() <= this.dinero && this.terminal.getCapacidadVehiculos() > this.terminal.getCantidadVehiculos()) {
+			
+			this.vehiculos.add(vehiculo);
+			this.terminal.agregarVehiculoTerminal(vehiculo);
+			
+		}
 		
 	}
 	
-	public void removerVehiculo() {
-		
-		// Implementación pendiente
-		
+	/**
+	 * Remueve un vehiculo de la lista de vehiculos de la transportadora
+	 * @param vehiculo a remover
+	 */
+	
+	public void removerVehiculo(Vehiculo vehiculo) {
+			
+		vehiculos.remove(vehiculos.indexOf(vehiculo));
+		this.terminal.removerVehiculoTerminal(vehiculo);
 		
 	}
+	
 	
 	public void realizarMantenimiento() {
 		
@@ -158,9 +171,17 @@ public class Transportadora {
 		
 	}
 	
-	public void pagarConductor() {
+	/**
+	 * Paga x cantidad de dinero a una persona
+	 * @param persona a pagar
+	 * @param cantidad de dinero a pagar
+	 */
+	
+	public void pagarPersona(Persona persona, int cantidad) {
 		
-		// Implementación pendiente 
+		
+		this.reducirDinero(cantidad);
+		persona.aumentarDinero(cantidad);
 		
 		
 	}
@@ -204,6 +225,26 @@ public class Transportadora {
 		return null;
 		
 		
+	}
+	
+	/**
+	 * Aumenta el dinero de la transportadora
+	 * @param dinero a aumentar
+	 */
+	
+	public void aumentarDinero (int dinero) {
+		
+		this.dinero = this.dinero + dinero;
+	}
+	
+	/**
+	 * Reduce el dinero de la terminal
+	 * @param dinero a reducir
+	 */
+	
+	public void reducirDinero (int dinero) {
+		
+		this.dinero = this.dinero - dinero;
 	}
 	
 	// METODOS GETTERS Y SETTERS
@@ -444,6 +485,11 @@ public class Transportadora {
 		this.conductoresDespedidos = conductoresDespedidos;
 		
 	}
+	
+	/**
+	 * Devuelve la cantidad de estrellas de la transportadora
+	 * @return Numero de estrellas
+	 */
 
 	public double getEstrellas() {
 	

@@ -14,6 +14,8 @@ public class Mecanico extends Persona{
 	private Vehiculo vehiculoAsignado; // Vehículo asignado al mecánico
 	private ArrayList <String> historial; // Historial de vehículos reparados por el mecánico
 	private Boolean estado; // Estado del mecánico
+	private static ArrayList <Mecanico> mecanicos;
+	private static ArrayList <Mecanico> mecanicosDisponibles;
 	
 
 	/**
@@ -30,7 +32,7 @@ public class Mecanico extends Persona{
 		this.vehiculoAsignado = vehiculoAsignado;
 		this.estado = estado;
 		this.historial =  new ArrayList<String>();
-		
+		mecanicos.add(this);
 	}
 	
 	

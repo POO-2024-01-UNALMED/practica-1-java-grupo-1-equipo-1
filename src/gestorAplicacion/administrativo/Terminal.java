@@ -24,6 +24,7 @@ public class Terminal {
 	private ArrayList <Viaje> historial = new ArrayList<>(); // viajes realizados por la terminal
 	private ArrayList <Viaje> viajesEnCurso = new ArrayList<>(); // viajes en curso en la terminal
 	private ArrayList <Destino> destinos = new ArrayList<>(); // destinos de la terminal 
+	private ArrayList <Vehiculo> vehiculosTerminal;
 	private Destino ubicacion; // ubicación de la terminal 
 	private Persona administrador; // Administrador de la terminal 
 	
@@ -43,6 +44,7 @@ public class Terminal {
 		this.destinos = destinos;
 		this.ubicacion = ubicacion;
 		this.administrador = administrador;
+		this.vehiculosTerminal = new ArrayList<> (); //Inicialización de la lista de vehiculos
 		Terminal.cantidadSedes++;
 	}
 	
@@ -61,6 +63,7 @@ public class Terminal {
 		this.viajesEnCurso = new ArrayList<Viaje>();
 		this.destinos = destinos;
 		this.ubicacion = ubicacion;
+		this.vehiculosTerminal = new ArrayList<> (); //Inicialización de la lista de vehiculos
 		//this.administrador = administrador;
 		Terminal.cantidadSedes++;
 }
@@ -182,10 +185,49 @@ public class Terminal {
 		
 	}
 	
+	/**
+	 * Agrega un nuevo vehiculo a la lista de la terminal
+	 * @param vehiculo a agregar
+	 */
 
+	public void agregarVehiculoTerminal (Vehiculo vehiculo) {
+		
+		this.vehiculosTerminal.add(vehiculo);
+		this.capacidadVehiculos --;
+		
+	}
+	/**
+	 * Remueve el vehiculoeleido de la lista de vehiculos de la terminal
+	 * @param vehiculo a remover
+	 */
+	
+	public void removerVehiculoTerminal (Vehiculo vehiculo) {
+		
+		this.vehiculosTerminal.remove(vehiculosTerminal.indexOf(vehiculo));
+	}
 			
 	
 	// METODOS GETTERS Y SETTERS
+	
+	/**
+	 * Retorna la lista de vehiculos de la terminal
+	 * @return Vehicuos de la terminal
+	 */
+	public ArrayList<Vehiculo> getVehiculosTerminal (){
+		
+		return (this.vehiculosTerminal);
+	}
+	
+	/**
+	 * Establece la lista de vehiculosTerminal
+	 * @param vehiculos: Lista de vehiculos de la terminal
+	 */
+	
+	public void setVehiculosTerminal (ArrayList<Vehiculo> vehiculos) {
+		
+		this.vehiculosTerminal = vehiculos;
+	}
+	
 	
 	/**
 	 * Establece o modifica el nombre de la terminal.

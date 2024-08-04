@@ -49,6 +49,26 @@ public abstract class Persona {
 		this.experiencia = experiencia;
 		this.dinero = dinero;
 	}
+	
+	/**
+	 * Metodo Para aumentar el dinero de las instancias de tipo persona
+	 * @param Cantidad de dinero a aumentar
+	**/
+	
+	public void aumentarDinero(int dinero) {
+		
+		this.dinero = this.dinero + dinero;
+	}
+	
+	/**
+	 * Metodo para reducir el dinero de las instancias de la clase persona
+	 * @param Cantidad de dinero a reducir
+ 	 */
+	
+	public void reducirDinero(int dinero) {
+		
+		this.dinero = this.dinero - dinero;
+	}
 
 	/**
 	 * Método para obtener el historial de viajes que ha tomado una persona.
