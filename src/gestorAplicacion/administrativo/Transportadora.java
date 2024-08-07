@@ -87,6 +87,7 @@ public class Transportadora implements Incentivo {
 	public void contratarConductor(Conductor conductor) {
 		
 		this.getConductores().add(conductor);
+		conductor.reinicioAtributos();
 		
 	}
 	
@@ -95,23 +96,34 @@ public class Transportadora implements Incentivo {
 	 *  se le remueve de la lista de conductores de la transportadora y 
 	 * se agrega a la lista de conductores despedidos elimina el conductor.
 	 * Para esto, primero se verifica que no tenga viajes programados y 
-	 * que su vehiculo tenga almenos 2 conductores.
+	 * que su vehiculo tenga almenos 2 conductores. Si existe algun inconveniente
+	 * el metodo devolvera un valor diferente para cada caso.
 	 * @param Conductor a despedir*/
 	
-	public void despedirConductor(Conductor conductor) {
+	public String despedirConductor(Conductor conductor) {
 		
 		if (conductor.getHorario().size() == 0) {
-			
-			if (conductor.getVehiculo().getConductores().size() >= 2 || conductor.getVehiculo() == null) {
+			if (conductor.getVehiculo() == null) {
 				conductor.quitarVehiculo();
-				int indiceConductor = this.getConductores().indexOf(conductor);
-				this.getConductores().remove(indiceConductor);
-				this.conductoresDespedidos.add(conductor);
+				int indiceConductor = conductor.getTransportadora().getConductores().indexOf(conductor);
+				conductor.getTransportadora().getConductores().remove(indiceConductor);
+				conductor.getTransportadora().getConductores().add(conductor);
+				conductor.indemnizar();
+				conductor.reinicioAtributos();
+				return "No problem";
+				}
+			if (conductor.getVehiculo().getConductores().size() >= 2 ) {
+				conductor.quitarVehiculo();
+				int indiceConductor = conductor.getTransportadora().getConductores().indexOf(conductor);
+				conductor.getTransportadora().getConductores().remove(indiceConductor);
+				conductor.getTransportadora().getConductores().add(conductor);
+				conductor.indemnizar();
+				conductor.reinicioAtributos();
+				return "No problem";
+				} else return "No es posible porque no hay mas conductores asigandos al vehiculo asociado al conductor";
+			} else return "No es posible porque el conductor tiene viajes programados";
 				
 			}
-		}
-		
-	}
 	
 	
 	/**
@@ -319,6 +331,33 @@ public class Transportadora implements Incentivo {
 	@Override
 	public void bonificacion(double premio) {
 		
+	}
+	
+	/**
+	 * Metodo para que devolvera un string con la lista de
+	 * conductores activos de una determinada trasportadora
+	 * @return string con la lista de conductores activos*/
+	
+	public String mostrarConductActivos() {
+		String mensaje = "";
+		for (Conductor conductor : this.conductores) {
+			mensaje += "Nombre: " + conductor.getNombre()+ "  #Cedula: " + conductor.getId() + "\n";
+		}
+		return mensaje;
+	}
+	
+	/**
+	 * Metodo para despedir un conductor de la lista de conductores
+	 * activos con su id.
+	 * @param id , id del conductor a despedir*/
+
+	public void despedirConductDesdeLista(int id) {
+		for (Conductor conductor : this.conductores) {
+			if (conductor.getId() == id) {
+				despedirConductor(conductor);
+				return;
+			}
+		}
 	}
 
 	

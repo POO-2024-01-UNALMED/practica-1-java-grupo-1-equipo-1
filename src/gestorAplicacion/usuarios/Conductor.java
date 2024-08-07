@@ -20,6 +20,9 @@ public class Conductor extends Persona {
 	private Vehiculo vehiculo; // Vehículo asociado al conductor
 	private Transportadora transportadora; // Transportadora asociada al conductor 
 	private ArrayList <Viaje> horario = new ArrayList<>(); // Horario de viajes del conductor
+	
+	public Conductor() { //Se agrego para facilitar las pruebas
+	}
 
 	/**
 	 * Constructor con parametros de Conductor.
@@ -57,14 +60,13 @@ public class Conductor extends Persona {
 	 */
 
 	public Conductor(int id, int edad, String nombre, char genero, ArrayList<Viaje> historial, int experiencia,
-			double dinero, boolean estadoLicencia, Vehiculo vehiculo, Transportadora transportadora, ArrayList<Viaje> horario ) {
-		super(id, edad, nombre, genero, historial, experiencia, dinero);
-		
+			double dinero, boolean estadoLicencia, Vehiculo vehiculo, Transportadora transportadora, ArrayList<Viaje> horario, 
+			ArrayList<Factura> facturas, int diasRestantesContr, int diasTrabajados) {
+		super(id, edad, nombre, genero, historial, experiencia, dinero, facturas, diasRestantesContr, diasTrabajados);
 		this.estadoLicencia = estadoLicencia;
 		this.vehiculo = vehiculo;
 		this.transportadora = transportadora;
 		this.horario = horario;
-		
 	}
 	
 	
@@ -135,8 +137,8 @@ public class Conductor extends Persona {
 	
 	public void tomarVehiculo(Vehiculo vehiculo) {
 		
-		//Se le pone momentaneamente un limite de 5 conductores por vehiculo
-		if (vehiculo.getConductores().size() < 5) {
+		//Se le pone momentaneamente un limite de 3 conductores por vehiculo
+		if (vehiculo.getConductores().size() < 3) {
 			vehiculo.asociarConductor(this);
 			this.vehiculo=vehiculo;
 		}
@@ -172,8 +174,41 @@ public class Conductor extends Persona {
 	
 	@Override
 	public void bonificacion(double premio) {
-		
-		
+	}
+	
+	/**
+	 * Metodo para renovar el contrato del conductor
+	 * @param dias , dias que se le sumaran a los dias restantes de contrato*/
+	
+	@Override
+	protected void renovarContrato(int dias) {
+		this.diasRestantesContr += dias;
+	}
+
+	/**
+	 * Metodo para indemnizar el conductor al despedirlo*/
+	
+	public void indemnizar() {
+		this.dinero += (this.diasRestantesContr * 0.5); //El dinero que se le devolvera todavia no esta definido
+	}
+	
+	/**
+	 * Metodo para agregarle un dia trabajado al conductor*/
+	
+	public void sumarUnDiaTrabajado() {
+		this.diasTrabajados++;
+	}
+	
+	/**
+	 * Metodo para reiniciar algunos atributos del conductor, 
+	 * este se usara cuando se despida o contrate un conductor
+	 * para que no haya errores en un futuro*/
+	
+	public void reinicioAtributos() {
+		this.horario = null;
+		this.diasRestantesContr = 0;
+		this.diasTrabajados = 0;
+		this.historial = null;
 	}
 	
 	// METODOS GETTERS Y SETTERS

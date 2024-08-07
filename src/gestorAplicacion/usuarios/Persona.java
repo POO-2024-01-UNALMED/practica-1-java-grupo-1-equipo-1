@@ -26,6 +26,11 @@ public abstract class Persona implements Incentivo {
 	protected int experiencia; // Este atributo será utilizado por las clases que heredan de persona y tendrá diferentes implementaciones en estas
 	protected double dinero; // Dinero de la persona
 	protected ArrayList <Factura> facturas = new ArrayList<>(); // Facturas asociadas a la persona
+	protected int diasRestantesContr; //Dias restantes de contrato
+	protected int diasTrabajados; //Dias trabajados durante en contrato actual
+	
+	public Persona() { //Se agrego para facilitar las pruebas
+	}
 	
 	/**
 	 * Constructor para la clase persona
@@ -38,7 +43,8 @@ public abstract class Persona implements Incentivo {
      * @param dinero, dinero de la persona
      */
 	
-	public Persona(int id, int edad, String nombre, char genero, ArrayList<Viaje> historial, int experiencia, double dinero) {
+	public Persona(int id, int edad, String nombre, char genero, ArrayList<Viaje> historial, int experiencia, double dinero, 
+			ArrayList <Factura> facturas, int diasRestantesContr, int diasTrabajados) {
 		this.id = id;
 		this.edad = edad;
 		this.nombre = nombre;
@@ -46,6 +52,9 @@ public abstract class Persona implements Incentivo {
 		this.historial = historial;
 		this.experiencia = experiencia;
 		this.dinero = dinero;
+		this.facturas = facturas;
+		this.diasRestantesContr = diasRestantesContr;
+		this.diasTrabajados = diasTrabajados;
 	}
 	
 	/**
@@ -365,7 +374,6 @@ public abstract class Persona implements Incentivo {
 	 *
 	 */ 
 	
-	
 	public ArrayList <Viaje> verDisponibilidad(Destino destino, String fecha, Terminal terminal){
 		
 		ArrayList <Viaje> viajesDisponibles = new ArrayList<>();
@@ -434,6 +442,10 @@ public abstract class Persona implements Incentivo {
 		
 	}
 
+
+	abstract protected void renovarContrato(int dias);
+
+	
 	// METODOS GETTERS Y SETTERS
 	
 	
@@ -607,6 +619,38 @@ public abstract class Persona implements Incentivo {
     public void setExperiencia(int experiencia) {
 		
 		this.experiencia = experiencia;
+	}
+
+    
+    /**
+     * Metodo para obtener los dias restantes del contrato
+     * @return diasRestantesContr , Dias restantes del contrato actual*/
+    
+	public int getDiasRestantesContr() {
+		return diasRestantesContr;
+	}
+
+	/**
+	 * Establece los dias restantes del contrato
+	 * @param diasRestantesContr , Dias restantes del contrato actual*/
+	public void setDiasRestantesContr(int diasRestantesContr) {
+		this.diasRestantesContr = diasRestantesContr;
+	}
+	
+	/**
+	 * Metodo para obtener los dias trabajados durante el actual contrato
+	 * @return diasTrabajados , dias trabajados en el actual contrato */
+
+	public int getDiasTrabajados() {
+		return diasTrabajados;
+	}
+	
+	/**
+	 * Establece los dias trabajados en el actual contrato
+	 * @return diasTrabajados , dias trabajados en el actual contrato*/
+
+	public void setDiasTrabajados(int diasTrabajados) {
+		this.diasTrabajados = diasTrabajados;
 	}
 
     
