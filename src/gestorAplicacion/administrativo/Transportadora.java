@@ -4,6 +4,7 @@ import gestorAplicacion.usuarios.Conductor;
 import gestorAplicacion.usuarios.Pasajero;
 import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.usuarios.Persona;
+import gestorAplicacion.constantes.Incentivo;
 
 /**
  * 	Autores: Jaime Luis Osorio Gómez, Santiago Ochoa Cardona, Juan Camilo Marín Valencia, Johan Ramírez Marín, Jonathan David Osorio Restrepo.
@@ -12,7 +13,7 @@ import gestorAplicacion.usuarios.Persona;
  *  pago y monitorear a los distintos vehículos asociados a esta.
  */
 
-public class Transportadora {
+public class Transportadora implements Incentivo {
 	
 	// Atributos
 	
@@ -25,7 +26,7 @@ public class Transportadora {
 	private ArrayList <Viaje> viajesAsignados = new ArrayList<>(); // Viajes de la transportadora
 	private Destino destinoAsignado; // Destino asignado a la transportadora, lugar hacia donde esta viajará
 	private Terminal terminal; // Terminal en donde opera la transportadora
-	private ArrayList <Destino> destinos = new ArrayList<>();
+	private ArrayList <Destino> destinos = new ArrayList<>(); // ???
 	private ArrayList <Viaje> viajesTerminados = new ArrayList<>(); // Viajes que ha concluido la terminal
 	private Persona dueño; // Dueño de la transportadora
 	private final double estrellas; // Permite calcular la tarifa de los buses
@@ -112,33 +113,7 @@ public class Transportadora {
 		
 	}
 	
-
-	/**
-	 * Metodo para calcular el dinero de la transportadora
-	 * teniendo en cuenta la cantidad de pasajeros transportados y la tarifa asociada al viaje
-	 * 
-	 */
 	
-	public void calcularDineroTransportadora() { 
-		
-		int cantPasajerosTransportados = 0; 
-		int tarifaViajes = 0; 
-		
-		for (Viaje v: viajesTerminados) {
-			
-			if (v.getPasajeros().size()>0) { 
-				
-			cantPasajerosTransportados += v.getPasajeros().size(); 
-			tarifaViajes += v.getTarifa(); 
-			
-			} 
-		} 
-		
-		this.dinero = cantPasajerosTransportados * tarifaViajes; 
-		
-	}
-	
-
 	/**
 	 * Metodo que nos permite calcular el dinero que la transportadora le debe pagar a la terminal
 	 * dicha terminal cobra cierta comisión por cada viaje que realiza la transportadora
@@ -309,6 +284,43 @@ public class Transportadora {
 		
 		this.dinero = this.dinero - dinero;
 	}
+	
+	/**
+	 * Metodo para calcular el dinero de la transportadora
+	 * teniendo en cuenta la cantidad de pasajeros transportados y la tarifa asociada al viaje
+	 * 
+	 */
+	
+	public void calcularDineroTransportadora() { 
+		
+		int cantPasajerosTransportados = 0; 
+		int tarifaViajes = 0; 
+		
+		for (Viaje v: viajesTerminados) {
+			
+			if (v.getPasajeros().size()>0) { 
+				
+			cantPasajerosTransportados += v.getPasajeros().size(); 
+			tarifaViajes += v.getTarifa(); 
+			
+			} 
+		} 
+		
+		this.dinero = cantPasajerosTransportados * tarifaViajes; 
+		
+	}
+	
+	@Override
+	public void descuento (double porcentaje) {
+		
+		
+	}
+	
+	@Override
+	public void bonificacion(double premio) {
+		
+	}
+
 	
 	// METODOS GETTERS Y SETTERS
 	
@@ -570,11 +582,4 @@ public class Transportadora {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-
 }

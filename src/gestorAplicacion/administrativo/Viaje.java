@@ -1,7 +1,4 @@
 package gestorAplicacion.administrativo;
-
-import gestorAplicacion.administrativo.Terminal;
-
 import java.lang.Math;
 import java.util.ArrayList;
 import gestorAplicacion.constantes.Destino;
@@ -17,6 +14,9 @@ import gestorAplicacion.tiempo.Tiempo;
  
 
 public class Viaje {
+	
+	// Atributos
+	
     private Terminal terminal; // Terminal
     private int id; // Identificador del viaje
     private double tarifa; // Tarifa del viaje
@@ -55,7 +55,7 @@ public class Viaje {
         this.horaLlegada = calcularHoraLlegada();
         this.asientosDisponibles = verificarAsientos();
         Viaje.totalViajes++;
-        terminal.getViajes().add(this);
+        Terminal.getViajes().add(this);
         vehiculo.getTransportadora().getViajesAsignados().add(this);
     }
     

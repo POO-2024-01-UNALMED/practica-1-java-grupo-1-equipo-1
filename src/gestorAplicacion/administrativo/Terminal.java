@@ -40,7 +40,7 @@ public class Terminal {
 		this.capacidadVehiculos = capacidadVehiculos;
 		this.cantidadVehiculos = cantidadVehiculos;
 		this.transportadoras = transportadoras;
-		this.viajes = viajes;
+		Terminal.viajes = viajes;
 		this.reservas = new ArrayList<Viaje>();
 		this.historial = new ArrayList<Viaje>();
 		this.viajesEnCurso = viajesEnCurso;
@@ -61,7 +61,7 @@ public class Terminal {
 		this.capacidadVehiculos = capacidadVehiculos;
 		this.cantidadVehiculos = cantidadVehiculos;
 		this.transportadoras = transportadoras;
-		this.viajes = new ArrayList<Viaje>();
+		Terminal.viajes = new ArrayList<Viaje>();
 		this.reservas = new ArrayList<Viaje>();
 		this.historial = new ArrayList<Viaje>();
 		this.viajesEnCurso = new ArrayList<Viaje>();

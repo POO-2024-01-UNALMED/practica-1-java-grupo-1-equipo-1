@@ -1,7 +1,5 @@
 package gestorAplicacion.administrativo;
 import gestorAplicacion.usuarios.*;
-import java.util.ArrayList;
-import gestorAplicacion.constantes.Destino;
 import java.time.LocalDate;
 
 /**
@@ -27,6 +25,7 @@ import java.time.LocalDate;
 	private Transportadora transportadora; // Transportadora asociada a la factura
 	private Taller taller; // Taller asociado a la factura
 	private LocalDate fecha; // Fecha en la que adquirió la factura
+	public String trayecto; // Trayecto asociado a un pasajero, muestra el lugar de salida y el lugar de llegada del pasajero
 	
 	/**
 	 * Constructor para la clase factura, este objeto estará asociado con un pasajero
@@ -39,7 +38,7 @@ import java.time.LocalDate;
      * @param transportadora, la transportadora que genera la factura.
      */
 	
-	public Factura(double total, Pasajero pasajero, Terminal terminal, Conductor conductor, Viaje viaje, Vehiculo vehiculo, Transportadora transportadora) {
+	public Factura(double total, Pasajero pasajero, Terminal terminal, Conductor conductor, Viaje viaje, Vehiculo vehiculo, Transportadora transportadora, String trayecto) {
 		
 		numeroFactura = (int)(Math.random()*10000);
 		this.total = total;
@@ -50,6 +49,7 @@ import java.time.LocalDate;
 		this.vehiculo = vehiculo;
 		this.transportadora = transportadora;
 		this.fecha = LocalDate.now();
+		this.trayecto = viaje.getSalida().name() + " - " +viaje.getLlegada().name();
 		pasajero.getFacturas().add(this);
 		totalFacturas++;
 		

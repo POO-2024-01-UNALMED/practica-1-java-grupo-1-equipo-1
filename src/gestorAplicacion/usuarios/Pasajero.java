@@ -1,6 +1,5 @@
 package gestorAplicacion.usuarios;
 import java.util.ArrayList;
-
 import gestorAplicacion.administrativo.Viaje;
 import gestorAplicacion.constantes.TipoPasajero;
 import gestorAplicacion.administrativo.Terminal;
@@ -12,7 +11,9 @@ import gestorAplicacion.administrativo.Terminal;
  *  cancelar el viaje de un pasajero y rembolsar su respectivo dinero. 
  */
 
-public class Pasajero extends Persona {
+public class Pasajero extends Persona{
+
+	// Atributos
 	
 	private TipoPasajero tipo; // Tipo de pasajero asociado al pasajero
 	
@@ -25,12 +26,6 @@ public class Pasajero extends Persona {
 		this.tipo = tipo;
 	}
 
-	
-	//constructor sin parámetros
-	
-	public Pasajero() {
-				
-	}
 	
 	public Viaje masEconomico(String destinoDeseado, int cantidad){
 
@@ -59,7 +54,7 @@ public class Pasajero extends Persona {
 	 * @return El viaje más barato que cumple con los criterios.
 	 */
 
-	
+	@Override
 	public String identificarse() {
 		
 		// Implementación pendiente
@@ -81,6 +76,19 @@ public class Pasajero extends Persona {
 		
 		
 	}
+	
+	@Override
+	public void descuento(double porcentaje) {
+		
+	}
+	
+	@Override
+	public void bonificacion(double premio) {
+		
+		
+	}
+	
+	// Métodos getters y setters
 	
 	/**
 	 * Método para obtener el tipo de pasajero de la pasajero.

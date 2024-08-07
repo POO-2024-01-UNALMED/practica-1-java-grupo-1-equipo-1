@@ -5,6 +5,7 @@ import gestorAplicacion.administrativo.Factura;
 import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.administrativo.Terminal;
 import gestorAplicacion.administrativo.Transportadora;
+import gestorAplicacion.constantes.Incentivo;
 
 
 /**
@@ -13,7 +14,9 @@ import gestorAplicacion.administrativo.Transportadora;
  *  es abstracta, su implementación principalmente es para las relaciones de herencia y métodos abstractos. 
  */
 
-public abstract class Persona {
+public abstract class Persona implements Incentivo {
+	
+	 // Atributos
 	
 	protected int id; // Id de la persona
 	protected int edad; // Edad de la persona
@@ -23,10 +26,6 @@ public abstract class Persona {
 	protected int experiencia; // Este atributo será utilizado por las clases que heredan de persona y tendrá diferentes implementaciones en estas
 	protected double dinero; // Dinero de la persona
 	protected ArrayList <Factura> facturas = new ArrayList<>(); // Facturas asociadas a la persona
-	
-	public Persona() {
-		
-	}
 	
 	/**
 	 * Constructor para la clase persona
@@ -260,7 +259,7 @@ public abstract class Persona {
 		ArrayList <Viaje> viajesReservables = new ArrayList<>(); 
 		ArrayList <Viaje> viajesReservablesOtraFecha = new ArrayList<>(); // Por si no hay viajes para la fecha que el pasajeró necesita
 				
-		for (Viaje viaje: terminal.getViajes()) {
+		for (Viaje viaje: Terminal.getViajes()) {
 			
 			// Se comprueba que el destino del viaje sea igual al destino al cuál viajará la persona con los acompañantes, lo mismo se hace con la fecha
 			// Y al final se comprueba se el viaje cuenta con la capacidad necesaria para transportar a los pasajeros
@@ -303,7 +302,7 @@ public abstract class Persona {
 			if (costo <= this.dinero) {
 				
 				viajeReservado.setPasajeros(pasajeros); 
-				terminal.getViajes().remove(viajeReservado); // Se elimina el viaje, ya que esté no admitirá más pasajeros
+				Terminal.getViajes().remove(viajeReservado); // Se elimina el viaje, ya que esté no admitirá más pasajeros
 				this.dinero = dinero - costo;
 			}
 			
@@ -330,7 +329,7 @@ public abstract class Persona {
 			if (costo <= this.dinero) {
 				
 				viajeReservado.setPasajeros(pasajeros); 
-				terminal.getViajes().remove(viajeReservado);
+				Terminal.getViajes().remove(viajeReservado);
 				this.dinero = dinero - (int) costo;
 			}
 		}
@@ -372,7 +371,7 @@ public abstract class Persona {
 		ArrayList <Viaje> viajesDisponibles = new ArrayList<>();
 		ArrayList <Viaje> viajesDisponiblesEnOtraFecha = new ArrayList<>();
 		
-		for (Viaje viaje : terminal.getViajes()) {
+		for (Viaje viaje : Terminal.getViajes()) {
 			
 			// Se compara el destino, la fecha y se evalúa si la capacidad del viaje no ha llegado a su tope
 			if (viaje.getLlegada().equals(destino) && viaje.getFecha().equals(fecha) && viaje.getPasajeros().size() < viaje.getVehiculo().getCapacidad()) {

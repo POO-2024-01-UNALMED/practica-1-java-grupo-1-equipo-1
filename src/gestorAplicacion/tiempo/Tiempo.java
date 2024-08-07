@@ -232,11 +232,11 @@ public class Tiempo {
         TipoVehiculo tipo1 = TipoVehiculo.TAXI;
         TipoVehiculo tipo2 = TipoVehiculo.VANS;
         
-        Pasajero P1 = new Pasajero(); 
+        Pasajero P1 = new Pasajero(TipoPasajero.REGULAR, 33, 19, "José", 'm',new ArrayList <Viaje>(), 8, 9.9); 
 
         Transportadora transportadora = new Transportadora();
         
-        Terminal terminal1 =  new Terminal("Terminal Principal", 1000000, 100, 1, 50, new ArrayList<Transportadora>(), viajes, Tiempo.viajesEnCurso, new ArrayList<Destino>(), Destino.MEDELLIN,P1);
+        Terminal terminal1 =  new Terminal("Terminal Principal", 1000000, 100, 1, 50, new ArrayList<Transportadora>(), viajes, Tiempo.viajesEnCurso, new ArrayList<Destino>(),8.0, Destino.MEDELLIN,P1);
         //Terminal terminal1 =  new Terminal("Terminal Principal", 1000000, 100, 1, 50, new ArrayList<Transportadora>(),new ArrayList<Destino>(), Destino.MEDELLIN);
         
         Vehiculo vehiculo1 = new Vehiculo("ABC123", "MARCOPOLO A800", 100, 50, tipo1, transportadora);
@@ -260,7 +260,7 @@ public class Tiempo {
         Destino destino5 = Destino.CALI;
 
         //////////////////////////////////////// CONDUCTOR OBJETOS PRUEBA /////////////////////////////////////// 
-        Conductor conductor = new Conductor(true, vehiculo1, transportadora, new ArrayList<Viaje>());
+        Conductor conductor = new Conductor(88, 27, "Lucas", 'm', new ArrayList<Viaje>(), 1, 9000.8,true, vehiculo1, transportadora, new ArrayList<Viaje>());
         
         //////////////////////////////////////// VIAJES OBJETOS PRUEBA ///////////////////////////////////////  
         Viaje viaje1 = new Viaje(terminal1,"1:5", "1/1/2024" , vehiculo1, conductor, destino4, dia6, destino1);

@@ -10,12 +10,15 @@ import java.util.ArrayList;
  */
 
 public class Mecanico extends Persona{
+	
+	// Atributos
+	
 	private Taller taller; // Taller al cuál pertenece el mecánico
 	private Vehiculo vehiculoAsignado; // Vehículo asignado al mecánico
-	private ArrayList <String> historial; // Historial de vehículos reparados por el mecánico
+	private ArrayList <Vehiculo> historialReparados; // Historial de vehículos reparados por el mecánico
 	private Boolean estado; // Estado del mecánico
-	private static ArrayList <Mecanico> mecanicos;
-	private static ArrayList <Mecanico> mecanicosDisponibles;
+	private static ArrayList <Mecanico> mecanicos; // ???
+	private static ArrayList <Mecanico> mecanicosDisponibles; // ???
 	
 
 	/**
@@ -26,16 +29,18 @@ public class Mecanico extends Persona{
      * 
      */
 	
-	public Mecanico(Taller taller, Vehiculo vehiculoAsignado, Boolean estado) {
-		super();
+	public Mecanico(int id, int edad, String nombre, char genero, ArrayList <Viaje> historial, int experiencia,
+			double dinero, ArrayList <Factura> facturas, Taller taller, Vehiculo vehiculoAsignado, Boolean estado) {
+		
+		super(id, edad, nombre, genero, historial, experiencia, dinero);
 		this.taller = taller;
 		this.vehiculoAsignado = vehiculoAsignado;
 		this.estado = estado;
-		this.historial =  new ArrayList<String>();
+		this.historialReparados =  new ArrayList<Vehiculo>();
 		mecanicos.add(this);
 	}
 	
-	
+	@Override
 	public String identificarse() {
 		
 		// Implementación pendiente
@@ -58,6 +63,82 @@ public class Mecanico extends Persona{
 		
 	}
 	
+	@Override
+	public void descuento(double porcentaje) {
+		
+	}
+	
+	@Override
+	public void bonificacion(double premio) {
+		
+		
+	}
+	
 	// METODOS GETTERS Y SETTERS
-	// Implementación pendiente
+	
+	/**
+	 * Establece o modifica el taller del mecánico.
+	 * @param taller, objeto de tipo Taller.
+	 */
+	public void setTaller(Taller taller) {
+	    this.taller = taller;
+	}
+
+	/**
+	 * Método que nos permite obtener el taller de un objeto de tipo mecánico.
+	 * @return Objeto de tipo Taller.
+	 */
+	public Taller getTaller() {
+	    return taller;
+	}
+
+	/**
+	 * Establece o modifica el vehículo asignado del mecánico.
+	 * @param vehiculoAsignado, objeto de tipo Vehiculo.
+	 */
+	public void setVehiculoAsignado(Vehiculo vehiculoAsignado) {
+	    this.vehiculoAsignado = vehiculoAsignado;
+	}
+
+	/**
+	 * Método que nos permite obtener el vehículo asignado de un objeto de tipo mecánico.
+	 * @return Objeto de tipo Vehiculo.
+	 */
+	public Vehiculo getVehiculoAsignado() {
+	    return vehiculoAsignado;
+	}
+
+	/**
+	 * Establece o modifica el historial de vehículos reparados del mecánico.
+	 * @param historialReparados, lista de vehículos reparados.
+	 */
+	public void setHistorialReparados(ArrayList<Vehiculo> historialReparados) {
+	    this.historialReparados = historialReparados;
+	}
+
+	/**
+	 * Método que nos permite obtener el historial de vehículos reparados de un objeto de tipo mecánico.
+	 * @return Lista de vehículos reparados.
+	 */
+	public ArrayList<Vehiculo> getHistorialReparados() {
+	    return historialReparados;
+	}
+
+	/**
+	 * Establece o modifica el estado del mecánico.
+	 * @param estado, valor booleano que indica el estado del mecánico.
+	 */
+	public void setEstado(boolean estado) {
+	    this.estado = estado;
+	}
+
+	/**
+	 * Método que nos permite obtener el estado de un objeto de tipo mecánico.
+	 * @return Estado del mecánico.
+	 */
+	public boolean getEstado() {
+	    return estado;
+	}
+
+	
 }

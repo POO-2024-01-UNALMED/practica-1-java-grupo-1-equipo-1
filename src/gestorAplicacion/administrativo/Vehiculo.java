@@ -12,6 +12,8 @@ import java.lang.Math;
  */
 public class Vehiculo {
 
+	// Atributos
+	
     private boolean estado; //Disponibilidad para viajar del vehiculo
 	private int integridad; // Nivel de integridad del vehículo
     private String placa; // Placa del vehículo

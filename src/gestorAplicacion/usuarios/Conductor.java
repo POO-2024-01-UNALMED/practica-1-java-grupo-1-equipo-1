@@ -14,19 +14,13 @@ import gestorAplicacion.administrativo.Factura;
 
 public class Conductor extends Persona {
 	
+	//Atributos
+	
 	private boolean estadoLicencia; // Estado de la licencia del conductor
 	private Vehiculo vehiculo; // Vehículo asociado al conductor
 	private Transportadora transportadora; // Transportadora asociada al conductor 
 	private ArrayList <Viaje> horario = new ArrayList<>(); // Horario de viajes del conductor
 
-	/*Constructor por defecto*/
-	
-	public Conductor() {
-		
-		
-	}
-	
-	
 	/**
 	 * Constructor con parametros de Conductor.
 	 * @param estadoLicencia, el estado de licencia asociado al conductor.
@@ -36,7 +30,7 @@ public class Conductor extends Persona {
      * 
      */
 	
-	public Conductor(boolean estadoLicencia, Vehiculo vehiculo, Transportadora transportadora, ArrayList<Viaje> horario) {
+	/*public Conductor(boolean estadoLicencia, Vehiculo vehiculo, Transportadora transportadora, ArrayList<Viaje> horario) {
 		
 		super();
 		this.estadoLicencia = estadoLicencia;
@@ -44,7 +38,7 @@ public class Conductor extends Persona {
 		this.transportadora = transportadora;
 		this.horario = horario;
 		
-	}
+	}*/
 	
 	
 	/**
@@ -63,7 +57,7 @@ public class Conductor extends Persona {
 	 */
 
 	public Conductor(int id, int edad, String nombre, char genero, ArrayList<Viaje> historial, int experiencia,
-			int dinero, boolean estadoLicencia, Vehiculo vehiculo, Transportadora transportadora, ArrayList<Viaje> horario ) {
+			double dinero, boolean estadoLicencia, Vehiculo vehiculo, Transportadora transportadora, ArrayList<Viaje> horario ) {
 		super(id, edad, nombre, genero, historial, experiencia, dinero);
 		
 		this.estadoLicencia = estadoLicencia;
@@ -163,11 +157,23 @@ public class Conductor extends Persona {
 		
 	}
 	
+	@Override
 	public String identificarse() {
 		
 		// Implementación pendiente
 		
 		return null;
+	}
+	
+	@Override
+	public void descuento(double porcentaje) {
+		
+	}
+	
+	@Override
+	public void bonificacion(double premio) {
+		
+		
 	}
 	
 	// METODOS GETTERS Y SETTERS
