@@ -57,6 +57,23 @@ public abstract class Persona implements Incentivo {
 		this.diasTrabajados = diasTrabajados;
 	}
 	
+	//Constructor para heredar en clase Pasajero
+	
+	/**
+	 * Constructor para la clase persona
+     * @param id, id de la persona.
+     * @param edad, edad de la persona
+     * @param nombre, nombre de la persona
+     * @param genero, genero de la persona
+     */
+	
+	public Persona(int id, int edad, String nombre, char genero) {
+		this.id = id;
+		this.edad = edad;
+		this.nombre = nombre;
+		this.genero = genero;
+	}
+	
 	/**
 	 * Metodo Para aumentar el dinero de las instancias de tipo persona
 	 * @param Cantidad de dinero a aumentar
