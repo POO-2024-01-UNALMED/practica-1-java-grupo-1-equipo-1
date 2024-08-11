@@ -42,6 +42,11 @@ public class Tiempo {
         timer = new Timer();
         iniciar(); // Iniciar el temporizador automáticamente al crear una instancia de SistemaDeTiempo
     }
+	
+	public String cancel() {  // Metodo necesario para frenar el tiempo al salir del programa
+		timer.cancel();
+		return "Fin del Tiempo";
+	}
 
     public void iniciar() {
     	Tiempo.viajes = new ArrayList<Viaje>(); // Solo va para las pruebas
@@ -273,96 +278,96 @@ public class Tiempo {
     
     //////////////////////////////////////// ESPACIO DE PRUEBAS //////////////////////////////////////////
     
-    public static void main(String[] args) {
-        new Tiempo(); // Crear una instancia de Tiempo automáticamente inicia el temporizador   /// IMPORTANTE 
-
-        ////////////////////////////////////////  OBJETOS PRUEBA ///////////////////////////////////////
-        
-        TipoVehiculo tipo1 = TipoVehiculo.TAXI;
-        TipoVehiculo tipo2 = TipoVehiculo.VANS;
-        
-        //Pasajero P1 = new Pasajero(TipoPasajero.REGULAR, 33, 19, "José", 'm',new ArrayList <Viaje>(), 8, 9.9); 
-
-        Transportadora transportadora = new Transportadora();
-        
-        //Terminal terminal1 =  new Terminal("Terminal Principal", 1000000, 100, 1, 50, new ArrayList<Transportadora>(), viajes, Tiempo.viajesEnCurso, new ArrayList<Destino>(),8.0, Destino.MEDELLIN,P1);
-        //Terminal terminal1 =  new Terminal("Terminal Principal", 1000000, 100, 1, 50, new ArrayList<Transportadora>(),new ArrayList<Destino>(), Destino.MEDELLIN);
-        
-        Vehiculo vehiculo1 = new Vehiculo("ABC123", "MARCOPOLO A800", 100, 50, tipo1, transportadora);
-        Vehiculo vehiculo2 = new Vehiculo("ABC123", "FORD F600", 100, 60, tipo2, transportadora);
-        
-        
-
-        //////////////////////////////////////// DIAS OBJETOS PRUEBA /////////////////////////////////////// 
-        Dia dia1 = Dia.LUN;
-        Dia dia2 = Dia.MAR;
-        Dia dia3 = Dia.MIER;
-        Dia dia4 = Dia.JUE;
-        Dia dia5 = Dia.VIE;
-        Dia dia6 = Dia.SAB;
-
-        //////////////////////////////////////// DESTINO OBJETOS PRUEBA /////////////////////////////////////// 
-        Destino destino1 = Destino.MEDELLIN;
-        Destino destino2 = Destino.ANGELOPOLIS;
-        Destino destino3 = Destino.LAGUAJIRA;
-        Destino destino4 = Destino.BOGOTA;
-        Destino destino5 = Destino.CALI;
-
-        //////////////////////////////////////// CONDUCTOR OBJETOS PRUEBA /////////////////////////////////////// 
-        //Conductor conductor = new Conductor(88, 27, "Lucas", 'm', new ArrayList<Viaje>(), 1, 9000.8,true, vehiculo1, transportadora, new ArrayList<Viaje>());
-        
-        //////////////////////////////////////// VIAJES OBJETOS PRUEBA ///////////////////////////////////////  
-        //Viaje viaje1 = new Viaje(terminal1,"1:5", "1/1/2024" , vehiculo1, conductor, destino4, dia6, destino1);
-        //Viaje viaje2 = new Viaje(terminal1,"6:35", "2/1/2024" ,vehiculo2, conductor, destino2, dia2, destino2);
-        //Viaje viaje3 = new Viaje(terminal1,"7:17", "2/1/2024" ,vehiculo1, conductor, destino1, dia3, destino5);
-        //Viaje viaje4 = new Viaje(terminal1,"10:12", "2/1/2024" ,vehiculo2, conductor, destino2, dia4, destino1);
-        //Viaje viaje5 = new Viaje(terminal1,"19:24", "4/1/2024" ,vehiculo1, conductor, destino1, dia5, destino2);
-        //Viaje viaje6 = new Viaje(terminal1,"23:57", "4/1/2024" ,vehiculo2, conductor, destino3, dia6, destino1);
-        
-        //////////////////////////////////////// PRUEBA DE SALIDAS //////////////////////////////////////////
-        
-        //System.out.println("Pruebas calculo de Distancia en Plano");
-        
-        //System.out.println("\nViaje 1:" + viaje1.getSalida().name() + " ---- " + viaje1.getLlegada().name());
-        //System.out.println("Duración: " + viaje1.getDuracion() + " Horas" + "\nDistancia: " + viaje1.calcularDistancia(viaje1.getSalida(), viaje1.getLlegada()) + " Km" + "\nVelocidad: " + viaje1.getVehiculo().getVelocidadPromedio() + "Km/h" +"\nTarifa: $" + viaje1.getTarifa() + "\nHora de Salida: " + viaje1.getHora() + " Fecha de Salida: " + viaje1.getFecha() + "   \nHora de LLegada: " + viaje1.getHoraLlegada() + " Fecha de Llegada: " + viaje1.getFechaLlegada());
-
-        //System.out.println("\nViaje 2:" + viaje2.getSalida().name() + " ---- " + viaje2.getLlegada().name()); 
-        //System.out.println("Duración: " + viaje2.getDuracion() + " Horas" + "\nDistancia: " + viaje2.calcularDistancia(viaje2.getSalida(), viaje2.getLlegada()) + " Km" + "\nVelocidad: " + viaje2.getVehiculo().getVelocidadPromedio() + "Km/h" + "\nTarifa: $" + viaje2.getTarifa() + "\nHora de Salida: " + viaje2.getHora() + " Fecha de Salida: " + viaje2.getFecha() +"   \nHora de LLegada: " + viaje2.getHoraLlegada()+ " Fecha de Llegada: " + viaje2.getFechaLlegada());
-
-        //System.out.println("\nViaje 3:" + viaje3.getSalida().name() + " ---- " + viaje3.getLlegada().name());
-        //System.out.println("Duración: " + viaje3.getDuracion() + " Horas" + "\nDistancia: " + viaje3.calcularDistancia(viaje3.getSalida(), viaje3.getLlegada()) + " Km" + "\nVelocidad: " + viaje3.getVehiculo().getVelocidadPromedio() + " Km/h" + "\nTarifa: $" + viaje3.getTarifa()+ "\nHora de Salida: " + viaje3.getHora() + " Fecha de Salida: " + viaje3.getFecha() +"   \nHora de LLegada: " + viaje3.getHoraLlegada()+ " Fecha de Llegada: " + viaje3.getFechaLlegada());
-
-        //System.out.println("\nViaje 4:" + viaje4.getSalida().name() + " ---- " + viaje4.getLlegada().name());
-        //System.out.println("Duración: " + viaje4.getDuracion() + " Horas" + "\nDistancia: " + viaje4.calcularDistancia(viaje4.getSalida(), viaje4.getLlegada()) + " Km" + "\nVelocidad: " + viaje4.getVehiculo().getVelocidadPromedio() + " Km/h" + "\nTarifa: $" + viaje4.getTarifa()+ "\nHora de Salida: " + viaje4.getHora() + " Fecha de Salida: " + viaje4.getFecha() +"   \nHora de LLegada: " + viaje4.getHoraLlegada()+ " Fecha de Llegada: " + viaje4.getFechaLlegada());
-
-        //System.out.println("\nViaje 5:" + viaje5.getSalida().name() + " ---- " + viaje5.getLlegada().name());
-        //System.out.println("Duración: " + viaje5.getDuracion() + " Horas" + "\nDistancia: " + viaje5.calcularDistancia(viaje5.getSalida(), viaje5.getLlegada()) + " Km" + "\nVelocidad: " + viaje5.getVehiculo().getVelocidadPromedio() + " Km/h" + "\nTarifa: $" + viaje5.getTarifa()+ "\nHora de Salida: " + viaje5.getHora() + " Fecha de Salida: " + viaje5.getFecha() +"   \nHora de LLegada: " + viaje5.getHoraLlegada()+ " Fecha de Llegada: " + viaje5.getFechaLlegada());
-
-        //System.out.println("\nViaje 6:" + viaje6.getSalida().name() + " ---- " + viaje6.getLlegada().name());
-        //System.out.println("Duración: " + viaje6.getDuracion() + " Horas" + "\nDistancia: " + viaje6.calcularDistancia(viaje6.getSalida(), viaje6.getLlegada()) + " Km" + "\nVelocidad: " + viaje6.getVehiculo().getVelocidadPromedio() + " Km/h" + "\nTarifa: $" + viaje6.getTarifa()+ "\nHora de Salida: " + viaje6.getHora() + " Fecha de Salida: " + viaje6.getFecha() +"   \nHora de LLegada: " + viaje6.getHoraLlegada()+ " Fecha de Llegada: " + viaje6.getFechaLlegada());
-
-        
-        //System.out.println("     ");
-        //System.out.println("     "); 
-        //System.out.println("     ");
-        
-        //System.out.println(Tiempo.salidaFecha);
-        //System.out.println(Tiempo.salidaHora);
-       // if(viaje1.getHora().equals(Tiempo.salidaHora)) {
-       //	System.out.println("OK");
-       //}
-        
-        ////////////////////////////////////////PRUEBA DE ENTRADAS //////////////////////////////////////////  
-        //Scanner lectura = new Scanner (System.in);
-        //System.out.println("Ingrese su nombre: ");
-        //String nombre = lectura.next();
-        //System.out.println("Ingrese su edad: ");
-        //int edad = lectura.nextInt();
-        //System.out.println("Su nombre es: " + nombre + " y su edad es: " + edad);
-    	//System.out.println("\n----------------------------------------------------------------------------------------------");
-        //System.out.print("Fecha: " + dias + "/" + meses + "/" + año + "     Hora: " + horas + ":" + minutos + "   Hoy es: " + diaNombre);
-        //System.out.println("\n----------------------------------------------------------------------------------------------");
-        
-        //System.out.println(Tiempo.salidaFecha + "   " + Tiempo.salidaHora);
-    }
+//    public static void main(String[] args) {
+//        new Tiempo(); // Crear una instancia de Tiempo automáticamente inicia el temporizador   /// IMPORTANTE 
+//
+//        ////////////////////////////////////////  OBJETOS PRUEBA ///////////////////////////////////////
+//        
+//        TipoVehiculo tipo1 = TipoVehiculo.TAXI;
+//        TipoVehiculo tipo2 = TipoVehiculo.VANS;
+//        
+//        //Pasajero P1 = new Pasajero(TipoPasajero.REGULAR, 33, 19, "José", 'm',new ArrayList <Viaje>(), 8, 9.9); 
+//
+//        Transportadora transportadora = new Transportadora();
+//        
+//        //Terminal terminal1 =  new Terminal("Terminal Principal", 1000000, 100, 1, 50, new ArrayList<Transportadora>(), viajes, Tiempo.viajesEnCurso, new ArrayList<Destino>(),8.0, Destino.MEDELLIN,P1);
+//        //Terminal terminal1 =  new Terminal("Terminal Principal", 1000000, 100, 1, 50, new ArrayList<Transportadora>(),new ArrayList<Destino>(), Destino.MEDELLIN);
+//        
+//        Vehiculo vehiculo1 = new Vehiculo("ABC123", "MARCOPOLO A800", 100, 50, tipo1, transportadora);
+//        Vehiculo vehiculo2 = new Vehiculo("ABC123", "FORD F600", 100, 60, tipo2, transportadora);
+//        
+//        
+//
+//        //////////////////////////////////////// DIAS OBJETOS PRUEBA /////////////////////////////////////// 
+//        Dia dia1 = Dia.LUN;
+//        Dia dia2 = Dia.MAR;
+//        Dia dia3 = Dia.MIER;
+//        Dia dia4 = Dia.JUE;
+//        Dia dia5 = Dia.VIE;
+//        Dia dia6 = Dia.SAB;
+//
+//        //////////////////////////////////////// DESTINO OBJETOS PRUEBA /////////////////////////////////////// 
+//        Destino destino1 = Destino.MEDELLIN;
+//        Destino destino2 = Destino.ANGELOPOLIS;
+//        Destino destino3 = Destino.LAGUAJIRA;
+//        Destino destino4 = Destino.BOGOTA;
+//        Destino destino5 = Destino.CALI;
+//
+//        //////////////////////////////////////// CONDUCTOR OBJETOS PRUEBA /////////////////////////////////////// 
+//        //Conductor conductor = new Conductor(88, 27, "Lucas", 'm', new ArrayList<Viaje>(), 1, 9000.8,true, vehiculo1, transportadora, new ArrayList<Viaje>());
+//        
+//        //////////////////////////////////////// VIAJES OBJETOS PRUEBA ///////////////////////////////////////  
+//        //Viaje viaje1 = new Viaje(terminal1,"1:5", "1/1/2024" , vehiculo1, conductor, destino4, dia6, destino1);
+//        //Viaje viaje2 = new Viaje(terminal1,"6:35", "2/1/2024" ,vehiculo2, conductor, destino2, dia2, destino2);
+//        //Viaje viaje3 = new Viaje(terminal1,"7:17", "2/1/2024" ,vehiculo1, conductor, destino1, dia3, destino5);
+//        //Viaje viaje4 = new Viaje(terminal1,"10:12", "2/1/2024" ,vehiculo2, conductor, destino2, dia4, destino1);
+//        //Viaje viaje5 = new Viaje(terminal1,"19:24", "4/1/2024" ,vehiculo1, conductor, destino1, dia5, destino2);
+//        //Viaje viaje6 = new Viaje(terminal1,"23:57", "4/1/2024" ,vehiculo2, conductor, destino3, dia6, destino1);
+//        
+//        //////////////////////////////////////// PRUEBA DE SALIDAS //////////////////////////////////////////
+//        
+//        //System.out.println("Pruebas calculo de Distancia en Plano");
+//        
+//        //System.out.println("\nViaje 1:" + viaje1.getSalida().name() + " ---- " + viaje1.getLlegada().name());
+//        //System.out.println("Duración: " + viaje1.getDuracion() + " Horas" + "\nDistancia: " + viaje1.calcularDistancia(viaje1.getSalida(), viaje1.getLlegada()) + " Km" + "\nVelocidad: " + viaje1.getVehiculo().getVelocidadPromedio() + "Km/h" +"\nTarifa: $" + viaje1.getTarifa() + "\nHora de Salida: " + viaje1.getHora() + " Fecha de Salida: " + viaje1.getFecha() + "   \nHora de LLegada: " + viaje1.getHoraLlegada() + " Fecha de Llegada: " + viaje1.getFechaLlegada());
+//
+//        //System.out.println("\nViaje 2:" + viaje2.getSalida().name() + " ---- " + viaje2.getLlegada().name()); 
+//        //System.out.println("Duración: " + viaje2.getDuracion() + " Horas" + "\nDistancia: " + viaje2.calcularDistancia(viaje2.getSalida(), viaje2.getLlegada()) + " Km" + "\nVelocidad: " + viaje2.getVehiculo().getVelocidadPromedio() + "Km/h" + "\nTarifa: $" + viaje2.getTarifa() + "\nHora de Salida: " + viaje2.getHora() + " Fecha de Salida: " + viaje2.getFecha() +"   \nHora de LLegada: " + viaje2.getHoraLlegada()+ " Fecha de Llegada: " + viaje2.getFechaLlegada());
+//
+//        //System.out.println("\nViaje 3:" + viaje3.getSalida().name() + " ---- " + viaje3.getLlegada().name());
+//        //System.out.println("Duración: " + viaje3.getDuracion() + " Horas" + "\nDistancia: " + viaje3.calcularDistancia(viaje3.getSalida(), viaje3.getLlegada()) + " Km" + "\nVelocidad: " + viaje3.getVehiculo().getVelocidadPromedio() + " Km/h" + "\nTarifa: $" + viaje3.getTarifa()+ "\nHora de Salida: " + viaje3.getHora() + " Fecha de Salida: " + viaje3.getFecha() +"   \nHora de LLegada: " + viaje3.getHoraLlegada()+ " Fecha de Llegada: " + viaje3.getFechaLlegada());
+//
+//        //System.out.println("\nViaje 4:" + viaje4.getSalida().name() + " ---- " + viaje4.getLlegada().name());
+//        //System.out.println("Duración: " + viaje4.getDuracion() + " Horas" + "\nDistancia: " + viaje4.calcularDistancia(viaje4.getSalida(), viaje4.getLlegada()) + " Km" + "\nVelocidad: " + viaje4.getVehiculo().getVelocidadPromedio() + " Km/h" + "\nTarifa: $" + viaje4.getTarifa()+ "\nHora de Salida: " + viaje4.getHora() + " Fecha de Salida: " + viaje4.getFecha() +"   \nHora de LLegada: " + viaje4.getHoraLlegada()+ " Fecha de Llegada: " + viaje4.getFechaLlegada());
+//
+//        //System.out.println("\nViaje 5:" + viaje5.getSalida().name() + " ---- " + viaje5.getLlegada().name());
+//        //System.out.println("Duración: " + viaje5.getDuracion() + " Horas" + "\nDistancia: " + viaje5.calcularDistancia(viaje5.getSalida(), viaje5.getLlegada()) + " Km" + "\nVelocidad: " + viaje5.getVehiculo().getVelocidadPromedio() + " Km/h" + "\nTarifa: $" + viaje5.getTarifa()+ "\nHora de Salida: " + viaje5.getHora() + " Fecha de Salida: " + viaje5.getFecha() +"   \nHora de LLegada: " + viaje5.getHoraLlegada()+ " Fecha de Llegada: " + viaje5.getFechaLlegada());
+//
+//        //System.out.println("\nViaje 6:" + viaje6.getSalida().name() + " ---- " + viaje6.getLlegada().name());
+//        //System.out.println("Duración: " + viaje6.getDuracion() + " Horas" + "\nDistancia: " + viaje6.calcularDistancia(viaje6.getSalida(), viaje6.getLlegada()) + " Km" + "\nVelocidad: " + viaje6.getVehiculo().getVelocidadPromedio() + " Km/h" + "\nTarifa: $" + viaje6.getTarifa()+ "\nHora de Salida: " + viaje6.getHora() + " Fecha de Salida: " + viaje6.getFecha() +"   \nHora de LLegada: " + viaje6.getHoraLlegada()+ " Fecha de Llegada: " + viaje6.getFechaLlegada());
+//
+//        
+//        //System.out.println("     ");
+//        //System.out.println("     "); 
+//        //System.out.println("     ");
+//        
+//        //System.out.println(Tiempo.salidaFecha);
+//        //System.out.println(Tiempo.salidaHora);
+//       // if(viaje1.getHora().equals(Tiempo.salidaHora)) {
+//       //	System.out.println("OK");
+//       //}
+//        
+//        ////////////////////////////////////////PRUEBA DE ENTRADAS //////////////////////////////////////////  
+//        //Scanner lectura = new Scanner (System.in);
+//        //System.out.println("Ingrese su nombre: ");
+//        //String nombre = lectura.next();
+//        //System.out.println("Ingrese su edad: ");
+//        //int edad = lectura.nextInt();
+//        //System.out.println("Su nombre es: " + nombre + " y su edad es: " + edad);
+//    	//System.out.println("\n----------------------------------------------------------------------------------------------");
+//        //System.out.print("Fecha: " + dias + "/" + meses + "/" + año + "     Hora: " + horas + ":" + minutos + "   Hoy es: " + diaNombre);
+//        //System.out.println("\n----------------------------------------------------------------------------------------------");
+//        
+//        //System.out.println(Tiempo.salidaFecha + "   " + Tiempo.salidaHora);
+//    }
 }

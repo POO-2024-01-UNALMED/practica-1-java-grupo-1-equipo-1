@@ -1,17 +1,15 @@
 package uiMain;
 import java.util.Scanner;
 
-import gestorAplicacion.tiempo.Tiempo;
-
-public class Main_1 {
+public class Main_3 {
     public static void ejecutar() {
         Scanner scanner = new Scanner(System.in);
         boolean regresar = false;
 
         while (!regresar) {
-            System.out.println("Ejecutando Funcionalidad 1...");
-            // Lógica específica para la Funcionalidad 1
-   
+            System.out.println("Ejecutando Funcionalidad 3");
+            // Lógica específica para Funcionalidad 3
+
             System.out.println("Seleccione una acción:");
             System.out.println("1. Accion 1");
             System.out.println("2. Accion 2");
@@ -51,6 +49,7 @@ public class Main_1 {
     
     // Desarrollar los metodos a partir de aqui
     public static void ejemplo() {
-    	System.out.println("Ejemplo Funcionalidad 1"); 
+    	System.out.println("Ejemplo Funcionalidad 3"); 
     }
+    
 }
