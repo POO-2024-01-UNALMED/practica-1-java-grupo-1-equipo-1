@@ -57,6 +57,7 @@ public class Viaje {
         Viaje.totalViajes++;
         Terminal.getViajes().add(this);
         vehiculo.getTransportadora().getViajesAsignados().add(this);
+        conductor.getHorario().add(this);
     }
     
     
@@ -156,7 +157,7 @@ public class Viaje {
                 costoPorMinuto = 200;
                 break;
             case VANS:
-                costoPorMinuto = 1700;
+                costoPorMinuto = 170;
                 break;
             case ESCALERA:
                 costoPorMinuto = 66;
@@ -285,12 +286,58 @@ public class Viaje {
         
     }
    
+    /**
+     * Genera un informe del estado actual del viaje, con detalles que varían dependiendo de si el viaje está en curso
+     * o si aún no ha salido.
+     *
+     * @return Una cadena de texto que describe el estado del viaje. Si el viaje está en curso, incluye detalles como
+     *         la ubicación actual, pasajeros en curso. Si el viaje aún no ha salido, 
+     *         muestra la información relevante comno los asientos disponibles.
+     */
     public String estado() {
-        // Implementación pendiente
-    	
-    	return null;
+        boolean enCurso = this.getEstado();
+        String estado;
+        
+        if (enCurso == true) {
+        	estado = "Estado del Viaje: En curso\n" + 
+        			 "Detalles del Viaje:\n" +
+        			 "Salida: " + this.getSalida().name() + "\n" +
+        			 "Llegada: " + this.getLlegada().name() + "\n" +
+        			 "Ubicacion Actual: " + this.ubicacion() + "\n" + 
+        			 "Fecha de salida: " + this.getFecha() + "\n" +
+        			 "Hora de salida: " + this.getHora() + "\n" +
+        			 "Vehiculo: " + this.getVehiculo().getModelo() + "\n" + 
+        			 "Placa: " + this.getVehiculo().getPlaca() + "\n" +
+        			 "Conductor: " + this.getConductor().getNombre() +  "\n" + 
+        			 "Experiencia: " + this.getConductor().getExperiencia() + "\n" + 
+        			 "Pasajeros en Curso: " + (this.getVehiculo().getCapacidad() - this.verificarAsientos()) + "\n";
+        } else {
+        	estado = "Estado del Viaje: Sin Salir\n" + 
+	       			 "Detalles del Viaje:\n" +
+	       			 "Salida: " + this.getSalida().name() + "\n" +
+	       			 "Llegada: " + this.getLlegada().name() + "\n" +
+	       			 "Fecha de salida: " + this.getFecha() + "\n" +
+	       			 "Vehiculo: " + this.getVehiculo().getModelo() + "\n" + 
+	       			 "Placa: " + this.getVehiculo().getPlaca() + "\n" +
+	       			 "Conductor: " + this.getConductor().getNombre() +  "\n" + 
+	       			 "Experiencia: " + this.getConductor().getExperiencia() + "\n" + 
+	       			 "Asientos disponibles: " + this.getAsientosDisponibles()+ "\n";
+	        }
+
+    	return estado;
     }
     
+    /**
+     * Calcula y devuelve la ubicación actual del viaje en curso basado en el tiempo transcurrido desde la salida.
+     * 
+     * Este método determina la posición del viaje en un plano cartesiano según las coordenadas de salida y llegada,
+     * el tiempo de salida, la hora actual, y la duración total del viaje. Si el viaje no está en curso, se devuelve
+     * la ubicación de salida.
+     * 
+     * @return Una cadena de texto que representa la ubicación actual del viaje en formato "x,y". Si el viaje no ha
+     *         iniciado o ya ha finalizado, se devuelve la ubicación de salida.
+     * 
+     */
     public String ubicacion() {
     	double duracion = this.getDuracion();
     	String horaSalida = this.getHora();
@@ -332,7 +379,7 @@ public class Viaje {
 		    	ubiX = porcentaje * llegadax2;
 		    	ubiY = porcentaje * llegaday2;	
 		    	ubicacion = ubiX + "," + ubiY;  			
-		    } else { // Falta implementar para vectores libres
+		    } else { // Para vectores libres
 	            ubiX = salidax1 + porcentaje * (llegadax2 - salidax1);  // Planteamos la solucion como una ecuación escalar parametrica donde nos basamos en los punto de salida y llegada para plantearla.
 	            ubiY = saliday1 + porcentaje * (llegaday2 - saliday1);
 	            ubicacion = ubiX + "," + ubiY;  
@@ -342,13 +389,43 @@ public class Viaje {
     }
 
     
+    /**
+     * Verifica el número de asientos disponibles en el vehículo asociado a este viaje.
+     * 
+     * Este método calcula la cantidad de asientos disponibles restando el número de pasajeros actuales
+     * de la capacidad total del vehículo asignado a este viaje.
+     * 
+     * @return El número de asientos disponibles en el vehículo. Un valor positivo indica la cantidad de asientos libres,
+     *         mientras que un valor de cero o negativo podría indicar que no hay asientos disponibles o que hay más pasajeros
+     *         de los que puede acomodar el vehículo.
+     */
     public int verificarAsientos() {
-    	int total;
-    	
-    	total = this.getVehiculo().getTipo().getCapacidad()-this.pasajeros.size();
+        int total;
         
-    	return total;
-    	
+        total = this.getVehiculo().getTipo().getCapacidad() - this.pasajeros.size();    // Calcula el total de asientos disponibles restando el número de pasajeros de la capacidad del vehículo.
+        
+        return total;
+    }
+    
+    /**
+     * Compara este objeto `Viaje` con otro objeto `Viaje` para verificar si son el mismo objeto en memoria.
+     * 
+     * @param f El objeto `Viaje` con el que se desea comparar este objeto `Viaje`.
+     *          Puede ser nulo.
+     * 
+     * @return `true` si el objeto `Viaje` dado es no nulo y apunta al mismo objeto que este `Viaje`.
+     *         De lo contrario, devuelve `false`.
+     */
+    public boolean isequals(Viaje f) {
+        boolean variable = false;
+        
+        if (f != null) { // Verifica que el objeto pasado no sea nulo.
+            if (f == this) {  // Compara las referencias de los objetos para determinar si son el mismo objeto.
+                variable = true;
+            }
+        }
+        
+        return variable;
     }
     
     // Getters y Setters

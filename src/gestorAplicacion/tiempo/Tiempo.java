@@ -94,40 +94,51 @@ public class Tiempo {
     	
     	/// Métodos Repetitivos
     	
-    	public static void calcularDia() {
-    		switch (dias % 7) {
-            case 1:
-            	Tiempo.diaNombre = Dia.LUN;
-                break;
-            case 2:
-            	Tiempo.diaNombre = Dia.MAR;
-                break;
-            case 3:
-            	Tiempo.diaNombre = Dia.MIER;
-                break;
-            case 4:
-            	Tiempo.diaNombre = Dia.JUE;
-                break;
-            case 5:
-            	Tiempo.diaNombre = Dia.VIE;
-                break;
-            case 6:
-            	Tiempo.diaNombre = Dia.SAB;
-                break;
-            case 7:
-            	Tiempo.diaNombre = Dia.DOM;
-                break;
-            default:
-                break;
-    		}
-    	}
+    	/**
+    	 * Calcula el día de la semana basado en el número de días transcurridos desde una fecha base.
+    	 * La fecha base se asume como 1 de enero de 2024, que es un lunes (LUN).
+    	 * La duración del año se considera como 360 días (30 días por mes).
+    	 * 
+    	 * Se actualiza el atributo estático `diaNombre` con el día de la semana correspondiente.
+    	 */
     	
+        public static void calcularDia() {
+            // Fecha base: 1 de enero de 2024 es un domingo
+            int baseDia = 1;
+            int baseMes = 1;
+            int baseAño = 2024;
+            Dia diaBase = Dia.LUN;
+
+            // Calcular el número de días totales desde la fecha base
+            int diasDesdeBase = 0;
+
+            // Añadir días por años completos
+            diasDesdeBase += (año - baseAño) * 360;  // Suponiendo 30 días por mes y 12 meses por año
+
+            // Añadir días por meses completos del año actual
+            diasDesdeBase += (meses - baseMes) * 30;
+
+            // Añadir días del mes actual
+            diasDesdeBase += (dias - baseDia);
+
+            // Determinar el día de la semana
+            Dia[] diasSemana = Dia.values();
+            int indiceDia = (diasDesdeBase + diaBase.ordinal()) % 7;
+            Tiempo.diaNombre = diasSemana[indiceDia];
+        }
+    	
+    	/**
+    	 * Actualiza la hora, los minutos, los días, los meses y los años de acuerdo con el paso del tiempo.
+    	 * Este método incrementa los minutos y realiza ajustes para las horas, días, meses y años con el paso del tiempo durante la ejecucion.
+    	 * 
+    	 */
+        
     	public static void calcularHora() {
     	    Tiempo.minutos++;
     	    if (Tiempo.minutos > 60) {
     	        Tiempo.horas++;
     	        Tiempo.minutos = 0;
-    	        if (Tiempo.horas > 24) {
+    	        if (Tiempo.horas > 23) {
     	            Tiempo.dias++;
     	            Tiempo.horas = 0;
     	            if (Tiempo.dias % 7 == 0) { // Verifica si han pasado 7 días
@@ -145,14 +156,21 @@ public class Tiempo {
     	    }
     	}
 
+
     	
-    	
-    	// Método que sirve para imprimir la hora y fecha actual con un formato completo, Util para pruebas...
+    	/**
+    	 * Imprime la fecha y hora actual en un formato completo para propósitos de prueba.
+    	 * 
+    	 * Este método muestra en la consola:
+    	 * - La fecha en formato "día/mes/año"
+    	 * - La hora en formato "hora:minutos"
+    	 * - El día de la semana correspondiente
+    	 * 
+    	 */
     	public static void mostrarTiempo() {
         	System.out.println("\n----------------------------------------------------------------------------------------------");
             System.out.print("Fecha: " + dias + "/" + meses + "/" + año + "     Hora: " + horas + ":" + minutos + "   Hoy es: " + diaNombre);
             System.out.println("\n----------------------------------------------------------------------------------------------");
-            System.out.println(salidaHora);
     	}
     	
     	public static void comprobarUbicacion() {
@@ -180,6 +198,18 @@ public class Tiempo {
 			return variable;
     	}
     	
+    	/**
+    	 * Revisa una lista de viajes y verifica si alguno de ellos coincide con la fecha y hora actuales.
+    	 * 
+    	 * Este método recorre la lista de viajes proporcionada y realiza las siguientes acciones:
+    	 * - Verifica si el viaje tiene la misma fecha que la fecha actual almacenada en `Tiempo.salidaFecha`.
+    	 * - Si la fecha coincide, también verifica si la hora del viaje coincide con la hora actual en `Tiempo.salidaHora`.
+    	 * - Si ambos coinciden, se considera que el viaje está próximo a salir,
+    	 *   y se llama al método `validacion` del viaje para realizar las acciones necesarias.
+    	 * 
+    	 * @param viajes Lista de objetos `Viaje` que se revisarán para encontrar viajes próximos a salir.
+    	 */
+    	
     	public static void comprobarViajes(ArrayList<Viaje> viajes) {
             if (viajes != null) {
             	for (int i = 0; i < viajes.size(); i++) {
@@ -195,6 +225,19 @@ public class Tiempo {
             	}
             }
     	}
+    	
+    	/**
+    	 * Revisa una lista de viajes en curso para determinar si alguno ha llegado a su destino en la fecha y hora actuales.
+    	 * 
+    	 * Este método recorre la lista de viajes proporcionada y realiza las siguientes acciones:
+    	 * - Verifica si el viaje tiene la misma fecha que la fecha actual almacenada en `Tiempo.salidaFecha`.
+    	 * - Si la fecha coincide, también verifica si la hora de llegada del viaje coincide con la hora actual en `Tiempo.salidaHora`.
+    	 * - Si ambos coinciden, se considera que el viaje ha llegado a su destino, se imprime un mensaje en la consola 
+    	 *   y se llama al método `programacionAutomatica` del viaje para realizar las acciones necesarias de actualización.
+    	 * 
+    	 * @param viajes Lista de objetos `Viaje` que se revisarán para encontrar viajes que hayan llegado a su destino.
+    	 */
+    	
     	public static void comprobarViajesEnCurso(ArrayList<Viaje> viajes) {
             if (viajes != null) {
             	for (int i = 0; i < viajes.size(); i++) {
@@ -211,11 +254,17 @@ public class Tiempo {
             }
     	}
     	
-    	
+    	/**
+    	 * Calcula la hora de salida basándose en la hora y minutos actuales.
+    	 * 
+    	 */
     	public static void calcularSalidaHora(){
     		Tiempo.salidaHora = (Tiempo.horas + ":" + (Tiempo.minutos+1));
     	}
-    	
+    	/**
+    	 * Calcula la fecha de salida basándose en la hora y minutos actuales.
+    	 * 
+    	 */
     	public static void calcularSalidaFecha(){
     		Tiempo.salidaFecha = (Tiempo.dias + "/" + Tiempo.meses + "/" + Tiempo.año);
     	}
@@ -232,11 +281,11 @@ public class Tiempo {
         TipoVehiculo tipo1 = TipoVehiculo.TAXI;
         TipoVehiculo tipo2 = TipoVehiculo.VANS;
         
-        Pasajero P1 = new Pasajero(TipoPasajero.REGULAR, 33, 19, "José", 'm',new ArrayList <Viaje>(), 8, 9.9); 
+        //Pasajero P1 = new Pasajero(TipoPasajero.REGULAR, 33, 19, "José", 'm',new ArrayList <Viaje>(), 8, 9.9); 
 
         Transportadora transportadora = new Transportadora();
         
-        Terminal terminal1 =  new Terminal("Terminal Principal", 1000000, 100, 1, 50, new ArrayList<Transportadora>(), viajes, Tiempo.viajesEnCurso, new ArrayList<Destino>(),8.0, Destino.MEDELLIN,P1);
+        //Terminal terminal1 =  new Terminal("Terminal Principal", 1000000, 100, 1, 50, new ArrayList<Transportadora>(), viajes, Tiempo.viajesEnCurso, new ArrayList<Destino>(),8.0, Destino.MEDELLIN,P1);
         //Terminal terminal1 =  new Terminal("Terminal Principal", 1000000, 100, 1, 50, new ArrayList<Transportadora>(),new ArrayList<Destino>(), Destino.MEDELLIN);
         
         Vehiculo vehiculo1 = new Vehiculo("ABC123", "MARCOPOLO A800", 100, 50, tipo1, transportadora);
@@ -260,14 +309,14 @@ public class Tiempo {
         Destino destino5 = Destino.CALI;
 
         //////////////////////////////////////// CONDUCTOR OBJETOS PRUEBA /////////////////////////////////////// 
-        Conductor conductor = new Conductor(88, 27, "Lucas", 'm', new ArrayList<Viaje>(), 1, 9000.8,true, vehiculo1, transportadora, new ArrayList<Viaje>());
+        //Conductor conductor = new Conductor(88, 27, "Lucas", 'm', new ArrayList<Viaje>(), 1, 9000.8,true, vehiculo1, transportadora, new ArrayList<Viaje>());
         
         //////////////////////////////////////// VIAJES OBJETOS PRUEBA ///////////////////////////////////////  
-        Viaje viaje1 = new Viaje(terminal1,"1:5", "1/1/2024" , vehiculo1, conductor, destino4, dia6, destino1);
-        Viaje viaje2 = new Viaje(terminal1,"6:35", "2/1/2024" ,vehiculo2, conductor, destino2, dia2, destino2);
-        Viaje viaje3 = new Viaje(terminal1,"7:17", "2/1/2024" ,vehiculo1, conductor, destino1, dia3, destino5);
-        Viaje viaje4 = new Viaje(terminal1,"10:12", "2/1/2024" ,vehiculo2, conductor, destino2, dia4, destino1);
-        Viaje viaje5 = new Viaje(terminal1,"19:24", "4/1/2024" ,vehiculo1, conductor, destino1, dia5, destino2);
+        //Viaje viaje1 = new Viaje(terminal1,"1:5", "1/1/2024" , vehiculo1, conductor, destino4, dia6, destino1);
+        //Viaje viaje2 = new Viaje(terminal1,"6:35", "2/1/2024" ,vehiculo2, conductor, destino2, dia2, destino2);
+        //Viaje viaje3 = new Viaje(terminal1,"7:17", "2/1/2024" ,vehiculo1, conductor, destino1, dia3, destino5);
+        //Viaje viaje4 = new Viaje(terminal1,"10:12", "2/1/2024" ,vehiculo2, conductor, destino2, dia4, destino1);
+        //Viaje viaje5 = new Viaje(terminal1,"19:24", "4/1/2024" ,vehiculo1, conductor, destino1, dia5, destino2);
         //Viaje viaje6 = new Viaje(terminal1,"23:57", "4/1/2024" ,vehiculo2, conductor, destino3, dia6, destino1);
         
         //////////////////////////////////////// PRUEBA DE SALIDAS //////////////////////////////////////////

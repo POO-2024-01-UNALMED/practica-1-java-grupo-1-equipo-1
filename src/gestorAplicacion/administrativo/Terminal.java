@@ -72,6 +72,13 @@ public class Terminal {
 		//this.administrador = administrador;
 		Terminal.cantidadSedes++;
 }
+	/**
+	 * Este método verifica la disponibilidad de cada una de 
+	 * las transportadoras dentro de la terminal para realizar 
+	 * un viaje con un destino selecionado
+	 * @input String, Nombre del destino deseado.
+	 * @return ArrayList<Transportadora>, transporatadoras con disponibilidad.
+	 */
 	
 	public ArrayList<Transportadora> viajesDisponiblesTransportadora(String destinoDeseado) {
 		ArrayList <Transportadora> transportadorasConDestino = new ArrayList<>();
@@ -92,13 +99,7 @@ public class Terminal {
 		return transportadorasConDestino;
 	}
 	
-	/**
-	 * Este método verifica la disponibilidad de cada una de 
-	 * las transportadoras dentro de la terminal para realizar 
-	 * un viaje con un destino selecionado
-	 * @input String, Nombre del destino deseado.
-	 * @return ArrayList<Transportadora>, transporatadoras con disponibilidad.
-	 */
+
 	
 	public Viaje programarViaje (Destino destino, Vehiculo vehiculo, String fecha, String hora, Destino salida) {  // Teniendo en cuenta el tipo de Vehiculo --- Habra otro que tiene en cuenta cierta capacidad y el costo del vaje
 		for (Transportadora t : this.getTransportadoras()) { 		// Verfificar las transportadoras que ofrecen este destino 
@@ -135,7 +136,7 @@ public class Terminal {
 		 boolean reubicados = false; // Permitira saber cual proceso fue exitoso 
 		 
 		 for (Viaje v : Terminal.viajes) { //Buscar en la lista de viajes disponibles un viaje que cumpla las caracteristicas para reubicar
-			 if (viaje.equals(v) == false) { // Primero debemos excluir el viaje que se va a cancelar
+			 if (viaje.isequals(v) == false) { // Primero debemos excluir el viaje que se va a cancelar
 				 if (v.getSalida().equals(viaje.getSalida()) && v.getLlegada().equals(viaje.getLlegada()) &&  viaje.getAsientosDisponibles() <= v.getAsientosDisponibles()) { // Verificar que la salida y la llegada sean las mismas y Verificar la capacidad de los vehiculos 
 					 v.setTarifa(viaje.getTarifa()); // Respeta la tarifa del viaje anterior 
 					 v.getPasajeros().addAll(pasajeros); // Mover los pasajeros al nuevo viaje y elminar
@@ -177,26 +178,45 @@ public class Terminal {
 		Boolean capacidad;
 		if (capacidadVehiculo >= asientosOcupados) {
 			capacidad = true;
-			System.out.println("El número de asientos disponibles es: " + disponibles + "/" + capacidadVehiculo);
 		}
 		else {
 			capacidad = false;
-			System.out.println("No hay asientos disponibles. ");
 		}
 		return capacidad;
 	}
 	
-	public void realizarReserva() {
+	public void realizarReserva() {   // Se pasara a la clase pasajero, pues tiene sentido que sea el pasajero quien realiza la reserva, es decir yo como objeto psajero soy el que conozco a donde quiero ir 
 		
 		// Implementación pendiente
 		
 	}
 	
-	public void denegarReserva() {
+	/**
+	 * Deniega una reserva eliminando el viaje asociado y actualizando la lista de reservas.
+	 * 
+	 * @param id El identificador del viaje asociado a la reserva que se desea denegar.
+	 * 
+	 * El método realiza los siguientes pasos:
+	 * 1. Busca el viaje con el identificador especificado en la lista de viajes de la terminal.
+	 * 2. Si el viaje se encuentra, se procede a cancelar el viaje, lo que mantiene la continuidad del viaje y elimina la reserva.
+	 * 3. Luego, se elimina el viaje de la lista de reservas.
+	 * 
+	 */
+	
+	public void denegarReserva(int id) { // Nota: Si el viaje no se encuentra, se debe considerar cómo informar al usuario o manejar el error adecuadamente. 
+		Viaje reserva = null;
 		
-		// Implementación pendiente
-		
-		
+		for (Viaje viaje : this.getViajes()) {
+			if (viaje.getId() == id) {
+				reserva = viaje;
+				break;
+			}
+		}
+//		if (reserva == null) {
+//			// Falta cambiar el tipo de retorno del metodo para que permita saber si la reserva no esta en la lista
+//		}
+		this.cancelarViaje(reserva);  // Mantiene la continuidad del viaje y ademas elimina la reserva
+		this.getReservas().remove(reserva); // Lo elimina de la lista de reserva		
 	}
 	
 	public ArrayList <Factura> obtenerFinanzas(){
@@ -208,7 +228,7 @@ public class Terminal {
 		
 	}
 	
-	public String estadoViaje() {
+	public String estadoViaje() { // Se paso a a la clase viaje pues yo como objeto viaje soy el que conozco mi estado 
 		
 		// Implementación pendiente
 		
