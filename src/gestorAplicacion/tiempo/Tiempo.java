@@ -8,6 +8,8 @@ import java.util.TimerTask;
 import gestorAplicacion.administrativo.Terminal;
 import gestorAplicacion.administrativo.Transportadora;
 import gestorAplicacion.administrativo.Vehiculo;
+import gestorAplicacion.usuarios.Mecanico;
+import gestorAplicacion.administrativo.Taller;
 
 //Importaciones
 
@@ -42,6 +44,16 @@ public class Tiempo {
         timer = new Timer();
         iniciar(); // Iniciar el temporizador automáticamente al crear una instancia de SistemaDeTiempo
     }
+	
+	/**
+	 * 
+	 * @return fecha y hora en minutos
+	 */
+	public static int getFechaHora () {
+		
+
+		return ((525600 * año) + (43800 * meses) + (10950 * semana) + (1440 + dias) + (60 * horas));
+	}
 	
 	public String cancel() {  // Metodo necesario para frenar el tiempo al salir del programa
 		timer.cancel();
@@ -80,6 +92,8 @@ public class Tiempo {
     		calcularHora(); // Calcula la hora
             calcularSalidaHora(); // Formato de Salida Hora
             calcularSalidaFecha(); // Formato de Salida Fecha
+            mecanicosDisponibles(); // Define que mecanicos tienen vehiculos  por reparar
+            verificarVehiculos(); // Verifica si la hora de la reparacion ya paso
             
     		// Formatos de Salida
     		//mostrarTiempo(); // Formato de salida General para pruebas 
@@ -258,6 +272,43 @@ public class Tiempo {
             	}
             }
     	}
+    	
+    	/** Verifica que mecanicos tienen vehiculos pendientes por arreglar
+    	 * 
+    	 */
+    	public static void mecanicosDisponibles () {
+    		
+    		for (Mecanico i : Mecanico.getMecanicos()) {
+    			
+    			if (i.getVehiculosReparando().size() == 0 ) {
+    				
+    				i.setEstado(true);
+    			}
+    			
+    			else {i.setEstado(false);}
+    			
+    		}
+    	}
+    	
+
+    	/** Verifica si ya ocurrio la hora de salida de los vehiculos del taller
+    	 * 
+    	 */
+        public static void verificarVehiculos () {
+        	
+        	for (Taller taller : Taller.getListaTalleres()) {
+        		
+        		for (Vehiculo vehiculo : taller.getVehiculosEnReparacion()) {
+        			
+        			if (vehiculo.getFechaHoraReparacion() <= Tiempo.getFechaHora()) {
+        				
+        				vehiculo.getMecanicoAsociado().repararVehiculo(vehiculo);
+        			}
+        		}
+        	}
+        	
+        	
+        }
     	
     	/**
     	 * Calcula la hora de salida basándose en la hora y minutos actuales.

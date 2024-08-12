@@ -14,12 +14,17 @@ public class Mecanico extends Persona{
 	// Atributos
 	
 	private Taller taller; // Taller al cuál pertenece el mecánico
-	private Vehiculo vehiculoAsignado; // Vehículo asignado al mecánico
 	private ArrayList <Vehiculo> historialReparados; // Historial de vehículos reparados por el mecánico
 	private Boolean estado; // Estado del mecánico
-	private static ArrayList <Mecanico> mecanicos; // ???
-	private static ArrayList <Mecanico> mecanicosDisponibles; // ???
+	private ArrayList <Vehiculo> vehiculosReparando; // Vehiculos en la cola de reparacion de dicho mecanico
+	private static ArrayList <Mecanico> mecanicos; // Lista de todos los mecanicos
+
 	
+	// Constructor por defecto
+	public Mecanico () {
+		
+		this.experiencia = 1;
+	}
 
 	/**
 	 * Constructor para la clase mecánico
@@ -30,15 +35,18 @@ public class Mecanico extends Persona{
      */
 	
 	public Mecanico(int id, int edad, String nombre, char genero, ArrayList <Viaje> historial, int experiencia,
-			double dinero, ArrayList <Factura> facturas, Taller taller, Vehiculo vehiculoAsignado, Boolean estado) {
+			double dinero, ArrayList <Factura> facturas, Taller taller, Vehiculo vehiculoAsignado, Boolean estado, int diasRestantesContr, int diasTrabajados) {
 		
-		super(id, edad, nombre, genero, historial, experiencia, dinero);
+		super(id, edad, nombre, genero, historial, experiencia, dinero, facturas, diasRestantesContr, diasTrabajados);
 		this.taller = taller;
-		this.vehiculoAsignado = vehiculoAsignado;
 		this.estado = estado;
-		this.historialReparados =  new ArrayList<Vehiculo>();
+		this.historialReparados = new ArrayList<Vehiculo>();
+		this.vehiculosReparando = new ArrayList <Vehiculo> ();
 		mecanicos.add(this);
+		this.experiencia = 1;
 	}
+
+	
 	
 	@Override
 	public String identificarse() {
@@ -51,26 +59,43 @@ public class Mecanico extends Persona{
 	
 	}
 	
-	public void repararVehiculo() {
+	public void agregarVehiculoCola (Vehiculo vehiculo) {
 		
-		// Implementación pendiente
+		this.vehiculosReparando.add(vehiculo);
+	}
+	
+	
+	public void repararVehiculo(Vehiculo vehiculo) {
+		
+		vehiculo.reparacion();
+		this.vehiculosReparando.remove(vehiculo);
+		this.taller.removerVehiculoReparacion(vehiculo);
+		this.historialReparados.add(vehiculo);
+		this.calcularExperiencia();
 		
 	}
 	
 	public void calcularExperiencia() {
 		
-		// Implementación pendiente
+		if (this.experiencia < 50 && this.historialReparados.size() % 10 == 0) {}
+		
+		this.experiencia = this.experiencia / 5;
+		
+	}
+	
+	@Override
+	public void renovarContrato (int dias) {
 		
 	}
 	
 	@Override
 	public void descuento(double porcentaje) {
 		
+		
 	}
 	
 	@Override
 	public void bonificacion(double premio) {
-		
 		
 	}
 	
@@ -92,21 +117,6 @@ public class Mecanico extends Persona{
 	    return taller;
 	}
 
-	/**
-	 * Establece o modifica el vehículo asignado del mecánico.
-	 * @param vehiculoAsignado, objeto de tipo Vehiculo.
-	 */
-	public void setVehiculoAsignado(Vehiculo vehiculoAsignado) {
-	    this.vehiculoAsignado = vehiculoAsignado;
-	}
-
-	/**
-	 * Método que nos permite obtener el vehículo asignado de un objeto de tipo mecánico.
-	 * @return Objeto de tipo Vehiculo.
-	 */
-	public Vehiculo getVehiculoAsignado() {
-	    return vehiculoAsignado;
-	}
 
 	/**
 	 * Establece o modifica el historial de vehículos reparados del mecánico.
@@ -138,6 +148,38 @@ public class Mecanico extends Persona{
 	 */
 	public boolean getEstado() {
 	    return estado;
+	}
+
+	/**
+	 * @return mecanicos
+	 */
+	public static ArrayList <Mecanico> getMecanicos() {
+		
+		return mecanicos;
+	}
+
+	/**
+	 * @param define la lista de mecanicos
+	 */
+	public static void setMecanicos(ArrayList <Mecanico> mecanicos) {
+		
+		Mecanico.mecanicos = mecanicos;
+	}
+
+	/**
+	 * @return vehiculosReparando
+	 */
+	public ArrayList <Vehiculo> getVehiculosReparando() {
+		
+		return vehiculosReparando;
+	}
+
+	/**
+	 * @param Define la lista de vehiculos a reparar por el mecanico
+	 */
+	public void setVehiculosReparando(ArrayList <Vehiculo> vehiculosReparando) {
+		
+		this.vehiculosReparando = vehiculosReparando;
 	}
 
 	

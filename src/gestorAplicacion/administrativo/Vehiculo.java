@@ -1,6 +1,7 @@
 package gestorAplicacion.administrativo;
 import gestorAplicacion.constantes.TipoVehiculo;
 import gestorAplicacion.usuarios.Conductor;
+import gestorAplicacion.usuarios.Mecanico;
 import java.util.ArrayList;
 import java.util.Random;
 import java.lang.Math;
@@ -24,6 +25,9 @@ public class Vehiculo {
     private int capacidad; // Capacidad pasajeros del vehículo
     private ArrayList<Conductor> conductores; // Lista de conductores asociados al vehículo
     private Transportadora transportadora; // Transportadora asociada al vehículo
+    private Mecanico mecanicoAsociado; // Mecanico que reparara el vehiculo
+    private int fechaHoraReparacion; // Fecha en la que terminara la reparacion
+
 
     
     /**
@@ -144,6 +148,7 @@ public class Vehiculo {
      */
     public void reparacion() {
         this.integridad = 100;
+        this.estado = true;
     }
 
     /**
@@ -299,6 +304,31 @@ public class Vehiculo {
     	this.estado = estado;
     }
     
+    public void setMecanicoAsociado (Mecanico mecanico) {
+    	
+    	this.mecanicoAsociado = mecanico;
+    }
+    
+    public Mecanico getMecanicoAsociado () {
+    	
+    	return (this.mecanicoAsociado);
+    }
+
+	/**
+	 * @return fecha de la reparacion
+	 */
+	public int getFechaHoraReparacion() {
+		return fechaHoraReparacion;
+	}
+
+	/**
+	 * @param fecha de reparacion
+	 */
+	public void setFechaHoraReparacion(int fechaReparacion) {
+		this.fechaHoraReparacion = fechaReparacion;
+	}
+
+
   //Testeos
   	/*public static void main (String[] Args) {
   		

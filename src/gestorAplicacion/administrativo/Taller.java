@@ -1,4 +1,5 @@
 package gestorAplicacion.administrativo;
+import gestorAplicacion.tiempo.Tiempo;
 import java.util.ArrayList;
 import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.usuarios.Mecanico;
@@ -14,6 +15,7 @@ public class Taller {
 	
 	// Atributos 
 	
+	private static ArrayList <Taller> listaTalleres = new ArrayList <Taller> ();
 	private ArrayList <Vehiculo> vehiculosEnReparacion; // Lista de vehículos a reparar
 	private ArrayList <Vehiculo> vehiculosEnVenta; // Lista de vehículos
 	private Transportadora transportadora; // Transportadora asociada al taller 
@@ -23,11 +25,74 @@ public class Taller {
 	private String nombre; // nombre del taller 
 	private int capacidad; // capacidad de vehículos del taller 
 	
-	public void agregarVehiculoReparacion () {
+	public Taller () {
 		
-		// Implementación pendiente
+		listaTalleres.add(this);
 		
 	}
+	
+	public Taller (Transportadora transportadora, Destino ubicacion, String nombre, int capacidad) {
+		
+		this.transportadora = transportadora;
+		this.ubicacion = ubicacion;
+		this.nombre = nombre;
+		this.capacidad = capacidad;
+		listaTalleres.add(this);
+	}
+	
+	public void agregarVehiculoReparacion (Vehiculo vehiculo) {
+		
+		Mecanico mecanico = null;
+		
+		for (Mecanico i : this.mecanicos) {
+			
+			if (i.getEstado() == true) {
+				
+				i.agregarVehiculoCola(vehiculo);
+				vehiculo.setFechaHoraReparacion(Tiempo.getFechaHora() + 1440);
+				vehiculo.setMecanicoAsociado(i);
+				this.vehiculosEnReparacion.add(vehiculo);
+				vehiculo.setEstado(false);
+				return;
+			}
+		
+		}
+		
+		
+		for (int i = 0; i < mecanicos.size(); i++) {
+			
+			
+			
+			if (i == 0) {
+				
+				mecanico = mecanicos.get(i);
+					
+			}
+			
+			if (mecanicos.get(i).getVehiculosReparando().get(-1).getFechaHoraReparacion() <= mecanico.getVehiculosReparando().get(-1).getFechaHoraReparacion()) {
+				
+				
+				mecanico = mecanicos.get(i);
+			}
+			
+		}
+		
+		mecanico.agregarVehiculoCola(vehiculo);
+		vehiculo.setFechaHoraReparacion(Tiempo.getFechaHora() + 1440);
+		vehiculo.setMecanicoAsociado(mecanico);
+		this.vehiculosEnReparacion.add(vehiculo);
+		vehiculo.setEstado(false);
+		return;
+		
+		
+	}
+	
+	
+	public void removerVehiculoReparacion (Vehiculo vehiculo) {
+		
+		this.vehiculosEnReparacion.remove(vehiculo);
+	}
+	
 	
 	public void agregarVehiculoVenta () {
 		
@@ -35,7 +100,7 @@ public class Taller {
 		
 	}
 	
-	public int generarCotizacion () {
+	public int generarCotizacion (Vehiculo vehiculo) {
 		
 		// Implementación pendiente
 		
@@ -43,13 +108,17 @@ public class Taller {
 		
 	}
 	
-	public void aplicarGastos () {
+	public void aplicarGastos (Vehiculo vehiculo) {
 		
-		// Implementación pendiente
+		long precio = Math.round((vehiculo.getPrecio() - (vehiculo.getPrecio()*vehiculo.getIntegridad()/100))/2);
+		vehiculo.getTransportadora().reducirDinero(precio);
+		vehiculo.getMecanicoAsociado().aumentarDinero(Math.round(precio*0.3));
+		
+		
 		
 	}
 	
-	public void regresarVehiculo () {
+	public void regresarVehiculo (Vehiculo vehiculo) {
 		
 		// Implementación pendiente
 		
@@ -226,6 +295,16 @@ public class Taller {
 	public int getCapacidad() {
 		
 	    return capacidad;
+	}
+	
+	public static void setListaTalleres (ArrayList<Taller> talleres) {
+		
+		listaTalleres = talleres;
+	}
+	
+	public static ArrayList<Taller> getListaTalleres () {
+		
+		return (listaTalleres);
 	}
 
 	
