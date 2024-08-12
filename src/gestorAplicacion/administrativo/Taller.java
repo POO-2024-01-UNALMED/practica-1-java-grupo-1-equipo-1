@@ -37,6 +37,7 @@ public class Taller {
 		this.ubicacion = ubicacion;
 		this.nombre = nombre;
 		this.capacidad = capacidad;
+		this.transportadora.setTaller(this);
 		listaTalleres.add(this);
 	}
 	
@@ -49,7 +50,7 @@ public class Taller {
 			if (i.getEstado() == true) {
 				
 				i.agregarVehiculoCola(vehiculo);
-				vehiculo.setFechaHoraReparacion(Tiempo.getFechaHora() + 1440);
+				vehiculo.setFechaHoraReparacion(Tiempo.getFechaHora() + 1440 - Math.round(i.getExperiencia()*1440/100));
 				vehiculo.setMecanicoAsociado(i);
 				this.vehiculosEnReparacion.add(vehiculo);
 				vehiculo.setEstado(false);
@@ -78,7 +79,7 @@ public class Taller {
 		}
 		
 		mecanico.agregarVehiculoCola(vehiculo);
-		vehiculo.setFechaHoraReparacion(Tiempo.getFechaHora() + 1440);
+		vehiculo.setFechaHoraReparacion(Tiempo.getFechaHora() + 1440 - Math.round(mecanico.getExperiencia()*1440/100));
 		vehiculo.setMecanicoAsociado(mecanico);
 		this.vehiculosEnReparacion.add(vehiculo);
 		vehiculo.setEstado(false);
@@ -111,8 +112,9 @@ public class Taller {
 	public void aplicarGastos (Vehiculo vehiculo) {
 		
 		long precio = Math.round((vehiculo.getPrecio() - (vehiculo.getPrecio()*vehiculo.getIntegridad()/100))/2);
-		vehiculo.getTransportadora().reducirDinero(precio);
-		vehiculo.getMecanicoAsociado().aumentarDinero(Math.round(precio*0.3));
+		long precioFinal = Math.round(precio + (vehiculo.getMecanicoAsociado().getExperiencia() * precio/200));
+		vehiculo.getTransportadora().reducirDinero(precioFinal);
+		vehiculo.getMecanicoAsociado().aumentarDinero(Math.round(precioFinal*0.3));
 		
 		
 		
@@ -124,25 +126,29 @@ public class Taller {
 		
 	}
 	
-	public void venderVehiculo () {
+	public void agregarVehiculoVenta (Vehiculo vehiculo) {
 		
-		// Implementación pendiente
+		this.vehiculosEnVenta.add(vehiculo);
+		vehiculo.setPrecio(this.calcularValor(vehiculo));
+		vehiculo.setFechaHoraReparacion((int)Math.round(1440 + (1440 * Math.random())));
 		
-	}
-	
-	public int calcularIntegridad () {
-		
-		// Implementación pendiente
-		
-		return 0;
 		
 	}
 	
-	public int calcularValor () {
+	public void venderVehiculo (Vehiculo vehiculo) {
 		
-		// Implementación pendiente
+		this.transportadora.aumentarDinero(vehiculo.getPrecio());
+		this.vehiculosEnVenta.remove(vehiculo);
+		this.transportadora.removerVehiculo(vehiculo);
 		
-		return 0;
+		
+	}
+	
+	public long calcularValor (Vehiculo vehiculo) {
+		
+		return (Math.round((vehiculo.getPrecio() - (vehiculo.getPrecio() * 0.3)) * vehiculo.getIntegridad()/100));
+		
+		
 		
 	}
 	

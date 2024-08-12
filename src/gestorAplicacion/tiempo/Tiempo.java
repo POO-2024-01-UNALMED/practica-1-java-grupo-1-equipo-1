@@ -94,6 +94,7 @@ public class Tiempo {
             calcularSalidaFecha(); // Formato de Salida Fecha
             mecanicosDisponibles(); // Define que mecanicos tienen vehiculos  por reparar
             verificarVehiculos(); // Verifica si la hora de la reparacion ya paso
+            verificarVehiculosVenta(); //Verifica si ya paso la hora de venta de los vehiculos
             
     		// Formatos de Salida
     		//mostrarTiempo(); // Formato de salida General para pruebas 
@@ -307,6 +308,25 @@ public class Tiempo {
         		}
         	}
         	
+        	
+        }
+        
+        /**
+         * Verificia si ya paso la hora de venta del vehiculo
+         */
+        
+        public static void verificarVehiculosVenta () {
+        	
+        	for (Taller taller : Taller.getListaTalleres()) {
+        		
+        		for (Vehiculo vehiculo : taller.getVehiculosEnVenta()) {
+        			
+        			if (vehiculo.getFechaHoraReparacion() <= Tiempo.getFechaHora()) {
+        				
+        				vehiculo.getTransportadora().getTaller().venderVehiculo(vehiculo);
+        			}
+        		}
+        	}
         	
         }
     	

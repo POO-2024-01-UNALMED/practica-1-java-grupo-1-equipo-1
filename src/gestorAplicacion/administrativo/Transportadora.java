@@ -26,6 +26,7 @@ public class Transportadora implements Incentivo {
 	private ArrayList <Viaje> viajesAsignados = new ArrayList<>(); // Viajes de la transportadora
 	private Destino destinoAsignado; // Destino asignado a la transportadora, lugar hacia donde esta viajará
 	private Terminal terminal; // Terminal en donde opera la transportadora
+	private Taller taller; //Taller de la transportadora
 	private ArrayList <Destino> destinos = new ArrayList<>(); // ???
 	private ArrayList <Viaje> viajesTerminados = new ArrayList<>(); // Viajes que ha concluido la terminal
 	private Persona dueño; // Dueño de la transportadora
@@ -619,6 +620,20 @@ public class Transportadora implements Incentivo {
 		
 		return viajesTerminados;
 		
+	}
+
+	/**
+	 * @return taller de la transportadora
+ 	 */
+	public Taller getTaller() {
+		return taller;
+	}
+
+	/**
+	 * @param Asigna un taller a la transportadora
+	 */
+	public void setTaller(Taller taller) {
+		this.taller = taller;
 	}
 	
 }
