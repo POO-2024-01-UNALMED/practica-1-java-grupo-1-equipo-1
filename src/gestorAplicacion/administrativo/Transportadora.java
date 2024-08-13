@@ -35,20 +35,22 @@ public class Transportadora implements Incentivo {
 	//Constructor con todos los parámetros
 	
 	public Transportadora(String nombre, double dinero, ArrayList<Conductor> conductores, ArrayList<Pasajero> pasajeros,
-			ArrayList<Vehiculo> vehiculos, ArrayList<Viaje> viajeAsignado, Destino destinoAsignado, Terminal terminal,
-			ArrayList<Destino> destinos, ArrayList<Viaje> viajesTerminados, double estrellas) {
+			ArrayList<Vehiculo> vehiculos, ArrayList<Viaje> viajesAsignados, Destino destinoAsignado, Terminal terminal, Taller taller,
+			ArrayList<Destino> destinos, ArrayList<Viaje> viajesTerminados,Persona dueño, double estrellas) {
 		
 		this.nombre = nombre;
 		this.dinero = dinero;
 		this.conductores = conductores;
 		this.pasajeros = pasajeros;
 		this.vehiculos = vehiculos;
-		this.viajesAsignados = viajeAsignado;
+		this.viajesAsignados = viajesAsignados;
 		this.destinoAsignado = destinoAsignado;
 		this.terminal = terminal;
+		this.taller = taller;
 		this.destinos = destinos;
 		this.viajesTerminados = viajesTerminados;
 		this.estrellas = estrellas;
+		this.dueño = dueño;
 		
 	}
 	
@@ -60,7 +62,7 @@ public class Transportadora implements Incentivo {
 	/**
 	 * Método que nos sirve para mostrar un String con la información de una factura que esté asociada 
 	 * con el dueño de una transportadora.
-	 * @param factura, la factura que se quiere mostarr 
+	 * @param factura, la factura que se quiere mostar 
 	 * @return String con la información de la factura en caso de que sea encontrada, de lo contrario se retorna que el objeto no posee la factura
 	 */
 
@@ -128,23 +130,19 @@ public class Transportadora implements Incentivo {
 	
 	
 	/**
-	 * Metodo que nos permite calcular el dinero que la transportadora le debe pagar a la terminal
+	 * Metodo que nos permite saber si una transportadora puede efectuar el respectivo pago a la terminal
 	 * dicha terminal cobra cierta comisión por cada viaje que realiza la transportadora
 	 * por ende se contarán los viajes que realizó exitosamente la terminal 
-	 * y ese valor se multiplicará por la comisión
+	 * y ese valor se multiplicará por la comisión para calcular el valor y así usar ese valor para saber si es posible dicho pago
 	 */
 	
-	public boolean pagarTerminal() {
+	public boolean verificarPagoTerminal() {
 		
-		boolean pago = false; // Nos servirá para saber si el pago fué efectuado o no
+		boolean pago = false; // Nos servirá para saber si el pago es posible o no
 		
 		double calcularValorAPagar = this.terminal.getComision()*this.getViajesTerminados().size();
 		
 		if (this.getDinero() > calcularValorAPagar) {
-			
-			this.dinero -= calcularValorAPagar;
-			
-			this.terminal.setDinero(calcularValorAPagar); // Se le pasa el dinero a la Terminal ya que la transportadora pagó su comisión
 			
 			pago = true;
 			
@@ -157,17 +155,30 @@ public class Transportadora implements Incentivo {
 			return false;
 			
 		}
-			
-			
-			
-			
+				
 		}
+	
+	/**
+	 * Método que nos sirve para obtener el valor que le tiene que pagar la transportadora a la terminal  
+	 * donde esta presta sus servicios  
+	 * @return calcularValoraPagar, el valor que le tiene que pagar la transportadora a la terminal
+	 */
+
+	public double RetornarValorAPagarTerminal() {
 		
+		double calcularValoraPagar = this.terminal.getComision()*this.getViajesTerminados().size(); // La terminal cobra una comisión por cada viaje hecho por la transportadora
 		
+		if(this.verificarPagoTerminal()) { // se llama al método verificarPagoTerminal para comprobar si la transportadora cuenta con suficiente dinero
 		
+			return calcularValoraPagar;
+			
+		}else { return 0.0;}
 		
 	
-	
+		
+		
+	}
+		
 	/**
 	 * Verifica la capacidad de la terminal y el dinero de la transportadora para poder agregar un vehiculo
 	 * @param vehiculo a comprar
@@ -307,7 +318,7 @@ public class Transportadora implements Incentivo {
 	public void calcularDineroTransportadora() { 
 		
 		int cantPasajerosTransportados = 0; 
-		int tarifaViajes = 0; 
+		double tarifaViajes = 0; 
 		
 		for (Viaje v: viajesTerminados) {
 			
@@ -323,14 +334,73 @@ public class Transportadora implements Incentivo {
 		
 	}
 	
+	/**
+	 * Método que nos sirve para calcular el descuento que le hace la terminal a la transportadora por el cobro que esta le efectúa
+	 * 
+	 */
+	
 	@Override
-	public void descuento (double porcentaje) {
+	public void descuento () {
+		
+		double valorPagar = this.RetornarValorAPagarTerminal(); // Se llama al método RetornarValorApagarTerminal para saber cuánto se le tiene que pagar
+		int verificacionViajes = 0;
+		
+		if (this.getViajesAsignados().size() == this.getViajesTerminados().size()) { // La transportadora cumple con su horario
+			
+			verificacionViajes = 1; // se le descuenta por cumplir con sus viajes
+			
+		}
+		
+		if (valorPagar > 0) {
+			
+			switch(verificacionViajes) {
+			
+			case 0:
+				
+				this.dinero -= valorPagar;
+				break;
+				
+			case 1:
+				
+				this.dinero -= (valorPagar - (valorPagar*0.05));
+				break;
+			
+			
+			}
+			
+			
+		}
+		
+		
 		
 		
 	}
 	
+	/**
+	 * Método que nos sirve para calcular la bonificación que le hace la terminal a la transportadora
+	 * teninedo en cuenta que la transportadora ha sabido mantener al los clientes, los cuales usan mucho su servicio
+	 
+	 */
 	@Override
-	public void bonificacion(double premio) {
+	public void bonificacion() {
+		
+		double dineroTerminal = this.getTerminal().getDinero();
+		double dineroaRestarTerminal = 0; /** Ya que esta bonificará a la transportadora 
+		por cada pasajero que dicha transportadora haya bonificado, ya que el cliente está viajando mucho en la transportadora, por ende el incentivo
+		*/
+		for (Pasajero p: this.getPasajeros()) {
+			
+			if (p.verificarBonificacion()!= 0) {
+				
+				dineroaRestarTerminal += Incentivo.incentivoBase;
+				this.dinero += dineroaRestarTerminal;
+				
+				
+			}
+
+		}
+		
+		this.getTerminal().setDinero(dineroTerminal-dineroaRestarTerminal);
 		
 	}
 	

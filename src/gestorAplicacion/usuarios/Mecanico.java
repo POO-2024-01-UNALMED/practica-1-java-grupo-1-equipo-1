@@ -1,5 +1,7 @@
 package gestorAplicacion.usuarios;
 import gestorAplicacion.administrativo.*;
+import gestorAplicacion.constantes.Incentivo;
+
 import java.util.ArrayList;
 
 /**
@@ -88,14 +90,40 @@ public class Mecanico extends Persona{
 		
 	}
 	
-	@Override
-	public void descuento(double porcentaje) {
-		
-		
-	}
+	/**
+	 * Método que nos sirve para calcular la bonificación que le hace la transportadora al conductor
+	 * teninedo en cuenta su cantidad de vehículos reparados
+	 
+	 */
 	
 	@Override
-	public void bonificacion(double premio) {
+	public void descuento() {
+	
+		
+		if (this.getHistorialReparados().size()> 10) {
+			
+			this.dinero += Incentivo.incentivoBase;
+			
+		}	
+	}
+	
+	/**
+	 * Método que nos sirve para calcular la bonificación que le hace la transportadora al conductor
+	 * teninedo en cuenta su gran experiencia
+	 
+	 */
+	
+	@Override
+	public void bonificacion() {
+		
+		double dineroTrans = this.getTaller().getTransportadora().getDinero();
+		
+		if (this.experiencia >= 5) {
+			
+			this.dinero += Incentivo.incentivoBase;
+			
+			this.getTaller().getTransportadora().setDinero(dineroTrans - Incentivo.incentivoBase);
+		}
 		
 	}
 	

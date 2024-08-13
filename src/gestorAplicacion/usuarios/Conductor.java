@@ -2,6 +2,7 @@ package gestorAplicacion.usuarios;
 import java.util.ArrayList;
 import gestorAplicacion.administrativo.Vehiculo;
 import gestorAplicacion.administrativo.Viaje;
+import gestorAplicacion.constantes.Incentivo;
 import gestorAplicacion.administrativo.Transportadora;
 import gestorAplicacion.administrativo.Factura;
 
@@ -167,13 +168,62 @@ public class Conductor extends Persona {
 		return null;
 	}
 	
+	
+	/**
+	 * Método que nos sirve para descontarle al conductor cierta cantidad de dinero por el valorAseguradora que le cobra la transportadora
+	 
+	 */
+	
 	@Override
-	public void descuento(double porcentaje) {
+	public void descuento() {
+		
+		double valorAseguradora = 200; // Acordar valor
+		
+		this.dinero -= valorAseguradora;
 		
 	}
 	
+	/**
+	 * Método que nos sirve para calcular la bonificación que le hace la transportadora a un conductor
+	 * teninedo en cuenta el número de viajes que este haya realizado para dicha transportadora
+	 
+	 */
+	
 	@Override
-	public void bonificacion(double premio) {
+	public void bonificacion() {
+		
+		int numeroDeViajesRealizados = 0;
+		double dineroTransportadora = this.getTransportadora().getDinero();
+		
+		for (Viaje v: this.getTransportadora().getViajesTerminados()) {
+			
+			if (this.id == v.getConductor().getId()) {
+				
+				
+				numeroDeViajesRealizados += 1;
+				
+			}
+			
+			if (numeroDeViajesRealizados < 10) {
+				
+				this.dinero += Incentivo.incentivoBase;
+				this.getTransportadora().setDinero(dineroTransportadora - Incentivo.incentivoBase);
+				
+			}
+			
+			else if(numeroDeViajesRealizados > 10) {
+				
+				
+				this.dinero += Incentivo.incentivoBase *2;
+				this.getTransportadora().setDinero(dineroTransportadora - (Incentivo.incentivoBase*2));
+			}
+			
+			
+				
+			
+		}
+		
+		
 	}
 	
 	/**

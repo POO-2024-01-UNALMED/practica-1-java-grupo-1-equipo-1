@@ -7,16 +7,16 @@ package gestorAplicacion.constantes;
 
 public enum TipoPasajero {
 	
-	ESTUDIANTE(0.35f), DISCAPACITADO(0.45f), REGULAR(1), VIP(2);
+	ESTUDIANTE(0.35), DISCAPACITADO(0.45), REGULAR(1), VIP(2);
 	
-	private float descuento; // Atributo descuento, el cuál hará un descuento al valor del pasaje al pasajero.
+	private double descuento; // Atributo descuento, el cuál hará un descuento al valor del pasaje al pasajero.
 	
 	 /**
      * Constructor para la clase TipoPasajero.
      * @param descuento, el descuento asociado al tipo de pasajero.
      */
 	
-	private TipoPasajero(float descuento) {
+	private TipoPasajero(double descuento) {
 		
 		this.descuento = descuento;
 		
@@ -27,7 +27,7 @@ public enum TipoPasajero {
 	 * @return el descuento asociado al pasajero.
 	 */
 	
-	public float getDescuento() {
+	public double getDescuento() {
 		
 		return descuento;
 		

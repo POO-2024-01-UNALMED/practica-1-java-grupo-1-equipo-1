@@ -35,6 +35,7 @@ public class Viaje {
     private Destino salida; // Destino actual del viaje
     private Boolean estado;
     private int asientosDisponibles;
+    private Transportadora transportadora; // transportadora asociada al viaje
 
     
     // Constructor de la clase Viaje
@@ -693,5 +694,28 @@ public class Viaje {
 	public void setAsientosDisponibles(int asientosDisponibles) {
 		this.asientosDisponibles = asientosDisponibles;
 	}
+	
+	/**
+     * Establece o modifica la transportadora asociada al viaje.
+     * @param transportadora nueva que se va a asociar a dicho viaje
+     */
+	public void setTransportadora(Transportadora transportadora) {
+		
+		this.transportadora = transportadora;
+		
+	}
+	
+	/**
+     * Obtiene la trasnportadora asociada al viaje.
+     * @return la transportadora asociada al viaje
+     */
+	
+	public Transportadora getTransportadora() {
+		
+		return this.transportadora;
+		
+	}
+	
+	
     
 }

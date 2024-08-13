@@ -58,21 +58,21 @@ public abstract class Persona implements Incentivo {
 	}
 	
 	//Constructor para heredar en clase Pasajero
-	
-	/**
-	 * Constructor para la clase persona
-     * @param id, id de la persona.
-     * @param edad, edad de la persona
-     * @param nombre, nombre de la persona
-     * @param genero, genero de la persona
-     */
-	
-	public Persona(int id, int edad, String nombre, char genero) {
-		this.id = id;
-		this.edad = edad;
-		this.nombre = nombre;
-		this.genero = genero;
-	}
+
+		/**
+		 * Constructor para la clase persona
+	     * @param id, id de la persona.
+	     * @param edad, edad de la persona
+	     * @param nombre, nombre de la persona
+	     * @param genero, genero de la persona
+	     */
+
+		public Persona(int id, int edad, String nombre, char genero) {
+			this.id = id;
+			this.edad = edad;
+			this.nombre = nombre;
+			this.genero = genero;
+		}
 	
 	/**
 	 * Metodo Para aumentar el dinero de las instancias de tipo persona
@@ -237,9 +237,12 @@ public abstract class Persona implements Incentivo {
 		
 		if (this.dinero >= viajeElegido.getTarifa()) {
 			
-			viajeElegido.getPasajeros().add((Pasajero)this); // Se añade a la lista de pasajeros del viaje
+			// Se calcula la tarifa del viaje
+			double tarifa = viajeElegido.getTarifa();
+			
+			viajeElegido.getPasajeros().add((Pasajero)this); // Se añade a la lista de pasajeros del viaje, caso de especialización
 			this.historial.add(viajeElegido); // Se añade el viaje a su historial 
-			this.dinero = dinero - viajeElegido.getTarifa(); // Se le descuenta el dinero
+			this.dinero = dinero - tarifa; // Se le descuenta el dinero 
 			
 			// Se crea el for para eliminar al pasajero de la lista de pasajeros de la transportadora a la cuál estaba asociado, esto por que ya está en un viaje
 			
@@ -290,12 +293,12 @@ public abstract class Persona implements Incentivo {
 			// Se comprueba que el destino del viaje sea igual al destino al cuál viajará la persona con los acompañantes, lo mismo se hace con la fecha
 			// Y al final se comprueba se el viaje cuenta con la capacidad necesaria para transportar a los pasajeros
 			
-			if (viaje.getLlegada().equals(destino) && viaje.getFecha().equals(fecha) && viaje.getVehiculo().getCapacidad() >= pasajeros.size()) {
+			if ((viaje.getLlegada().equals(destino)) && viaje.getFecha().equals(fecha) && viaje.getVehiculo().getCapacidad() >= pasajeros.size()) {
 					
 				viajesReservables.add(viaje);
 				
 					
-			}else if (viaje.getLlegada().equals(destino)&& !viaje.getFecha().equals(fecha) 
+			}else if ((viaje.getLlegada().equals(destino))&& !viaje.getFecha().equals(fecha) 
 					&& viaje.getVehiculo().getCapacidad() >= pasajeros.size())   {
 				
 				viajesReservablesOtraFecha.add(viaje);
@@ -321,7 +324,7 @@ public abstract class Persona implements Incentivo {
 				}
 				
 			}
-			// Se calcula el costo del viaje
+			// Se calcula el costo del viaje para este no se tiene en cuenta descuentos pues se ve como un viaje exclusivo
 			costo = viajeReservado.getTarifa() * pasajeros.size();
 			
 			// Se verifica que la persona que va a reservar el viaje tenga suficiente dinero para pagarlo
@@ -330,6 +333,12 @@ public abstract class Persona implements Incentivo {
 				viajeReservado.setPasajeros(pasajeros); 
 				Terminal.getViajes().remove(viajeReservado); // Se elimina el viaje, ya que esté no admitirá más pasajeros
 				this.dinero = dinero - costo;
+			}
+			
+			for (Pasajero p: pasajeros) {
+				
+				p.getHistorial().add(viajeReservado); // Se añade el viaje reservado al historial de cada pasajero
+					
 			}
 			
 			
@@ -356,7 +365,13 @@ public abstract class Persona implements Incentivo {
 				
 				viajeReservado.setPasajeros(pasajeros); 
 				Terminal.getViajes().remove(viajeReservado);
-				this.dinero = dinero - (int) costo;
+				this.dinero = dinero - costo;
+			}
+			
+			for (Pasajero p: pasajeros) {
+				
+				p.getHistorial().add(viajeReservado); // Se añade el viaje reservado al historial de cada pasajero
+					
 			}
 		}
 		
@@ -669,6 +684,7 @@ public abstract class Persona implements Incentivo {
 	public void setDiasTrabajados(int diasTrabajados) {
 		this.diasTrabajados = diasTrabajados;
 	}
+
 
     
 	
