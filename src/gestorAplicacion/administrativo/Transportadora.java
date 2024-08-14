@@ -20,7 +20,7 @@ public class Transportadora implements Incentivo {
 	private String nombre; // Nombre de la transportadora
 	private double dinero; // Dinero de la transportadora 
 	private ArrayList <Conductor> conductores = new ArrayList<>(); // Lista de conductores de la transportadora
-	private ArrayList <Persona> conductoresDespedidos = new ArrayList<>(); // Lista de conductores despedidos de la transportadora 
+	private ArrayList <Conductor> conductoresRegistrados = new ArrayList<>(); // Lista de conductores registrados de la transportadora 
 	private ArrayList <Pasajero> pasajeros = new ArrayList<>(); // Lista de pasajeros de la transportadora
 	private ArrayList <Vehiculo> vehiculos = new ArrayList<>(); // Lista de vehículos asociados a la transportadora
 	private ArrayList <Viaje> viajesAsignados = new ArrayList<>(); // Viajes de la transportadora
@@ -90,12 +90,38 @@ public class Transportadora implements Incentivo {
 	 * @param Conductor a contratar
 	 */
 	
-	public void contratarConductor(Conductor conductor) {
+	public String contratarConductor(Conductor conductor) {
 		
-		this.getConductores().add(conductor);
-		conductor.reinicioAtributos();
+		if (conductor.getExperiencia() >= 365 && conductor.getEstadoLicencia()) {
+			conductor.reinicioAtributos();
+			this.getConductores().add(conductor);
+		}
+		if (conductor.getExperiencia() >= 365) {
+			if (conductor.getEstadoLicencia()) {
+				conductor.reinicioAtributos();
+				this.getConductores().add(conductor);
+				return "Se contrato a " + conductor.getNombre() + " exitosamente.";
+			} else {
+				return "No se pudo contratar a " + conductor.getNombre() + "porque no tiene licencia activa";
+			}
+		} else {
+			return "No se pudo contratar a " + conductor.getNombre() + " porque tiene menos de un año de experiencia";
+		}
 		
 	}
+	
+	public String contratarConductor(int cedula) {
+		Conductor conductor = null;
+		for (Conductor conduc:conductoresRegistrados) {
+			if (conduc.getId() == cedula)
+				conductor = conductoresRegistrados.get(conductoresRegistrados.indexOf(conduc));
+				continue;
+		}
+		return contratarConductor(conductor);
+				
+	}
+	
+	
 	
 	/**
 	 * Metodo para despedir conductor al cual se le remueve el vehiculo,
@@ -113,7 +139,6 @@ public class Transportadora implements Incentivo {
 				conductor.quitarVehiculo();
 				int indiceConductor = conductor.getTransportadora().getConductores().indexOf(conductor);
 				conductor.getTransportadora().getConductores().remove(indiceConductor);
-				conductor.getTransportadora().getConductores().add(conductor);
 				conductor.indemnizar();
 				conductor.reinicioAtributos();
 				return "No problem";
@@ -122,7 +147,6 @@ public class Transportadora implements Incentivo {
 				conductor.quitarVehiculo();
 				int indiceConductor = conductor.getTransportadora().getConductores().indexOf(conductor);
 				conductor.getTransportadora().getConductores().remove(indiceConductor);
-				conductor.getTransportadora().getConductores().add(conductor);
 				conductor.indemnizar();
 				conductor.reinicioAtributos();
 				return "No problem";
@@ -435,6 +459,25 @@ public class Transportadora implements Incentivo {
 			}
 		}
 	}
+	
+	public Conductor encontrarConductor(int cedula) {
+		for (Conductor driver:conductores) {
+			if (driver.getId() == cedula) {
+				return driver;
+			} 
+		} 
+		return null;
+	}
+	
+	public Vehiculo encontrarVehiculo(String placa) {
+		String placaVehiculo = placa.toUpperCase();
+		for (Vehiculo vehiculo : vehiculos) {
+			if (vehiculo.getPlaca().equals(placaVehiculo)) {
+				return vehiculo;
+			}
+		}
+		return null;
+	}
 
 	
 	// METODOS GETTERS Y SETTERS
@@ -659,9 +702,9 @@ public class Transportadora implements Incentivo {
 	 * @return conductores despedidos de la transportadora
 	 */
 	
-	public ArrayList<Persona> getConductoresDespedidos() {
+	public ArrayList<Conductor> getconductoresRegistrados() {
 		
-		return conductoresDespedidos;
+		return conductoresRegistrados;
 		
 	}
 
@@ -670,9 +713,9 @@ public class Transportadora implements Incentivo {
 	 * @param conductores despedidos de la transportadora.
 	 */
 	
-	public void setConductoresDespedidos(ArrayList<Persona> conductoresDespedidos) {
+	public void setconductoresRegistrados(ArrayList<Conductor> conductoresRegistrados) {
 		
-		this.conductoresDespedidos = conductoresDespedidos;
+		this.conductoresRegistrados = conductoresRegistrados;
 		
 	}
 	

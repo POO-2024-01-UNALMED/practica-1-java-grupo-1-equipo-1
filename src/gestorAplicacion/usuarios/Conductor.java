@@ -153,8 +153,10 @@ public class Conductor extends Persona {
 	public void quitarVehiculo() {
 		
 		if (this.horario.size() == 0) {
-			this.vehiculo.quitarConductor(this.nombre);
-			this.vehiculo=null;
+			if (vehiculo.getConductores().size() >= 2) {
+				this.vehiculo.quitarConductor(this.nombre);
+				this.vehiculo=null;	
+			}
 		}
 		
 		
@@ -224,6 +226,15 @@ public class Conductor extends Persona {
 		}
 		
 		
+	}
+	
+	public boolean tieneVehiculo() {
+		if (vehiculo == null) {
+			return false;
+		} else {
+			return true;
+		}
+			
 	}
 	
 	/**
