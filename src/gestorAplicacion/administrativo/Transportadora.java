@@ -31,6 +31,7 @@ public class Transportadora implements Incentivo {
 	private ArrayList <Viaje> viajesTerminados = new ArrayList<>(); // Viajes que ha concluido la terminal
 	private Persona dueño; // Dueño de la transportadora
 	private final double estrellas; // Permite calcular la tarifa de los buses
+	private static ArrayList <Transportadora> transportadoras = new ArrayList <Transportadora>();
 	
 	//Constructor con todos los parámetros
 	
@@ -51,12 +52,14 @@ public class Transportadora implements Incentivo {
 		this.viajesTerminados = viajesTerminados;
 		this.estrellas = estrellas;
 		this.dueño = dueño;
+		transportadoras.add(this);
 		
 	}
 	
 	//Dejarlo mientras las Pruebas 
 	public Transportadora() {
 		this.estrellas = 1;		
+		transportadoras.add(this);
 	}
 
 	/**
@@ -190,6 +193,8 @@ public class Transportadora implements Incentivo {
 			
 			this.vehiculos.add(vehiculo);
 			this.terminal.agregarVehiculoTerminal(vehiculo);
+			this.reducirDinero(vehiculo.getPrecio());
+			this.terminal.setCantidadVehiculos(this.terminal.getCantidadVehiculos() + 1);
 			
 		}
 		
@@ -706,4 +711,13 @@ public class Transportadora implements Incentivo {
 		this.taller = taller;
 	}
 	
+	public static ArrayList<Transportadora> getTransportadoras () {
+		
+		return transportadoras;
+	}
+	
+	public static void setTrasportadoras (ArrayList<Transportadora> transportadoras) {
+		
+		Transportadora.transportadoras = transportadoras;
+	}
 }
