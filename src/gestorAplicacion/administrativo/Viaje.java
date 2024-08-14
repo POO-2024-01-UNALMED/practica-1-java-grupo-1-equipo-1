@@ -1,4 +1,5 @@
 package gestorAplicacion.administrativo;
+import java.io.Serializable;
 import java.lang.Math;
 import java.util.ArrayList;
 import gestorAplicacion.constantes.Destino;
@@ -13,10 +14,11 @@ import gestorAplicacion.tiempo.Tiempo;
  */
  
 
-public class Viaje {
+public class Viaje implements Serializable {
+	
+	private static final long serialVersionUID = 1;
 	
 	// Atributos
-	
     private Terminal terminal; // Terminal
     private int id; // Identificador del viaje
     private double tarifa; // Tarifa del viaje

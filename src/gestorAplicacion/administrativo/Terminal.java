@@ -1,4 +1,5 @@
 package gestorAplicacion.administrativo;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import gestorAplicacion.constantes.Destino;
@@ -13,8 +14,11 @@ import gestorAplicacion.usuarios.Persona;
  *  una ubicación y finalmente un administrador, esta clase nos servirá para administrar todo el sistema de la terminal.   
  */
 
-public class Terminal {
+public class Terminal implements Serializable{
 	
+	private static final long serialVersionUID = 1;
+	
+	// Atributos
 	private String nombre; // Nombre de la terminal
 	private double dinero; // Dinero de la terminal 
 	private int capacidadVehiculos; // capacidad de vehículos en la terminal
@@ -23,8 +27,8 @@ public class Terminal {
 	private ArrayList <Transportadora> transportadoras = new ArrayList<>(); // transportadoras asociadas a la terminal 
 	private ArrayList <Viaje> reservas = new ArrayList<>(); // reservas de viaje de la terminal
 	private static ArrayList <Viaje> viajes = new ArrayList<>(); // viajes disponibles en la terminal
-	private ArrayList <Viaje> historial = new ArrayList<>(); // viajes realizados por la terminal
-	private ArrayList <Viaje> viajesEnCurso = new ArrayList<>(); // viajes en curso en la terminal
+	private static ArrayList <Viaje> historial = new ArrayList<>(); // viajes realizados por la terminal
+	private static ArrayList <Viaje> viajesEnCurso = new ArrayList<>(); // viajes en curso en la terminal
 	private ArrayList <Destino> destinos = new ArrayList<>(); // destinos de la terminal 
 	private ArrayList <Vehiculo> vehiculosTerminal;
 	public final double comision; // comision que cobra la terminal a las transportadoras por dejarle prestar sus servicios, está será por cada viaje que realicen las transportadoras
@@ -477,9 +481,9 @@ public class Terminal {
 	 * @param viajes, lista con los viajes en curso asociados a la terminal
 	 */
 	
-	public void setViajesEnCurso(ArrayList <Viaje> viajesEnCurso) {
+	public static void setViajesEnCurso(ArrayList <Viaje> viajesEnCurso) {
 		
-		this.viajesEnCurso = viajesEnCurso;
+		Terminal.viajesEnCurso = viajesEnCurso;
 		
 	}
 	
@@ -488,9 +492,9 @@ public class Terminal {
 	 * @retunr lista de viajes en curso asociados a la terminal.
 	 */
 	
-	public ArrayList <Viaje> getViajesEnCurso(){
+	public static ArrayList <Viaje> getViajesEnCurso(){
 		
-		return viajesEnCurso;
+		return Terminal.viajesEnCurso;
 	
 	}
 	
@@ -499,9 +503,9 @@ public class Terminal {
 	 * @param destinos, lista con los destinos asociados a la terminal.
 	 */
 	
-public void setHistorial(ArrayList <Viaje> historial) {
+public static void setHistorial(ArrayList <Viaje> historial) {
 		
-		this.historial = viajesEnCurso;
+		Terminal.historial = viajesEnCurso;
 		
 	}
 	
@@ -510,9 +514,9 @@ public void setHistorial(ArrayList <Viaje> historial) {
 	 * @retunr lista de viajes realizados por la terminal.
 	 */
 	
-	public ArrayList <Viaje> getHistorial(){
+	public static ArrayList <Viaje> getHistorial(){
 		
-		return historial;
+		return Terminal.historial;
 	
 	}
 	

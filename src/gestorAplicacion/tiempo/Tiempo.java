@@ -1,10 +1,20 @@
 package gestorAplicacion.tiempo;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 /////// Importaciones para el tiempo ///////
 import java.util.Timer;
 import java.util.TimerTask;
 
+import baseDatos.Deserializador;
+import baseDatos.Serializador;
 import gestorAplicacion.administrativo.Terminal;
 import gestorAplicacion.administrativo.Transportadora;
 import gestorAplicacion.administrativo.Vehiculo;
@@ -18,8 +28,11 @@ import gestorAplicacion.constantes.*;
 import gestorAplicacion.usuarios.Conductor;
 import gestorAplicacion.usuarios.Pasajero;
 
-public class Tiempo {
-	private Timer timer;
+public class Tiempo implements Serializable{
+	
+	private static final long serialVersionUID = 1;
+	
+	private transient Timer timer;
 	
 	// Atributos para el Tiempo
 	public static ArrayList<Viaje> viajes; // Solo va para las pruebas
@@ -34,6 +47,7 @@ public class Tiempo {
 	public static int meses = 1;
 	public static int año = 2024;
 	public static Dia diaNombre;
+	public static Tiempo principal;
 	
 	// Atributos para formato de salida
 	public static String salidaFecha = (Tiempo.dias + "/" + Tiempo.meses + "/" + Tiempo.año);
@@ -43,7 +57,22 @@ public class Tiempo {
 	public Tiempo() {
         timer = new Timer();
         iniciar(); // Iniciar el temporizador automáticamente al crear una instancia de SistemaDeTiempo
+        Tiempo.principal = this;
     }
+	
+    // Serialización y Deserialización
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        timer = new Timer();
+        iniciar();
+        Deserializador.cargarEstado(); // Restaurar estado estático
+    }
+   
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        Serializador.guardarEstado(); // Guardar estado estático
+    }
+    
 	
 	/**
 	 * 
@@ -69,16 +98,6 @@ public class Tiempo {
         // Programar una tarea que se ejecute cada cierto intervalo de tiempo
         timer.scheduleAtFixedRate(new TareaPeriodica(), 0, 1); // Tiempo de Iteraciones 1 Segundo = 1000 Milisegundos
         
-        
-        /// Métodos necesarios para implementar 
-        
-        /**
-         * comprobarViajes
-         * comprobarViajesEnCurso
-         * comprobarSalarios
-         * comprobarReparaciones
-         * 
-        **/
         System.out.println("Inicio del Tiempo"); // -- -- --  --  -- Activar para saber si esta coriendo el Tiempo, o si se activo otra linea (Hilo). 
     }
 
@@ -92,9 +111,6 @@ public class Tiempo {
     		calcularHora(); // Calcula la hora
             calcularSalidaHora(); // Formato de Salida Hora
             calcularSalidaFecha(); // Formato de Salida Fecha
-            mecanicosDisponibles(); // Define que mecanicos tienen vehiculos  por reparar
-            verificarVehiculos(); // Verifica si la hora de la reparacion ya paso
-            verificarVehiculosVenta(); //Verifica si ya paso la hora de venta de los vehiculos
             
     		// Formatos de Salida
     		//mostrarTiempo(); // Formato de salida General para pruebas 
@@ -104,6 +120,10 @@ public class Tiempo {
         	//comprobarViajes(viajes); // Verifica el momento de salida de los viajes
         	//comprobarViajesEnCurso(viajesEnCurso); // Verifica el momento de llegada de los viajes
     		//comprobarHora();
+            
+//            mecanicosDisponibles(); // Define que mecanicos tienen vehiculos  por reparar
+//            verificarVehiculos(); // Verifica si la hora de la reparacion ya paso
+//            verificarVehiculosVenta(); //Verifica si ya paso la hora de venta de los vehiculos
     		
             
         	//comprobarViajes(Terminal.viajes); // Verifica el momento de salida de los viajes

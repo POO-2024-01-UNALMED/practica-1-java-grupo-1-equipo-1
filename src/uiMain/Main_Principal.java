@@ -1,13 +1,21 @@
 package uiMain;
 
+import java.io.IOException;
 import java.util.Scanner;
+
+import baseDatos.*;
 import gestorAplicacion.tiempo.Tiempo;
 
 public class Main_Principal {
+	
+    static {
+    	//Serializador.objetosBase();
+    	//manejarDeserializacion();
+    }
+    
 	public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean continuar = true;
-        Tiempo a = new Tiempo();  // Inicio del Tiempo 
         
         while (continuar) {
             System.out.println("Seleccione una acción:");
@@ -39,7 +47,8 @@ public class Main_Principal {
                 case 6:
                     continuar = false;
                     System.out.println("Saliendo del sistema...");
-                    System.out.println(a.cancel()); // Fin del Tiempo 
+                    //System.out.println(Tiempo.principal.cancel()); // Fin del Tiempo
+                    //manejarSerializacion();
                     break;
                 default:
                     System.out.println("Opción no válida, Marque de 1,6");
@@ -47,5 +56,23 @@ public class Main_Principal {
         }
 
         scanner.close();
+    }
+	
+    private static void manejarSerializacion() {
+        try {
+            Serializador.serializar();
+        } catch (Exception e) {
+            System.err.println("Error en el proceso de serialización: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    private static void manejarDeserializacion() {
+        try {
+            Deserializador.deserializar();;
+        } catch (Exception e) {
+            System.err.println("Error en el proceso de deserializar: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
