@@ -15,6 +15,7 @@ public class Mecanico extends Persona{
 	
 	// Atributos
 	
+	private static final long serialVersionUID = 10L;
 	private Taller taller; // Taller al cuál pertenece el mecánico
 	private ArrayList <Vehiculo> historialReparados; // Historial de vehículos reparados por el mecánico
 	private Boolean estado; // Estado del mecánico

@@ -1,6 +1,7 @@
 package gestorAplicacion.administrativo;
 import gestorAplicacion.usuarios.*;
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * 	Autores: Jaime Luis Osorio Gómez, Santiago Ochoa Cardona, Juan Camilo Marín Valencia, Johan Ramírez Marín, Jonathan David Osorio Restrepo.
@@ -10,10 +11,11 @@ import java.time.LocalDate;
  *  que hayan cancelado su respectivo monto a la terminal.
  */
 
-	public class Factura {
+	public class Factura implements Serializable {
 	
 	//Atributos 
 	
+	private static final long serialVersionUID = 3L;
 	private int numeroFactura; // Número de la factura (Identificador)
 	private double total; // Valor total de la factura
 	public static int totalFacturas; // Número total de obejtos factura creados
@@ -24,8 +26,9 @@ import java.time.LocalDate;
 	private Vehiculo vehiculo; // Vehículo asociado a la factura 
 	private Transportadora transportadora; // Transportadora asociada a la factura
 	private Taller taller; // Taller asociado a la factura
-	private LocalDate fecha; // Fecha en la que adquirió la factura
+	private String fecha; // Fecha en la que adquirió la factura
 	public String trayecto; // Trayecto asociado a un pasajero, muestra el lugar de salida y el lugar de llegada del pasajero
+	private static ArrayList <Factura> facturasCreadas;
 	
 	/**
 	 * Constructor para la clase factura, este objeto estará asociado con un pasajero
@@ -48,10 +51,10 @@ import java.time.LocalDate;
 		this.viaje = viaje;
 		this.vehiculo = vehiculo;
 		this.transportadora = transportadora;
-		this.fecha = LocalDate.now();
 		this.trayecto = viaje.getSalida().name() + " - " +viaje.getLlegada().name();
 		pasajero.getFacturas().add(this);
 		totalFacturas++;
+		Factura.facturasCreadas.add(this);
 		
 	}
 	
@@ -67,8 +70,8 @@ import java.time.LocalDate;
 		numeroFactura = (int)(Math.random()*10000);
 		this.total = total;
 		this.terminal = terminal;
-		this.fecha = LocalDate.now();
 		totalFacturas++;
+		Factura.facturasCreadas.add(this);
 		
 	}
 
@@ -86,8 +89,8 @@ import java.time.LocalDate;
 		this.total = total;
 		this.transportadora = transportadora;
 		this.vehiculo = vehiculo;
-		this.fecha = LocalDate.now();
 		totalFacturas++;
+		Factura.facturasCreadas.add(this);
 		
 	}
 	
@@ -104,22 +107,9 @@ import java.time.LocalDate;
 		this.total = total;
 		this.transportadora = transportadora;
 		this.taller = taller;
-		this.fecha = LocalDate.now();
 		totalFacturas++;
+		Factura.facturasCreadas.add(this);
 			
-	}
-	
-	
-	public void modificarFactura() {
-		
-		
-		// Idea de la interfaz : Calcular bonificaciones a los empleados de la terminal según su tipo y calcular el pasaje de un pasajero
-		// El método modificar factura modificará una factura en base a las distintas modificaciones que se le hayan hecho a esta, es decir si un
-		// pasajero compro un pasaje y se le aplicó un descuento, dicho método modificará dicha factura antes de ser entregada, lo mismo
-		// con los conductores y los mecánicos por las diversas bonificaciones que pueden tener, aplica también para las transportadoras, 
-		// en las transportadoras tener en cuenta que si esta es puntual con su pago o lleva muchos pasajeros se le hará un descuento de lo que le 
-		// tenía que pagar a la terminal
-	
 	}
 	
 	
@@ -349,7 +339,7 @@ import java.time.LocalDate;
 	 * @param fecha, la fecha asociada a una factura.
 	 */
 	
-	public void setFecha(LocalDate fecha) {
+	public void setFecha(String fecha) {
 		
 		this.fecha = fecha;
 		
@@ -360,9 +350,21 @@ import java.time.LocalDate;
 	 * @return fecha asociada a dicha factura.
 	 */
 	
-	public LocalDate getFecha() {
+	public String getFecha() {
 		
 		return fecha;
+		
+	}
+	
+	public static ArrayList <Factura> getFacturasCreadas() {
+	
+		return Factura.facturasCreadas;
+		
+	}
+	
+	public static void setFacturasCreadas(ArrayList<Factura> facturasCreadas) {
+		
+		Factura.facturasCreadas = facturasCreadas;
 		
 	}
 	

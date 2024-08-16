@@ -54,7 +54,29 @@ public class Serializador {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+     // Objetos tipo Persona
+        try (FileOutputStream fileOutputStream5 = new FileOutputStream("src\\baseDatos\\temp\\personas.txt");
+             ObjectOutputStream objectOutputStream5 = new ObjectOutputStream(fileOutputStream5)) {
+            
+            objectOutputStream5.writeObject(Persona.getSerializarPersonas());
+            System.out.println("Personas serializadas correctamente.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+     // Objetos tipo Factura
+        try (FileOutputStream fileOutputStream6 = new FileOutputStream("src\\baseDatos\\temp\\facturas.txt");
+             ObjectOutputStream objectOutputStream6 = new ObjectOutputStream(fileOutputStream6)) {
+            
+            objectOutputStream6.writeObject(Factura.getFacturasCreadas());
+            System.out.println("Facturas serializadas correctamente.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     
+        
+        
     // OBJETOS TERMINAL
     
     // OBJETOS VEHICULO

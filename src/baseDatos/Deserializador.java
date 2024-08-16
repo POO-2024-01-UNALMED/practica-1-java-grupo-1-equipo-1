@@ -62,6 +62,28 @@ public class Deserializador {
 
         // ESPACIO PARA AGREGAR LAS OTRAS DESERIALIZACIONES 
         
+     // Objetos tipo Persona
+        try (FileInputStream fileInputStream5 = new FileInputStream("src\\baseDatos\\temp\\personas.txt");
+             ObjectInputStream objectInputStream5 = new ObjectInputStream(fileInputStream5)) {
+            
+            ArrayList<Persona> deserializarPersonas = (ArrayList<Persona>) objectInputStream5.readObject();
+            Persona.setSerializarPersonas(deserializarPersonas);
+            System.out.println("personas deserializadas correctamente.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error al deserializar personas: " + e.getMessage());
+        }
+        
+     // Objetos tipo Factura
+        try (FileInputStream fileInputStream6 = new FileInputStream("src\\baseDatos\\temp\\facturas.txt");
+             ObjectInputStream objectInputStream6 = new ObjectInputStream(fileInputStream6)) {
+            
+            ArrayList<Factura> deserializarFacturas = (ArrayList<Factura>) objectInputStream6.readObject();
+            Factura.setFacturasCreadas(deserializarFacturas);
+            System.out.println("facturas deserializadas correctamente.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error al deserializar facturas: " + e.getMessage());
+        }
+        
 
     }
     

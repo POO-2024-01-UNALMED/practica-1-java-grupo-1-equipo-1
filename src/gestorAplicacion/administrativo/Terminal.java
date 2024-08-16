@@ -24,7 +24,7 @@ public class Terminal implements Serializable{
 	private int capacidadVehiculos; // capacidad de vehículos en la terminal
 	public static int cantidadSedes = 0; // cantidad de sedes de la terminal
 	private int cantidadVehiculos; // cantidad de vehículos que hay en la terminal 
-	private ArrayList <Transportadora> transportadoras = new ArrayList<>(); // transportadoras asociadas a la terminal 
+	private static ArrayList <Transportadora> transportadoras = new ArrayList<>(); // transportadoras asociadas a la terminal 
 	private ArrayList <Viaje> reservas = new ArrayList<>(); // reservas de viaje de la terminal
 	private static ArrayList <Viaje> viajes = new ArrayList<>(); // viajes disponibles en la terminal
 	private static ArrayList <Viaje> historial = new ArrayList<>(); // viajes realizados por la terminal
@@ -415,9 +415,9 @@ public class Terminal implements Serializable{
 	 * @param trasnportadoras, lista de las transportadoras asociadas a la terminal.
 	 */
 	
-	public void setTransportadoras(ArrayList <Transportadora> transportadoras) {
+	public static void setTransportadoras(ArrayList <Transportadora> transportadoras) {
 		
-		this.transportadoras = transportadoras;
+		Terminal.transportadoras = transportadoras;
 		
 	}
 	
@@ -426,7 +426,7 @@ public class Terminal implements Serializable{
 	 * @return lista de las transportadoras asociadas a la terminal.
 	 */
 	
-	public ArrayList <Transportadora> getTransportadoras(){
+	public static ArrayList <Transportadora> getTransportadoras(){
 		
 		return transportadoras;
 	}

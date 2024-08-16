@@ -1,10 +1,11 @@
 package uiMain;
-
 import java.io.IOException;
 import java.util.Scanner;
-
 import baseDatos.*;
+import gestorAplicacion.constantes.*;
 import gestorAplicacion.tiempo.Tiempo;
+import gestorAplicacion.administrativo.*;
+import gestorAplicacion.usuarios.*;
 
 public class Main_Principal {
 	

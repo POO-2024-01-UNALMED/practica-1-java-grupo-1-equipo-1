@@ -20,6 +20,7 @@ public class Pasajero extends Persona{
 
 	// Atributos
 	
+	private static final long serialVersionUID = 11L;
 	private TipoPasajero tipo; // Tipo de pasajero asociado al pasajero
 	private static int idStatic = 0;
 	private static final char[] GENEROS = {'M', 'F'};

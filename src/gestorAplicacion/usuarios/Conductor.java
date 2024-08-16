@@ -17,6 +17,7 @@ public class Conductor extends Persona {
 	
 	//Atributos
 	
+	private static final long serialVersionUID = 5L;
 	private boolean estadoLicencia; // Estado de la licencia del conductor
 	private Vehiculo vehiculo; // Vehículo asociado al conductor
 	private Transportadora transportadora; // Transportadora asociada al conductor 

@@ -6,6 +6,7 @@ import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.administrativo.Terminal;
 import gestorAplicacion.administrativo.Transportadora;
 import gestorAplicacion.constantes.Incentivo;
+import java.io.Serializable;
 
 
 /**
@@ -14,10 +15,11 @@ import gestorAplicacion.constantes.Incentivo;
  *  es abstracta, su implementación principalmente es para las relaciones de herencia y métodos abstractos. 
  */
 
-public abstract class Persona implements Incentivo {
+public abstract class Persona implements Incentivo, Serializable {
 	
 	 // Atributos
 	
+	private static final long serialVersionUID = 2L;
 	protected int id; // Id de la persona
 	protected int edad; // Edad de la persona
 	protected String nombre; // Nombre de la persona
@@ -28,6 +30,7 @@ public abstract class Persona implements Incentivo {
 	protected ArrayList <Factura> facturas = new ArrayList<>(); // Facturas asociadas a la persona
 	protected int diasRestantesContr; //Dias restantes de contrato
 	protected int diasTrabajados; //Dias trabajados durante en contrato actual
+	protected static ArrayList <Persona> serializarPersonas = new ArrayList <>(); // Se añade para serializar los objetos hijos de pesona
 	
 	public Persona() { //Se agrego para facilitar las pruebas
 	}
@@ -55,6 +58,7 @@ public abstract class Persona implements Incentivo {
 		this.facturas = facturas;
 		this.diasRestantesContr = diasRestantesContr;
 		this.diasTrabajados = diasTrabajados;
+		Persona.serializarPersonas.add(this);
 	}
 	
 	//Constructor para heredar en clase Pasajero
@@ -72,6 +76,7 @@ public abstract class Persona implements Incentivo {
 			this.edad = edad;
 			this.nombre = nombre;
 			this.genero = genero;
+			Persona.serializarPersonas.add(this);
 		}
 	
 	/**
@@ -683,6 +688,18 @@ public abstract class Persona implements Incentivo {
 
 	public void setDiasTrabajados(int diasTrabajados) {
 		this.diasTrabajados = diasTrabajados;
+	}
+	
+	public static ArrayList <Persona> getSerializarPersonas(){
+		
+		return Persona.serializarPersonas;
+		
+	}
+	
+	public static void setSerializarPersonas(ArrayList <Persona> serializarPersonas){
+		
+		Persona.serializarPersonas = serializarPersonas;
+		
 	}
 
 
