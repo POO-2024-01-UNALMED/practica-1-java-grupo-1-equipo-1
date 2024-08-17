@@ -132,7 +132,8 @@ public class Transportadora implements Incentivo {
 	 * el metodo devolvera un valor diferente para cada caso.
 	 * @param Conductor a despedir*/
 	
-	public String despedirConductor(Conductor conductor) {
+	public String despedirConductor(int indice) {
+		Conductor conductor = conductores.get(indice-1);
 		
 		if (conductor.getHorario().size() == 0) {
 			if (conductor.getVehiculo() == null) {
@@ -433,6 +434,14 @@ public class Transportadora implements Incentivo {
 		
 	}
 	
+	public String mostrarConductRegistrados() {
+		String mensaje = "";
+		for (Persona conductor : this.conductoresRegistrados) {
+			mensaje += "Nombre: " + conductor.getNombre()+ "  #Cedula: " + conductor.getId() + "\n";
+		}
+		return mensaje;
+	}
+	
 	/**
 	 * Metodo para que devolvera un string con la lista de
 	 * conductores activos de una determinada trasportadora
@@ -454,7 +463,7 @@ public class Transportadora implements Incentivo {
 	public void despedirConductDesdeLista(int id) {
 		for (Conductor conductor : this.conductores) {
 			if (conductor.getId() == id) {
-				despedirConductor(conductor);
+				despedirConductor(conductor.getId());
 				return;
 			}
 		}

@@ -5,14 +5,25 @@ import java.util.Scanner;
 
 import gestorAplicacion.administrativo.Transportadora;
 import gestorAplicacion.administrativo.Vehiculo;
+import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.usuarios.Conductor;
 
 public class Main_2 {
 	static Scanner scanner = new Scanner(System.in);
     public static void ejecutar() {
         boolean regresar = false;
+        boolean valueTrans = false;
+        Transportadora transportaElegida = new Transportadora();// No borrar, solo para pruebas
 
         while (!regresar) {
+        	
+        	/*while (!valueTrans) {
+    		System.out.println("Digite el numero de la transportadora que desea administrar");
+            //System.out.println(terminal.mostrarTransportadoras());
+    		//int selection = ckeck(1,terminal.getTransportadoras.size());
+    		}*/
+        	//Transportadora transportaElegida = terminal.getTransportadoras().get(selection - 1);
+        	
             System.out.println("Ejecutando Funcionalidad 2");
             // Lógica específica para Funcionalidad 2
             
@@ -28,14 +39,143 @@ public class Main_2 {
 
             switch (opcion) {
                 case 1:
-                    // Poner los metodos a ejecutar para cada accion.
-                	ejemplo();
+                	mostrarConductoresActivos(transportaElegida);
+                	System.out.println("Seleccione el conductor a despedir");
+                	opcion = check(1,transportaElegida.getConductores().size());
+                	System.out.println(transportaElegida.despedirConductor(opcion));
                     break;
                 case 2:
-                    // Poner los metodos a ejecutar para cada accion.
+                	System.out.println("Seleccione el conductor a contratar");
+             		System.out.println(transportaElegida.mostrarConductRegistrados());
+             		opcion = scanner.nextInt();
+             		System.out.println(transportaElegida.contratarConductor(opcion));
                     break;
                 case 3:
-                    // Poner los metodos a ejecutar para cada accion.
+                	mostrarConductoresActivos(transportaElegida);
+                	System.out.println("Seleccione el conductor que desea modificar");
+                	opcion = scanner.nextInt();
+                	Conductor selectedDriver = transportaElegida.encontrarConductor(opcion);
+                	System.out.println("¿Que desea modificar del conductor?");
+                	System.out.println("1. Viajes programados");
+                	System.out.println("2. Vehiculo");
+                	System.out.println("3. Estado de la licencia");
+                	System.out.println("4. Regresar");
+                	opcion = scanner.nextInt();
+                	
+                	switch (opcion) {
+                	case 1:
+                		if (selectedDriver.getHorario() == null) {
+                			System.out.println("Seleccione una opcion");
+                			System.out.println("1. Asignar viaje");
+                			System.out.println("2. Regresar");
+                			opcion = check(1,2);
+                			switch (opcion) {
+                			case 1:
+                				break;
+                			case 2:
+                				break;
+                			}
+                		} else {
+                			System.out.println("Seleccione una opcion");
+                			System.out.println("1. Asignar viaje");
+                			System.out.println("2. Desvincular viaje");
+                			System.out.println("3. Regresar");
+                			opcion = check(1,3);
+                			switch (opcion) {
+                			case 1:
+                				break;
+                			case 2:
+                				break;
+                			case 3:
+                				break;
+                			default:
+                				break;
+                			}
+                			
+                		}
+                		break;
+                	case 2:
+                		boolean valorVerdad = selectedDriver.tieneVehiculo();
+                		if (valorVerdad) {
+                			System.out.println("Seleccione una opcion");
+                        	System.out.println("1. Quitar Vehiculo asociado");
+                        	System.out.println("2. Regresar");
+                        	opcion = scanner.nextInt();
+                        	switch (opcion) {
+                        	case 1:
+                        		selectedDriver.quitarVehiculo();
+                        		break;
+                        	case 2:
+                        		break;
+                        	}
+                        	
+                		} else {
+                			System.out.println("Seleccione una opcion");
+                			System.out.println("1. Asignar un vehiculo");
+                			System.out.println("2. Regresar");
+                			opcion = scanner.nextInt();
+                			switch (opcion) {
+                			case 1:
+                				//transportaElegida.mostrarVehiculos();
+                				mostrarVehiculosDisponibles(transportaElegida,selectedDriver);
+                				break;
+                			case 2:
+                				break;
+                			}
+                		}
+                		break;
+                	case 3:
+                		if (selectedDriver.getEstadoLicencia()) {
+                			System.out.println("El conductor actualmente tiene la licencia activa");
+                			System.out.println("¿Desea desactivarle la licencia?");
+                			//String letras = checkSN();
+                			String letras = scanner.nextLine().toUpperCase();
+                			boolean value = false;
+                			
+                			while (!value) {
+                			    letras = scanner.nextLine().toUpperCase();
+                			    
+                			    if (!letras.equals("S") && !letras.equals("N")) {
+                			        System.out.println("Error, ingrese la letra S o N");
+                			    } else {
+                			        value = true;
+                			    }
+                			}
+                			if (letras.equals("S")) {
+                				if (selectedDriver.getHorario().size()==7) {
+                					selectedDriver.setEstadoLicencia(false);
+                					System.out.println("Se le ha desactivado la licencia exitosamente");
+                				} else {
+                					System.out.println("No es posible desactivar la licencia, el conductor tiene viajes prorgamados");
+                				}
+                			}
+                		} else {
+                			System.out.println("El conductor actualmente tiene la licencia desactivada");
+                			System.out.println("¿Desea activarle la licencia?");
+                			//String letras = checkSN();
+                			String letras = scanner.nextLine().toUpperCase();
+                			boolean value = false;
+
+                			while (!value) {
+                			    letras = scanner.nextLine().toUpperCase();
+                			    if (!letras.equals("S") && !letras.equals("N")) {
+                			        System.out.println("Error, ingrese la letra S o N");
+                			    } else {
+                			        value = true;
+                			    }
+                			}
+                			if (letras.equals("S")) {
+                				selectedDriver.setEstadoLicencia(true);
+                				System.out.println("Se le ha activado la licencia exitosamente");
+                			}
+                		}
+                		
+                		break;
+                	case 4:
+                		break;
+                	}
+                	
+                	
                     break;
                 case 4:
                     // Poner los metodos a ejecutar para cada accion.
