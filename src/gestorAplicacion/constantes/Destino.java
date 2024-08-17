@@ -44,4 +44,19 @@ public enum Destino {
 	public double getEjeY() {
 		return ejeY;
 	}
+	
+	
+	/**
+	 * metodo para ver si el string que se ingresa puede convertirse en uno de los destinos
+	 * @param input
+	 * @return
+	 */
+    public static boolean esDestinoValido(String destinoDeseado) {
+        for (Destino destino : Destino.values()) {
+            if (destino.name().equals(destinoDeseado)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

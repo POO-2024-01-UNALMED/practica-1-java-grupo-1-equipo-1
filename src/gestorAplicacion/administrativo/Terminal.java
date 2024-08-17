@@ -80,33 +80,34 @@ public class Terminal implements Serializable{
 }
 	/**
 	 * Este método verifica la disponibilidad de cada una de 
-	 * las transportadoras dentro de la terminal para realizar 
-	 * un viaje con un destino selecionado
-	 * @input String, Nombre del destino deseado.
+	 * las transportadoras dentro de la terminal para realizar un viaje con un destino
+	 *  selecionado, una cantidad de asienos y los viajes con los que se pueden contar
+	 * @param Destino, destino deseado.
+	 * @param int, asientos
+	 * @param ArrayList<Viaje> lista de viajes segun tipo de pasajero
 	 * @return ArrayList<Transportadora>, transporatadoras con disponibilidad.
 	 */
 	
-	public ArrayList<Transportadora> viajesDisponiblesTransportadora(String destinoDeseado) {
+	public static ArrayList<Transportadora> transportadorasViajeDisponible(Destino destinoDeseado, int asientos, ArrayList<Viaje> listaViajes) {
 		ArrayList <Transportadora> transportadorasConDestino = new ArrayList<>();
-		for (Transportadora transportadora : transportadoras) {
-			boolean esta = false;
-			
-			for (Destino destino:transportadora.getDestinos()) {
-				if (destino.name().equals(destinoDeseado)) {
-					esta = true;					
-				}
-			}
-			
-			if (esta) {
-				transportadorasConDestino.add(transportadora);
-			}
-		}
-		
-		return transportadorasConDestino;
-	}
-	
+	    for (Viaje viaje : listaViajes) {
+	        if (viaje != null
+	        		
+	        		&& viaje.getTransportadora() != null
+	        		&& viaje.getLlegada().name().equals(destinoDeseado)
+	        		&& viaje.verificarAsientos()>=asientos) {
+	        	
+	            Transportadora transportadora = viaje.getTransportadora();
+	            
+	            if (!transportadorasConDestino.contains(transportadora)) {
+	            	transportadorasConDestino.add(transportadora);
+	            }
+	        }
+	    }
+	    
+	    return transportadorasConDestino;
+	}	
 
-	
 	public Viaje programarViaje (Destino destino, Vehiculo vehiculo, String fecha, String hora, Destino salida) {  // Teniendo en cuenta el tipo de Vehiculo --- Habra otro que tiene en cuenta cierta capacidad y el costo del vaje
 		for (Transportadora t : Terminal.getTransportadoras()) { 		// Verfificar las transportadoras que ofrecen este destino 
 			for (Destino d : t.getDestinos()) {

@@ -5,6 +5,7 @@ import gestorAplicacion.administrativo.Viaje;
 import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.constantes.Incentivo;
 import gestorAplicacion.constantes.TipoPasajero;
+import gestorAplicacion.constantes.TipoVehiculo;
 import gestorAplicacion.administrativo.Factura;
 import gestorAplicacion.administrativo.Terminal;
 import gestorAplicacion.administrativo.Transportadora;
@@ -23,22 +24,7 @@ public class Pasajero extends Persona{
 	private static final long serialVersionUID = 1L;
 	private TipoPasajero tipo; // Tipo de pasajero asociado al pasajero
 	private static int idStatic = 0;
-	private static final char[] GENEROS = {'M', 'F'};
 	private Viaje viaje;
-	private static final String[] NOMBRESH = {"Carlos", "Luis", "Jose", "Alejandro", "Santiago", "Jonathan","Jhonathan",
-												"Juan", "jhon", "john", "David", "johan", "Fernando", "Camilo", "Daniel",
-												"Jack", "Mateo","Miguel", "Andrés", "Sebastián", "Ricardo", "Francisco",
-											    "Marcos", "Iván", "Manuel", "Pedro", "Roberto", "Rafael", "Mario", "Pablo",
-											    "Hugo", "Sergio", "Antonio", "Javier", "Martín", "Álvaro", "Gustavo",
-											    "Adrián", "Fabián", "Héctor", "Enrique", "Eduardo", "Ángel", "Cristian",
-											    "Alfredo", "Gabriel", "Leonardo", "Bruno", "Armando"};
-
-	private static final String[] NOMBRESM = {"Ana", "Maria", "Laura", "Carmen", "Juana", "Marta", "Lucía", "Sofía", "Isabel",
-		    "Patricia", "Sara", "Elena", "Pilar", "Teresa", "Rosa", "Beatriz", "Adriana",
-		    "Gabriela", "Victoria", "Natalia", "Daniela", "Paula", "Carolina", "Silvia",
-		    "Claudia", "Lorena", "Cristina", "Julia", "Andrea", "Valeria", "Eva", "Angela",
-		    "Susana", "Raquel", "Irene", "Rocío", "Alicia", "Marina", "Lourdes", "Bárbara",
-		    "Sandra", "Ariana", "Verónica", "Esther", "Noelia", "Vanessa", "Nuria", "Inés"};
 	
 	public Pasajero(TipoPasajero tipo, int id, int edad, String nombre, char genero) { // falta Inicializar varios de los atributos que hereda de persona
 		super(id, edad, nombre, genero);
@@ -46,12 +32,6 @@ public class Pasajero extends Persona{
 		this.tipo = tipo;
 		
 	}
-
-	//contructor aleatorio para llenar viajes
-		/**
-		 * Para un correcto funcionamiento de esta implementación, se deberá especificar que el atributo "id" para los otros 
-		 * objetos creados manualmente debera ser superior a los 6 dígitos y asi, evitar conflictos a la hora de designar viajes, etc.
-		 */
 	
 	/**
 	 * Constructor para la clase persona
@@ -61,39 +41,54 @@ public class Pasajero extends Persona{
 	//Constructor para nuevos usuarios
 	
 	public Pasajero(TipoPasajero tipo) {
-		
-		this.tipo = tipo;													
-		Random random = new Random();
-		this.setId(Pasajero.getIdStatic());
-        this.setEdad(random.nextInt(100));
-		char genero = GENEROS[random.nextInt(GENEROS.length)];
-		this.setGenero(genero);
-		
-		if (genero == 'M') {
-			
-			this.setNombre(NOMBRESM[random.nextInt(NOMBRESM.length)]);
-			
-		}
-		
-		else {
-			
-			this.setNombre(NOMBRESH[random.nextInt(NOMBRESH.length)]);
-			
-		}
-		
+		this.tipo = tipo;
+	}
+
+	
+	/**
+	 * Este método elige el viaje con la tarifa más económica.
+	 * @param destinoDeseado Nombre del destino deseado.
+	 * @param cantidad Asientos solicitados.
+	 * @return El viaje más barato que cumple con los criterios.
+	 */
+
+	public static ArrayList<Viaje> viajesDisponibles(){
+		return new ArrayList<>();
 	}
 	
-	public Viaje masEconomico(String destinoDeseado, int cantidad){
-
+	public static Viaje masRapido(Destino destinoDeseado, int cantidad, ArrayList<Viaje> viajes) {
+		//El tercer parametro son los viajes a los que puede acceder
+		Viaje viajeMasRapido = null;
+		
+		for (Viaje viaje : viajes) {
+	        // Verificar si el viaje tiene el destino deseado y suficientes asientos disponibles
+			
+	        if (viaje.getLlegada()==(destinoDeseado)
+	        		&&((viaje.getVehiculo().getTipo()==TipoVehiculo.VANS)
+	        		||(viaje.getVehiculo().getTipo()==TipoVehiculo.TAXI))) {
+	        	
+	            if (viajeMasRapido == null || viaje.getDuracion() < viajeMasRapido.getDuracion()) {
+	                viajeMasRapido = viaje;
+	                
+	            }
+	        }
+	    }
+		
+		return viajeMasRapido;
+	}
+	
+	public static Viaje masEconomico(Destino destinoDeseado, int cantidad, ArrayList<Viaje> viajes){
+		//el ultimo se refiere a los viajes a los que puede acceder desde el tipoPasajero
+	
 		Viaje viajeMasBarato = null;
 
 	   	//Suponiendo que "viajes" es una arrayList con los viajes que se 
 		//encuentran disponibles en la terminal y que "finalDestino" de transportadora es hacia donde se dirige
 
-		for (Viaje viaje : Terminal.getViajes()) {
+		for (Viaje viaje : viajes) {
 	        // Verificar si el viaje tiene el destino deseado y suficientes asientos disponibles
 			
-	        if (viaje.getLlegada().name().equals(destinoDeseado) && viaje.getAsientosDisponibles() >= cantidad&&viaje.getEstado()==false) {
+	        if (viaje.getVehiculo().getTipo()==TipoVehiculo.BUS) {
 	        	
 	            if (viajeMasBarato == null || viaje.getTarifa() < viajeMasBarato.getTarifa()) {
 	                viajeMasBarato = viaje;
@@ -106,11 +101,108 @@ public class Pasajero extends Persona{
 	}
 	
 	/**
+	 * Este método elige los viajes disponibles para regulares.
+	 * @param cantidad Asientos solicitados.
+	 * @param lugar donde llega
+	 * @return ArrayList con los viajes que se le pueden vender.
+	 */
+	
+	static public ArrayList<Viaje> viajesParaRegularesYDiscapacitados(int cantidad, Destino destino, TipoVehiculo vehiculo){
+		
+		ArrayList <Viaje> viajes = new ArrayList<>();
+		
+		for (Viaje viaje : Terminal.getViajes()) {
+
+			if(viaje==null) {
+				continue;
+			}
+			
+			if (viaje.verificarAsientos()>=cantidad && viaje.getLlegada()==destino
+					&& viaje.getVehiculo().getTipo()==vehiculo&&!viaje.getEstado()) {
+				viajes.add(viaje);
+			}
+		}
+		
+		return viajes;
+		
+	}
+	
+	/**
+	 * Este método elige los viajes disponibles para pasajeros VIPs.
+	 * @param cantidad Asientos solicitados.
+	 * @param lugar donde llega
+	 * @return ArrayList con los viajes que se le pueden vender.
+	 */
+	
+	static public ArrayList<Viaje> viajesParaVips(int cantidad, Destino destino, TipoVehiculo vehiculo){
+		
+		ArrayList <Viaje> viajes = new ArrayList<>(cantidad);
+		
+		for (Viaje viaje : Terminal.getViajes()) {
+
+			if(viaje==null) {
+				continue;
+			}
+			
+			if (viaje.verificarAsientos()>=cantidad && viaje.getVehiculo().getTipo()==vehiculo
+					&&viaje.getLlegada()==destino && vehiculo != TipoVehiculo.ESCALERA&&!viaje.getEstado()) {
+				viajes.add(viaje);
+			}
+		}
+		
+		return viajes;
+		
+	}
+	
+    public static boolean esDestinoValido(String input) {
+        for (Destino destino : Destino.values()) {
+            if (destino.name().equals(input)) {
+                return true;
+            }
+        }
+        return false;
+    }
+	
+	/**
+	 * Este método elige los viajes disponibles para pasajeros estudiantes.
+	 * @param cantidad Asientos solicitados.
+	 * @return ArrayList con los viajes que se le pueden vender.
+	 */
+	
+	static public ArrayList<Viaje> viajesParaEstudiantes(Destino destino, TipoVehiculo vehiculo){
+		
+		ArrayList <Viaje> viajes = new ArrayList<>();
+		
+		for (Viaje viaje : Terminal.getViajes()) {
+			
+			if(viaje==null) {
+				continue;
+			}
+			
+			if (viaje.verificarAsientos()>=1 && viaje.getVehiculo().getTipo()==vehiculo
+				&&viaje.getLlegada()==destino && vehiculo!=TipoVehiculo.TAXI&&!viaje.getEstado()) {
+				viajes.add(viaje);
+				
+			}
+			
+
+		}
+		
+		return viajes;
+		
+	}
+	
+	/**
 	 * Este método elige el viaje con la tarifa más económica.
 	 * @param destinoDeseado Nombre del destino deseado.
 	 * @param cantidad Asientos solicitados.
 	 * @return El viaje más barato que cumple con los criterios.
 	 */
+	
+	
+	public static Pasajero nuevoPasajero(TipoPasajero tipo, int id, int edad, String nombre, char genero) {
+		return new Pasajero(tipo);
+	}
 
 	@Override
 	public String identificarse() {
@@ -119,6 +211,7 @@ public class Pasajero extends Persona{
 		
 		return null;
 	}
+	
 	
 	
 	public void pagarFactura() {
@@ -167,6 +260,7 @@ public class Pasajero extends Persona{
 		 this.getViaje().getTransportadora().setDinero(dineroTransportadora - 50);
 		 
 	}
+	
 	
 	/**
 	 * Método que nos sirve para calcular la bonificación que le hace una transportadora a un pasajero por su fidelidad a la trasnportadora 
