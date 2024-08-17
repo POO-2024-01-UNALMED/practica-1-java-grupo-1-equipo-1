@@ -30,7 +30,7 @@ import gestorAplicacion.usuarios.Pasajero;
 
 public class Tiempo implements Serializable{
 	
-	private static final long serialVersionUID = 1;
+	private static final long serialVersionUID = 1L;
 	
 	private transient Timer timer;
 	
@@ -47,7 +47,7 @@ public class Tiempo implements Serializable{
 	public static int meses = 1;
 	public static int año = 2024;
 	public static Dia diaNombre;
-	public static Tiempo principal;
+	public static ArrayList<Tiempo> principal = new ArrayList<>();
 	
 	// Atributos para formato de salida
 	public static String salidaFecha = (Tiempo.dias + "/" + Tiempo.meses + "/" + Tiempo.año);
@@ -57,7 +57,7 @@ public class Tiempo implements Serializable{
 	public Tiempo() {
         timer = new Timer();
         iniciar(); // Iniciar el temporizador automáticamente al crear una instancia de SistemaDeTiempo
-        Tiempo.principal = this;
+        Tiempo.principal.add(this);
     }
 	
     // Serialización y Deserialización

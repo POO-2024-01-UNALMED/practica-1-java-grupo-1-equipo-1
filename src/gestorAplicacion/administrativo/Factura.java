@@ -15,7 +15,7 @@ import java.util.ArrayList;
 	
 	//Atributos 
 	
-	private static final long serialVersionUID = 3L;
+	private static final long serialVersionUID = 1L;
 	private int numeroFactura; // Número de la factura (Identificador)
 	private double total; // Valor total de la factura
 	public static int totalFacturas; // Número total de obejtos factura creados

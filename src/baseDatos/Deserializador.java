@@ -5,89 +5,56 @@ import gestorAplicacion.usuarios.*;
 import gestorAplicacion.tiempo.*;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 public class Deserializador {
-	
-    public static void main(String[] args) {
-
-    }
-    public static void deserializar() throws IOException, ClassNotFoundException {     // Método para deserializar todos los objetos
-        // VIAJES TERMINADOS - HISTORIAL
-        try (FileInputStream fileInputStream1 = new FileInputStream("src\\baseDatos\\temp\\historialViajes.txt");
-             ObjectInputStream objectInputStream1 = new ObjectInputStream(fileInputStream1)) {
-            
-            ArrayList<Viaje> historialViajes = (ArrayList<Viaje>) objectInputStream1.readObject();
-            Terminal.setHistorial(historialViajes);
-            System.out.println("Viajes terminados deserializados correctamente.");
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error al deserializar viajes terminados: " + e.getMessage());
-        }
-
-        // VIAJES SIN TERMINAR - EN CURSO
-        try (FileInputStream fileInputStream2 = new FileInputStream("src\\baseDatos\\temp\\viajesEnCurso.txt");
-             ObjectInputStream objectInputStream2 = new ObjectInputStream(fileInputStream2)) {
-            
-            ArrayList<Viaje> viajesEnCurso = (ArrayList<Viaje>) objectInputStream2.readObject();
-            Terminal.setViajesEnCurso(viajesEnCurso);
-            System.out.println("Viajes en curso deserializados correctamente.");
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error al deserializar viajes en curso: " + e.getMessage());
-        }
-
-        // VIAJES SIN SALIR - DISPONIBLES
-        try (FileInputStream fileInputStream3 = new FileInputStream("src\\baseDatos\\temp\\viajesDisponibles.txt");
-             ObjectInputStream objectInputStream3 = new ObjectInputStream(fileInputStream3)) {
-            
-            ArrayList<Viaje> viajesDisponibles = (ArrayList<Viaje>) objectInputStream3.readObject();
-            Terminal.setViajes(viajesDisponibles);
-            System.out.println("Viajes disponibles deserializados correctamente.");
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error al deserializar viajes disponibles: " + e.getMessage());
-        }
-
-        // OBJETO TIEMPO - PERMITE GUARDAR EL PROGRESO DEL TIEMPO
-        try (FileInputStream fileInputStream4 = new FileInputStream("src\\baseDatos\\temp\\tiempoObjetos.txt");
-             ObjectInputStream objectInputStream4 = new ObjectInputStream(fileInputStream4)) {
-            
-            Tiempo.principal = (Tiempo) objectInputStream4.readObject();
-            System.out.println("Objeto Tiempo deserializado correctamente.");
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error al deserializar objeto Tiempo: " + e.getMessage());
-        }
-
-        // ESPACIO PARA AGREGAR LAS OTRAS DESERIALIZACIONES 
-        
-     // Objetos tipo Persona
-        try (FileInputStream fileInputStream5 = new FileInputStream("src\\baseDatos\\temp\\personas.txt");
-             ObjectInputStream objectInputStream5 = new ObjectInputStream(fileInputStream5)) {
-            
-            ArrayList<Persona> deserializarPersonas = (ArrayList<Persona>) objectInputStream5.readObject();
-            Persona.setSerializarPersonas(deserializarPersonas);
-            System.out.println("personas deserializadas correctamente.");
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error al deserializar personas: " + e.getMessage());
-        }
-        
-     // Objetos tipo Factura
-        try (FileInputStream fileInputStream6 = new FileInputStream("src\\baseDatos\\temp\\facturas.txt");
-             ObjectInputStream objectInputStream6 = new ObjectInputStream(fileInputStream6)) {
-            
-            ArrayList<Factura> deserializarFacturas = (ArrayList<Factura>) objectInputStream6.readObject();
-            Factura.setFacturasCreadas(deserializarFacturas);
-            System.out.println("facturas deserializadas correctamente.");
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error al deserializar facturas: " + e.getMessage());
-        }
-        
+	   
+    private static <T> void deserializar (ArrayList <T> listas, String nombre) {
+    	
+    	File archivo = new File("");
+    	FileInputStream fi;
+    	ObjectInputStream ob;
+    	
+    	try {
+    		File path = new File (archivo.getAbsolutePath() + "/src/baseDatos/temp/" + nombre + ".txt");
+    		fi = new FileInputStream (path);
+    		ob = new ObjectInputStream (fi);
+    		
+    		if (listas != null) {
+    			listas.addAll((ArrayList<T>) ob.readObject());
+    		}
+    		
+    		ob.close();
+    		fi.close();
+    		
+    	} catch (FileNotFoundException e) {
+    		System.out.println("Archivo no encontrado");
+    	} catch (IOException e) {
+    		System.out.println("Error inicialización");
+    	} catch (ClassNotFoundException e) {
+    		e.printStackTrace();
+    	}        
 
     }
     
-    
+    public static void deserializarListas() {
+		Deserializador.deserializar(Transportadora.getTransportadoras(), "transportadora");// OBJETOS DE TRANSPORTADORA
+		Deserializador.deserializar(Terminal.getListaTerminales(), "terminal");           // OBJETO TERMINAL
+		Deserializador.deserializar(Terminal.getHistorial(), "historialViajes");         // VIAJES TERMINADOS - HISTORIAL
+		Deserializador.deserializar(Terminal.getViajesEnCurso(), "viajesEnCurso");      // VIAJES SIN TERMINAR - EN CURSO
+		Deserializador.deserializar(Terminal.getViajes(), "viajesDisponibles");        // VIAJES SIN SALIR - DISPONIBLES
+		Deserializador.deserializar(Tiempo.principal, "tiempoObjetos");               // OBJETOS TIEMPO - PERMITE GUARDAR EL PROGRESO DEL TIEMPO
+		Deserializador.deserializar(Persona.getSerializarPersonas(), "personas");    // OBJETOS TIPO PERSONA
+		Deserializador.deserializar(Factura.getFacturasCreadas(), "facturas");      // OBJETOS TIPO FACTURA
+		Deserializador.deserializar(Taller.getListaTalleres(), "talleres");        // OBJETOS TIPO TALLER
+		Deserializador.deserializar(Vehiculo.getListaVehiculos(), "vehiculos");   // OBJETOS TIPO VEHICULO
+    }
     
     public static void cargarEstado() {
         try (BufferedReader reader = new BufferedReader(new FileReader("src\\baseDatos\\temp\\estado_tiempo.txt"))) {

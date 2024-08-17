@@ -1,4 +1,5 @@
 package gestorAplicacion.administrativo;
+import java.io.Serializable;
 import java.util.ArrayList;
 import gestorAplicacion.usuarios.Conductor;
 import gestorAplicacion.usuarios.Pasajero;
@@ -13,8 +14,9 @@ import gestorAplicacion.constantes.Incentivo;
  *  pago y monitorear a los distintos vehículos asociados a esta.
  */
 
-public class Transportadora implements Incentivo {
+public class Transportadora implements Incentivo, Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	// Atributos
 	
 	private String nombre; // Nombre de la transportadora

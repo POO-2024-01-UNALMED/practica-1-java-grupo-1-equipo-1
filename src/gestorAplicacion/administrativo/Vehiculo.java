@@ -4,6 +4,7 @@ import gestorAplicacion.usuarios.Conductor;
 import gestorAplicacion.usuarios.Mecanico;
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.Serializable;
 import java.lang.Math;
 
 /**
@@ -11,8 +12,9 @@ import java.lang.Math;
  * Esta clase representa a un vehículo, el cual tiene atributos como integridad, placa, modelo, precio, velocidad promedio, tipo, capacidad, conductores y transportadora asociada
  * nos servirá para realizar los distintos viajes, asociar un conductor a un vehículo, reparar el vehículo y venderlo.
  */
-public class Vehiculo {
+public class Vehiculo implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	// Atributos
 	
     private boolean estado; //Disponibilidad para viajar del vehiculo
@@ -27,6 +29,7 @@ public class Vehiculo {
     private Transportadora transportadora; // Transportadora asociada al vehículo
     private Mecanico mecanicoAsociado; // Mecanico que reparara el vehiculo
     private int fechaHoraReparacion; // Fecha en la que terminara la reparacion
+    private static ArrayList <Vehiculo> listaVehiculos = new ArrayList <Vehiculo> (); // Se almacenan los vehiculos cuando se crean, se utiliza para el serializado. 
 
 
     
@@ -49,6 +52,7 @@ public class Vehiculo {
         this.tipo = tipo;
         this.capacidad = tipo.getCapacidad();
         this.transportadora = transportadora;
+        Vehiculo.listaVehiculos.add(this);
     }
     
 	public Vehiculo() {
@@ -328,6 +332,15 @@ public class Vehiculo {
 		this.fechaHoraReparacion = fechaReparacion;
 	}
 
+	// Método getter para obtener la lista de vehículos
+	public static ArrayList<Vehiculo> getListaVehiculos() {
+	    return Vehiculo.listaVehiculos;
+	}
+
+	// Método setter para establecer la lista de vehículos
+	public static void setListaVehiculos(ArrayList<Vehiculo> nuevaLista) {
+	    Vehiculo.listaVehiculos = nuevaLista;
+	}
 
   //Testeos
   	/*public static void main (String[] Args) {

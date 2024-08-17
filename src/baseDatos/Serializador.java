@@ -5,87 +5,54 @@ import gestorAplicacion.usuarios.*;
 import gestorAplicacion.tiempo.*;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 public class Serializador {
-    public static void main(String[] args) {
-    	
-    }
-	public static void serializar() throws IOException {
-        // VIAJES TERMINADOS - HISTORIAL
-        try (FileOutputStream fileOutputStream1 = new FileOutputStream("src\\baseDatos\\temp\\historialViajes.txt");
-             ObjectOutputStream objectOutputStream1 = new ObjectOutputStream(fileOutputStream1)) {
-            
-            objectOutputStream1.writeObject(Terminal.getHistorial());
-            System.out.println("Viajes terminados serializados correctamente.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // VIAJES SIN TERMINAR - EN CURSO
-        try (FileOutputStream fileOutputStream2 = new FileOutputStream("src\\baseDatos\\temp\\viajesEnCurso.txt");
-             ObjectOutputStream objectOutputStream2 = new ObjectOutputStream(fileOutputStream2)) {
-            
-            objectOutputStream2.writeObject(Terminal.getViajesEnCurso());
-            System.out.println("Viajes en curso serializados correctamente.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // VIAJES SIN SALIR - DISPONIBLES
-        try (FileOutputStream fileOutputStream3 = new FileOutputStream("src\\baseDatos\\temp\\viajesDisponibles.txt");
-             ObjectOutputStream objectOutputStream3 = new ObjectOutputStream(fileOutputStream3)) {
-            
-            objectOutputStream3.writeObject(Terminal.getViajes());
-            System.out.println("Viajes disponibles serializados correctamente.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // OBJETOS TIEMPO - PERMITE GUARDAR EL PROGRESO DEL TIEMPO
-        try (FileOutputStream fileOutputStream4 = new FileOutputStream("src\\baseDatos\\temp\\tiempoObjetos.txt");
-             ObjectOutputStream objectOutputStream4 = new ObjectOutputStream(fileOutputStream4)) {
-            
-            objectOutputStream4.writeObject(Tiempo.principal);
-            System.out.println("Objeto Tiempo serializado correctamente.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-     // Objetos tipo Persona
-        try (FileOutputStream fileOutputStream5 = new FileOutputStream("src\\baseDatos\\temp\\personas.txt");
-             ObjectOutputStream objectOutputStream5 = new ObjectOutputStream(fileOutputStream5)) {
-            
-            objectOutputStream5.writeObject(Persona.getSerializarPersonas());
-            System.out.println("Personas serializadas correctamente.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-     // Objetos tipo Factura
-        try (FileOutputStream fileOutputStream6 = new FileOutputStream("src\\baseDatos\\temp\\facturas.txt");
-             ObjectOutputStream objectOutputStream6 = new ObjectOutputStream(fileOutputStream6)) {
-            
-            objectOutputStream6.writeObject(Factura.getFacturasCreadas());
-            System.out.println("Facturas serializadas correctamente.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     
-        
-        
-    // OBJETOS TERMINAL
-    
-    // OBJETOS VEHICULO
-    
-    // OBJETOS ...
-
+	private static void serializar(ArrayList< ?extends Object > listas, String nombre) {
+		
+		File archivo = new File("");
+		
+		try {
+			File path = new File(archivo.getAbsolutePath()+"/src/baseDatos/temp/" + nombre + ".txt");
+			
+			FileOutputStream f = new FileOutputStream(path);
+			ObjectOutputStream o = new ObjectOutputStream(f);
+			
+			o.writeObject(listas);
+			
+			o.close();
+			f.close();
+		}
+		catch(FileNotFoundException e){
+			System.out.println("No se encuentra el archivo");
+		}
+		catch(IOException e){
+			System.out.println("Error inicialización");
+		}
 	}
 	
-    // Métodos de Guardar y Cargar Estado Estático
+	public static void serializarListas(){
+		Serializador.serializar(Transportadora.getTransportadoras(), "transportadora");// OBJETOS DE TRANSPORTADORA
+		Serializador.serializar(Terminal.getListaTerminales(), "terminal");           // OBJETO TERMINAL
+		Serializador.serializar(Terminal.getHistorial(), "historialViajes");         // VIAJES TERMINADOS - HISTORIAL
+	    Serializador.serializar(Terminal.getViajesEnCurso(), "viajesEnCurso");      // VIAJES SIN TERMINAR - EN CURSO
+	    Serializador.serializar(Terminal.getViajes(), "viajesDisponibles");        // VIAJES SIN SALIR - DISPONIBLES
+	    Serializador.serializar(Tiempo.principal, "tiempoObjetos");               // OBJETOS TIEMPO - PERMITE GUARDAR EL PROGRESO DEL TIEMPO
+	    Serializador.serializar(Persona.getSerializarPersonas(), "personas");    // OBJETOS TIPO PERSONA
+	    Serializador.serializar(Factura.getFacturasCreadas(), "facturas");      // OBJETOS TIPO FACTURA
+	    Serializador.serializar(Taller.getListaTalleres(), "talleres");        // OBJETOS TIPO TALLER
+	    Serializador.serializar(Vehiculo.getListaVehiculos(), "vehiculos");   // OBJETOS TIPO VEHICULO
+	}
+		
+	
+    // Métodos de Guardar y Cargar Estado Estático - - - - Utlizado para actualizar los atributos de clase de Tiempo, debido a que implementa la Clase Timer que no es Serializable. 
     public static void guardarEstado() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src\\baseDatos\\temp\\estado_tiempo.txt"))) {
             writer.write("minutos=" + Tiempo.minutos);
@@ -104,7 +71,7 @@ public class Serializador {
             writer.newLine();
             writer.write("salidaHora=" + Tiempo.salidaHora);
         } catch (IOException e) {
-            e.printStackTrace();
+        	System.out.println("Error inicialización");
         }
     }
 

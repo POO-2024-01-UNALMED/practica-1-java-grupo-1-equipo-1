@@ -11,7 +11,7 @@ public class Main_Principal {
 	
     static {
     	//Serializador.objetosBase();
-    	//manejarDeserializacion();
+    	//Deserializador.deserializarListas();
     }
     
 	public static void main(String[] args) {
@@ -48,32 +48,15 @@ public class Main_Principal {
                 case 6:
                     continuar = false;
                     System.out.println("Saliendo del sistema...");
-                    //System.out.println(Tiempo.principal.cancel()); // Fin del Tiempo
-                    //manejarSerializacion();
+                    //System.out.println(Tiempo.principal.); // Fin del Tiempo
+                    //Serializador.serializarListas();;
                     break;
                 default:
                     System.out.println("Opción no válida, Marque de 1,6");
             }
         }
-
         scanner.close();
-    }
-	
-    private static void manejarSerializacion() {
-        try {
-            Serializador.serializar();
-        } catch (Exception e) {
-            System.err.println("Error en el proceso de serialización: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    
-    private static void manejarDeserializacion() {
-        try {
-            Deserializador.deserializar();;
-        } catch (Exception e) {
-            System.err.println("Error en el proceso de deserializar: " + e.getMessage());
-            e.printStackTrace();
-        }
+        
+        
     }
 }

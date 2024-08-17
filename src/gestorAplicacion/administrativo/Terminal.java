@@ -16,7 +16,7 @@ import gestorAplicacion.usuarios.Persona;
 
 public class Terminal implements Serializable{
 	
-	private static final long serialVersionUID = 1;
+	private static final long serialVersionUID = 1L;
 	
 	// Atributos
 	private String nombre; // Nombre de la terminal
@@ -29,6 +29,7 @@ public class Terminal implements Serializable{
 	private static ArrayList <Viaje> viajes = new ArrayList<>(); // viajes disponibles en la terminal
 	private static ArrayList <Viaje> historial = new ArrayList<>(); // viajes realizados por la terminal
 	private static ArrayList <Viaje> viajesEnCurso = new ArrayList<>(); // viajes en curso en la terminal
+	private static ArrayList <Terminal> listaTerminales = new ArrayList <Terminal> ();
 	private ArrayList <Destino> destinos = new ArrayList<>(); // destinos de la terminal 
 	private ArrayList <Vehiculo> vehiculosTerminal;
 	public final double comision; // comision que cobra la terminal a las transportadoras por dejarle prestar sus servicios, está será por cada viaje que realicen las transportadoras
@@ -519,6 +520,29 @@ public static void setHistorial(ArrayList <Viaje> historial) {
 		return Terminal.historial;
 	
 	}
+	
+	/**
+	 * Establece o modifica la lista de Terminales.
+	 * @param terminal, lista con terminales.
+	 */
+	
+public static void setListaTerminales(ArrayList <Terminal> terminal) {
+		
+		Terminal.listaTerminales = terminal;
+		
+	}
+	
+	/**
+	 * Método para obtener la lista de las terminales.
+	 * @retunr lista de terminales creadas.
+	 */
+	
+	public static ArrayList<Terminal> getListaTerminales(){
+		
+		return Terminal.listaTerminales;
+	
+	}
+	
 	
 	/**
 	 * Establece o modifica la lista de destinos asociado a la terminal.

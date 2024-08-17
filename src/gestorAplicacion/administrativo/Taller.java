@@ -1,5 +1,7 @@
 package gestorAplicacion.administrativo;
 import gestorAplicacion.tiempo.Tiempo;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.usuarios.Mecanico;
@@ -11,7 +13,9 @@ import gestorAplicacion.usuarios.Mecanico;
  *  reparar los vehículos y para venderlos.
  */
 
-public class Taller {
+public class Taller implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	// Atributos 
 	
