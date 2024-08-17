@@ -1,6 +1,6 @@
 package gestorAplicacion.administrativo;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.io.Serializable;
 import gestorAplicacion.usuarios.Conductor;
 import gestorAplicacion.usuarios.Pasajero;
 import gestorAplicacion.constantes.Destino;
@@ -17,6 +17,7 @@ import gestorAplicacion.constantes.Incentivo;
 public class Transportadora implements Incentivo, Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
 	// Atributos
 	
 	private String nombre; // Nombre de la transportadora
@@ -34,6 +35,8 @@ public class Transportadora implements Incentivo, Serializable {
 	private Persona dueño; // Dueño de la transportadora
 	private final double estrellas; // Permite calcular la tarifa de los buses
 	private static ArrayList <Transportadora> transportadoras = new ArrayList <Transportadora>();
+	private String fechaPago; // Fecha en la cual la transportadora le paga a la termina
+	private int numeropagosRealizados; 
 	
 	//Constructor con todos los parámetros
 	
@@ -123,8 +126,6 @@ public class Transportadora implements Incentivo, Serializable {
 				
 	}
 	
-	
-	
 	/**
 	 * Metodo para despedir conductor al cual se le remueve el vehiculo,
 	 *  se le remueve de la lista de conductores de la transportadora y 
@@ -157,7 +158,6 @@ public class Transportadora implements Incentivo, Serializable {
 			} else return "No es posible porque el conductor tiene viajes programados";
 				
 			}
-	
 	
 	/**
 	 * Metodo que nos permite saber si una transportadora puede efectuar el respectivo pago a la terminal
@@ -321,6 +321,27 @@ public class Transportadora implements Incentivo, Serializable {
 		
 	}
 	
+	public void pagarConductor(Conductor c) {
+		
+		
+			if (c.getHorario().size() == 0) { // O no tiene viajes asignados o ya los completó, tenemos en cuenta que si los tiene asignados
+				
+				c.bonificacion();
+				c.descuento();
+				c.aumentarDinero(800000);
+				
+				
+			
+			
+			numeropagosRealizados++;
+			
+			
+		}
+		
+		
+		
+	}
+	
 	/**
 	 * Aumenta el dinero de la transportadora
 	 * @param dinero a aumentar
@@ -367,7 +388,8 @@ public class Transportadora implements Incentivo, Serializable {
 	}
 	
 	/**
-	 * Método que nos sirve para calcular el descuento que le hace la terminal a la transportadora por el cobro que esta le efectúa
+	 * Método que nos sirve para calcular el descuento que le hace la terminal a la transportadora por el cobro que esta le efectúa y a su vez 
+	 * se cancela dicho cobro
 	 * 
 	 */
 	
@@ -390,11 +412,13 @@ public class Transportadora implements Incentivo, Serializable {
 			case 0:
 				
 				this.dinero -= valorPagar;
+				this.terminal.setDinero(this.getTerminal().getDinero()+ valorPagar);
 				break;
 				
 			case 1:
 				
 				this.dinero -= (valorPagar - (valorPagar*0.05));
+				this.terminal.setDinero(this.getTerminal().getDinero()+ valorPagar);
 				break;
 			
 			
@@ -406,6 +430,14 @@ public class Transportadora implements Incentivo, Serializable {
 		
 		
 		
+	}
+	
+	public String mostrarConductRegistrados() {
+		String mensaje = "";
+		for (Persona conductor : this.conductoresRegistrados) {
+			mensaje += "Nombre: " + conductor.getNombre()+ "  #Cedula: " + conductor.getId() + "\n";
+		}
+		return mensaje;
 	}
 	
 	/**
@@ -434,14 +466,6 @@ public class Transportadora implements Incentivo, Serializable {
 		
 		this.getTerminal().setDinero(dineroTerminal-dineroaRestarTerminal);
 		
-	}
-	
-	public String mostrarConductRegistrados() {
-		String mensaje = "";
-		for (Persona conductor : this.conductoresRegistrados) {
-			mensaje += "Nombre: " + conductor.getNombre()+ "  #Cedula: " + conductor.getId() + "\n";
-		}
-		return mensaje;
 	}
 	
 	/**
@@ -774,4 +798,21 @@ public class Transportadora implements Incentivo, Serializable {
 		
 		Transportadora.transportadoras = transportadoras;
 	}
+	
+	public String getFechaPago() {
+		
+		return this.fechaPago;
+	}
+	
+	public void setFechaPago(String fechaPago) {
+		
+		this.fechaPago = fechaPago;
+	}
+	
+	public int getNumeroDePagosRealizados() {
+		
+		return numeropagosRealizados;
+	}
+	
+	
 }

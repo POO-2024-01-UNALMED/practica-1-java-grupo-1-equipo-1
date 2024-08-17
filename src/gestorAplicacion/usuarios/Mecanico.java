@@ -99,11 +99,14 @@ public class Mecanico extends Persona{
 	
 	@Override
 	public void descuento() {
-	
+		
+		double dineroTransportadora = this.getTaller().getTransportadora().getDinero();
 		
 		if (this.getHistorialReparados().size()> 10) {
 			
 			this.dinero += Incentivo.incentivoBase;
+			
+			this.getTaller().getTransportadora().setDinero(dineroTransportadora - Incentivo.incentivoBase);
 			
 		}	
 	}

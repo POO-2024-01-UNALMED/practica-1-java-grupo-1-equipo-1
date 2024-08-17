@@ -1,8 +1,8 @@
 package gestorAplicacion.usuarios;
 import java.util.ArrayList;
+import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.administrativo.Viaje;
 import gestorAplicacion.administrativo.Factura;
-import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.administrativo.Terminal;
 import gestorAplicacion.administrativo.Transportadora;
 import gestorAplicacion.constantes.Incentivo;
@@ -19,7 +19,7 @@ public abstract class Persona implements Incentivo, Serializable {
 	
 	 // Atributos
 	
-	private static final long serialVersionUID = 2L;
+	private static final long serialVersionUID = 1L;
 	protected int id; // Id de la persona
 	protected int edad; // Edad de la persona
 	protected String nombre; // Nombre de la persona
@@ -382,7 +382,7 @@ public abstract class Persona implements Incentivo, Serializable {
 		
 		// Se elimina el viaje de la transportadora que se encargaba de este
 		
-		for (Transportadora transportadora : terminal.getTransportadoras()){
+		for (Transportadora transportadora : Terminal.getTransportadoras()){
 			
 			if (transportadora.getDestinoAsignado().equals(viajeReservado.getLlegada())) {
 				

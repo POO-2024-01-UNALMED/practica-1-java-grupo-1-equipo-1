@@ -22,6 +22,7 @@ public class Conductor extends Persona {
 	private Vehiculo vehiculo; // Vehículo asociado al conductor
 	private Transportadora transportadora; // Transportadora asociada al conductor 
 	private ArrayList <Viaje> horario = new ArrayList<>(); // Horario de viajes del conductor
+	private static ArrayList <Conductor> conductores = new ArrayList<>();
 	
 	public Conductor() { //Se agrego para facilitar las pruebas
 	}
@@ -155,12 +156,18 @@ public class Conductor extends Persona {
 		
 		if (this.horario.size() == 0) {
 			if (vehiculo.getConductores().size() >= 2) {
-				this.vehiculo.quitarConductor(this.nombre);
+				this.vehiculo.quitarConductor(this.id);
 				this.vehiculo=null;	
 			}
 		}
 		
 		
+	}
+	
+	public void eliminarVehiculo() {
+		
+		this.vehiculo.quitarConductor(this.id);
+		this.vehiculo = null;
 	}
 	
 	@Override
@@ -180,9 +187,10 @@ public class Conductor extends Persona {
 	@Override
 	public void descuento() {
 		
-		double valorAseguradora = 200; // Acordar valor
+		double valorAseguradora = 20000; 
 		
 		this.dinero -= valorAseguradora;
+		this.getTransportadora().setDinero(this.getTransportadora().getDinero() + valorAseguradora);
 		
 	}
 	
@@ -361,6 +369,14 @@ public class Conductor extends Persona {
 		
 		return horario;
 	}
+	
+	public static ArrayList <Conductor> getConductores(){
+		
+		
+		return Conductor.conductores;
+	}
+	
+	
 	
 	
 	

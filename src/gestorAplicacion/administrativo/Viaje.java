@@ -16,7 +16,7 @@ import gestorAplicacion.tiempo.Tiempo;
 
 public class Viaje implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1;
 	
 	// Atributos
     private Terminal terminal; // Terminal

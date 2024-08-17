@@ -16,7 +16,7 @@ import gestorAplicacion.usuarios.Persona;
 
 public class Terminal implements Serializable{
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1;
 	
 	// Atributos
 	private String nombre; // Nombre de la terminal
@@ -29,12 +29,13 @@ public class Terminal implements Serializable{
 	private static ArrayList <Viaje> viajes = new ArrayList<>(); // viajes disponibles en la terminal
 	private static ArrayList <Viaje> historial = new ArrayList<>(); // viajes realizados por la terminal
 	private static ArrayList <Viaje> viajesEnCurso = new ArrayList<>(); // viajes en curso en la terminal
-	private static ArrayList <Terminal> listaTerminales = new ArrayList <Terminal> ();
 	private ArrayList <Destino> destinos = new ArrayList<>(); // destinos de la terminal 
 	private ArrayList <Vehiculo> vehiculosTerminal;
 	public final double comision; // comision que cobra la terminal a las transportadoras por dejarle prestar sus servicios, está será por cada viaje que realicen las transportadoras
 	private Destino ubicacion; // ubicación de la terminal 
-	private Persona administrador; // Administrador de la terminal 
+	private Persona administrador; // Administrador de la terminal
+	private static ArrayList <Terminal> listaTerminales = new ArrayList <Terminal> ();
+	private static ArrayList <Factura> facturas; // Facturas asociadas a la terminal, tener en cuenta quu solo hay una
 	
 	// Constructor Clase Terminal
 	public Terminal(String nombre, double dinero, int capacidadVehiculos, int cantidadSedes, int cantidadVehiculos, ArrayList <Transportadora> transportadoras,
@@ -44,11 +45,11 @@ public class Terminal implements Serializable{
 		this.dinero = dinero;
 		this.capacidadVehiculos = capacidadVehiculos;
 		this.cantidadVehiculos = cantidadVehiculos;
-		this.transportadoras = transportadoras;
+		Terminal.transportadoras = transportadoras;
 		Terminal.viajes = viajes;
 		this.reservas = new ArrayList<Viaje>();
-		this.historial = new ArrayList<Viaje>();
-		this.viajesEnCurso = viajesEnCurso;
+		Terminal.historial = new ArrayList<Viaje>();
+		Terminal.viajesEnCurso = viajesEnCurso;
 		this.destinos = destinos;
 		this.comision = comision;
 		this.ubicacion = ubicacion;
@@ -65,11 +66,11 @@ public class Terminal implements Serializable{
 		this.dinero = dinero;
 		this.capacidadVehiculos = capacidadVehiculos;
 		this.cantidadVehiculos = cantidadVehiculos;
-		this.transportadoras = transportadoras;
+		Terminal.transportadoras = transportadoras;
 		Terminal.viajes = new ArrayList<Viaje>();
 		this.reservas = new ArrayList<Viaje>();
-		this.historial = new ArrayList<Viaje>();
-		this.viajesEnCurso = new ArrayList<Viaje>();
+		Terminal.historial = new ArrayList<Viaje>();
+		Terminal.viajesEnCurso = new ArrayList<Viaje>();
 		this.destinos = destinos;
 		this.comision = comision;
 		this.ubicacion = ubicacion;
@@ -107,7 +108,7 @@ public class Terminal implements Serializable{
 
 	
 	public Viaje programarViaje (Destino destino, Vehiculo vehiculo, String fecha, String hora, Destino salida) {  // Teniendo en cuenta el tipo de Vehiculo --- Habra otro que tiene en cuenta cierta capacidad y el costo del vaje
-		for (Transportadora t : this.getTransportadoras()) { 		// Verfificar las transportadoras que ofrecen este destino 
+		for (Transportadora t : Terminal.getTransportadoras()) { 		// Verfificar las transportadoras que ofrecen este destino 
 			for (Destino d : t.getDestinos()) {
 				if (d.equals(destino)) {
 					for (Vehiculo v : t.getVehiculos()) {		    // Verfificar el tipo de vehiculo requerido
@@ -522,29 +523,6 @@ public static void setHistorial(ArrayList <Viaje> historial) {
 	}
 	
 	/**
-	 * Establece o modifica la lista de Terminales.
-	 * @param terminal, lista con terminales.
-	 */
-	
-public static void setListaTerminales(ArrayList <Terminal> terminal) {
-		
-		Terminal.listaTerminales = terminal;
-		
-	}
-	
-	/**
-	 * Método para obtener la lista de las terminales.
-	 * @retunr lista de terminales creadas.
-	 */
-	
-	public static ArrayList<Terminal> getListaTerminales(){
-		
-		return Terminal.listaTerminales;
-	
-	}
-	
-	
-	/**
 	 * Establece o modifica la lista de destinos asociado a la terminal.
 	 * @param destinos, lista con los destinos asociados a la terminal.
 	 */
@@ -604,6 +582,30 @@ public static void setListaTerminales(ArrayList <Terminal> terminal) {
 		return this.comision;
 		
 		
+	}
+	
+	public static ArrayList <Factura> getFacturas(){
+		
+		
+	return Terminal.facturas;
+			
+	}
+	
+	public static void setListaTerminales(ArrayList <Terminal> terminal) {
+
+		Terminal.listaTerminales = terminal;
+
+	}
+
+	/**
+	 * Método para obtener la lista de las terminales.
+	 * @retunr lista de terminales creadas.
+	 */
+
+	public static ArrayList<Terminal> getListaTerminales(){
+
+		return Terminal.listaTerminales;
+
 	}
 	
 }

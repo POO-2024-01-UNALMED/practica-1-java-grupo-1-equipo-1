@@ -1,10 +1,10 @@
 package gestorAplicacion.administrativo;
 import gestorAplicacion.constantes.TipoVehiculo;
+import java.io.Serializable;
 import gestorAplicacion.usuarios.Conductor;
 import gestorAplicacion.usuarios.Mecanico;
 import java.util.ArrayList;
 import java.util.Random;
-import java.io.Serializable;
 import java.lang.Math;
 
 /**
@@ -13,8 +13,9 @@ import java.lang.Math;
  * nos servirá para realizar los distintos viajes, asociar un conductor a un vehículo, reparar el vehículo y venderlo.
  */
 public class Vehiculo implements Serializable {
-
+	
 	private static final long serialVersionUID = 1L;
+
 	// Atributos
 	
     private boolean estado; //Disponibilidad para viajar del vehiculo
@@ -28,8 +29,9 @@ public class Vehiculo implements Serializable {
     private ArrayList<Conductor> conductores; // Lista de conductores asociados al vehículo
     private Transportadora transportadora; // Transportadora asociada al vehículo
     private Mecanico mecanicoAsociado; // Mecanico que reparara el vehiculo
-    private int fechaHoraReparacion; // Fecha en la que terminara la reparacion
+    private int fechaHoraReparacion; // Fecha en la que terminara la reparacion}private static ArrayList <Vehiculo> listaVehiculos = new ArrayList <Vehiculo> (); // Se almacenan los vehiculos cuando se crean, se utiliza para el serializado. 
     private static ArrayList <Vehiculo> listaVehiculos = new ArrayList <Vehiculo> (); // Se almacenan los vehiculos cuando se crean, se utiliza para el serializado. 
+
 
 
     
@@ -136,11 +138,11 @@ public class Vehiculo implements Serializable {
      * Quita un conductor asociado al vehículo.
      * @param nombre, el nombre del conductor a quitar.
      */
-    public void quitarConductor(String nombre) {
+    public void quitarConductor(int id) {
         for (Conductor i : conductores) {
-            if (i.getNombre().equals(nombre)) {
+            if (i.getId() == id) { // Se cambia a getId ya que es un identificador único, pueden haber conductores con el mismo nombre
                 conductores.remove(i);
-                System.out.println(nombre + " ha sido eliminado de los conductores asociados");
+                System.out.println(i.getNombre() + " ha sido eliminado de los conductores asociados");
                 return;
             }
         }
@@ -331,16 +333,17 @@ public class Vehiculo implements Serializable {
 	public void setFechaHoraReparacion(int fechaReparacion) {
 		this.fechaHoraReparacion = fechaReparacion;
 	}
-
+	
 	// Método getter para obtener la lista de vehículos
-	public static ArrayList<Vehiculo> getListaVehiculos() {
-	    return Vehiculo.listaVehiculos;
-	}
+		public static ArrayList<Vehiculo> getListaVehiculos() {
+		    return Vehiculo.listaVehiculos;
+		}
 
-	// Método setter para establecer la lista de vehículos
-	public static void setListaVehiculos(ArrayList<Vehiculo> nuevaLista) {
-	    Vehiculo.listaVehiculos = nuevaLista;
-	}
+		// Método setter para establecer la lista de vehículos
+		public static void setListaVehiculos(ArrayList<Vehiculo> nuevaLista) {
+		    Vehiculo.listaVehiculos = nuevaLista;
+		}
+
 
   //Testeos
   	/*public static void main (String[] Args) {
