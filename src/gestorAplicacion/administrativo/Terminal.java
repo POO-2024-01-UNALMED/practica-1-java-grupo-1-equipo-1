@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.constantes.TipoVehiculo;
+import gestorAplicacion.tiempo.Tiempo;
 import gestorAplicacion.usuarios.Conductor;
 import gestorAplicacion.usuarios.Pasajero;
 import gestorAplicacion.usuarios.Persona;
@@ -112,7 +113,17 @@ public class Terminal implements Serializable{
 	    }
 	    
 	    return transportadorasConDestino;
-	}	
+	}
+	
+	public static ArrayList<Transportadora> transportadorasViajeDisponible(Destino destinoSeleccionado) {
+		ArrayList<Transportadora> transportadorasPorDestino = new ArrayList<>();
+		for (Transportadora transportadora : Terminal.getTransportadoras()) {
+            if (transportadora.getDestinos().contains(destinoSeleccionado)) {
+                transportadorasPorDestino.add(transportadora);
+            }
+		}
+		return transportadorasPorDestino;
+	}
 	
 	public static ArrayList<Viaje> viajesDisponibles(){
 		return new ArrayList<>();
@@ -253,26 +264,28 @@ public class Terminal implements Serializable{
 		return viajes;
 		
 	}
-
-	public Viaje programarViaje (Destino destino, Vehiculo vehiculo, String fecha, String hora, Destino salida) {  // Teniendo en cuenta el tipo de Vehiculo --- Habra otro que tiene en cuenta cierta capacidad y el costo del vaje
+	
+	// Programación por Vehiculo ()
+	
+	public Viaje programarViaje (Destino llegada, Vehiculo vehiculo, String fecha, String hora, Destino salida) {  // Teniendo en cuenta el tipo de Vehiculo --- Habra otro que tiene en cuenta cierta capacidad y el costo del vaje
 		for (Transportadora t : Terminal.getTransportadoras()) { 		// Verfificar las transportadoras que ofrecen este destino 
 			for (Destino d : t.getDestinos()) {
-				if (d.equals(destino)) {
+				if (d.equals(llegada)) {
 					for (Vehiculo v : t.getVehiculos()) {		    // Verfificar el tipo de vehiculo requerido
 						if(vehiculo.getTipo().equals(v.getTipo()) && v.disponibilidad()) {
 							Conductor conductorSeleccionado = null;  // Se pueden agregar mas condiciones para esta selección 
 							for (Conductor c : v.getConductores()) { // Añadir la verificacion de la lista de horario del conductor para verificar loa disponiblidad Formato String "8:30 4/08/2024"
-								String cadena = hora+fecha;
-								if (c.getEstadoLicencia() ) {  // && c.getHorario().contains(cadena) Cambiar la manera de asignar el horario al conductor automaticamente esta cadena cuando se crea un viaje puede ser un metodo
+								if (c.getEstadoLicencia() ) {  
 									conductorSeleccionado = c;
 									break;  // Selecciona el primer conductor disponible
 								}
 							}
 							
 							if (conductorSeleccionado != null) {
-								Viaje nuevoViaje = new Viaje(t.getTerminal(), hora, fecha, v, conductorSeleccionado, d, null, salida); // Creacion del Viaje // --- plantear la posibilidad de eliminar el dia del constructor y que las transportadoras tengan un destino como ubicacion
-								return nuevoViaje;  //El viaje no se perdera pues este ya tiene apunadores desde la clase Vehiculo, Transportadora, Conductor, Viaje. 
+								Viaje nuevoViaje = new Viaje(t.getTerminal(), hora, fecha, v, conductorSeleccionado, llegada, salida); // Creacion del Viaje // --- plantear la posibilidad de eliminar el dia del constructor y que las transportadoras tengan un destino como ubicacion
 								
+								return nuevoViaje;  //El viaje no se perdera pues este ya tiene apunadores desde la clase Vehiculo, Transportadora, Conductor, Viaje. 
+
 							} else {return null; } // Hay un problema con el conductor asignado --- Volver a programar automaticamente 
 
 						} else {return null; } // No hay del mismo tipo de vehiculo
@@ -283,6 +296,40 @@ public class Terminal implements Serializable{
 		}
 		return null; // No hay ese destino
 	}
+	
+	// Programacion por Conductor ()
+	
+	public static Viaje programarViaje(Destino llegada, Conductor conductor, TipoVehiculo tipoVehiculo, String fecha, String hora, Destino salida) {
+	    // Itera sobre todas las transportadoras disponibles en el terminal
+	    for (Transportadora t : Terminal.getTransportadoras()) {
+	        // Verifica si la transportadora ofrece el destino seleccionado
+	        if (t.getDestinos().contains(llegada)) {
+	            // Verifica si la transportadora tiene vehículos disponibles del tipo solicitado en la fecha y hora dadas
+	            for (Vehiculo v : t.getVehiculos()) {
+	                if (v.getTipo().equals(tipoVehiculo) && v.disponibilidad()) {
+	                    // Verifica la disponibilidad del conductor en la fecha y hora dadas
+	                    if (t.conductoresDisponibles(fecha, tipoVehiculo).contains(conductor)) {
+	                        // Si el conductor tiene licencia válida
+	                        if (conductor.getEstadoLicencia()) {
+	                            // Crea y retorna el nuevo viaje
+	                            Viaje nuevoViaje = new Viaje(t.getTerminal(), hora, fecha, v, conductor, llegada, salida);
+	                            return nuevoViaje;
+	                        } else {
+	                            return null;
+	                        }
+	                    } else {
+	                        return null;
+	                    }
+	                }
+	            }
+	            return null;
+	        }
+	    }
+	    return null;
+	}
+
+	
+	
 	
 	public void cancelarViaje(Viaje viaje) {  // Puede devolver un String con una retroalimentacion de la operacion que se realizo
 		 ArrayList <Pasajero> pasajeros = viaje.getPasajeros(); // Debemos tener en cuenta que el viaje debe ser reprogramado, reubicar sus pasajeros o la devolucion del dinero. 
@@ -338,11 +385,6 @@ public class Terminal implements Serializable{
 		return capacidad;
 	}
 	
-	public void realizarReserva() {   // Se pasara a la clase pasajero, pues tiene sentido que sea el pasajero quien realiza la reserva, es decir yo como objeto psajero soy el que conozco a donde quiero ir 
-		
-		// Implementación pendiente
-		
-	}
 	
 	/**
 	 * Deniega una reserva eliminando el viaje asociado y actualizando la lista de reservas.
@@ -418,14 +460,6 @@ public class Terminal implements Serializable{
 		
 	}
 	
-	public String estadoViaje() { // Se paso a a la clase viaje pues yo como objeto viaje soy el que conozco mi estado 
-		
-		// Implementación pendiente
-		
-		return null;
-		
-		
-	}
 	
 	public void asignarViaje() {
 		
@@ -462,7 +496,46 @@ public class Terminal implements Serializable{
 		
 		this.vehiculosTerminal.remove(vehiculosTerminal.indexOf(vehiculo));
 	}
-			
+	
+	/**
+	 * Genera una lista de fechas disponibles a partir de la fecha actual.
+	 * Este método calcula una serie de fechas a partir de la fecha actual guardada en {@link Tiempo#salidaFecha}.
+	 * La lista contiene fechas desde el día siguiente hasta un máximo de seis días después. 
+	 * La fecha actual se extrae de {@link Tiempo#salidaFecha}, que debe estar en el formato "dd/MM/yyyy".
+	 * 
+	 * @return Un {@link ArrayList} de {@link String} que contiene las fechas disponibles en el formato "dd/MM/yyyy".
+	 *         La lista incluye la fecha actual más los siguientes seis días.
+	 * 
+	 * @throws NumberFormatException Si {@link Tiempo#salidaFecha} no está en el formato correcto "dd/MM/yyyy".
+	 */
+	
+	public static ArrayList <String> fechasDisponibles () {
+		ArrayList<String> fechas = new ArrayList<>();
+		
+    	String [] fechapartes = Tiempo.salidaFecha.split("/");
+    	
+    	int dia = Integer.parseInt(fechapartes[0]);
+    	int mes = Integer.parseInt(fechapartes[1]);
+    	int año = Integer.parseInt(fechapartes[2]);
+    	
+    	int i = 1;
+    	
+    	while (i<7) {
+	    	dia += 1;
+	    	if (dia > 30) {
+	    		dia = 0;
+	    		mes++;
+	    		if (mes > 12) {
+	    			mes = 0;
+	    			año++;
+	    		}
+	    	}
+	    	String fechaLlegada = dia + "/" + mes + "/" + año;
+	    	fechas.add(fechaLlegada);
+	    	i++;
+    	} 
+        return fechas;
+}
 	
 	// METODOS GETTERS Y SETTERS
 	

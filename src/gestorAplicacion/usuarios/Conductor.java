@@ -337,6 +337,26 @@ public void vincularYDesvincular(Conductor c,Viaje v) {
 		
 		
 	}
+
+/**
+ * Metodo para saber  un viaje al conductor que invoco el metodo
+ * y desvincular el viaje al conductor que va de parametro
+ * @param conductor, conductor al que se le desvinculara el viaje
+ * @param viaje, el viaje que se le desvinculara al conductor de parametro
+ * */
+
+public boolean disponibleFecha(String fecha) {
+	boolean disponible = true;
+	if (this.getHorario()!=null) {
+		for (Viaje viaje : this.getHorario()){
+			if (viaje.getFecha().equals(fecha)) {
+				disponible = false;
+				return disponible;
+			}
+		}
+	}
+	return disponible;
+}
 	
 	// METODOS GETTERS Y SETTERS
 	

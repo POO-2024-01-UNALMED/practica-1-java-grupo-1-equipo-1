@@ -1,6 +1,10 @@
 package baseDatos;
 
 import gestorAplicacion.administrativo.*;
+import gestorAplicacion.constantes.Destino;
+import gestorAplicacion.constantes.Dia;
+import gestorAplicacion.constantes.TipoPasajero;
+import gestorAplicacion.constantes.TipoVehiculo;
 import gestorAplicacion.usuarios.*;
 import gestorAplicacion.tiempo.*;
 
@@ -74,11 +78,6 @@ public class Serializador {
         	System.out.println("Error inicialización");
         }
     }
-
-	public static void objetosBase() {
-		new Tiempo();
-		
-	}
 }
 
         

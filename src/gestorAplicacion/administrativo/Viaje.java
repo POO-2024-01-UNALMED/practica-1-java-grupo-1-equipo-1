@@ -41,7 +41,7 @@ public class Viaje implements Serializable {
 
     
     // Constructor de la clase Viaje
-    public Viaje(Terminal terminal, String hora, String fecha, Vehiculo vehiculo, Conductor conductor, Destino llegada, Dia dia, Destino salida) {
+    public Viaje(Terminal terminal, String hora, String fecha, Vehiculo vehiculo, Conductor conductor, Destino llegada, Destino salida) {
         this.terminal = terminal;
     	this.id = Viaje.totalViajes;
         this.hora = hora;
@@ -49,10 +49,10 @@ public class Viaje implements Serializable {
         this.vehiculo = vehiculo;
         this.conductor = conductor;
         this.llegada = llegada;
-        this.dia = dia;
         this.salida = salida;
-        this.estado = false; // Solo se coloca en true mientras el viaje esta en curso
-    	this.distancia = calcularDistancia(salida, llegada);  // Se deja con parametros a proposito para su implementacion en otras funcionalidades 
+        this.estado = false;   // Solo se coloca en true mientras el viaje esta en curso
+        this.dia = Tiempo.calcularDia(fecha);  // Desde la clase Tiempo se determina que dia de la semana es segun la fecha. 
+    	this.distancia = Viaje.calcularDistancia(salida, llegada);  // Se deja con parametros a proposito para su implementacion en otras funcionalidades 
         this.duracion = calcularDuracion();
         this.tarifa = calcularTarifa();
         this.horaLlegada = calcularHoraLlegada();
@@ -68,7 +68,7 @@ public class Viaje implements Serializable {
 	 * Método para obtener la distancia del Viaje.
 	 * @return double, la distancia entre dos lugares.
 	 */
-    public double calcularDistancia(Destino salida ,Destino llegada) {
+    public static double calcularDistancia(Destino salida ,Destino llegada) {
     	// Coordenadas de la Salida (INICIO)
     	double x1 = salida.getEjeX();
     	double y1 = salida.getEjeY();
@@ -166,10 +166,9 @@ public class Viaje implements Serializable {
                     costoPorMinuto = 200;
                     break;
                 case BUS:
-                    total = vehiculo.getTransportadora().getEstrellas()*llegada.getDistancia()*50;
+                    total = vehiculo.getTransportadora().getEstrellas()*this.calcularDistancia(getSalida(), getLlegada())*50;
                     return total;
                 default:
-                    System.out.println("Tipo de vehículo no válido.");
                     return -1; // Valor de retorno inválido
             }
             // Calcular la tarifa total
@@ -198,23 +197,21 @@ public class Viaje implements Serializable {
      */
     
     public String validacion(Viaje viaje, ArrayList<Viaje> viajesEnCurso,  ArrayList<Viaje> viajes) {
-    	if (this.getTerminal().getViajes().contains(this)) {
-    		this.getTerminal().getViajesEnCurso().add(this);
+    	String cadena;
+    	if (Terminal.getViajes().contains(this)) {
+    		Terminal.getViajesEnCurso().add(this);
     		this.setEstado(true);
-    		if (this.getTerminal().getViajesEnCurso().contains(viaje)) {
-    			System.out.println("El viaje está en curso.");
-				this.getTerminal().getViajes().remove(this);
-				System.out.println("Viajes:   " + this.getTerminal().getViajes());  // Lista de Viajes Terminal
-				System.out.println("En curso: " + this.getTerminal().getViajesEnCurso()); // Lista de Viajes en Curso
-				System.out.println("Historial: " + this.getTerminal().getHistorial()); // Lista de Viajes en Curso
-    			return "El viaje está en curso.";
+    		if (Terminal.getViajesEnCurso().contains(viaje)) {
+    			cadena = ("El viaje está en curso.");
+    			Terminal.getViajes().remove(this);
+    			return cadena;
             } else {
-            	System.out.println("El viaje no está en curso.");
-                return "Viaje perdido...";
+            	cadena = ("Viaje perdido");
+                return cadena;
                 }
-            } else {
-            	System.out.println("El viaje no está en curso.");
-                return "El viaje no está en curso.";
+        } else {
+        	cadena = ("El viaje no está en curso.");
+            return cadena;
             }
     }
     
@@ -237,14 +234,13 @@ public class Viaje implements Serializable {
     
     public void programacionAutomatica() { // Metodo necesario para manejar una continuidad
     	this.setEstado(false); // Fin del Viaje el estado cambia
-    	if (this.getTerminal().getViajesEnCurso().contains(this)) {
-    		this.getTerminal().getHistorial().add(this);
-    		this.getTerminal().getViajesEnCurso().remove(this);
-    		new Viaje(this.getTerminal(), this.getHora(), this.ajusteFecha(), this.getVehiculo(), this.getConductor(), this.getLlegada(), this.getDia(), this.getSalida());
-    		System.out.println("Fecha Nueva: " + this.ajusteFecha() + " Fecha Actual: " +Tiempo.salidaFecha);
+    	if (Terminal.getViajesEnCurso().contains(this)) {
+    		Terminal.getHistorial().add(this);
+    		Terminal.getViajesEnCurso().remove(this);
+    		new Viaje(this.getTerminal(), this.getHora(), this.ajusteFecha(2), this.getVehiculo(), this.getConductor(), this.getLlegada(), this.getSalida());
     	} else { // Siginifica que el viaje fue cancelado antes de Salir.
 			Terminal.getViajes().remove(this);
-    		new Viaje(this.getTerminal(), this.getHora(), this.ajusteFecha(), this.getVehiculo(), this.getConductor(), this.getLlegada(), this.getDia(), this.getSalida());
+    		new Viaje(this.getTerminal(), this.getHora(), this.ajusteFecha(2), this.getVehiculo(), this.getConductor(), this.getLlegada(), this.getSalida());
     	}
     	
     }
@@ -253,7 +249,7 @@ public class Viaje implements Serializable {
      * Ajusta la fecha de llegada del objeto sumándole dos días.
      * 
      * Este método toma la fecha de llegada actual, la descompone en sus partes constituyentes
-     * (día, mes, año), incrementa el día en 2 y ajusta el mes y el año en caso de que se
+     * (día, mes, año), incrementa el día en x dias y ajusta el mes y el año en caso de que se
      * sobrepase el número de días o meses. Finalmente, construye y retorna la nueva fecha
      * en formato "día/mes/año".
      *
@@ -263,7 +259,7 @@ public class Viaje implements Serializable {
      * @return La nueva fecha de llegada ajustada en el formato "día/mes/año".
      */
     
-    public String ajusteFecha() {
+    public String ajusteFecha(int dias) {
     	
     	String [] fechapartes = this.getFechaLlegada().split("/");
     	
@@ -271,7 +267,7 @@ public class Viaje implements Serializable {
     	int mes = Integer.parseInt(fechapartes[1]);
     	int año = Integer.parseInt(fechapartes[2]);
     	
-    	dia += 2;
+    	dia += dias;
 
     	if (dia > 30) {
     		dia = 0;
@@ -440,7 +436,7 @@ public class Viaje implements Serializable {
 		mensaje = "Fecha del viaje: " + getFecha() + " Destino: " + getLlegada() + "Id: " + getId();
 		return mensaje;
 	}
-    
+	
     // Getters y Setters
     
     /**

@@ -31,15 +31,9 @@ import gestorAplicacion.usuarios.Pasajero;
 public class Tiempo implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	private transient Timer timer;  // Se coloca el modificador transient debido a que la clase Timer no es Serializable
 	
-	private transient Timer timer;
-	
-	// Atributos para el Tiempo
-	public static ArrayList<Viaje> viajes; // Solo va para las pruebas
-	public static ArrayList<Viaje> viajesEnCurso; // Solo va para las pruebas
-	public static ArrayList<Viaje> historial; // Solo va para las pruebas
-	
-	
+	// Atributos para el Tiempo	
 	public static int minutos = 0;
 	public static int horas = 1;
 	public static int dias = 1;
@@ -53,14 +47,16 @@ public class Tiempo implements Serializable{
 	public static String salidaFecha = (Tiempo.dias + "/" + Tiempo.meses + "/" + Tiempo.año);
 	public static String salidaHora = (Tiempo.horas + ":" + Tiempo.minutos);
 	
-	// Métodos
+	// Constructor
 	public Tiempo() {
         timer = new Timer();
         iniciar(); // Iniciar el temporizador automáticamente al crear una instancia de SistemaDeTiempo
         Tiempo.principal.add(this);
     }
 	
-    // Serialización y Deserialización
+	// Métodos
+	
+    // Serialización y Deserialización Personalizada, Necesario para volver a iniciar el contador y actualizar los Atributos Staticos.
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         timer = new Timer();
@@ -73,13 +69,73 @@ public class Tiempo implements Serializable{
         Serializador.guardarEstado(); // Guardar estado estático
     }
     
+	/**
+	 * Imprime la fecha y hora actual en un formato completo para propósitos de prueba.
+	 * 
+	 * Este método muestra en la consola:
+	 * - La fecha en formato "día/mes/año"
+	 * - La hora en formato "hora:minutos"
+	 * - El día de la semana correspondiente
+	 * 
+	 */
+	public static String mostrarTiempo() {
+	    // Construye la cadena de texto con el formato deseado
+	    String tiempo = String.format(
+	        "\n----------------------------------------------------------------------------------------------\n" +
+	        "Fecha: %d/%d/%d     Hora: %d:%d   Hoy es: %s\n" +
+	        "----------------------------------------------------------------------------------------------",
+	        dias, meses, año, horas, minutos, diaNombre
+	    );
+
+	    // Retorna la cadena construida
+	    return tiempo;
+	}
+	
+	/**
+	 * Calcula el día de la semana para una fecha dada.
+	 * 
+	 * @param fecha La fecha en formato "dd/MM/yyyy".
+	 * @return El día de la semana correspondiente a la fecha.
+	 */
+	public static Dia calcularDia(String fecha) {
+    	
+    	String [] fechapartes = fecha.split("/");
+    	
+    	int dia = Integer.parseInt(fechapartes[0]);
+    	int mes = Integer.parseInt(fechapartes[1]);
+    	int año = Integer.parseInt(fechapartes[2]);
+    	
+        // Fecha base: 1 de enero de 2024 es un domingo
+        int baseDia = 1;
+        int baseMes = 1;
+        int baseAño = 2024;
+        Dia diaBase = Dia.LUN;
+
+        // Calcular el número de días totales desde la fecha base
+        int diasDesdeBase = 0;
+
+        // Añadir días por años completos
+        diasDesdeBase += (año - baseAño) * 360;  // Suponiendo 30 días por mes y 12 meses por año
+
+        // Añadir días por meses completos del año actual
+        diasDesdeBase += (mes - baseMes) * 30;
+
+        // Añadir días del mes actual
+        diasDesdeBase += (dia - baseDia);
+
+        // Determinar el día de la semana
+        Dia[] diasSemana = Dia.values();
+        int indiceDia = (diasDesdeBase + diaBase.ordinal()) % 7;
+        
+        return diasSemana[indiceDia];
+    }
+	
 	
 	/**
 	 * 
 	 * @return fecha y hora en minutos
 	 */
 	public static int getFechaHora () {
-		
 
 		return ((525600 * año) + (43800 * meses) + (10950 * semana) + (1440 + dias) + (60 * horas));
 	}
@@ -90,11 +146,6 @@ public class Tiempo implements Serializable{
 	}
 
     public void iniciar() {
-    	Tiempo.viajes = new ArrayList<Viaje>(); // Solo va para las pruebas
-    	Tiempo.viajesEnCurso = new ArrayList<Viaje>();// Solo va para las pruebas
-    	Tiempo.historial = new ArrayList<Viaje>();// Solo va para las pruebas
-    	
-    	
         // Programar una tarea que se ejecute cada cierto intervalo de tiempo
         timer.scheduleAtFixedRate(new TareaPeriodica(), 0, 1); // Tiempo de Iteraciones 1 Segundo = 1000 Milisegundos
         
@@ -113,12 +164,11 @@ public class Tiempo implements Serializable{
             calcularSalidaFecha(); // Formato de Salida Fecha
             
     		// Formatos de Salida
-    		//mostrarTiempo(); // Formato de salida General para pruebas 
             //comprobarUbicacion(); // Solo para pruebas 
     		
     		// Comprobaciones y actualizaciones
-        	//comprobarViajes(viajes); // Verifica el momento de salida de los viajes
-        	//comprobarViajesEnCurso(viajesEnCurso); // Verifica el momento de llegada de los viajes
+        	//comprobarViajes(Terminal.getViajes()); // Verifica el momento de salida de los viajes
+        	//comprobarViajesEnCurso(Terminal.getViajesEnCurso()); // Verifica el momento de llegada de los viajes
     		//comprobarHora();
             
 //            mecanicosDisponibles(); // Define que mecanicos tienen vehiculos  por reparar
@@ -132,7 +182,7 @@ public class Tiempo implements Serializable{
 
         }
     	
-    	/// Métodos Repetitivos
+    	// Métodos Repetitivos
     	
     	/**
     	 * Calcula el día de la semana basado en el número de días transcurridos desde una fecha base.
@@ -143,29 +193,25 @@ public class Tiempo implements Serializable{
     	 */
     	
         public static void calcularDia() {
-            // Fecha base: 1 de enero de 2024 es un domingo
-            int baseDia = 1;
+            int baseDia = 1;   // Fecha base: 1 de enero de 2024 es un Lunes
             int baseMes = 1;
             int baseAño = 2024;
             Dia diaBase = Dia.LUN;
 
-            // Calcular el número de días totales desde la fecha base
-            int diasDesdeBase = 0;
 
-            // Añadir días por años completos
+            int diasDesdeBase = 0;                   // Almacena el número de días totales desde la fecha base
+
             diasDesdeBase += (año - baseAño) * 360;  // Suponiendo 30 días por mes y 12 meses por año
 
-            // Añadir días por meses completos del año actual
-            diasDesdeBase += (meses - baseMes) * 30;
+            diasDesdeBase += (meses - baseMes) * 30; // Añadir días por meses completos del año actual
 
-            // Añadir días del mes actual
-            diasDesdeBase += (dias - baseDia);
+            diasDesdeBase += (dias - baseDia);       // Añadir días del mes actual
 
-            // Determinar el día de la semana
-            Dia[] diasSemana = Dia.values();
+            Dia[] diasSemana = Dia.values();         // Determinar el día de la semana
             int indiceDia = (diasDesdeBase + diaBase.ordinal()) % 7;
             Tiempo.diaNombre = diasSemana[indiceDia];
         }
+    	
     	
     	/**
     	 * Actualiza la hora, los minutos, los días, los meses y los años de acuerdo con el paso del tiempo.
@@ -195,49 +241,7 @@ public class Tiempo implements Serializable{
     	        }
     	    }
     	}
-
-
-    	
-    	/**
-    	 * Imprime la fecha y hora actual en un formato completo para propósitos de prueba.
-    	 * 
-    	 * Este método muestra en la consola:
-    	 * - La fecha en formato "día/mes/año"
-    	 * - La hora en formato "hora:minutos"
-    	 * - El día de la semana correspondiente
-    	 * 
-    	 */
-    	public static void mostrarTiempo() {
-        	System.out.println("\n----------------------------------------------------------------------------------------------");
-            System.out.print("Fecha: " + dias + "/" + meses + "/" + año + "     Hora: " + horas + ":" + minutos + "   Hoy es: " + diaNombre);
-            System.out.println("\n----------------------------------------------------------------------------------------------");
-    	}
-    	
-    	public static void comprobarUbicacion() {
-    		if (viajesEnCurso != null) {
-    			for (Viaje viaje : viajesEnCurso) {
-    				if(viaje.getSalida().getEjeX() == 0 && viaje.getSalida().getEjeY() == 0) {
-    					System.out.println("Viaje "+ viaje.getId() + "  Coor: " + viaje.ubicacion() + " Hora Actual " + Tiempo.salidaHora + "   Hora de Inicio " + viaje.getHora());
-    				}
-    				
-
-    			}
-    		}
-    	}
-    	
-    	public static boolean comprobarHora() {
-    		Boolean variable = false;
-    		if (viajes != null) {
-    			for (Viaje viaje : viajes) {
-    				if (Tiempo.salidaHora.equals(viaje)) {
-    					System.out.println("Salio el viaje" + Tiempo.salidaHora);
-    					variable = true ;
-    				}
-    			}
-    		}
-			return variable;
-    	}
-    	
+	
     	/**
     	 * Revisa una lista de viajes y verifica si alguno de ellos coincide con la fecha y hora actuales.
     	 * 
@@ -258,8 +262,8 @@ public class Tiempo implements Serializable{
             		if (viaje.getFecha().equals(Tiempo.salidaFecha)) {
             			//System.out.println("Viaje Próximo a Salir: " + viaje.getId());
             			if (viaje.getHora().equals(Tiempo.salidaHora)) {
-            				System.out.println("\nEl viaje " + viaje.getId()+ " Salio a la: " + Tiempo.salidaHora);
-            				viaje.validacion(viaje, viajesEnCurso, viajes);
+            				//System.out.println("\nEl viaje " + viaje.getId()+ " Salio a la: " + Tiempo.salidaHora);
+            				viaje.validacion(viaje, Terminal.getViajesEnCurso(), viajes);
             			}
             		}
             	}
@@ -286,7 +290,7 @@ public class Tiempo implements Serializable{
             		if (viaje.getFecha().equals(Tiempo.salidaFecha)) {
             			//System.out.println("Viaje Próximo a Salir: " + viaje.getId());
             			if (viaje.getHoraLlegada().equals(Tiempo.salidaHora)) {
-            				System.out.println("\nEl viaje " + viaje.getId()+ "Llego a la: " + Tiempo.salidaHora);
+            				//System.out.println("\nEl viaje " + viaje.getId()+ "Llego a la: " + Tiempo.salidaHora);
             				viaje.programacionAutomatica();
             			}
             		}
@@ -298,7 +302,7 @@ public class Tiempo implements Serializable{
     	 * 
     	 */
     	public static void mecanicosDisponibles () {
-    		
+    		// COMPROBAR SI ES NULL ANTES DE ENTRAR AL FOR
     		for (Mecanico i : Mecanico.getMecanicos()) {
     			
     			if (i.getVehiculosReparando().size() == 0 ) {
@@ -354,111 +358,15 @@ public class Tiempo implements Serializable{
     	 * Calcula la hora de salida basándose en la hora y minutos actuales.
     	 * 
     	 */
-    	public static void calcularSalidaHora(){
+    	private static void calcularSalidaHora(){
     		Tiempo.salidaHora = (Tiempo.horas + ":" + (Tiempo.minutos+1));
     	}
     	/**
     	 * Calcula la fecha de salida basándose en la hora y minutos actuales.
     	 * 
     	 */
-    	public static void calcularSalidaFecha(){
+    	private static void calcularSalidaFecha(){
     		Tiempo.salidaFecha = (Tiempo.dias + "/" + Tiempo.meses + "/" + Tiempo.año);
     	}
-    	
     }
-    
-    //////////////////////////////////////// ESPACIO DE PRUEBAS //////////////////////////////////////////
-    
-//    public static void main(String[] args) {
-//        new Tiempo(); // Crear una instancia de Tiempo automáticamente inicia el temporizador   /// IMPORTANTE 
-//
-//        ////////////////////////////////////////  OBJETOS PRUEBA ///////////////////////////////////////
-//        
-//        TipoVehiculo tipo1 = TipoVehiculo.TAXI;
-//        TipoVehiculo tipo2 = TipoVehiculo.VANS;
-//        
-//        //Pasajero P1 = new Pasajero(TipoPasajero.REGULAR, 33, 19, "José", 'm',new ArrayList <Viaje>(), 8, 9.9); 
-//
-//        Transportadora transportadora = new Transportadora();
-//        
-//        //Terminal terminal1 =  new Terminal("Terminal Principal", 1000000, 100, 1, 50, new ArrayList<Transportadora>(), viajes, Tiempo.viajesEnCurso, new ArrayList<Destino>(),8.0, Destino.MEDELLIN,P1);
-//        //Terminal terminal1 =  new Terminal("Terminal Principal", 1000000, 100, 1, 50, new ArrayList<Transportadora>(),new ArrayList<Destino>(), Destino.MEDELLIN);
-//        
-//        Vehiculo vehiculo1 = new Vehiculo("ABC123", "MARCOPOLO A800", 100, 50, tipo1, transportadora);
-//        Vehiculo vehiculo2 = new Vehiculo("ABC123", "FORD F600", 100, 60, tipo2, transportadora);
-//        
-//        
-//
-//        //////////////////////////////////////// DIAS OBJETOS PRUEBA /////////////////////////////////////// 
-//        Dia dia1 = Dia.LUN;
-//        Dia dia2 = Dia.MAR;
-//        Dia dia3 = Dia.MIER;
-//        Dia dia4 = Dia.JUE;
-//        Dia dia5 = Dia.VIE;
-//        Dia dia6 = Dia.SAB;
-//
-//        //////////////////////////////////////// DESTINO OBJETOS PRUEBA /////////////////////////////////////// 
-//        Destino destino1 = Destino.MEDELLIN;
-//        Destino destino2 = Destino.ANGELOPOLIS;
-//        Destino destino3 = Destino.LAGUAJIRA;
-//        Destino destino4 = Destino.BOGOTA;
-//        Destino destino5 = Destino.CALI;
-//
-//        //////////////////////////////////////// CONDUCTOR OBJETOS PRUEBA /////////////////////////////////////// 
-//        //Conductor conductor = new Conductor(88, 27, "Lucas", 'm', new ArrayList<Viaje>(), 1, 9000.8,true, vehiculo1, transportadora, new ArrayList<Viaje>());
-//        
-//        //////////////////////////////////////// VIAJES OBJETOS PRUEBA ///////////////////////////////////////  
-//        //Viaje viaje1 = new Viaje(terminal1,"1:5", "1/1/2024" , vehiculo1, conductor, destino4, dia6, destino1);
-//        //Viaje viaje2 = new Viaje(terminal1,"6:35", "2/1/2024" ,vehiculo2, conductor, destino2, dia2, destino2);
-//        //Viaje viaje3 = new Viaje(terminal1,"7:17", "2/1/2024" ,vehiculo1, conductor, destino1, dia3, destino5);
-//        //Viaje viaje4 = new Viaje(terminal1,"10:12", "2/1/2024" ,vehiculo2, conductor, destino2, dia4, destino1);
-//        //Viaje viaje5 = new Viaje(terminal1,"19:24", "4/1/2024" ,vehiculo1, conductor, destino1, dia5, destino2);
-//        //Viaje viaje6 = new Viaje(terminal1,"23:57", "4/1/2024" ,vehiculo2, conductor, destino3, dia6, destino1);
-//        
-//        //////////////////////////////////////// PRUEBA DE SALIDAS //////////////////////////////////////////
-//        
-//        //System.out.println("Pruebas calculo de Distancia en Plano");
-//        
-//        //System.out.println("\nViaje 1:" + viaje1.getSalida().name() + " ---- " + viaje1.getLlegada().name());
-//        //System.out.println("Duración: " + viaje1.getDuracion() + " Horas" + "\nDistancia: " + viaje1.calcularDistancia(viaje1.getSalida(), viaje1.getLlegada()) + " Km" + "\nVelocidad: " + viaje1.getVehiculo().getVelocidadPromedio() + "Km/h" +"\nTarifa: $" + viaje1.getTarifa() + "\nHora de Salida: " + viaje1.getHora() + " Fecha de Salida: " + viaje1.getFecha() + "   \nHora de LLegada: " + viaje1.getHoraLlegada() + " Fecha de Llegada: " + viaje1.getFechaLlegada());
-//
-//        //System.out.println("\nViaje 2:" + viaje2.getSalida().name() + " ---- " + viaje2.getLlegada().name()); 
-//        //System.out.println("Duración: " + viaje2.getDuracion() + " Horas" + "\nDistancia: " + viaje2.calcularDistancia(viaje2.getSalida(), viaje2.getLlegada()) + " Km" + "\nVelocidad: " + viaje2.getVehiculo().getVelocidadPromedio() + "Km/h" + "\nTarifa: $" + viaje2.getTarifa() + "\nHora de Salida: " + viaje2.getHora() + " Fecha de Salida: " + viaje2.getFecha() +"   \nHora de LLegada: " + viaje2.getHoraLlegada()+ " Fecha de Llegada: " + viaje2.getFechaLlegada());
-//
-//        //System.out.println("\nViaje 3:" + viaje3.getSalida().name() + " ---- " + viaje3.getLlegada().name());
-//        //System.out.println("Duración: " + viaje3.getDuracion() + " Horas" + "\nDistancia: " + viaje3.calcularDistancia(viaje3.getSalida(), viaje3.getLlegada()) + " Km" + "\nVelocidad: " + viaje3.getVehiculo().getVelocidadPromedio() + " Km/h" + "\nTarifa: $" + viaje3.getTarifa()+ "\nHora de Salida: " + viaje3.getHora() + " Fecha de Salida: " + viaje3.getFecha() +"   \nHora de LLegada: " + viaje3.getHoraLlegada()+ " Fecha de Llegada: " + viaje3.getFechaLlegada());
-//
-//        //System.out.println("\nViaje 4:" + viaje4.getSalida().name() + " ---- " + viaje4.getLlegada().name());
-//        //System.out.println("Duración: " + viaje4.getDuracion() + " Horas" + "\nDistancia: " + viaje4.calcularDistancia(viaje4.getSalida(), viaje4.getLlegada()) + " Km" + "\nVelocidad: " + viaje4.getVehiculo().getVelocidadPromedio() + " Km/h" + "\nTarifa: $" + viaje4.getTarifa()+ "\nHora de Salida: " + viaje4.getHora() + " Fecha de Salida: " + viaje4.getFecha() +"   \nHora de LLegada: " + viaje4.getHoraLlegada()+ " Fecha de Llegada: " + viaje4.getFechaLlegada());
-//
-//        //System.out.println("\nViaje 5:" + viaje5.getSalida().name() + " ---- " + viaje5.getLlegada().name());
-//        //System.out.println("Duración: " + viaje5.getDuracion() + " Horas" + "\nDistancia: " + viaje5.calcularDistancia(viaje5.getSalida(), viaje5.getLlegada()) + " Km" + "\nVelocidad: " + viaje5.getVehiculo().getVelocidadPromedio() + " Km/h" + "\nTarifa: $" + viaje5.getTarifa()+ "\nHora de Salida: " + viaje5.getHora() + " Fecha de Salida: " + viaje5.getFecha() +"   \nHora de LLegada: " + viaje5.getHoraLlegada()+ " Fecha de Llegada: " + viaje5.getFechaLlegada());
-//
-//        //System.out.println("\nViaje 6:" + viaje6.getSalida().name() + " ---- " + viaje6.getLlegada().name());
-//        //System.out.println("Duración: " + viaje6.getDuracion() + " Horas" + "\nDistancia: " + viaje6.calcularDistancia(viaje6.getSalida(), viaje6.getLlegada()) + " Km" + "\nVelocidad: " + viaje6.getVehiculo().getVelocidadPromedio() + " Km/h" + "\nTarifa: $" + viaje6.getTarifa()+ "\nHora de Salida: " + viaje6.getHora() + " Fecha de Salida: " + viaje6.getFecha() +"   \nHora de LLegada: " + viaje6.getHoraLlegada()+ " Fecha de Llegada: " + viaje6.getFechaLlegada());
-//
-//        
-//        //System.out.println("     ");
-//        //System.out.println("     "); 
-//        //System.out.println("     ");
-//        
-//        //System.out.println(Tiempo.salidaFecha);
-//        //System.out.println(Tiempo.salidaHora);
-//       // if(viaje1.getHora().equals(Tiempo.salidaHora)) {
-//       //	System.out.println("OK");
-//       //}
-//        
-//        ////////////////////////////////////////PRUEBA DE ENTRADAS //////////////////////////////////////////  
-//        //Scanner lectura = new Scanner (System.in);
-//        //System.out.println("Ingrese su nombre: ");
-//        //String nombre = lectura.next();
-//        //System.out.println("Ingrese su edad: ");
-//        //int edad = lectura.nextInt();
-//        //System.out.println("Su nombre es: " + nombre + " y su edad es: " + edad);
-//    	//System.out.println("\n----------------------------------------------------------------------------------------------");
-//        //System.out.print("Fecha: " + dias + "/" + meses + "/" + año + "     Hora: " + horas + ":" + minutos + "   Hoy es: " + diaNombre);
-//        //System.out.println("\n----------------------------------------------------------------------------------------------");
-//        
-//        //System.out.println(Tiempo.salidaFecha + "   " + Tiempo.salidaHora);
-//    }
 }

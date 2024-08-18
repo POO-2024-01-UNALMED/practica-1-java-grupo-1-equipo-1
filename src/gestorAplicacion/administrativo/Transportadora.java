@@ -3,9 +3,8 @@ import java.util.ArrayList;
 import java.io.Serializable;
 import gestorAplicacion.usuarios.Conductor;
 import gestorAplicacion.usuarios.Pasajero;
-import gestorAplicacion.constantes.Destino;
+import gestorAplicacion.constantes.*;
 import gestorAplicacion.usuarios.Persona;
-import gestorAplicacion.constantes.Incentivo;
 
 /**
  * 	Autores: Jaime Luis Osorio Gómez, Santiago Ochoa Cardona, Juan Camilo Marín Valencia, Johan Ramírez Marín, Jonathan David Osorio Restrepo.
@@ -553,8 +552,48 @@ public class Transportadora implements Incentivo, Serializable {
 		return mensaje;
 		
 	}
-
 	
+	 /**
+     * Devuelve una lista de conductores disponibles en una fecha específica y un vehiculo especifico.
+     * 
+     * @param fecha La fecha para verificar disponibilidad.
+     * @return Una lista de conductores disponibles en la fecha proporcionada.
+     */
+    public ArrayList<Conductor> conductoresDisponibles(String fecha, TipoVehiculo tipo) {
+        ArrayList<Conductor> conductoresDisponibles = new ArrayList<>();
+        
+        for (Conductor conductor : this.conductores) {
+        	if (conductor.getVehiculo().getTipo() == tipo) {
+	            if (conductor.disponibleFecha(fecha)) {             // Verificar si el conductor está disponible en la fecha dada
+	                conductoresDisponibles.add(conductor);         // Si el conductor está disponible, agregarlo a la lista de disponibles
+	            }
+        	}
+        }
+        return conductoresDisponibles;
+    }
+    
+    /**
+     * Devuelve una lista de tipos de vehículos disponibles en la transportadora.
+     * 
+     * Este método recorre todos los vehículos registrados en la transportadora y verifica
+     * si cada vehículo está disponible. Si un vehículo está disponible, su tipo se añade
+     * a una lista de tipos de vehículos disponibles, asegurando que no se repitan tipos.
+     * Finalmente, el método devuelve la lista de tipos de vehículos únicos que están disponibles.
+     * 
+     * @return Una lista de tipos de vehículos que están disponibles en la transportadora.
+     */
+	public  ArrayList<TipoVehiculo> tiposVehiculosDisponible() {
+        ArrayList<TipoVehiculo> tiposDisponibles = new ArrayList<>(); // Lista para almacenar los tipos de vehículos disponibles
+        for (Vehiculo vehiculo : this.getVehiculos()) {
+            if (vehiculo.disponibilidad()) {
+                TipoVehiculo tipo = vehiculo.getTipo();
+                if (!tiposDisponibles.contains(tipo)) {
+                    tiposDisponibles.add(tipo);
+                }
+            }
+        }
+        return tiposDisponibles;
+    }
 	// METODOS GETTERS Y SETTERS
 	
 	/**

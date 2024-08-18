@@ -10,7 +10,7 @@ import gestorAplicacion.usuarios.*;
 public class Main_Principal {
 	
     static {
-    	//Serializador.objetosBase();
+    	Serializador.objetosBase();
     	//Deserializador.deserializarListas();
     }
     
@@ -31,7 +31,7 @@ public class Main_Principal {
 
             switch (opcion) {
                 case 1:
-                    Main_1.ejecutar();
+                    //Main_1.ejecutar();
                     break;
                 case 2:
                 	Main_2.ejecutar();
