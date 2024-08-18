@@ -9,6 +9,19 @@ import gestorAplicacion.usuarios.*;
 
 public class Main_Principal {
 	
+	public static Scanner sc = new Scanner(System.in);
+	
+	 public static int readInt() {
+	    	
+	    	return sc.nextInt();
+	    }
+	    
+	    public static String readString() {
+	    	
+	    	return sc.nextLine();
+	    
+	    }
+	
     static {
     	Serializador.objetosBase();
     	//Deserializador.deserializarListas();
@@ -37,7 +50,8 @@ public class Main_Principal {
                 	Main_2.ejecutar();
                     break;
                 case 3:
-                	Main_3.ejecutar();
+                	
+                	//facturacionYFinanzas();
                     break;
                 case 4:
                 	Main_4.ejecutar();

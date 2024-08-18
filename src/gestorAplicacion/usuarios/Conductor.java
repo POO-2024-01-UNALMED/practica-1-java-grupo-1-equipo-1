@@ -23,6 +23,7 @@ public class Conductor extends Persona {
 	private Transportadora transportadora; // Transportadora asociada al conductor 
 	private ArrayList <Viaje> horario = new ArrayList<>(); // Horario de viajes del conductor
 	private static ArrayList <Conductor> conductores = new ArrayList<>();
+	private int numeroDePagosRecibidos;
 	
 	public Conductor() { //Se agrego para facilitar las pruebas
 	}
@@ -70,6 +71,7 @@ public class Conductor extends Persona {
 		this.vehiculo = vehiculo;
 		this.transportadora = transportadora;
 		this.horario = horario;
+		this.numeroDePagosRecibidos = this.getFacturas().size();
 	}
 	
 	
@@ -451,6 +453,13 @@ public boolean disponibleFecha(String fecha) {
 		
 		
 		return Conductor.conductores;
+	}
+	
+	public int getNumeropagosRecibidosConductor() {
+		
+		
+		return this.numeroDePagosRecibidos;
+		
 	}
 	
 	

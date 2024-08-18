@@ -22,7 +22,7 @@ public class Terminal implements Serializable{
 	
 	// Atributos
 	private String nombre; // Nombre de la terminal
-	private double dinero; // Dinero de la terminal 
+	private static double dinero; // Dinero de la terminal 
 	private int capacidadVehiculos; // capacidad de vehículos en la terminal
 	public static int cantidadSedes = 0; // cantidad de sedes de la terminal
 	private int cantidadVehiculos; // cantidad de vehículos que hay en la terminal 
@@ -474,6 +474,26 @@ public class Terminal implements Serializable{
 		
 		
 	}
+	
+	public static double calcularGanancias() {
+		
+		double ganancias = 0;
+		
+		for (Transportadora t: Terminal.getTransportadoras()) {
+			
+			if (t.verificarPagoTerminal()) {
+				
+				ganancias += t.RetornarValorAPagarTerminal();
+				
+			}
+			
+			
+		}
+		return ganancias;
+		
+		
+		
+	}
 	 
 	
 	/**
@@ -586,9 +606,9 @@ public class Terminal implements Serializable{
 	 * @param dinero, el dinero de la terminal.
 	 */
 	
-	public void setDinero (double dinero) {
+	public static void setDinero (double dinero) {
 		
-		this.dinero = dinero;
+		Terminal.dinero = dinero;
 		
 	}
 	
@@ -597,7 +617,7 @@ public class Terminal implements Serializable{
 	 * @return el dinero de la terminal.
 	 */
 	
-	public double getDinero() {
+	public static double getDinero() {
 		
 		return dinero;
 		

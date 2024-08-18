@@ -2,6 +2,7 @@ package uiMain;
 
 import java.util.ArrayList;
 
+import gestorAplicacion.administrativo.Factura;
 import gestorAplicacion.administrativo.Terminal;
 import gestorAplicacion.administrativo.Transportadora;
 import gestorAplicacion.administrativo.Viaje;
@@ -148,6 +149,26 @@ public interface Tablas {
         System.out.println("Transportadora:      " + viaje.getTransportadora());
         System.out.println("-------------------");
     }
+
+	public static void imprimirDetallesFactura(Factura factura) {
+		
+		System.out.println("---------------------------------------------------");
+        System.out.println("                  DETALLES DE LA FACTURA           ");
+        System.out.println("---------------------------------------------------");
+        System.out.printf("%-30s %s%n", "Número de Factura:", factura.getNumeroFactura());
+        System.out.printf("%-30s $%.2f%n", "Total:", factura.getTotal());
+        System.out.println("---------------------------------------------------");
+        System.out.printf("%-30s %s%n", "Pasajero:", factura.getPasajero().getNombre());
+        System.out.printf("%-30s %s%n", "Terminal:", factura.getTerminal().getNombre());
+        System.out.printf("%-30s %s%n", "Conductor:", factura.getConductor().getNombre());
+        System.out.printf("%-30s %s%n", "Viaje:", factura.getViaje().getLlegada());
+        System.out.printf("%-30s %s%n", "Vehículo:", factura.getVehiculo().getModelo());
+        System.out.printf("%-30s %s%n", "Transportadora:", factura.getTransportadora().getNombre());
+        System.out.println("---------------------------------------------------");
+	
+		
+	}
+
     
     public static void tablaDestinos(ArrayList<Destino> destinos) {
         // Determinar el máximo ancho necesario para los nombres de los destinos

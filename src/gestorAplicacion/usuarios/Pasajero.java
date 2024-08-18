@@ -116,11 +116,18 @@ public class Pasajero extends Persona{
 	 */
 	@Override
 	public void descuento() {
-		
+	
 		double dineroTransportadora = this.getViaje().getTransportadora().getDinero();
-		 this.viaje.setTarifa(viaje.getTarifa()-50);
-		 this.getViaje().getTransportadora().setDinero(dineroTransportadora - 50);
+		 double descuento = (this.viaje.getTarifa()-(viaje.getTarifa() * this.getTipo().getDescuento()));
+		 this.getViaje().getTransportadora().setDinero(dineroTransportadora - (viaje.getTarifa() * this.getTipo().getDescuento()));
+		 this.setDinero(this.getDinero()- descuento);
 		 
+	}
+	
+	public double obtenerValorDescontado() {
+		
+		double valorDescontado = (this.viaje.getTarifa()-(viaje.getTarifa() * this.getTipo().getDescuento()));
+		return valorDescontado;
 	}
 	
 	

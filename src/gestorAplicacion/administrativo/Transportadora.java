@@ -319,23 +319,50 @@ public class Transportadora implements Incentivo, Serializable {
 		
 	}
 	
+	public void pagarConductores() {
+		
+			for(Conductor c: this.getConductores()) {
+				
+				if (c.getHorario().size() == 0) { // O no tiene viajes asignados o ya los completó, tenemos en cuenta que si los tiene asignados
+					
+					c.bonificacion();
+					c.descuento();
+					c.aumentarDinero(800000);
+				
+				
+			}
+				
+		}
+			
+			numeropagosRealizados++;
+		
+		
+		
+	}
+	
 	public void pagarConductor(Conductor c) {
 		
 		
-			if (c.getHorario().size() == 0) { // O no tiene viajes asignados o ya los completó, tenemos en cuenta que si los tiene asignados
-				
-				c.bonificacion();
-				c.descuento();
-				c.aumentarDinero(800000);
-				
-				
+		if (verificarCumplimientoHorario(c)) { // O no tiene viajes asignados o ya los completó, tenemos en cuenta que si los tiene asignados se le paga al conductor por su cumplimiento de horario
 			
+			c.bonificacion();
+			c.descuento();
+			c.aumentarDinero(800000);
+
+	}
+	
+	
+	
+}
+	
+	public boolean verificarCumplimientoHorario(Conductor c) {
+		
+		if (c.getHorario().size() == 0) {
 			
-			numeropagosRealizados++;
-			
-			
+			return true;
 		}
 		
+		return false;
 		
 		
 	}

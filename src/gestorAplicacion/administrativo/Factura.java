@@ -29,6 +29,11 @@ import java.util.ArrayList;
 	private String fecha; // Fecha en la que adquirió la factura
 	public String trayecto; // Trayecto asociado a un pasajero, muestra el lugar de salida y el lugar de llegada del pasajero
 	private static ArrayList <Factura> facturasCreadas;
+	private int facturasTransportadora = 0;
+	private int facturasPasajeros = 0;
+	private int facturasConductores = 0;
+	private int facturaTalleres = 0;
+	private int facturaMecanico = 0;
 	
 	/**
 	 * Constructor para la clase factura, este objeto estará asociado con un pasajero
@@ -41,7 +46,7 @@ import java.util.ArrayList;
      * @param transportadora, la transportadora que genera la factura.
      */
 	
-	public Factura(double total, Pasajero pasajero, Terminal terminal, Conductor conductor, Viaje viaje, Vehiculo vehiculo, Transportadora transportadora, String trayecto) {
+	public Factura(double total, Pasajero pasajero, Terminal terminal, Conductor conductor, Viaje viaje, Vehiculo vehiculo, Transportadora transportadora) {
 		
 		numeroFactura = (int)(Math.random()*10000);
 		this.total = total;
@@ -55,7 +60,7 @@ import java.util.ArrayList;
 		pasajero.getFacturas().add(this);
 		totalFacturas++;
 		Factura.facturasCreadas.add(this);
-		
+		facturasPasajeros ++;
 	}
 	
 	
@@ -72,6 +77,7 @@ import java.util.ArrayList;
 		this.terminal = terminal;
 		totalFacturas++;
 		Factura.facturasCreadas.add(this);
+		facturasTransportadora++;
 		
 	}
 
@@ -91,6 +97,7 @@ import java.util.ArrayList;
 		this.vehiculo = vehiculo;
 		totalFacturas++;
 		Factura.facturasCreadas.add(this);
+		facturasConductores++;
 		
 	}
 	
@@ -109,6 +116,7 @@ import java.util.ArrayList;
 		this.taller = taller;
 		totalFacturas++;
 		Factura.facturasCreadas.add(this);
+		this.facturaMecanico++;
 			
 	}
 	
@@ -367,5 +375,32 @@ import java.util.ArrayList;
 		Factura.facturasCreadas = facturasCreadas;
 		
 	}
+	
+	public int getFacturasTransportadora() {
+		
+		return this.facturasTransportadora;
+	}
+	
+	public int getFacturasPasajero() {
+		
+		return this.facturasPasajeros;
+	}
+	
+	public int getFacturasConductores() {
+		
+		return this.facturasConductores;
+	}
+	
+	public int getFacturasTalleres() {
+		
+		return this.facturaTalleres;
+	}
+	
+	public int getFacturasMecanicos() {
+		
+		return this.facturaMecanico;
+	}
+	
+	
 	
 }
