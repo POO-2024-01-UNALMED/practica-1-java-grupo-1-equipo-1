@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import gestorAplicacion.constantes.Destino;
+import gestorAplicacion.constantes.TipoVehiculo;
 import gestorAplicacion.usuarios.Conductor;
 import gestorAplicacion.usuarios.Pasajero;
 import gestorAplicacion.usuarios.Persona;
@@ -112,6 +113,146 @@ public class Terminal implements Serializable{
 	    
 	    return transportadorasConDestino;
 	}	
+	
+	public static ArrayList<Viaje> viajesDisponibles(){
+		return new ArrayList<>();
+	}
+	
+	public static Viaje masRapido(Destino destinoDeseado, int cantidad, ArrayList<Viaje> viajes) {
+		//El tercer parametro son los viajes a los que puede acceder
+		Viaje viajeMasRapido = null;
+		
+		for (Viaje viaje : viajes) {
+	        // Verificar si el viaje tiene el destino deseado y suficientes asientos disponibles
+			
+	        if (viaje.getLlegada()==(destinoDeseado)
+	        		&&((viaje.getVehiculo().getTipo()==TipoVehiculo.VANS)
+	        		||(viaje.getVehiculo().getTipo()==TipoVehiculo.TAXI))) {
+	        	
+	            if (viajeMasRapido == null || viaje.getDuracion() < viajeMasRapido.getDuracion()) {
+	                viajeMasRapido = viaje;
+	                
+	            }
+	        }
+	    }
+		
+		return viajeMasRapido;
+	}
+	
+	public static Viaje masEconomico(Destino destinoDeseado, int cantidad, ArrayList<Viaje> viajes){
+		//el ultimo se refiere a los viajes a los que puede acceder desde el tipoPasajero
+	
+		Viaje viajeMasBarato = null;
+
+	   	//Suponiendo que "viajes" es una arrayList con los viajes que se 
+		//encuentran disponibles en la terminal y que "finalDestino" de transportadora es hacia donde se dirige
+
+		for (Viaje viaje : viajes) {
+	        // Verificar si el viaje tiene el destino deseado y suficientes asientos disponibles
+			
+	        if (viaje.getVehiculo().getTipo()==TipoVehiculo.BUS) {
+	        	
+	            if (viajeMasBarato == null || viaje.getTarifa() < viajeMasBarato.getTarifa()) {
+	                viajeMasBarato = viaje;
+	                
+	            }
+	        }
+	    }
+
+	    return viajeMasBarato;
+	}
+	
+	/**
+	 * Este método elige los viajes disponibles para regulares.
+	 * @param cantidad Asientos solicitados.
+	 * @param lugar donde llega
+	 * @return ArrayList con los viajes que se le pueden vender.
+	 */
+	
+	static public ArrayList<Viaje> viajesParaRegularesYDiscapacitados(int cantidad, Destino destino, TipoVehiculo vehiculo){
+		
+		ArrayList <Viaje> viajes = new ArrayList<>();
+		
+		for (Viaje viaje : Terminal.getViajes()) {
+
+			if(viaje==null) {
+				continue;
+			}
+			
+			if (viaje.verificarAsientos()>=cantidad && viaje.getLlegada()==destino
+					&& viaje.getVehiculo().getTipo()==vehiculo&&!viaje.getEstado()) {
+				viajes.add(viaje);
+			}
+		}
+		
+		return viajes;
+		
+	}
+	
+	/**
+	 * Este método elige los viajes disponibles para pasajeros VIPs.
+	 * @param cantidad Asientos solicitados.
+	 * @param lugar donde llega
+	 * @return ArrayList con los viajes que se le pueden vender.
+	 */
+	
+	static public ArrayList<Viaje> viajesParaVips(int cantidad, Destino destino, TipoVehiculo vehiculo){
+		
+		ArrayList <Viaje> viajes = new ArrayList<>(cantidad);
+		
+		for (Viaje viaje : Terminal.getViajes()) {
+
+			if(viaje==null) {
+				continue;
+			}
+			
+			if (viaje.verificarAsientos()>=cantidad && viaje.getVehiculo().getTipo()==vehiculo
+					&&viaje.getLlegada()==destino && vehiculo != TipoVehiculo.ESCALERA&&!viaje.getEstado()) {
+				viajes.add(viaje);
+			}
+		}
+		
+		return viajes;
+		
+	}
+	
+    public static boolean esDestinoValido(String input) {
+        for (Destino destino : Destino.values()) {
+            if (destino.name().equals(input)) {
+                return true;
+            }
+        }
+        return false;
+    }
+	
+	/**
+	 * Este método elige los viajes disponibles para pasajeros estudiantes.
+	 * @param cantidad Asientos solicitados.
+	 * @return ArrayList con los viajes que se le pueden vender.
+	 */
+	
+	static public ArrayList<Viaje> viajesParaEstudiantes(Destino destino, TipoVehiculo vehiculo){
+		
+		ArrayList <Viaje> viajes = new ArrayList<>();
+		
+		for (Viaje viaje : Terminal.getViajes()) {
+			
+			if(viaje==null) {
+				continue;
+			}
+			
+			if (viaje.verificarAsientos()>=1 && viaje.getVehiculo().getTipo()==vehiculo
+				&&viaje.getLlegada()==destino && vehiculo!=TipoVehiculo.TAXI&&!viaje.getEstado()) {
+				viajes.add(viaje);
+				
+			}
+			
+
+		}
+		
+		return viajes;
+		
+	}
 
 	public Viaje programarViaje (Destino destino, Vehiculo vehiculo, String fecha, String hora, Destino salida) {  // Teniendo en cuenta el tipo de Vehiculo --- Habra otro que tiene en cuenta cierta capacidad y el costo del vaje
 		for (Transportadora t : Terminal.getTransportadoras()) { 		// Verfificar las transportadoras que ofrecen este destino 
