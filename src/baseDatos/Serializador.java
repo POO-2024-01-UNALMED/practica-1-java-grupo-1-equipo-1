@@ -103,7 +103,7 @@ public class Serializador {
 
 		terminal.setTransportadoras(transportadoras);
 
-	    ArrayList<Destino> destinos1 = new ArrayList<>();
+		ArrayList<Destino> destinos1 = new ArrayList<>();
 	    destinos1.add(Destino.ANGELOPOLIS);
 	    destinos1.add(Destino.BARRANQUILLA);
 	    destinos1.add(Destino.CALI);
@@ -111,18 +111,18 @@ public class Serializador {
 	    transportadoraExpress.setDestinos(destinos1);
 
 	    ArrayList<Destino> destinos2 = new ArrayList<>();
-	    destinos2.add(Destino.ANGELOPOLIS);
-	    destinos2.add(Destino.BARRANQUILLA);
-	    destinos2.add(Destino.CALI);
-	    destinos2.add(Destino.BARBOSA);
+	    destinos2.add(Destino.GUARNE);
+	    destinos2.add(Destino.MARINILLA);
+	    destinos2.add(Destino.RIONEGRO);
+	    destinos2.add(Destino.LAPINTADA);
 	    transportadoraSegura.setDestinos(destinos2);
 
 	    
 	    ArrayList<Destino> destinos3 = new ArrayList<>();
-	    destinos3.add(Destino.ANGELOPOLIS);
-	    destinos3.add(Destino.BARRANQUILLA);
-	    destinos3.add(Destino.CALI);
-	    destinos3.add(Destino.BARBOSA);
+	    destinos3.add(Destino.COOPACABANA);
+	    destinos3.add(Destino.BELLO);
+	    destinos3.add(Destino.GIRARDOTA);
+	    destinos3.add(Destino.GUATAPE);
 	    transportadoraGlobal.setDestinos(destinos3);
 	    
 	    
@@ -132,6 +132,72 @@ public class Serializador {
 	    destinos4.add(Destino.CALI);
 	    destinos4.add(Destino.BARBOSA);
 	    transportadoraLocal.setDestinos(destinos4);
+	    
+	    //Vehiculos
+	    Vehiculo vehiculo1 = new Vehiculo("ABC123", "ModeloA", 12500.00, 120.0, TipoVehiculo.BUS, transportadoraRapida);
+        Vehiculo vehiculo2 = new Vehiculo("DEF456", "ModeloB", 13500.00, 130.0, TipoVehiculo.BUS, transportadoraRapida);
+        Vehiculo vehiculo3 = new Vehiculo("GHI789", "ModeloC", 14500.00, 125.0, TipoVehiculo.BUS, transportadoraRapida);
+        Vehiculo vehiculo4 = new Vehiculo("JKL012", "ModeloD", 15500.00, 140.0, TipoVehiculo.ESCALERA, transportadoraRapida);
+        Vehiculo vehiculo5 = new Vehiculo("MNO345", "ModeloE", 16500.00, 135.0, TipoVehiculo.ESCALERA, transportadoraRapida);
+        Vehiculo vehiculo6 = new Vehiculo("PQR678", "ModeloF", 17500.00, 145.0, TipoVehiculo.VANS, transportadoraRapida);
+        Vehiculo vehiculo7 = new Vehiculo("STU901", "ModeloG", 18500.00, 120.0, TipoVehiculo.VANS, transportadoraRapida);
+        Vehiculo vehiculo8 = new Vehiculo("VWX234", "ModeloH", 19500.00, 125.0, TipoVehiculo.VANS, transportadoraRapida);
+        Vehiculo vehiculo9 = new Vehiculo("YZA567", "ModeloI", 20500.00, 130.0, TipoVehiculo.TAXI, transportadoraRapida);
+        Vehiculo vehiculo10 = new Vehiculo("BCD890", "ModeloJ", 21500.00, 135.0, TipoVehiculo.TAXI, transportadoraRapida);
+        Vehiculo vehiculo11 = new Vehiculo("EFG123", "ModeloK", 22500.00, 140.0, TipoVehiculo.BUS, transportadoraEficiente);
+        Vehiculo vehiculo12 = new Vehiculo("HIJ456", "ModeloL", 23500.00, 145.0, TipoVehiculo.BUS, transportadoraEficiente);
+        Vehiculo vehiculo13 = new Vehiculo("KLM789", "ModeloM", 24500.00, 120.0, TipoVehiculo.BUS, transportadoraEficiente);
+        Vehiculo vehiculo14 = new Vehiculo("NOP012", "ModeloN", 25500.00, 125.0, TipoVehiculo.ESCALERA, transportadoraEficiente);
+        Vehiculo vehiculo15 = new Vehiculo("QRS345", "ModeloO", 26500.00, 130.0, TipoVehiculo.ESCALERA, transportadoraEficiente);
+        Vehiculo vehiculo16 = new Vehiculo("TUV678", "ModeloP", 27500.00, 135.0, TipoVehiculo.VANS, transportadoraEficiente);
+        Vehiculo vehiculo17 = new Vehiculo("WXY901", "ModeloQ", 28500.00, 140.0, TipoVehiculo.VANS, transportadoraEficiente);
+        Vehiculo vehiculo18 = new Vehiculo("ZAB234", "ModeloR", 29500.00, 145.0, TipoVehiculo.VANS, transportadoraEficiente);
+        Vehiculo vehiculo19 = new Vehiculo("CDE567", "ModeloS", 30500.00, 125.0, TipoVehiculo.TAXI, transportadoraEficiente);
+        Vehiculo vehiculo20 = new Vehiculo("FGH890", "ModeloT", 31500.00, 130.0, TipoVehiculo.TAXI, transportadoraEficiente);
+        Vehiculo vehiculo21 = new Vehiculo("IJK123", "ModeloU", 32500.00, 135.0, TipoVehiculo.BUS, transportadoraExpress);
+        Vehiculo vehiculo22 = new Vehiculo("LMN456", "ModeloV", 33500.00, 140.0, TipoVehiculo.BUS, transportadoraExpress);
+        Vehiculo vehiculo23 = new Vehiculo("OPQ789", "ModeloW", 34500.00, 145.0, TipoVehiculo.BUS, transportadoraExpress);
+        Vehiculo vehiculo24 = new Vehiculo("RST012", "ModeloX", 25000.00, 120.0, TipoVehiculo.ESCALERA, transportadoraExpress);
+        Vehiculo vehiculo25 = new Vehiculo("UVW345", "ModeloY", 26000.00, 125.0, TipoVehiculo.ESCALERA, transportadoraExpress);
+        Vehiculo vehiculo26 = new Vehiculo("XYZ678", "ModeloZ", 27000.00, 130.0, TipoVehiculo.VANS, transportadoraExpress);
+        Vehiculo vehiculo27 = new Vehiculo("ABC901", "ModeloAA", 28000.00, 135.0, TipoVehiculo.VANS, transportadoraExpress);
+        Vehiculo vehiculo28 = new Vehiculo("DEF234", "ModeloBB", 29000.00, 140.0, TipoVehiculo.TAXI, transportadoraExpress);
+        Vehiculo vehiculo29 = new Vehiculo("GHI567", "ModeloCC", 30000.00, 145.0, TipoVehiculo.TAXI, transportadoraExpress);
+        Vehiculo vehiculo30 = new Vehiculo("JKL890", "ModeloDD", 15000.00, 120.0, TipoVehiculo.TAXI, transportadoraExpress);
+        Vehiculo vehiculo31 = new Vehiculo("MNO123", "ModeloEE", 16000.00, 125.0, TipoVehiculo.BUS, transportadoraSegura);
+        Vehiculo vehiculo32 = new Vehiculo("PQR456", "ModeloFF", 17000.00, 130.0, TipoVehiculo.BUS, transportadoraSegura);
+        Vehiculo vehiculo33 = new Vehiculo("STU789", "ModeloGG", 18000.00, 135.0, TipoVehiculo.BUS, transportadoraSegura);
+        Vehiculo vehiculo34 = new Vehiculo("VWX012", "ModeloHH", 19000.00, 140.0, TipoVehiculo.ESCALERA, transportadoraSegura);
+        Vehiculo vehiculo35 = new Vehiculo("YZA345", "ModeloII", 20000.00, 145.0, TipoVehiculo.ESCALERA, transportadoraSegura);
+        Vehiculo vehiculo36 = new Vehiculo("BCD678", "ModeloJJ", 21000.00, 120.0, TipoVehiculo.VANS, transportadoraSegura);
+        Vehiculo vehiculo37 = new Vehiculo("EFG901", "ModeloKK", 22000.00, 125.0, TipoVehiculo.VANS, transportadoraSegura);
+        Vehiculo vehiculo38 = new Vehiculo("HIJ234", "ModeloLL", 23000.00, 130.0, TipoVehiculo.TAXI, transportadoraSegura);
+        Vehiculo vehiculo39 = new Vehiculo("KLM567", "ModeloMM", 24000.00, 135.0, TipoVehiculo.TAXI, transportadoraSegura);
+        Vehiculo vehiculo40 = new Vehiculo("NOP890", "ModeloNN", 25000.00, 140.0, TipoVehiculo.TAXI, transportadoraSegura);
+        Vehiculo vehiculo41 = new Vehiculo("QRS123", "ModeloOO", 26000.00, 145.0, TipoVehiculo.BUS, transportadoraGlobal);
+        Vehiculo vehiculo42 = new Vehiculo("TUV456", "ModeloPP", 27000.00, 120.0, TipoVehiculo.BUS, transportadoraGlobal);
+        Vehiculo vehiculo43 = new Vehiculo("WXY789", "ModeloQQ", 28000.00, 125.0, TipoVehiculo.BUS, transportadoraGlobal);
+        Vehiculo vehiculo44 = new Vehiculo("ZAB012", "ModeloRR", 29000.00, 130.0, TipoVehiculo.ESCALERA, transportadoraGlobal);
+        Vehiculo vehiculo45 = new Vehiculo("CDE345", "ModeloSS", 30000.00, 135.0, TipoVehiculo.ESCALERA, transportadoraGlobal);
+        Vehiculo vehiculo46 = new Vehiculo("FGH678", "ModeloTT", 11000.00, 140.0, TipoVehiculo.VANS, transportadoraGlobal);
+        Vehiculo vehiculo47 = new Vehiculo("IJK901", "ModeloUU", 12000.00, 145.0, TipoVehiculo.VANS, transportadoraGlobal);
+        Vehiculo vehiculo48 = new Vehiculo("LMN234", "ModeloVV", 13000.00, 120.0, TipoVehiculo.TAXI, transportadoraGlobal);
+        Vehiculo vehiculo49 = new Vehiculo("OPQ567", "ModeloWW", 14000.00, 125.0, TipoVehiculo.TAXI, transportadoraGlobal);
+        Vehiculo vehiculo50 = new Vehiculo("RST890", "ModeloXX", 15000.00, 130.0, TipoVehiculo.TAXI, transportadoraGlobal);
+	Vehiculo vehiculo51 = new Vehiculo("ABC234", "ModeloYY", 11500.00, 110.0, TipoVehiculo.BUS, transportadoraLocal);
+        Vehiculo vehiculo52 = new Vehiculo("DEF567", "ModeloZZ", 12500.00, 120.0, TipoVehiculo.BUS, transportadoraLocal);
+        Vehiculo vehiculo53 = new Vehiculo("GHI890", "ModeloAAA", 13500.00, 130.0, TipoVehiculo.BUS, transportadoraLocal);
+        Vehiculo vehiculo54 = new Vehiculo("JKL123", "ModeloBBB", 14500.00, 140.0, TipoVehiculo.ESCALERA, transportadoraLocal);
+        Vehiculo vehiculo55 = new Vehiculo("MNO456", "ModeloCCC", 15500.00, 125.0, TipoVehiculo.ESCALERA, transportadoraLocal);
+        Vehiculo vehiculo56 = new Vehiculo("PQR789", "ModeloDDD", 16500.00, 135.0, TipoVehiculo.VANS, transportadoraLocal);
+        Vehiculo vehiculo57 = new Vehiculo("STU012", "ModeloEEE", 17500.00, 145.0, TipoVehiculo.VANS, transportadoraLocal);
+        Vehiculo vehiculo58 = new Vehiculo("VWX345", "ModeloFFF", 18500.00, 120.0, TipoVehiculo.TAXI, transportadoraLocal);
+        Vehiculo vehiculo59 = new Vehiculo("YZA678", "ModeloGGG", 19500.00, 130.0, TipoVehiculo.TAXI, transportadoraLocal);
+        Vehiculo vehiculo60 = new Vehiculo("BCD901", "ModeloHHH", 20500.00, 140.0, TipoVehiculo.TAXI, transportadoraLocal);
+
+
+
+				
 	    
 				ArrayList<Conductor> conductores1 = new ArrayList<>();
 				ArrayList<Conductor> conductores2 = new ArrayList<>();
@@ -557,66 +623,7 @@ public class Serializador {
 
 
 
-				Vehiculo vehiculo1 = new Vehiculo("ABC123", "ModeloA", 12500.00, 120.0, TipoVehiculo.BUS, transportadoraRapida);
-				        Vehiculo vehiculo2 = new Vehiculo("DEF456", "ModeloB", 13500.00, 130.0, TipoVehiculo.BUS, transportadoraRapida);
-				        Vehiculo vehiculo3 = new Vehiculo("GHI789", "ModeloC", 14500.00, 125.0, TipoVehiculo.BUS, transportadoraRapida);
-				        Vehiculo vehiculo4 = new Vehiculo("JKL012", "ModeloD", 15500.00, 140.0, TipoVehiculo.ESCALERA, transportadoraRapida);
-				        Vehiculo vehiculo5 = new Vehiculo("MNO345", "ModeloE", 16500.00, 135.0, TipoVehiculo.ESCALERA, transportadoraRapida);
-				        Vehiculo vehiculo6 = new Vehiculo("PQR678", "ModeloF", 17500.00, 145.0, TipoVehiculo.VANS, transportadoraRapida);
-				        Vehiculo vehiculo7 = new Vehiculo("STU901", "ModeloG", 18500.00, 120.0, TipoVehiculo.VANS, transportadoraRapida);
-				        Vehiculo vehiculo8 = new Vehiculo("VWX234", "ModeloH", 19500.00, 125.0, TipoVehiculo.VANS, transportadoraRapida);
-				        Vehiculo vehiculo9 = new Vehiculo("YZA567", "ModeloI", 20500.00, 130.0, TipoVehiculo.TAXI, transportadoraRapida);
-				        Vehiculo vehiculo10 = new Vehiculo("BCD890", "ModeloJ", 21500.00, 135.0, TipoVehiculo.TAXI, transportadoraRapida);
-				        Vehiculo vehiculo11 = new Vehiculo("EFG123", "ModeloK", 22500.00, 140.0, TipoVehiculo.BUS, transportadoraEficiente);
-				        Vehiculo vehiculo12 = new Vehiculo("HIJ456", "ModeloL", 23500.00, 145.0, TipoVehiculo.BUS, transportadoraEficiente);
-				        Vehiculo vehiculo13 = new Vehiculo("KLM789", "ModeloM", 24500.00, 120.0, TipoVehiculo.BUS, transportadoraEficiente);
-				        Vehiculo vehiculo14 = new Vehiculo("NOP012", "ModeloN", 25500.00, 125.0, TipoVehiculo.ESCALERA, transportadoraEficiente);
-				        Vehiculo vehiculo15 = new Vehiculo("QRS345", "ModeloO", 26500.00, 130.0, TipoVehiculo.ESCALERA, transportadoraEficiente);
-				        Vehiculo vehiculo16 = new Vehiculo("TUV678", "ModeloP", 27500.00, 135.0, TipoVehiculo.VANS, transportadoraEficiente);
-				        Vehiculo vehiculo17 = new Vehiculo("WXY901", "ModeloQ", 28500.00, 140.0, TipoVehiculo.VANS, transportadoraEficiente);
-				        Vehiculo vehiculo18 = new Vehiculo("ZAB234", "ModeloR", 29500.00, 145.0, TipoVehiculo.VANS, transportadoraEficiente);
-				        Vehiculo vehiculo19 = new Vehiculo("CDE567", "ModeloS", 30500.00, 125.0, TipoVehiculo.TAXI, transportadoraEficiente);
-				        Vehiculo vehiculo20 = new Vehiculo("FGH890", "ModeloT", 31500.00, 130.0, TipoVehiculo.TAXI, transportadoraEficiente);
-				        Vehiculo vehiculo21 = new Vehiculo("IJK123", "ModeloU", 32500.00, 135.0, TipoVehiculo.BUS, transportadoraExpress);
-				        Vehiculo vehiculo22 = new Vehiculo("LMN456", "ModeloV", 33500.00, 140.0, TipoVehiculo.BUS, transportadoraExpress);
-				        Vehiculo vehiculo23 = new Vehiculo("OPQ789", "ModeloW", 34500.00, 145.0, TipoVehiculo.BUS, transportadoraExpress);
-				        Vehiculo vehiculo24 = new Vehiculo("RST012", "ModeloX", 25000.00, 120.0, TipoVehiculo.ESCALERA, transportadoraExpress);
-				        Vehiculo vehiculo25 = new Vehiculo("UVW345", "ModeloY", 26000.00, 125.0, TipoVehiculo.ESCALERA, transportadoraExpress);
-				        Vehiculo vehiculo26 = new Vehiculo("XYZ678", "ModeloZ", 27000.00, 130.0, TipoVehiculo.VANS, transportadoraExpress);
-				        Vehiculo vehiculo27 = new Vehiculo("ABC901", "ModeloAA", 28000.00, 135.0, TipoVehiculo.VANS, transportadoraExpress);
-				        Vehiculo vehiculo28 = new Vehiculo("DEF234", "ModeloBB", 29000.00, 140.0, TipoVehiculo.TAXI, transportadoraExpress);
-				        Vehiculo vehiculo29 = new Vehiculo("GHI567", "ModeloCC", 30000.00, 145.0, TipoVehiculo.TAXI, transportadoraExpress);
-				        Vehiculo vehiculo30 = new Vehiculo("JKL890", "ModeloDD", 15000.00, 120.0, TipoVehiculo.TAXI, transportadoraExpress);
-				        Vehiculo vehiculo31 = new Vehiculo("MNO123", "ModeloEE", 16000.00, 125.0, TipoVehiculo.BUS, transportadoraSegura);
-				        Vehiculo vehiculo32 = new Vehiculo("PQR456", "ModeloFF", 17000.00, 130.0, TipoVehiculo.BUS, transportadoraSegura);
-				        Vehiculo vehiculo33 = new Vehiculo("STU789", "ModeloGG", 18000.00, 135.0, TipoVehiculo.BUS, transportadoraSegura);
-				        Vehiculo vehiculo34 = new Vehiculo("VWX012", "ModeloHH", 19000.00, 140.0, TipoVehiculo.ESCALERA, transportadoraSegura);
-				        Vehiculo vehiculo35 = new Vehiculo("YZA345", "ModeloII", 20000.00, 145.0, TipoVehiculo.ESCALERA, transportadoraSegura);
-				        Vehiculo vehiculo36 = new Vehiculo("BCD678", "ModeloJJ", 21000.00, 120.0, TipoVehiculo.VANS, transportadoraSegura);
-				        Vehiculo vehiculo37 = new Vehiculo("EFG901", "ModeloKK", 22000.00, 125.0, TipoVehiculo.VANS, transportadoraSegura);
-				        Vehiculo vehiculo38 = new Vehiculo("HIJ234", "ModeloLL", 23000.00, 130.0, TipoVehiculo.TAXI, transportadoraSegura);
-				        Vehiculo vehiculo39 = new Vehiculo("KLM567", "ModeloMM", 24000.00, 135.0, TipoVehiculo.TAXI, transportadoraSegura);
-				        Vehiculo vehiculo40 = new Vehiculo("NOP890", "ModeloNN", 25000.00, 140.0, TipoVehiculo.TAXI, transportadoraSegura);
-				        Vehiculo vehiculo41 = new Vehiculo("QRS123", "ModeloOO", 26000.00, 145.0, TipoVehiculo.BUS, transportadoraGlobal);
-				        Vehiculo vehiculo42 = new Vehiculo("TUV456", "ModeloPP", 27000.00, 120.0, TipoVehiculo.BUS, transportadoraGlobal);
-				        Vehiculo vehiculo43 = new Vehiculo("WXY789", "ModeloQQ", 28000.00, 125.0, TipoVehiculo.BUS, transportadoraGlobal);
-				        Vehiculo vehiculo44 = new Vehiculo("ZAB012", "ModeloRR", 29000.00, 130.0, TipoVehiculo.ESCALERA, transportadoraGlobal);
-				        Vehiculo vehiculo45 = new Vehiculo("CDE345", "ModeloSS", 30000.00, 135.0, TipoVehiculo.ESCALERA, transportadoraGlobal);
-				        Vehiculo vehiculo46 = new Vehiculo("FGH678", "ModeloTT", 11000.00, 140.0, TipoVehiculo.VANS, transportadoraGlobal);
-				        Vehiculo vehiculo47 = new Vehiculo("IJK901", "ModeloUU", 12000.00, 145.0, TipoVehiculo.VANS, transportadoraGlobal);
-				        Vehiculo vehiculo48 = new Vehiculo("LMN234", "ModeloVV", 13000.00, 120.0, TipoVehiculo.TAXI, transportadoraGlobal);
-				        Vehiculo vehiculo49 = new Vehiculo("OPQ567", "ModeloWW", 14000.00, 125.0, TipoVehiculo.TAXI, transportadoraGlobal);
-				        Vehiculo vehiculo50 = new Vehiculo("RST890", "ModeloXX", 15000.00, 130.0, TipoVehiculo.TAXI, transportadoraGlobal);
-					Vehiculo vehiculo51 = new Vehiculo("ABC234", "ModeloYY", 11500.00, 110.0, TipoVehiculo.BUS, transportadoraLocal);
-				        Vehiculo vehiculo52 = new Vehiculo("DEF567", "ModeloZZ", 12500.00, 120.0, TipoVehiculo.BUS, transportadoraLocal);
-				        Vehiculo vehiculo53 = new Vehiculo("GHI890", "ModeloAAA", 13500.00, 130.0, TipoVehiculo.BUS, transportadoraLocal);
-				        Vehiculo vehiculo54 = new Vehiculo("JKL123", "ModeloBBB", 14500.00, 140.0, TipoVehiculo.ESCALERA, transportadoraLocal);
-				        Vehiculo vehiculo55 = new Vehiculo("MNO456", "ModeloCCC", 15500.00, 125.0, TipoVehiculo.ESCALERA, transportadoraLocal);
-				        Vehiculo vehiculo56 = new Vehiculo("PQR789", "ModeloDDD", 16500.00, 135.0, TipoVehiculo.VANS, transportadoraLocal);
-				        Vehiculo vehiculo57 = new Vehiculo("STU012", "ModeloEEE", 17500.00, 145.0, TipoVehiculo.VANS, transportadoraLocal);
-				        Vehiculo vehiculo58 = new Vehiculo("VWX345", "ModeloFFF", 18500.00, 120.0, TipoVehiculo.TAXI, transportadoraLocal);
-				        Vehiculo vehiculo59 = new Vehiculo("YZA678", "ModeloGGG", 19500.00, 130.0, TipoVehiculo.TAXI, transportadoraLocal);
-				        Vehiculo vehiculo60 = new Vehiculo("BCD901", "ModeloHHH", 20500.00, 140.0, TipoVehiculo.TAXI, transportadoraLocal);
+				
 
 				conductor1.tomarVehiculo(vehiculo1);
 				conductor2.tomarVehiculo(vehiculo1);
@@ -858,7 +865,27 @@ public class Serializador {
 				mecanicos6.add(mecanico136);
 				mecanicos6.add(mecanico137);
 				
+				//Viajes
+				new Viaje(terminal, "8:0", "2/1/2024", vehiculo1, conductor1, Destino.ANGELOPOLIS, Destino.MEDELLIN);
+				new Viaje(terminal, "10:0", "2/1/2024", vehiculo2, conductor2, Destino.BARRANQUILLA, Destino.MEDELLIN);
+				new Viaje(terminal, "12:0", "3/1/2024", vehiculo3, conductor3, Destino.CALI, Destino.MEDELLIN);
+				new Viaje(terminal, "14:0", "14/1/2024", vehiculo4, conductor4, Destino.BARBOSA, Destino.MEDELLIN);
 				
+				
+				new Viaje(terminal, "8:30", "4/2/2024", vehiculo11, conductor21, Destino.GUARNE, Destino.MEDELLIN);
+				new Viaje(terminal, "10:30", "5/2/2024", vehiculo12, conductor22, Destino.MARINILLA, Destino.MEDELLIN);
+				new Viaje(terminal, "12:30", "7/1/2024", vehiculo14, conductor24, Destino.RIONEGRO, Destino.MEDELLIN);
+				new Viaje(terminal, "14:30", "18/1/2024", vehiculo16, conductor26, Destino.LAPINTADA, Destino.MEDELLIN);
+				
+				
+				new Viaje(terminal, "9:0", "1/3/2024", vehiculo21, conductor41, Destino.COOPACABANA, Destino.MEDELLIN);
+				
+				new Viaje(terminal, "11:0", "1/4/2024", vehiculo31, conductor62, Destino.ANGELOPOLIS, Destino.MEDELLIN);
+				
+				new Viaje(terminal, "13:0", "1/9/2024", vehiculo41, conductor81, Destino.ANGELOPOLIS, Destino.MEDELLIN);
+			
+				new Viaje(terminal, "15:0", "1/10/2024", vehiculo59, conductor117, Destino.ANGELOPOLIS, Destino.MEDELLIN);
+						
 				//pasajeros tipo VIP(80)
 				new Pasajero(TipoPasajero.VIP, 100001, 34, "Luis Martinez", 'M');
 				new Pasajero(TipoPasajero.VIP, 100002, 45, "Ana Gomez", 'F');

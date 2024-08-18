@@ -2,9 +2,13 @@ package gestorAplicacion.administrativo;
 import java.io.Serializable;
 import java.lang.Math;
 import java.util.ArrayList;
+import java.util.Random;
+
 import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.usuarios.*;
 import gestorAplicacion.constantes.Dia;
+import gestorAplicacion.constantes.TipoPasajero;
+import gestorAplicacion.constantes.TipoVehiculo;
 import gestorAplicacion.tiempo.Tiempo;
 
 /**
@@ -62,8 +66,7 @@ public class Viaje implements Serializable {
         vehiculo.getTransportadora().getViajesAsignados().add(this);
         conductor.getHorario().add(this);
     }
-    
-    
+
 	/**
 	 * Método para obtener la distancia del Viaje.
 	 * @return double, la distancia entre dos lugares.
@@ -81,7 +84,26 @@ public class Viaje implements Serializable {
     	return distancia;
     }
     
-    
+    public static double asignarPasajerosAViaje(ArrayList<Pasajero> listaPasajeros, Viaje viaje, TipoPasajero tipo) {
+        Random random = new Random();
+        double dineroTotal;
+
+        int capacidad = viaje.getVehiculo().getTipo().getCapacidad();
+        int cantidad = Math.min(random.nextInt(capacidad / 2) + 1, listaPasajeros.size());
+
+        for (int i = 0; i < cantidad; i++) {
+
+            int indiceAleatorio = random.nextInt(listaPasajeros.size());
+            Pasajero pasajeroAleatorio = listaPasajeros.get(indiceAleatorio);
+            pasajeroAleatorio.setViaje(viaje);
+            viaje.getPasajeros().add(pasajeroAleatorio);
+            
+            
+        }
+        dineroTotal=cantidad*(viaje.getTarifa()*(1+tipo.getDescuento()));
+        return dineroTotal;
+    }
+        
 	/**
 	 * Método para obtener la duración del Viaje.
 	 * @return int, dependiendo las condiciones establecidas: Destino, Vehiculo y Experiencia del Conductor.
