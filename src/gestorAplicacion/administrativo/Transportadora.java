@@ -513,6 +513,46 @@ public class Transportadora implements Incentivo, Serializable {
 		}
 		return null;
 	}
+	
+	/**
+	 * Metodo que muestra los conductores disponibles de la terminal
+	 * que no tengan un viaje asignado el mismo dia del viaje pasado como
+	 * parametro y que los otros conductores asociados al vehiculo de cada
+	 * conductor no tengan viajes asignados el mismo dia del pasado como parametro
+	 * @return string con la lista de conductores disponibles*/
+	
+	public String conductoresDisponibles(Viaje v) {
+		ArrayList<Conductor> conductoresLibres= new ArrayList<Conductor>();
+		String mensaje = "";
+		
+		for (Conductor conductor: conductores) {
+			
+			for (Conductor driver: conductor.getVehiculo().getConductores()) {
+				for (Viaje trip: driver.getHorario()) {
+					if (trip.getDia() == v.getDia()) {
+						//finished
+					} else {
+						if (conductor.getHorario() == null) {
+							conductoresLibres.add(conductor);
+						}
+						for (Viaje viaje: conductor.getHorario()) {
+							if ( Math.abs((viaje.getDia().getValue() - v.getDia().getValue())) >= 1  ) {
+								conductoresLibres.add(conductor);
+							}	
+						}
+					}
+				}
+					
+			}
+		}
+		
+		for(Conductor conductor:conductoresLibres) {
+			mensaje += "Nombre: " + conductor.getNombre()+ "  #Cedula: " + conductor.getId() + "\n";
+		}
+		
+		return mensaje;
+		
+	}
 
 	
 	// METODOS GETTERS Y SETTERS

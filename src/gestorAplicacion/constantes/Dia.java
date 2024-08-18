@@ -7,6 +7,16 @@ package gestorAplicacion.constantes;
 
 public enum Dia {
 	
-	LUN, MAR, MIER, JUE, VIE, SAB, DOM;
+	LUN(1), MAR(2), MIER(3), JUE(4), VIE(5), SAB(6), DOM(7);
 
+	private int value;
+	
+	Dia(int value) {
+		this.value = value;
+	}
+
+	public int getValue() {
+		return value;
+	}
+	
 }

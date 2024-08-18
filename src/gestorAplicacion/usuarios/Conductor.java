@@ -164,6 +164,10 @@ public class Conductor extends Persona {
 		
 	}
 	
+	/**
+	 * Metodo para desvincular el vehiculo al conductor y desvincular
+	 * al conductor el vehiculo*/
+	
 	public void eliminarVehiculo() {
 		
 		this.vehiculo.quitarConductor(this.id);
@@ -237,6 +241,10 @@ public class Conductor extends Persona {
 		
 	}
 	
+	/**
+	 * Metodo para saber si el conductor tiene un vehiculo
+	 * @return boolean*/
+	
 	public boolean tieneVehiculo() {
 		if (vehiculo == null) {
 			return false;
@@ -279,6 +287,55 @@ public class Conductor extends Persona {
 		this.diasRestantesContr = 0;
 		this.diasTrabajados = 0;
 		this.historial = null;
+	}
+	
+	/**
+	 * Metodo que devuelve un string con la lista de los viajes que tiene
+	 * asignados el conductor
+	 * @return string con la lista de viajes*/
+	
+	public String mostrarViajes() {
+		String mensaje = "";
+		int number = 1;
+		for (Viaje viaje : getHorario()) {
+			mensaje += number + ". " + viaje.detallesViaje();
+			number++;
+		}
+		return mensaje;
+	}
+	
+	/**
+	 * Metodo para desvincular un viaje al conductor que invoco el metodo
+	 * y vincular el viaje al conductor que va de parametro
+	 * @param conductor, conductor al que se le vinculara el viaje
+	 * @param viaje, el viaje que se le vinculara al conductor de parametr
+	 * */
+	
+	public void desvincularYVincular(Conductor c,Viaje v) {
+		
+		c.getHorario().add(v);
+		v.setConductor(c);
+		v.setVehiculo(c.getVehiculo());
+		this.getHorario().remove(v);
+		
+		
+	}
+	
+	/**
+	 * Metodo para vincular un viaje al conductor que invoco el metodo
+	 * y desvincular el viaje al conductor que va de parametro
+	 * @param conductor, conductor al que se le desvinculara el viaje
+	 * @param viaje, el viaje que se le desvinculara al conductor de parametro
+	 * */
+	
+public void vincularYDesvincular(Conductor c,Viaje v) {
+		
+		this.getHorario().add(v);
+		v.setConductor(this);
+		v.setVehiculo(this.getVehiculo());
+		c.getHorario().remove(v);
+		
+		
 	}
 	
 	// METODOS GETTERS Y SETTERS

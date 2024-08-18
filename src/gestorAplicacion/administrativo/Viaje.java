@@ -431,6 +431,16 @@ public class Viaje implements Serializable {
         return variable;
     }
     
+	/**
+	 * Metodo para mostrar los detalles del viaje
+	 * @return string con los detalles del viaje*/
+	
+	public String detallesViaje() {
+		String mensaje = "";
+		mensaje = "Fecha del viaje: " + getFecha() + " Destino: " + getLlegada() + "Id: " + getId();
+		return mensaje;
+	}
+    
     // Getters y Setters
     
     /**

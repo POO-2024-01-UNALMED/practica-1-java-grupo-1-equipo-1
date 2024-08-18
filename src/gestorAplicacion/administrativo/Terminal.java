@@ -37,6 +37,11 @@ public class Terminal implements Serializable{
 	private static ArrayList <Terminal> listaTerminales = new ArrayList <Terminal> ();
 	private static ArrayList <Factura> facturas; // Facturas asociadas a la terminal, tener en cuenta quu solo hay una
 	
+	public Terminal() { 
+		this.comision = 0;
+		
+	}
+	
 	// Constructor Clase Terminal
 	public Terminal(String nombre, double dinero, int capacidadVehiculos, int cantidadSedes, int cantidadVehiculos, ArrayList <Transportadora> transportadoras,
 					ArrayList <Viaje> viajes, ArrayList <Viaje> viajesEnCurso, ArrayList <Destino> destinos, double comision, Destino ubicacion, Persona administrador) {
@@ -224,6 +229,43 @@ public class Terminal implements Serializable{
 //		}
 		this.cancelarViaje(reserva);  // Mantiene la continuidad del viaje y ademas elimina la reserva
 		this.getReservas().remove(reserva); // Lo elimina de la lista de reserva		
+	}
+	
+	/**
+	 * Metodo para mostrar los viajes disponibles que no sean el mismo dia
+	 * o 7 dias despues del viaje.
+	 * @return mensaje con la lista de viajes disponibles
+	 * */
+	
+	public String mostrarViajesDisponibles(int d) {
+		String mensaje = "";
+		int number = 1;
+		ArrayList<Viaje> viajesDisponibles = new ArrayList<Viaje>();
+		for (Viaje viaje : getViajes()) {
+			if ( Math.abs((viaje.getDia().getValue() - d)) >= 1  ) {
+				viajesDisponibles.add(viaje);
+				mensaje += number + ". " + viaje.detallesViaje();
+				number++;
+			}
+		}
+		
+		return mensaje;
+	}
+	
+	/**
+	 * Metodo para encontrar un viaje mediante el id en 
+	 * los viajes de la terminal.
+	 * @param id del viaje buscado
+	 * @return viaje que coincide con el id*/
+	
+	public Viaje encontrarViaje(int id) {
+
+		for (Viaje viaje : getViajes()) {
+			if (viaje.getId() == id) {
+				return viaje;
+			}
+		}
+		return null;
 	}
 	
 	public ArrayList <Factura> obtenerFinanzas(){
