@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 /////// Importaciones para el tiempo ///////
 import java.util.Timer;
@@ -227,8 +228,12 @@ public class Tiempo implements Serializable{
     	        if (Tiempo.horas > 23) {
     	            Tiempo.dias++;
     	            Tiempo.horas = 0;
+    	            agregarDiasTrabajados();
+    	            restarDiasContrato();
+    	            renovacionContratos();
     	            if (Tiempo.dias % 7 == 0) { // Verifica si han pasado 7 días
     	                Tiempo.semana++;
+    	                pagarConductores();
     	            }
     	            if (Tiempo.dias > 30) { // Verifica si han pasado 30 días
     	                Tiempo.meses++;
@@ -367,6 +372,56 @@ public class Tiempo implements Serializable{
     	 */
     	private static void calcularSalidaFecha(){
     		Tiempo.salidaFecha = (Tiempo.dias + "/" + Tiempo.meses + "/" + Tiempo.año);
+    	}
+    	
+    	/**
+    	 * Metodo para pagarle a los conductores mensualmente.*
+    	 */
+    	
+    	public static void pagarConductores() { //*******************************************************//
+    		for (Transportadora transportadora : Transportadora.getTransportadoras()) {
+    			for (Conductor conductor: transportadora.getConductores()) {
+        			conductor.setDinero(conductor.getDinero() + 2250.00);;
+        		}
+    		}
+    	}
+    	
+    	/**
+    	 * Metodo para restarle un dia de contrato a todos los conductores activos*/
+    	
+    	public static void restarDiasContrato() {
+    		for (Transportadora transportadora : Transportadora.getTransportadoras()) {
+    			for (Conductor conductor: transportadora.getConductores()) {
+        			conductor.setDiasRestantesContr(conductor.getDiasRestantesContr() - 1);;;
+        		}
+    		}
+    	}
+    	
+    	/**
+    	 * Metodo para agregarle un dia en los dias trabajados a todos los constructores activos*/
+    	
+    	public static void agregarDiasTrabajados() {
+    		for (Transportadora transportadora : Transportadora.getTransportadoras()) {
+    			for (Conductor conductor: transportadora.getConductores()) {
+        			conductor.setDiasTrabajados(conductor.getDiasTrabajados() + 1);;;
+        		}
+    		}
+    	}
+    	
+    	/**
+    	 * Metodo para renovar el contrato de un conductor cuando se le acaba el contrato*/
+    	
+    	public static void renovacionContratos() {
+    		for (Transportadora transportadora : Transportadora.getTransportadoras()) {
+    			for (Conductor conductor: transportadora.getConductores()) {
+    				if (conductor.getDiasRestantesContr() == 0) {
+    					Random random = new Random();
+        		        int diasAgregar = random.nextInt((360 - 100) + 1) + 100;
+        		        conductor.setDiasRestantesContr(conductor.getDiasRestantesContr() + diasAgregar);
+    				}
+    				
+        		}
+    		}
     	}
     }
 }

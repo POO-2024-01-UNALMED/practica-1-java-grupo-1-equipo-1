@@ -414,42 +414,8 @@ public class Terminal implements Serializable{
 		this.getReservas().remove(reserva); // Lo elimina de la lista de reserva		
 	}
 	
-	/**
-	 * Metodo para mostrar los viajes disponibles que no sean el mismo dia
-	 * o 7 dias despues del viaje.
-	 * @return mensaje con la lista de viajes disponibles
-	 * */
 	
-	public String mostrarViajesDisponibles(int d) {
-		String mensaje = "";
-		int number = 1;
-		ArrayList<Viaje> viajesDisponibles = new ArrayList<Viaje>();
-		for (Viaje viaje : getViajes()) {
-			if ( Math.abs((viaje.getDia().getValue() - d)) >= 1  ) {
-				viajesDisponibles.add(viaje);
-				mensaje += number + ". " + viaje.detallesViaje();
-				number++;
-			}
-		}
-		
-		return mensaje;
-	}
-	
-	/**
-	 * Metodo para encontrar un viaje mediante el id en 
-	 * los viajes de la terminal.
-	 * @param id del viaje buscado
-	 * @return viaje que coincide con el id*/
-	
-	public Viaje encontrarViaje(int id) {
 
-		for (Viaje viaje : getViajes()) {
-			if (viaje.getId() == id) {
-				return viaje;
-			}
-		}
-		return null;
-	}
 	
 	public ArrayList <Factura> obtenerFinanzas(){
 		

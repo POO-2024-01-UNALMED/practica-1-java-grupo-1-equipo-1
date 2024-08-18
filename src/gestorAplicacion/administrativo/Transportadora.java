@@ -133,8 +133,8 @@ public class Transportadora implements Incentivo, Serializable {
 	 * el metodo devolvera un valor diferente para cada caso.
 	 * @param Conductor a despedir*/
 	
-	public String despedirConductor(int indice) {
-		Conductor conductor = conductores.get(indice-1);
+	public String despedirConductor(int id) {
+		Conductor conductor =  encontrarConductor(id);
 		
 		if (conductor.getHorario().size() == 0) {
 			if (conductor.getVehiculo() == null) {
@@ -555,7 +555,7 @@ public class Transportadora implements Incentivo, Serializable {
 			for (Conductor driver: conductor.getVehiculo().getConductores()) {
 				for (Viaje trip: driver.getHorario()) {
 					if (trip.getDia() == v.getDia()) {
-						//finished
+						return mensaje;
 					} else {
 						if (conductor.getHorario() == null) {
 							conductoresLibres.add(conductor);
@@ -620,6 +620,43 @@ public class Transportadora implements Incentivo, Serializable {
         }
         return tiposDisponibles;
     }
+	
+	/**
+	 * Metodo para mostrar los viajes disponibles que no sean el mismo dia
+	 * o 7 dias despues del viaje.
+	 * @return mensaje con la lista de viajes disponibles
+	 * */
+	
+	public String mostrarViajesDisponibles(int d) {
+		String mensaje = "";
+		int number = 1;
+		ArrayList<Viaje> viajesDisponibles = new ArrayList<Viaje>();
+		for (Viaje viaje : getViajesAsignados()) {
+			if ( Math.abs((viaje.getDia().getValue() - d)) >= 1  ) {
+				viajesDisponibles.add(viaje);
+				mensaje += number + ". " + viaje.detallesViaje();
+				number++;
+			}
+		}
+		
+		return mensaje;
+	}
+	
+	/**
+	 * Metodo para encontrar un viaje mediante el id en 
+	 * los viajes de la terminal.
+	 * @param id del viaje buscado
+	 * @return viaje que coincide con el id*/
+	
+	public Viaje encontrarViaje(int id) {
+
+		for (Viaje viaje : getViajesAsignados()) {
+			if (viaje.getId() == id) {
+				return viaje;
+			}
+		}
+		return null;
+	}
 	// METODOS GETTERS Y SETTERS
 	
 	/**

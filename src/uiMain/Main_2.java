@@ -16,7 +16,7 @@ public class Main_2 {
     public static void ejecutar() {
         boolean regresar = false;
         boolean valueTrans = false;
-        Transportadora transportaElegida = new Transportadora();// No borrar, solo para pruebas
+        Transportadora transportaElegida = Transportadora.getTransportadoras().get(0);;// No borrar, solo para pruebas
         Terminal terminal = new Terminal();
         
         while (!regresar) {
@@ -50,7 +50,12 @@ public class Main_2 {
                     break;
                     
                 case 2:
-                	System.out.println("Seleccione el conductor a contratar");
+                	System.out.println("Digite el id del conductor a contratar");
+                	
+                	if (transportaElegida.mostrarConductRegistrados().equals("")) {
+                		System.out.println("No hay conductores disponibles para contratar");
+                		break;
+                	}
              		System.out.println(transportaElegida.mostrarConductRegistrados());
              		opcion = scanner.nextInt();
              		System.out.println(transportaElegida.contratarConductor(opcion));
@@ -79,17 +84,22 @@ public class Main_2 {
                 			switch (opcion) {
                 			case 1:
                 				System.out.println("Digite el del viaje que desea asignarle al conductor");
-                				System.out.println(terminal.mostrarViajesDisponibles(Tiempo.diaNombre.getValue()));
+                				System.out.println(transportaElegida.mostrarViajesDisponibles(Tiempo.diaNombre.getValue()));
                 				
-                				opcion = scanner.nextInt();
-                				
-                				if (terminal.encontrarViaje(opcion) == null) {
-                					System.out.println("No se encontro un viaje con el Id");
+                				if (transportaElegida.mostrarViajesDisponibles(Tiempo.diaNombre.getValue()).equals("")){
+                					System.out.println("No hay viajes disponibles que el conductor pueda tomar");
                 				} else {
-                					Viaje selectedViaje = terminal.encontrarViaje(opcion);
-                					selectedDriver.vincularYDesvincular(selectedViaje.getConductor(),selectedViaje);
-                					System.out.println("Se asigno el viaje al conductor");
+                					opcion = scanner.nextInt();
+                    				
+                    				if (transportaElegida.encontrarViaje(opcion) == null) {
+                    					System.out.println("No se encontro un viaje con el Id");
+                    				} else {
+                    					Viaje selectedViaje = transportaElegida.encontrarViaje(opcion);
+                    					selectedDriver.vincularYDesvincular(selectedViaje.getConductor(),selectedViaje);
+                    					System.out.println("Se asigno el viaje al conductor");
+                    				}
                 				}
+                				
                 				break;
                 				
                 			case 2:
@@ -105,16 +115,20 @@ public class Main_2 {
                 			switch (opcion) {
                 			case 1:
                 				System.out.println("Digite el del viaje que desea asignarle al conductor");
-                				System.out.println(terminal.mostrarViajesDisponibles(Tiempo.diaNombre.getValue()));
+                				System.out.println(transportaElegida.mostrarViajesDisponibles(Tiempo.diaNombre.getValue()));
                 				
-                				opcion = scanner.nextInt();
-                				
-                				if (terminal.encontrarViaje(opcion) == null) {
-                					System.out.println("No se encontro un viaje con el Id");
+                				if (transportaElegida.mostrarViajesDisponibles(Tiempo.diaNombre.getValue()).equals("")){
+                					System.out.println("No hay viajes disponibles que el conductor pueda tomar");
                 				} else {
-                					Viaje selectedViaje = terminal.encontrarViaje(opcion);
-                					selectedDriver.vincularYDesvincular(selectedViaje.getConductor(),selectedViaje);
-                					System.out.println("Se asigno el viaje al conductor");
+                					opcion = scanner.nextInt();
+                    				
+                    				if (transportaElegida.encontrarViaje(opcion) == null) {
+                    					System.out.println("No se encontro un viaje con el Id");
+                    				} else {
+                    					Viaje selectedViaje = transportaElegida.encontrarViaje(opcion);
+                    					selectedDriver.vincularYDesvincular(selectedViaje.getConductor(),selectedViaje);
+                    					System.out.println("Se asigno el viaje al conductor");
+                    				}
                 				}
                 				break;
                 				
