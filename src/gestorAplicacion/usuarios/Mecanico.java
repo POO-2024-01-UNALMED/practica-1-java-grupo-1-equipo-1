@@ -20,7 +20,7 @@ public class Mecanico extends Persona{
 	private ArrayList <Vehiculo> historialReparados; // Historial de vehículos reparados por el mecánico
 	private Boolean estado; // Estado del mecánico
 	private ArrayList <Vehiculo> vehiculosReparando; // Vehiculos en la cola de reparacion de dicho mecanico
-	private static ArrayList <Mecanico> mecanicos; // Lista de todos los mecanicos
+	private static ArrayList <Mecanico> mecanicos = new ArrayList<>(); // Lista de todos los mecanicos
 
 	
 	// Constructor por defecto

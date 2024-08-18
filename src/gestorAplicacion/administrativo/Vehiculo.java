@@ -55,6 +55,7 @@ public class Vehiculo implements Serializable {
         this.capacidad = tipo.getCapacidad();
         this.transportadora = transportadora;
         Vehiculo.listaVehiculos.add(this);
+        this.conductores = new ArrayList <Conductor>(); 
     }
     
 	public Vehiculo() {
