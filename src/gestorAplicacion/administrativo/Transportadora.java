@@ -157,19 +157,17 @@ public class Transportadora implements Incentivo, Serializable {
 		if (conductor.getHorario().size() == 0) {
 			if (conductor.getVehiculo() == null) {
 				conductor.quitarVehiculo();
-				int indiceConductor = conductor.getTransportadora().getConductores().indexOf(conductor);
-				conductor.getTransportadora().getConductores().remove(indiceConductor);
+				conductor.getTransportadora().getConductores().remove(conductor);
 				conductor.indemnizar();
 				conductor.reinicioAtributos();
-				return "No problem";
+				return "Se ha despedido a " + conductor.getNombre();
 				}
 			if (conductor.getVehiculo().getConductores().size() >= 2 ) {
 				conductor.quitarVehiculo();
-				int indiceConductor = conductor.getTransportadora().getConductores().indexOf(conductor);
-				conductor.getTransportadora().getConductores().remove(indiceConductor);
+				conductor.getTransportadora().getConductores().remove(conductor);
 				conductor.indemnizar();
 				conductor.reinicioAtributos();
-				return "No problem";
+				return "Se ha despedido a " + conductor.getNombre();
 				} else return "No es posible porque no hay mas conductores asigandos al vehiculo asociado al conductor";
 			} else return "No es posible porque el conductor tiene viajes programados";
 				
@@ -568,7 +566,7 @@ public class Transportadora implements Incentivo, Serializable {
 		ArrayList<Conductor> conductoresLibres= new ArrayList<Conductor>();
 		String mensaje = "";
 		
-		for (Conductor conductor: conductores) {
+		/*for (Conductor conductor: conductores) {
 			
 			for (Conductor driver: conductor.getVehiculo().getConductores()) {
 				for (Viaje trip: driver.getHorario()) {
@@ -586,6 +584,41 @@ public class Transportadora implements Incentivo, Serializable {
 					}
 				}
 					
+			}
+		}*/
+		
+		for (Conductor conductor : conductores) {
+			boolean value = false;
+			boolean valor = true;
+			
+			if (conductor.getVehiculo().getTipo() == v.getVehiculo().getTipo()) {
+				
+				for (Conductor driver : conductor.getVehiculo().getConductores()) {
+					
+					if (driver.getHorario()==null) {
+						
+						value = true;
+						conductoresLibres.add(driver);
+						continue;
+						
+					}
+					
+					for (Viaje viaje: driver.getHorario()) {
+						
+						if ((viaje.getDia().getValue() - v.getDia().getValue()) == 0) {
+							
+							valor = false;
+							break;
+							
+						}
+					}
+					
+					if (valor) {
+						
+						conductoresLibres.add(driver);
+						
+					}
+				}
 			}
 		}
 		
@@ -645,12 +678,14 @@ public class Transportadora implements Incentivo, Serializable {
 	 * @return mensaje con la lista de viajes disponibles
 	 * */
 	
-	public String mostrarViajesDisponibles(int d) {
+	public String mostrarViajesDisponibles(int d, TipoVehiculo tipo) {
+		
 		String mensaje = "";
 		int number = 1;
 		ArrayList<Viaje> viajesDisponibles = new ArrayList<Viaje>();
+		
 		for (Viaje viaje : getViajesAsignados()) {
-			if ( Math.abs((viaje.getDia().getValue() - d)) >= 1  ) {
+			if ( Math.abs((viaje.getDia().getValue() - d)) >= 1  && (viaje.getVehiculo().getTipo() == tipo)) {
 				viajesDisponibles.add(viaje);
 				mensaje += number + ". " + viaje.detallesViaje();
 				number++;
