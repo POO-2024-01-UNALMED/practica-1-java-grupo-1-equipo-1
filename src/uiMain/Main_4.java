@@ -749,16 +749,36 @@ public class Main_4 {
     	
     	switch (opcion) {
     	
-    		case 1:
-    			
-    			vehiculo.getTransportadora().getTaller().agregarVehiculoVenta(vehiculo);
-    			break;
-    			
-    			
-    		case 2:
-    			
-    			transportadora.removerVehiculo(transportadora.getVehiculos().get(num));
-    			break;
+
+		case 1:
+			
+			if (vehiculo.getTransportadora().getTaller().getVehiculosEnVenta().contains(vehiculo) || vehiculo.getTransportadora().getTaller().getVehiculosEnReparacion().contains(vehiculo)) {
+				
+				System.out.println("No se puede vender el vehiculo pues ya esta siendo vendido o reparado");
+			}
+			
+			else {
+				
+				vehiculo.getTransportadora().getTaller().agregarVehiculoVenta(vehiculo);
+			}
+			
+			break;
+			
+			
+		case 2:
+			
+			if (vehiculo.getTransportadora().getTaller().getVehiculosEnVenta().contains(vehiculo) || vehiculo.getTransportadora().getTaller().getVehiculosEnReparacion().contains(vehiculo)) {
+				
+				System.out.println("No se puede vender el vehiculo pues ya esta siendo vendido o reparado");
+			}
+			
+			else {
+				
+				vehiculo.getTransportadora().removerVehiculo(vehiculo);
+			}
+			
+			
+			break;
     		
     		default:
     			
@@ -796,13 +816,32 @@ public class Main_4 {
     	
     		case 1:
     			
-    			vehiculo.getTransportadora().getTaller().venderVehiculo(vehiculo);
+    			if (vehiculo.getTransportadora().getTaller().getVehiculosEnVenta().contains(vehiculo) || vehiculo.getTransportadora().getTaller().getVehiculosEnReparacion().contains(vehiculo)) {
+    				
+    				System.out.println("No se puede vender el vehiculo pues ya esta siendo vendido o reparado");
+    			}
+    			
+    			else {
+    				
+    				vehiculo.getTransportadora().getTaller().agregarVehiculoVenta(vehiculo);
+    			}
+    			
     			break;
     			
     			
     		case 2:
     			
-    			vehiculo.getTransportadora().removerVehiculo(vehiculo);
+    			if (vehiculo.getTransportadora().getTaller().getVehiculosEnVenta().contains(vehiculo) || vehiculo.getTransportadora().getTaller().getVehiculosEnReparacion().contains(vehiculo)) {
+    				
+    				System.out.println("No se puede vender el vehiculo pues ya esta siendo vendido o reparado");
+    			}
+    			
+    			else {
+    				
+    				vehiculo.getTransportadora().removerVehiculo(vehiculo);
+    			}
+    			
+    			
     			break;
     			
     		default:
