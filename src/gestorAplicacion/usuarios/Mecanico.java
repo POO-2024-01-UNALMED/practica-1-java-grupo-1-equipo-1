@@ -58,7 +58,12 @@ public class Mecanico extends Persona{
 		this.estado = true;
 		this.historialReparados = new ArrayList<Vehiculo>();
 		this.vehiculosReparando = new ArrayList <Vehiculo> ();
-		taller.agregarMecanico(this);
+		
+		if (taller != null) {
+			
+			taller.agregarMecanico(this);
+		}
+		
 		mecanicos.add(this);
 		this.experiencia = 1;
 	}

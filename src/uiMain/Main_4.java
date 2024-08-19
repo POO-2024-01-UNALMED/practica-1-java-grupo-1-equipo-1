@@ -22,9 +22,11 @@ public class Main_4 {
 		int opcion3;
 		int opcion4;
 		int opcion5;
+		regresar = false;
 		
 		Transportadora transportadora = elegirTransportadora();
 		if (transportadora == null) {
+			System.out.println("Transportadora no disponible");
 			return;
 		}
 		

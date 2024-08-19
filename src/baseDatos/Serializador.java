@@ -133,6 +133,15 @@ public class Serializador {
 	    destinos4.add(Destino.BARBOSA);
 	    transportadoraLocal.setDestinos(destinos4);
 	    
+	    //Talleres 
+	    
+		Taller tallerRapido = new Taller(transportadoraRapida, transportadoraRapida.getDestinoAsignado(), "Taller Rápido", 10);
+		Taller tallerEficiente = new Taller(transportadoraEficiente, transportadoraEficiente.getDestinoAsignado(), "Taller Eficiente", 10);
+		Taller tallerExpress = new Taller(transportadoraExpress, transportadoraExpress.getDestinoAsignado(), "Taller Express", 10);
+		Taller tallerSegura = new Taller(transportadoraSegura, transportadoraSegura.getDestinoAsignado(), "Taller Seguro", 10);
+		Taller tallerGlobal = new Taller(transportadoraGlobal, transportadoraGlobal.getDestinoAsignado(), "Taller Global", 10);
+		//Taller tallerLocal = new Taller(transportadoraLocal, transportadoraLocal.getDestinoAsignado(), "Taller Local", 10);
+	    
 	    //Vehiculos
 	    Vehiculo vehiculo1 = new Vehiculo("ABC123", "ModeloA", 12500.00, 120.0, TipoVehiculo.BUS, transportadoraRapida);
         Vehiculo vehiculo2 = new Vehiculo("DEF456", "ModeloB", 13500.00, 130.0, TipoVehiculo.BUS, transportadoraRapida);
@@ -618,7 +627,7 @@ public class Serializador {
 				transportadoraSegura.setConductores(conductores4);
 				transportadoraGlobal.setConductores(conductores5);
 				transportadoraLocal.setConductores(conductores6);
-
+				
 
 
 
@@ -818,33 +827,33 @@ public class Serializador {
 
 
 
-				Mecanico mecanico121 = new Mecanico(121, 34, "Alejandro Vargas", 'M', new ArrayList<>(), 5, 1600.0, new ArrayList<>(), null, null, true, 15, 200);
-				Mecanico  mecanico122 = new Mecanico(122, 28, "Sergio Morales", 'M', new ArrayList<>(), 4, 1450.0, new ArrayList<>(), null, null, true, 12, 180);
-				Mecanico  mecanico123 = new Mecanico(123, 37, "Ricardo López", 'M', new ArrayList<>(), 7, 1750.0, new ArrayList<>(), null, null, true, 20, 220);
-				Mecanico  mecanico124 = new Mecanico(124, 31, "Carlos Martínez", 'M', new ArrayList<>(), 6, 1650.0, new ArrayList<>(), null, null, true, 14, 210);
-				Mecanico  mecanico125 = new Mecanico(125, 40, "Javier Ramírez", 'M', new ArrayList<>(), 8, 1800.0, new ArrayList<>(), null, null, true, 18, 230);
-				Mecanico  mecanico126 = new Mecanico(126, 29, "Fernando Pérez", 'M', new ArrayList<>(), 5, 1550.0, new ArrayList<>(), null, null, true, 13, 200);
-				Mecanico  mecanico127 = new Mecanico(127, 33, "Héctor Jiménez", 'M', new ArrayList<>(), 6, 1600.0, new ArrayList<>(), null, null, true, 17, 220);
-				Mecanico  mecanico128 = new Mecanico(128, 35, "Luis Rodríguez", 'M', new ArrayList<>(), 7, 1700.0, new ArrayList<>(), null, null, true, 16, 230);
-				Mecanico mecanico129 = new Mecanico(129, 30, "Manuel García", 'M', new ArrayList<>(), 5, 1500.0, new ArrayList<>(), null, null, true, 15, 200);
-				Mecanico  mecanico130 = new Mecanico(130, 38, "Tomás Fernández", 'M', new ArrayList<>(), 7, 1750.0, new ArrayList<>(), null, null, true, 19, 220);
-				Mecanico  mecanico131 = new Mecanico(131, 32, "Óscar López", 'M', new ArrayList<>(), 6, 1600.0, new ArrayList<>(), null, null, true, 14, 210);
-				Mecanico  mecanico132 = new Mecanico(132, 31, "David Martínez", 'M', new ArrayList<>(), 5, 1550.0, new ArrayList<>(), null, null, true, 13, 200);
-				Mecanico  mecanico133 = new Mecanico(133, 36, "Gabriel Silva", 'M', new ArrayList<>(), 8, 1800.0, new ArrayList<>(), null, null, true, 20, 230);
-				Mecanico  mecanico134 = new Mecanico(134, 29, "Ricardo Vargas", 'M', new ArrayList<>(), 5, 1500.0, new ArrayList<>(), null, null, true, 12, 180);
-				Mecanico  mecanico135 = new Mecanico(135, 34, "Adrián Rodríguez", 'M', new ArrayList<>(), 7, 1650.0, new ArrayList<>(), null, null, true, 18, 220);
-				Mecanico  mecanico136 = new Mecanico(136, 40, "Héctor Hernández", 'M', new ArrayList<>(), 9, 1750.0, new ArrayList<>(), null, null, true, 22, 240);
-				Mecanico  mecanico137 = new Mecanico(137, 33, "Eduardo Díaz", 'M', new ArrayList<>(), 6, 1600.0, new ArrayList<>(), null, null, true, 15, 210);
-				Mecanico  mecanico138 = new Mecanico(138, 32, "Carlos Moreno", 'M', new ArrayList<>(), 6, 1550.0, new ArrayList<>(), null, null, true, 14, 200);
-				Mecanico  mecanico139 = new Mecanico(139, 28, "José Pérez", 'M', new ArrayList<>(), 4, 1450.0, new ArrayList<>(), null, null, true, 12, 180);
-				Mecanico  mecanico140 = new Mecanico(140, 35, "Jorge Moreno", 'M', new ArrayList<>(), 7, 1700.0, new ArrayList<>(), null, null, true, 16, 220);
-				Mecanico  mecanico141 = new Mecanico(141, 30, "Luis Martínez", 'M', new ArrayList<>(), 5, 1500.0, new ArrayList<>(), null, null, true, 13, 200);
-				Mecanico  mecanico142 = new Mecanico(142, 31, "Miguel Gómez", 'M', new ArrayList<>(), 6, 1600.0, new ArrayList<>(), null, null, true, 14, 210);
-				Mecanico  mecanico143 = new Mecanico(143, 29, "Andrés Morales", 'M', new ArrayList<>(), 5, 1550.0, new ArrayList<>(), null, null, true, 13, 200);
-				Mecanico  mecanico144 = new Mecanico(144, 38, "Roberto Fernández", 'M', new ArrayList<>(), 8, 1750.0, new ArrayList<>(), null, null, true, 17, 220);
-				Mecanico  mecanico145 = new Mecanico(145, 32, "Víctor Vargas", 'M', new ArrayList<>(), 6, 1600.0, new ArrayList<>(), null, null, true, 15, 210);
-				Mecanico  mecanico146 = new Mecanico(146, 34, "Fernando Gómez", 'M', new ArrayList<>(), 7, 1650.0, new ArrayList<>(), null, null, true, 16, 220);
-				Mecanico  mecanico147 = new Mecanico(147, 30, "Héctor Rivas", 'M', new ArrayList<>(), 5, 1500.0, new ArrayList<>(), null, null, true, 12, 200);
+				 Mecanico mecanico121 = new Mecanico(121, 34, "Alejandro Vargas", 'M', new ArrayList<>(), 5, 1600.0, new ArrayList<>(), tallerRapido, null, true, 15, 200);
+				 Mecanico mecanico122 = new Mecanico(122, 28, "Sergio Morales", 'M', new ArrayList<>(), 4, 1450.0, new ArrayList<>(), tallerEficiente, null, true, 12, 180);
+				 Mecanico mecanico123 = new Mecanico(123, 37, "Ricardo López", 'M', new ArrayList<>(), 7, 1750.0, new ArrayList<>(), tallerExpress, null, true, 20, 220);
+				 Mecanico mecanico124 = new Mecanico(124, 31, "Carlos Martínez", 'M', new ArrayList<>(), 6, 1650.0, new ArrayList<>(), tallerSegura, null, true, 14, 210);
+				 Mecanico mecanico125 = new Mecanico(125, 40, "Javier Ramírez", 'M', new ArrayList<>(), 8, 1800.0, new ArrayList<>(), tallerGlobal, null, true, 18, 230);
+				 Mecanico mecanico126 = new Mecanico(126, 29, "Fernando Pérez", 'M', new ArrayList<>(), 5, 1550.0, new ArrayList<>(), tallerRapido, null, true, 13, 200);
+				 Mecanico mecanico127 = new Mecanico(127, 33, "Héctor Jiménez", 'M', new ArrayList<>(), 6, 1600.0, new ArrayList<>(), tallerEficiente, null, true, 17, 220);
+				 Mecanico mecanico128 = new Mecanico(128, 35, "Luis Rodríguez", 'M', new ArrayList<>(), 7, 1700.0, new ArrayList<>(), tallerExpress, null, true, 16, 230);
+				 Mecanico mecanico129 = new Mecanico(129, 30, "Manuel García", 'M', new ArrayList<>(), 5, 1500.0, new ArrayList<>(), tallerSegura, null, true, 15, 200);
+				 Mecanico mecanico130 = new Mecanico(130, 38, "Tomás Fernández", 'M', new ArrayList<>(), 7, 1750.0, new ArrayList<>(), tallerGlobal, null, true, 19, 220);
+				 Mecanico mecanico131 = new Mecanico(131, 32, "Óscar López", 'M', new ArrayList<>(), 6, 1600.0, new ArrayList<>(), tallerRapido, null, true, 14, 210);
+				 Mecanico mecanico132 = new Mecanico(132, 31, "David Martínez", 'M', new ArrayList<>(), 5, 1550.0, new ArrayList<>(), tallerEficiente, null, true, 13, 200);
+				 Mecanico mecanico133 = new Mecanico(133, 36, "Gabriel Silva", 'M', new ArrayList<>(), 8, 1800.0, new ArrayList<>(), tallerExpress, null, true, 20, 230);
+				 Mecanico mecanico134 = new Mecanico(134, 29, "Ricardo Vargas", 'M', new ArrayList<>(), 5, 1500.0, new ArrayList<>(), tallerSegura, null, true, 12, 180);
+				 Mecanico mecanico135 = new Mecanico(135, 34, "Adrián Rodríguez", 'M', new ArrayList<>(), 7, 1650.0, new ArrayList<>(), tallerGlobal, null, true, 18, 220);
+				 Mecanico mecanico136 = new Mecanico(136, 40, "Héctor Hernández", 'M', new ArrayList<>(), 9, 1750.0, new ArrayList<>(), tallerRapido, null, true, 22, 240);
+				 Mecanico mecanico137 = new Mecanico(137, 33, "Eduardo Díaz", 'M', new ArrayList<>(), 6, 1600.0, new ArrayList<>(), tallerEficiente, null, true, 15, 210);
+				 Mecanico mecanico138 = new Mecanico(138, 32, "Carlos Moreno", 'M', new ArrayList<>(), 6, 1550.0, new ArrayList<>(), tallerExpress, null, true, 14, 200);
+				 Mecanico mecanico139 = new Mecanico(139, 28, "José Pérez", 'M', new ArrayList<>(), 4, 1450.0, new ArrayList<>(), tallerSegura, null, true, 12, 180);
+				 Mecanico mecanico140 = new Mecanico(140, 35, "Jorge Moreno", 'M', new ArrayList<>(), 7, 1700.0, new ArrayList<>(), tallerGlobal, null, true, 16, 220);
+				 Mecanico mecanico141 = new Mecanico(141, 30, "Luis Martínez", 'M', new ArrayList<>(), 5, 1500.0, new ArrayList<>(), tallerRapido, null, true, 13, 200);
+				 Mecanico mecanico142 = new Mecanico(142, 31, "Miguel Gómez", 'M', new ArrayList<>(), 6, 1600.0, new ArrayList<>(), tallerEficiente, null, true, 14, 210);
+				 Mecanico mecanico143 = new Mecanico(143, 29, "Andrés Morales", 'M', new ArrayList<>(), 5, 1550.0, new ArrayList<>(), tallerExpress, null, true, 13, 200);
+				 Mecanico mecanico144 = new Mecanico(144, 38, "Roberto Fernández", 'M', new ArrayList<>(), 8, 1750.0, new ArrayList<>(), tallerSegura, null, true, 17, 220);
+				 Mecanico mecanico145 = new Mecanico(145, 32, "Víctor Vargas", 'M', new ArrayList<>(), 6, 1600.0, new ArrayList<>(), tallerGlobal, null, true, 15, 210);
+				 Mecanico mecanico146 = new Mecanico(146, 34, "Fernando Gómez", 'M', new ArrayList<>(), 7, 1650.0, new ArrayList<>(), tallerRapido, null, true, 16, 220);
+				 Mecanico mecanico147 = new Mecanico(147, 30, "Héctor Rivas", 'M', new ArrayList<>(), 5, 1500.0, new ArrayList<>(), tallerEficiente, null, true, 12, 200);
 
 
 				mecanicos1.add(mecanico121);
