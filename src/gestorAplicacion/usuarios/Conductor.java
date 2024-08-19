@@ -154,13 +154,19 @@ public class Conductor extends Persona {
 	 * Metodo para quitar el vehiculo si no tiene viajes programados
 	 * @return void*/
 	
-	public void quitarVehiculo() {
+	public String quitarVehiculo() {
 		
 		if (this.horario.size() == 0) {
+			
 			if (vehiculo.getConductores().size() >= 2) {
 				this.vehiculo.quitarConductor(this.id);
-				this.vehiculo=null;	
+				this.vehiculo=null;
+				return "Se ha desvinculado el vehiculo a " + this.nombre;
+			} else {
+				return "No se ha podido desvincular el vehiculo a " + this.nombre;
 			}
+		} else {
+			return "No se ha podido desvincular el vehiculo a " + this.nombre;
 		}
 		
 		

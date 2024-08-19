@@ -563,7 +563,7 @@ public class Transportadora implements Incentivo, Serializable {
 	 * @return string con la lista de conductores disponibles*/
 	
 	public String conductoresDisponibles(Viaje v) {
-		ArrayList<Conductor> conductoresLibres= new ArrayList<Conductor>();
+		ArrayList<Conductor> conductoresLibres= new ArrayList<>();
 		String mensaje = "";
 		
 		/*for (Conductor conductor: conductores) {
@@ -595,6 +595,12 @@ public class Transportadora implements Incentivo, Serializable {
 				
 				for (Conductor driver : conductor.getVehiculo().getConductores()) {
 					
+					if (conductoresLibres.contains(driver)) {
+						
+						continue;
+						
+					}
+					
 					if (driver.getHorario()==null) {
 						
 						value = true;
@@ -610,6 +616,8 @@ public class Transportadora implements Incentivo, Serializable {
 							valor = false;
 							break;
 							
+						} else {
+							valor=true;
 						}
 					}
 					

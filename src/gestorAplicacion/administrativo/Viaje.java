@@ -455,7 +455,7 @@ public class Viaje implements Serializable {
 	
 	public String detallesViaje() {
 		String mensaje = "";
-		mensaje = "Fecha del viaje: " + getFecha() + " Destino: " + getLlegada() + "Id: " + getId();
+		mensaje = "Fecha del viaje: " + getFecha() + "  Destino: " + getLlegada();
 		return mensaje;
 	}
 	

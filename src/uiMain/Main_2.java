@@ -26,16 +26,14 @@ public class Main_2 {
         	n++;
         }
         
+      
         int selection = check(1,Transportadora.getTransportadoras().size());
         Transportadora transportaElegida = Transportadora.getTransportadoras().get(selection-1);
         
-        System.out.println("Haz seleccionado " + transportaElegida.getNombre());
+        System.out.println("Has seleccionado " + transportaElegida.getNombre() + "\n");
         
         while (!regresar) {
         	
-            System.out.println("Ejecutando Funcionalidad 2");
-            // Lógica específica para Funcionalidad 2
-            
             System.out.println("Seleccione una acción:");
             System.out.println("1. Despedir conductor");
             System.out.println("2. Contratar conductor");
@@ -52,8 +50,15 @@ public class Main_2 {
                 	
                 	mostrarConductoresActivos(transportaElegida);
                 	System.out.println("Digite el id del conductor a despedir");
-                	opcion = check(1,transportaElegida.getConductores().size());
-                	System.out.println(transportaElegida.despedirConductor(opcion));
+                	opcion = scanner.nextInt();
+                	
+                	if (transportaElegida.encontrarConductor(opcion) == null) {
+    					
+    					System.out.println("No se encontro el conductor con Id #" + opcion);
+    					
+    				} else {
+    					System.out.println(transportaElegida.despedirConductor(opcion));
+    				}
                     break;
                     
                 case 2:
@@ -131,7 +136,7 @@ public class Main_2 {
                 			}
                 		} else {
                 			
-                			System.out.println("Seleccione una opcion");
+                			System.out.println("\nSeleccione una opcion");
                 			System.out.println("1. Asignar viaje");
                 			System.out.println("2. Desvincular viaje");
                 			System.out.println("3. Regresar");
@@ -147,7 +152,7 @@ public class Main_2 {
                 					
                 				} else {
                 					
-                					System.out.println("Digite el del viaje que desea asignarle al conductor");
+                					System.out.println("Digite el id del viaje que desea asignarle al conductor");
                     				System.out.println(transportaElegida.mostrarViajesDisponibles(Tiempo.diaNombre.getValue(),selectedDriver.getVehiculo().getTipo()));
       
                 					opcion = scanner.nextInt();
@@ -171,18 +176,18 @@ public class Main_2 {
                 				System.out.println(selectedDriver.mostrarViajes());
                 				int selectedTrip = check(1,selectedDriver.getHorario().size());
                 			
-                				System.out.println("Elija un nuevo conductor que tomara el viaje");
-                				System.out.println(transportaElegida.conductoresDisponibles(selectedDriver.getHorario().get(selectedTrip)));
+                				System.out.println("Digite el id del conductor que tomara el viaje");
+                				System.out.println(transportaElegida.conductoresDisponibles(selectedDriver.getHorario().get(selectedTrip-1)));
                 				opcion = scanner.nextInt();
                 			
                 				if (transportaElegida.encontrarConductor(opcion) == null) {
                 					
-                					System.out.println("No se encontro el conductor con cedula #" + opcion);
+                					System.out.println("No se encontro el conductor con Id #" + opcion);
                 					
                 				} else {
                 					
-                					selectedDriver.desvincularYVincular(transportaElegida.encontrarConductor(opcion), selectedDriver.getHorario().get(selectedTrip));
-                		            System.out.print("Se asignado el viaje al conductor " + transportaElegida.encontrarConductor(opcion).getNombre());
+                					selectedDriver.desvincularYVincular(transportaElegida.encontrarConductor(opcion), selectedDriver.getHorario().get(selectedTrip-1));
+                		            System.out.print("Se asignado el viaje al conductor " + transportaElegida.encontrarConductor(opcion).getNombre() + "\n\n");
                 		            
                 				}
                 				break;
@@ -206,12 +211,20 @@ public class Main_2 {
                 		if (valorVerdad) {
                 			
                 			System.out.println("Seleccione una opcion");
-                        	System.out.println("1. Quitar Vehiculo asociado");
+                        	System.out.println("1. Desvincular vehiculo asociado");
                         	System.out.println("2. Regresar");
                         	opcion = scanner.nextInt();
                         	switch (opcion) {
                         	case 1:
-                        		selectedDriver.quitarVehiculo();
+                        		
+                        		if (selectedDriver.getHorario().isEmpty() != true) {
+                        			
+                        			System.out.println("No se puede desvincular el vehiculo porque el conductor tiene viajes programados");
+                        			break;
+                        			
+                        		}
+                        		
+                        		System.out.println(selectedDriver.quitarVehiculo());
                         		break;
                         		
                         	case 2:
@@ -301,7 +314,7 @@ public class Main_2 {
     	int number = 0;
     	while (!value) {
     		int opcion = scanner.nextInt();
-    		if (opcion >= min || opcion <= max) {
+    		if (opcion >= min && opcion <= max) {
     			value = true;
     			number = opcion;
     		} else {

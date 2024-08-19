@@ -84,6 +84,13 @@ public class Serializador {
 		
 		Terminal terminal = new Terminal("Terminal del norte", 99999999, 500, 1, 20, null,  null, 0, Destino.MEDELLIN); //(String nombre, double dinero, int capacidadVehiculos, int cantidadSedes, int cantidadVehiculos, ArrayList <Transportadora> transportadoras, ArrayList <Destino> destinos, double comision, Destino ubicacion)
 
+		ArrayList<Conductor> conductoresRegistrados1 = new ArrayList<>();
+		ArrayList<Conductor> conductoresRegistrados2 = new ArrayList<>();
+		ArrayList<Conductor> conductoresRegistrados3 = new ArrayList<>();
+		ArrayList<Conductor> conductoresRegistrados4 = new ArrayList<>();
+		ArrayList<Conductor> conductoresRegistrados5 = new ArrayList<>();
+		ArrayList<Conductor> conductoresRegistrados6 = new ArrayList<>();
+		
 
 		Transportadora transportadoraRapida = new Transportadora("Transportadora Rapida", 196000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, new ArrayList<>(), new ArrayList<>(), null, 4.5);
 		Transportadora transportadoraEficiente = new Transportadora("Transportadora Eficiente", 189000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, new ArrayList<>(), new ArrayList<>(), null, 4.0);
@@ -92,6 +99,9 @@ public class Serializador {
 		Transportadora transportadoraGlobal = new Transportadora("Transportadora Global", 305000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, new ArrayList<>(), new ArrayList<>(), null, 2.5);
 		Transportadora transportadoraLocal = new Transportadora("Transportadora Local", 250000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, new ArrayList<>(), new ArrayList<>(), null, 4.7);
 				                       
+		
+
+		
 		// Creación de un ArrayList y adición de las instancias de Transportadora
 	    ArrayList<Transportadora> transportadoras = new ArrayList<>();
 		transportadoras.add(transportadoraRapida);
@@ -144,65 +154,35 @@ public class Serializador {
 	    
 	    //Vehiculos
 	    Vehiculo vehiculo1 = new Vehiculo("ABC123", "ModeloA", 12500.00, 120.0, TipoVehiculo.BUS, transportadoraRapida);
-        Vehiculo vehiculo2 = new Vehiculo("DEF456", "ModeloB", 13500.00, 130.0, TipoVehiculo.BUS, transportadoraRapida);
-        Vehiculo vehiculo3 = new Vehiculo("GHI789", "ModeloC", 14500.00, 125.0, TipoVehiculo.BUS, transportadoraRapida);
-        Vehiculo vehiculo4 = new Vehiculo("JKL012", "ModeloD", 15500.00, 140.0, TipoVehiculo.ESCALERA, transportadoraRapida);
-        Vehiculo vehiculo5 = new Vehiculo("MNO345", "ModeloE", 16500.00, 135.0, TipoVehiculo.ESCALERA, transportadoraRapida);
-        Vehiculo vehiculo6 = new Vehiculo("PQR678", "ModeloF", 17500.00, 145.0, TipoVehiculo.VANS, transportadoraRapida);
-        Vehiculo vehiculo7 = new Vehiculo("STU901", "ModeloG", 18500.00, 120.0, TipoVehiculo.VANS, transportadoraRapida);
-        Vehiculo vehiculo8 = new Vehiculo("VWX234", "ModeloH", 19500.00, 125.0, TipoVehiculo.VANS, transportadoraRapida);
-        Vehiculo vehiculo9 = new Vehiculo("YZA567", "ModeloI", 20500.00, 130.0, TipoVehiculo.TAXI, transportadoraRapida);
-        Vehiculo vehiculo10 = new Vehiculo("BCD890", "ModeloJ", 21500.00, 135.0, TipoVehiculo.TAXI, transportadoraRapida);
-        Vehiculo vehiculo11 = new Vehiculo("EFG123", "ModeloK", 22500.00, 140.0, TipoVehiculo.BUS, transportadoraEficiente);
-        Vehiculo vehiculo12 = new Vehiculo("HIJ456", "ModeloL", 23500.00, 145.0, TipoVehiculo.BUS, transportadoraEficiente);
-        Vehiculo vehiculo13 = new Vehiculo("KLM789", "ModeloM", 24500.00, 120.0, TipoVehiculo.BUS, transportadoraEficiente);
-        Vehiculo vehiculo14 = new Vehiculo("NOP012", "ModeloN", 25500.00, 125.0, TipoVehiculo.ESCALERA, transportadoraEficiente);
+        Vehiculo vehiculo2 = new Vehiculo("DEF456", "ModeloB", 13500.00, 130.0, TipoVehiculo.ESCALERA, transportadoraRapida);
+        Vehiculo vehiculo3 = new Vehiculo("GHI789", "ModeloC", 14500.00, 125.0, TipoVehiculo.VANS, transportadoraRapida);
+        Vehiculo vehiculo4 = new Vehiculo("JKL012", "ModeloD", 15500.00, 140.0, TipoVehiculo.TAXI, transportadoraRapida);
+        Vehiculo vehiculo5 = new Vehiculo("MNO345", "ModeloE", 16500.00, 135.0, TipoVehiculo.BUS, transportadoraRapida);
+        Vehiculo vehiculo11 = new Vehiculo("EFG123", "ModeloK", 22500.00, 140.0, TipoVehiculo.ESCALERA, transportadoraEficiente);
+        Vehiculo vehiculo12 = new Vehiculo("HIJ456", "ModeloL", 23500.00, 145.0, TipoVehiculo.VANS, transportadoraEficiente);
+        Vehiculo vehiculo13 = new Vehiculo("KLM789", "ModeloM", 24500.00, 120.0, TipoVehiculo.TAXI, transportadoraEficiente);
+        Vehiculo vehiculo14 = new Vehiculo("NOP012", "ModeloN", 25500.00, 125.0, TipoVehiculo.BUS, transportadoraEficiente);
         Vehiculo vehiculo15 = new Vehiculo("QRS345", "ModeloO", 26500.00, 130.0, TipoVehiculo.ESCALERA, transportadoraEficiente);
-        Vehiculo vehiculo16 = new Vehiculo("TUV678", "ModeloP", 27500.00, 135.0, TipoVehiculo.VANS, transportadoraEficiente);
-        Vehiculo vehiculo17 = new Vehiculo("WXY901", "ModeloQ", 28500.00, 140.0, TipoVehiculo.VANS, transportadoraEficiente);
-        Vehiculo vehiculo18 = new Vehiculo("ZAB234", "ModeloR", 29500.00, 145.0, TipoVehiculo.VANS, transportadoraEficiente);
-        Vehiculo vehiculo19 = new Vehiculo("CDE567", "ModeloS", 30500.00, 125.0, TipoVehiculo.TAXI, transportadoraEficiente);
-        Vehiculo vehiculo20 = new Vehiculo("FGH890", "ModeloT", 31500.00, 130.0, TipoVehiculo.TAXI, transportadoraEficiente);
         Vehiculo vehiculo21 = new Vehiculo("IJK123", "ModeloU", 32500.00, 135.0, TipoVehiculo.BUS, transportadoraExpress);
-        Vehiculo vehiculo22 = new Vehiculo("LMN456", "ModeloV", 33500.00, 140.0, TipoVehiculo.BUS, transportadoraExpress);
-        Vehiculo vehiculo23 = new Vehiculo("OPQ789", "ModeloW", 34500.00, 145.0, TipoVehiculo.BUS, transportadoraExpress);
-        Vehiculo vehiculo24 = new Vehiculo("RST012", "ModeloX", 25000.00, 120.0, TipoVehiculo.ESCALERA, transportadoraExpress);
-        Vehiculo vehiculo25 = new Vehiculo("UVW345", "ModeloY", 26000.00, 125.0, TipoVehiculo.ESCALERA, transportadoraExpress);
-        Vehiculo vehiculo26 = new Vehiculo("XYZ678", "ModeloZ", 27000.00, 130.0, TipoVehiculo.VANS, transportadoraExpress);
-        Vehiculo vehiculo27 = new Vehiculo("ABC901", "ModeloAA", 28000.00, 135.0, TipoVehiculo.VANS, transportadoraExpress);
-        Vehiculo vehiculo28 = new Vehiculo("DEF234", "ModeloBB", 29000.00, 140.0, TipoVehiculo.TAXI, transportadoraExpress);
-        Vehiculo vehiculo29 = new Vehiculo("GHI567", "ModeloCC", 30000.00, 145.0, TipoVehiculo.TAXI, transportadoraExpress);
-        Vehiculo vehiculo30 = new Vehiculo("JKL890", "ModeloDD", 15000.00, 120.0, TipoVehiculo.TAXI, transportadoraExpress);
-        Vehiculo vehiculo31 = new Vehiculo("MNO123", "ModeloEE", 16000.00, 125.0, TipoVehiculo.BUS, transportadoraSegura);
-        Vehiculo vehiculo32 = new Vehiculo("PQR456", "ModeloFF", 17000.00, 130.0, TipoVehiculo.BUS, transportadoraSegura);
-        Vehiculo vehiculo33 = new Vehiculo("STU789", "ModeloGG", 18000.00, 135.0, TipoVehiculo.BUS, transportadoraSegura);
-        Vehiculo vehiculo34 = new Vehiculo("VWX012", "ModeloHH", 19000.00, 140.0, TipoVehiculo.ESCALERA, transportadoraSegura);
+        Vehiculo vehiculo22 = new Vehiculo("LMN456", "ModeloV", 33500.00, 140.0, TipoVehiculo.ESCALERA, transportadoraExpress);
+        Vehiculo vehiculo23 = new Vehiculo("OPQ789", "ModeloW", 34500.00, 145.0, TipoVehiculo.VANS, transportadoraExpress);
+        Vehiculo vehiculo24 = new Vehiculo("RST012", "ModeloX", 25000.00, 120.0, TipoVehiculo.TAXI, transportadoraExpress);
+        Vehiculo vehiculo25 = new Vehiculo("UVW345", "ModeloY", 26000.00, 125.0, TipoVehiculo.BUS, transportadoraExpress);
+        Vehiculo vehiculo31 = new Vehiculo("MNO123", "ModeloEE", 16000.00, 125.0, TipoVehiculo.ESCALERA, transportadoraSegura);
+        Vehiculo vehiculo32 = new Vehiculo("PQR456", "ModeloFF", 17000.00, 130.0, TipoVehiculo.VANS, transportadoraSegura);
+        Vehiculo vehiculo33 = new Vehiculo("STU789", "ModeloGG", 18000.00, 135.0, TipoVehiculo.TAXI, transportadoraSegura);
+        Vehiculo vehiculo34 = new Vehiculo("VWX012", "ModeloHH", 19000.00, 140.0, TipoVehiculo.BUS, transportadoraSegura);
         Vehiculo vehiculo35 = new Vehiculo("YZA345", "ModeloII", 20000.00, 145.0, TipoVehiculo.ESCALERA, transportadoraSegura);
-        Vehiculo vehiculo36 = new Vehiculo("BCD678", "ModeloJJ", 21000.00, 120.0, TipoVehiculo.VANS, transportadoraSegura);
-        Vehiculo vehiculo37 = new Vehiculo("EFG901", "ModeloKK", 22000.00, 125.0, TipoVehiculo.VANS, transportadoraSegura);
-        Vehiculo vehiculo38 = new Vehiculo("HIJ234", "ModeloLL", 23000.00, 130.0, TipoVehiculo.TAXI, transportadoraSegura);
-        Vehiculo vehiculo39 = new Vehiculo("KLM567", "ModeloMM", 24000.00, 135.0, TipoVehiculo.TAXI, transportadoraSegura);
-        Vehiculo vehiculo40 = new Vehiculo("NOP890", "ModeloNN", 25000.00, 140.0, TipoVehiculo.TAXI, transportadoraSegura);
-        Vehiculo vehiculo41 = new Vehiculo("QRS123", "ModeloOO", 26000.00, 145.0, TipoVehiculo.BUS, transportadoraGlobal);
-        Vehiculo vehiculo42 = new Vehiculo("TUV456", "ModeloPP", 27000.00, 120.0, TipoVehiculo.BUS, transportadoraGlobal);
+        Vehiculo vehiculo41 = new Vehiculo("QRS123", "ModeloOO", 26000.00, 145.0, TipoVehiculo.VANS, transportadoraGlobal);
+        Vehiculo vehiculo42 = new Vehiculo("TUV456", "ModeloPP", 27000.00, 120.0, TipoVehiculo.TAXI, transportadoraGlobal);
         Vehiculo vehiculo43 = new Vehiculo("WXY789", "ModeloQQ", 28000.00, 125.0, TipoVehiculo.BUS, transportadoraGlobal);
         Vehiculo vehiculo44 = new Vehiculo("ZAB012", "ModeloRR", 29000.00, 130.0, TipoVehiculo.ESCALERA, transportadoraGlobal);
-        Vehiculo vehiculo45 = new Vehiculo("CDE345", "ModeloSS", 30000.00, 135.0, TipoVehiculo.ESCALERA, transportadoraGlobal);
-        Vehiculo vehiculo46 = new Vehiculo("FGH678", "ModeloTT", 11000.00, 140.0, TipoVehiculo.VANS, transportadoraGlobal);
-        Vehiculo vehiculo47 = new Vehiculo("IJK901", "ModeloUU", 12000.00, 145.0, TipoVehiculo.VANS, transportadoraGlobal);
-        Vehiculo vehiculo48 = new Vehiculo("LMN234", "ModeloVV", 13000.00, 120.0, TipoVehiculo.TAXI, transportadoraGlobal);
-        Vehiculo vehiculo49 = new Vehiculo("OPQ567", "ModeloWW", 14000.00, 125.0, TipoVehiculo.TAXI, transportadoraGlobal);
-        Vehiculo vehiculo50 = new Vehiculo("RST890", "ModeloXX", 15000.00, 130.0, TipoVehiculo.TAXI, transportadoraGlobal);
-	Vehiculo vehiculo51 = new Vehiculo("ABC234", "ModeloYY", 11500.00, 110.0, TipoVehiculo.BUS, transportadoraLocal);
+        Vehiculo vehiculo45 = new Vehiculo("CDE345", "ModeloSS", 30000.00, 135.0, TipoVehiculo.VANS, transportadoraGlobal);
+        Vehiculo vehiculo51 = new Vehiculo("ABC234", "ModeloYY", 11500.00, 110.0, TipoVehiculo.TAXI, transportadoraLocal);
         Vehiculo vehiculo52 = new Vehiculo("DEF567", "ModeloZZ", 12500.00, 120.0, TipoVehiculo.BUS, transportadoraLocal);
-        Vehiculo vehiculo53 = new Vehiculo("GHI890", "ModeloAAA", 13500.00, 130.0, TipoVehiculo.BUS, transportadoraLocal);
-        Vehiculo vehiculo54 = new Vehiculo("JKL123", "ModeloBBB", 14500.00, 140.0, TipoVehiculo.ESCALERA, transportadoraLocal);
-        Vehiculo vehiculo55 = new Vehiculo("MNO456", "ModeloCCC", 15500.00, 125.0, TipoVehiculo.ESCALERA, transportadoraLocal);
-        Vehiculo vehiculo56 = new Vehiculo("PQR789", "ModeloDDD", 16500.00, 135.0, TipoVehiculo.VANS, transportadoraLocal);
-        Vehiculo vehiculo57 = new Vehiculo("STU012", "ModeloEEE", 17500.00, 145.0, TipoVehiculo.VANS, transportadoraLocal);
-        Vehiculo vehiculo58 = new Vehiculo("VWX345", "ModeloFFF", 18500.00, 120.0, TipoVehiculo.TAXI, transportadoraLocal);
-        Vehiculo vehiculo59 = new Vehiculo("YZA678", "ModeloGGG", 19500.00, 130.0, TipoVehiculo.TAXI, transportadoraLocal);
-        Vehiculo vehiculo60 = new Vehiculo("BCD901", "ModeloHHH", 20500.00, 140.0, TipoVehiculo.TAXI, transportadoraLocal);
+        Vehiculo vehiculo53 = new Vehiculo("GHI890", "ModeloAAA", 13500.00, 130.0, TipoVehiculo.ESCALERA, transportadoraLocal);
+        Vehiculo vehiculo54 = new Vehiculo("JKL123", "ModeloBBB", 14500.00, 140.0, TipoVehiculo.VANS, transportadoraLocal);
+        Vehiculo vehiculo55 = new Vehiculo("MNO456", "ModeloCCC", 15500.00, 125.0, TipoVehiculo.TAXI, transportadoraLocal);
 
 
 
@@ -263,16 +243,18 @@ public class Serializador {
 				conductores1.add(conductor8);
 				conductores1.add(conductor9);
 				conductores1.add(conductor10);
-				conductores1.add(conductor11);
-				conductores1.add(conductor12);
-				conductores1.add(conductor13);
-				conductores1.add(conductor14);
-				conductores1.add(conductor15);
-				conductores1.add(conductor16);
-				conductores1.add(conductor17);
-				conductores1.add(conductor18);
-				conductores1.add(conductor19);
-				conductores1.add(conductor20);
+				
+				conductoresRegistrados1.add(conductor11);
+				conductoresRegistrados1.add(conductor12);
+				conductoresRegistrados1.add(conductor13);
+				conductoresRegistrados1.add(conductor14);
+				conductoresRegistrados1.add(conductor15);
+				conductoresRegistrados1.add(conductor16);
+				conductoresRegistrados1.add(conductor17);
+				conductoresRegistrados1.add(conductor18);
+				conductoresRegistrados1.add(conductor19);
+				conductoresRegistrados1.add(conductor20);
+				
 				
 				
 
@@ -332,16 +314,19 @@ public class Serializador {
 				conductores2.add(conductor28);
 				conductores2.add(conductor29);
 				conductores2.add(conductor30);
-				conductores2.add(conductor31);
-				conductores2.add(conductor32);
-				conductores2.add(conductor33);
-				conductores2.add(conductor34);
-				conductores2.add(conductor35);
-				conductores2.add(conductor36);
-				conductores2.add(conductor37);
-				conductores2.add(conductor38);
-				conductores2.add(conductor39);
-				conductores2.add(conductor40);
+				
+				conductoresRegistrados2.add(conductor21);
+				conductoresRegistrados2.add(conductor22);
+				conductoresRegistrados2.add(conductor23);
+				conductoresRegistrados2.add(conductor24);
+				conductoresRegistrados2.add(conductor25);
+				conductoresRegistrados2.add(conductor26);
+				conductoresRegistrados2.add(conductor27);
+				conductoresRegistrados2.add(conductor28);
+				conductoresRegistrados2.add(conductor29);
+				conductoresRegistrados2.add(conductor30);
+				
+
 
 				conductor21.setTransportadora(transportadoraEficiente);
 				conductor22.setTransportadora(transportadoraEficiente);
@@ -396,17 +381,20 @@ public class Serializador {
 				conductores3.add(conductor48);
 				conductores3.add(conductor49);
 				conductores3.add(conductor50);
-				conductores3.add(conductor51);
-				conductores3.add(conductor52);
-				conductores3.add(conductor53);
-				conductores3.add(conductor54);
-				conductores3.add(conductor55);
-				conductores3.add(conductor56);
-				conductores3.add(conductor57);
-				conductores3.add(conductor58);
-				conductores3.add(conductor59);
-				conductores3.add(conductor60);
+			
 
+				conductoresRegistrados3.add(conductor51);
+				conductoresRegistrados3.add(conductor52);
+				conductoresRegistrados3.add(conductor53);
+				conductoresRegistrados3.add(conductor54);
+				conductoresRegistrados3.add(conductor55);
+				conductoresRegistrados3.add(conductor56);
+				conductoresRegistrados3.add(conductor57);
+				conductoresRegistrados3.add(conductor58);
+				conductoresRegistrados3.add(conductor59);
+				conductoresRegistrados3.add(conductor60);
+
+				
 				conductor41.setTransportadora(transportadoraExpress);
 				conductor42.setTransportadora(transportadoraExpress);
 				conductor43.setTransportadora(transportadoraExpress);
@@ -460,16 +448,18 @@ public class Serializador {
 				conductores4.add(conductor68);
 				conductores4.add(conductor69);
 				conductores4.add(conductor70);
-				conductores4.add(conductor71);
-				conductores4.add(conductor72);
-				conductores4.add(conductor73);
-				conductores4.add(conductor74);
-				conductores4.add(conductor75);
-				conductores4.add(conductor76);
-				conductores4.add(conductor77);
-				conductores4.add(conductor78);
-				conductores4.add(conductor79);
-				conductores4.add(conductor80);
+				
+				conductoresRegistrados4.add(conductor71);
+				conductoresRegistrados4.add(conductor72);
+				conductoresRegistrados4.add(conductor73);
+				conductoresRegistrados4.add(conductor74);
+				conductoresRegistrados4.add(conductor75);
+				conductoresRegistrados4.add(conductor76);
+				conductoresRegistrados4.add(conductor77);
+				conductoresRegistrados4.add(conductor78);
+				conductoresRegistrados4.add(conductor79);
+				conductoresRegistrados4.add(conductor80);
+
 
 				conductor61.setTransportadora(transportadoraSegura);
 				conductor62.setTransportadora(transportadoraSegura);
@@ -524,16 +514,17 @@ public class Serializador {
 				conductores5.add(conductor88);
 				conductores5.add(conductor89);
 				conductores5.add(conductor90);
-				conductores5.add(conductor91);
-				conductores5.add(conductor92);
-				conductores5.add(conductor93);
-				conductores5.add(conductor94);
-				conductores5.add(conductor95);
-				conductores5.add(conductor96);
-				conductores5.add(conductor97);
-				conductores5.add(conductor98);
-				conductores5.add(conductor99);
-				conductores5.add(conductor100);
+				
+				conductoresRegistrados5.add(conductor91);
+				conductoresRegistrados5.add(conductor92);
+				conductoresRegistrados5.add(conductor93);
+				conductoresRegistrados5.add(conductor94);
+				conductoresRegistrados5.add(conductor95);
+				conductoresRegistrados5.add(conductor96);
+				conductoresRegistrados5.add(conductor97);
+				conductoresRegistrados5.add(conductor98);
+				conductoresRegistrados5.add(conductor99);
+				conductoresRegistrados5.add(conductor100);
 
 				conductor81.setTransportadora(transportadoraGlobal);
 				conductor82.setTransportadora(transportadoraGlobal);
@@ -588,16 +579,18 @@ public class Serializador {
 				conductores6.add(conductor108);
 				conductores6.add(conductor109);
 				conductores6.add(conductor110);
-				conductores6.add(conductor111);
-				conductores6.add(conductor112);
-				conductores6.add(conductor113);
-				conductores6.add(conductor114);
-				conductores6.add(conductor115);
-				conductores6.add(conductor116);
-				conductores6.add(conductor117);
-				conductores6.add(conductor118);
-				conductores6.add(conductor119);
-				conductores6.add(conductor120);
+				
+				conductoresRegistrados6.add(conductor111);
+				conductoresRegistrados6.add(conductor112);
+				conductoresRegistrados6.add(conductor113);
+				conductoresRegistrados6.add(conductor114);
+				conductoresRegistrados6.add(conductor115);
+				conductoresRegistrados6.add(conductor116);
+				conductoresRegistrados6.add(conductor117);
+				conductoresRegistrados6.add(conductor118);
+				conductoresRegistrados6.add(conductor119);
+				conductoresRegistrados6.add(conductor120);
+
 
 				conductor101.setTransportadora(transportadoraLocal);
 				conductor102.setTransportadora(transportadoraLocal);
@@ -644,16 +637,6 @@ public class Serializador {
 				conductor8.tomarVehiculo(vehiculo4);
 				conductor9.tomarVehiculo(vehiculo5);
 				conductor10.tomarVehiculo(vehiculo5);
-				conductor11.tomarVehiculo(vehiculo6);
-				conductor12.tomarVehiculo(vehiculo6);
-				conductor13.tomarVehiculo(vehiculo7);
-				conductor14.tomarVehiculo(vehiculo7);
-				conductor15.tomarVehiculo(vehiculo8);
-				conductor16.tomarVehiculo(vehiculo8);
-				conductor17.tomarVehiculo(vehiculo9);
-				conductor18.tomarVehiculo(vehiculo9);
-				conductor19.tomarVehiculo(vehiculo10);
-				conductor20.tomarVehiculo(vehiculo10);
 				conductor21.tomarVehiculo(vehiculo11);
 				conductor22.tomarVehiculo(vehiculo11);
 				conductor23.tomarVehiculo(vehiculo12);
@@ -664,16 +647,6 @@ public class Serializador {
 				conductor28.tomarVehiculo(vehiculo14);
 				conductor29.tomarVehiculo(vehiculo15);
 				conductor30.tomarVehiculo(vehiculo15);
-				conductor31.tomarVehiculo(vehiculo16);
-				conductor32.tomarVehiculo(vehiculo16);
-				conductor33.tomarVehiculo(vehiculo17);
-				conductor34.tomarVehiculo(vehiculo17);
-				conductor35.tomarVehiculo(vehiculo18);
-				conductor36.tomarVehiculo(vehiculo18);
-				conductor37.tomarVehiculo(vehiculo19);
-				conductor38.tomarVehiculo(vehiculo19);
-				conductor39.tomarVehiculo(vehiculo20);
-				conductor40.tomarVehiculo(vehiculo20);
 				conductor41.tomarVehiculo(vehiculo21);
 				conductor42.tomarVehiculo(vehiculo21);
 				conductor43.tomarVehiculo(vehiculo22);
@@ -684,16 +657,6 @@ public class Serializador {
 				conductor48.tomarVehiculo(vehiculo24);
 				conductor49.tomarVehiculo(vehiculo25);
 				conductor50.tomarVehiculo(vehiculo25);
-				conductor51.tomarVehiculo(vehiculo26);
-				conductor52.tomarVehiculo(vehiculo26);
-				conductor53.tomarVehiculo(vehiculo27);
-				conductor54.tomarVehiculo(vehiculo27);
-				conductor55.tomarVehiculo(vehiculo28);
-				conductor56.tomarVehiculo(vehiculo28);
-				conductor57.tomarVehiculo(vehiculo29);
-				conductor58.tomarVehiculo(vehiculo29);
-				conductor59.tomarVehiculo(vehiculo30);
-				conductor60.tomarVehiculo(vehiculo30);
 				conductor61.tomarVehiculo(vehiculo31);
 				conductor62.tomarVehiculo(vehiculo31);
 				conductor63.tomarVehiculo(vehiculo32);
@@ -704,16 +667,6 @@ public class Serializador {
 				conductor68.tomarVehiculo(vehiculo34);
 				conductor69.tomarVehiculo(vehiculo35);
 				conductor70.tomarVehiculo(vehiculo35);
-				conductor71.tomarVehiculo(vehiculo36);
-				conductor72.tomarVehiculo(vehiculo36);
-				conductor73.tomarVehiculo(vehiculo37);
-				conductor74.tomarVehiculo(vehiculo37);
-				conductor75.tomarVehiculo(vehiculo38);
-				conductor76.tomarVehiculo(vehiculo38);
-				conductor77.tomarVehiculo(vehiculo39);
-				conductor78.tomarVehiculo(vehiculo39);
-				conductor79.tomarVehiculo(vehiculo40);
-				conductor80.tomarVehiculo(vehiculo40);
 				conductor81.tomarVehiculo(vehiculo41);
 				conductor82.tomarVehiculo(vehiculo41);
 				conductor83.tomarVehiculo(vehiculo42);
@@ -724,16 +677,6 @@ public class Serializador {
 				conductor88.tomarVehiculo(vehiculo44);
 				conductor89.tomarVehiculo(vehiculo45);
 				conductor90.tomarVehiculo(vehiculo45);
-				conductor91.tomarVehiculo(vehiculo46);
-				conductor92.tomarVehiculo(vehiculo46);
-				conductor93.tomarVehiculo(vehiculo47);
-				conductor94.tomarVehiculo(vehiculo47);
-				conductor95.tomarVehiculo(vehiculo48);
-				conductor96.tomarVehiculo(vehiculo48);
-				conductor97.tomarVehiculo(vehiculo49);
-				conductor98.tomarVehiculo(vehiculo49);
-				conductor99.tomarVehiculo(vehiculo50);
-				conductor100.tomarVehiculo(vehiculo50);
 				conductor101.tomarVehiculo(vehiculo51);
 				conductor102.tomarVehiculo(vehiculo51);
 				conductor103.tomarVehiculo(vehiculo52);
@@ -744,16 +687,7 @@ public class Serializador {
 				conductor108.tomarVehiculo(vehiculo54);
 				conductor109.tomarVehiculo(vehiculo55);
 				conductor110.tomarVehiculo(vehiculo55);
-				conductor111.tomarVehiculo(vehiculo56);
-				conductor112.tomarVehiculo(vehiculo56);
-				conductor113.tomarVehiculo(vehiculo57);
-				conductor114.tomarVehiculo(vehiculo57);
-				conductor115.tomarVehiculo(vehiculo58);
-				conductor116.tomarVehiculo(vehiculo58);
-				conductor117.tomarVehiculo(vehiculo59);
-				conductor118.tomarVehiculo(vehiculo59);
-				conductor119.tomarVehiculo(vehiculo60);
-				conductor120.tomarVehiculo(vehiculo60);
+
 
 
 				vehiculos1.add(vehiculo1);
@@ -761,61 +695,32 @@ public class Serializador {
 				vehiculos1.add(vehiculo3);
 				vehiculos1.add(vehiculo4);
 				vehiculos1.add(vehiculo5);
-				vehiculos1.add(vehiculo6);
-				vehiculos1.add(vehiculo7);
-				vehiculos1.add(vehiculo8);
-				vehiculos1.add(vehiculo9);
-				vehiculos1.add(vehiculo10);
 				vehiculos2.add(vehiculo11);
 				vehiculos2.add(vehiculo12);
 				vehiculos2.add(vehiculo13);
 				vehiculos2.add(vehiculo14);
 				vehiculos2.add(vehiculo15);
-				vehiculos2.add(vehiculo16);
-				vehiculos2.add(vehiculo17);
-				vehiculos2.add(vehiculo18);
-				vehiculos2.add(vehiculo19);
-				vehiculos2.add(vehiculo20);
 				vehiculos3.add(vehiculo21);
 				vehiculos3.add(vehiculo22);
 				vehiculos3.add(vehiculo23);
 				vehiculos3.add(vehiculo24);
 				vehiculos3.add(vehiculo25);
-				vehiculos3.add(vehiculo26);
-				vehiculos3.add(vehiculo27);
-				vehiculos3.add(vehiculo28);
-				vehiculos3.add(vehiculo29);
-				vehiculos3.add(vehiculo30);
 				vehiculos4.add(vehiculo31);
 				vehiculos4.add(vehiculo32);
 				vehiculos4.add(vehiculo33);
 				vehiculos4.add(vehiculo34);
 				vehiculos4.add(vehiculo35);
-				vehiculos4.add(vehiculo36);
-				vehiculos4.add(vehiculo37);
-				vehiculos4.add(vehiculo38);
-				vehiculos4.add(vehiculo39);
-				vehiculos4.add(vehiculo40);
 				vehiculos5.add(vehiculo41);
 				vehiculos5.add(vehiculo42);
 				vehiculos5.add(vehiculo43);
 				vehiculos5.add(vehiculo44);
 				vehiculos5.add(vehiculo45);
-				vehiculos5.add(vehiculo46);
-				vehiculos5.add(vehiculo47);
-				vehiculos5.add(vehiculo48);
-				vehiculos5.add(vehiculo49);
-				vehiculos5.add(vehiculo50);
 				vehiculos6.add(vehiculo51);
 				vehiculos6.add(vehiculo52);
 				vehiculos6.add(vehiculo53);
 				vehiculos6.add(vehiculo54);
 				vehiculos6.add(vehiculo55);
-				vehiculos6.add(vehiculo56);
-				vehiculos6.add(vehiculo57);
-				vehiculos6.add(vehiculo58);
-				vehiculos6.add(vehiculo59);
-				vehiculos6.add(vehiculo60);
+
 
 				transportadoraRapida.setVehiculos(vehiculos1);
 				transportadoraEficiente.setVehiculos(vehiculos2);
@@ -884,7 +789,7 @@ public class Serializador {
 				new Viaje(terminal, "8:30", "4/2/2024", vehiculo11, conductor21, Destino.GUARNE, Destino.MEDELLIN);
 				new Viaje(terminal, "10:30", "5/2/2024", vehiculo12, conductor22, Destino.MARINILLA, Destino.MEDELLIN);
 				new Viaje(terminal, "12:30", "7/1/2024", vehiculo14, conductor24, Destino.RIONEGRO, Destino.MEDELLIN);
-				new Viaje(terminal, "14:30", "18/1/2024", vehiculo16, conductor26, Destino.LAPINTADA, Destino.MEDELLIN);
+				new Viaje(terminal, "14:30", "18/1/2024", conductor26.getVehiculo() , conductor26, Destino.LAPINTADA, Destino.MEDELLIN);
 				
 				
 				new Viaje(terminal, "9:0", "1/3/2024", vehiculo21, conductor41, Destino.COOPACABANA, Destino.MEDELLIN);
@@ -893,8 +798,17 @@ public class Serializador {
 				
 				new Viaje(terminal, "13:0", "1/9/2024", vehiculo41, conductor81, Destino.ANGELOPOLIS, Destino.MEDELLIN);
 			
-				new Viaje(terminal, "15:0", "1/10/2024", vehiculo59, conductor117, Destino.ANGELOPOLIS, Destino.MEDELLIN);
+				new Viaje(terminal, "15:0", "1/10/2024", conductor117.getVehiculo() , conductor117, Destino.ANGELOPOLIS, Destino.MEDELLIN);
 						
+				
+				transportadoraRapida.setconductoresRegistrados(conductoresRegistrados1);
+				transportadoraEficiente.setconductoresRegistrados(conductoresRegistrados2);
+				transportadoraExpress.setconductoresRegistrados(conductoresRegistrados3);
+				transportadoraSegura.setconductoresRegistrados(conductoresRegistrados4);
+				transportadoraGlobal.setconductoresRegistrados(conductoresRegistrados5);
+				transportadoraLocal.setconductoresRegistrados(conductoresRegistrados6);
+				
+				
 				//pasajeros tipo VIP(80)
 				new Pasajero(TipoPasajero.VIP, 100001, 34, "Luis Martinez", 'M');
 				new Pasajero(TipoPasajero.VIP, 100002, 45, "Ana Gomez", 'F');
