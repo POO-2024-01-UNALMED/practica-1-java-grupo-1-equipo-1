@@ -80,7 +80,7 @@ public class Serializador {
     }
     
 	public static void objetosBase() {
-		//new Tiempo();
+		new Tiempo();
 		
 		Terminal terminal = new Terminal("Terminal del norte", 99999999, 500, 1, 20, null,  null, 0, Destino.MEDELLIN); //(String nombre, double dinero, int capacidadVehiculos, int cantidadSedes, int cantidadVehiculos, ArrayList <Transportadora> transportadoras, ArrayList <Destino> destinos, double comision, Destino ubicacion)
 
@@ -315,16 +315,16 @@ public class Serializador {
 				conductores2.add(conductor29);
 				conductores2.add(conductor30);
 				
-				conductoresRegistrados2.add(conductor21);
-				conductoresRegistrados2.add(conductor22);
-				conductoresRegistrados2.add(conductor23);
-				conductoresRegistrados2.add(conductor24);
-				conductoresRegistrados2.add(conductor25);
-				conductoresRegistrados2.add(conductor26);
-				conductoresRegistrados2.add(conductor27);
-				conductoresRegistrados2.add(conductor28);
-				conductoresRegistrados2.add(conductor29);
-				conductoresRegistrados2.add(conductor30);
+				conductoresRegistrados2.add(conductor31);
+				conductoresRegistrados2.add(conductor32);
+				conductoresRegistrados2.add(conductor33);
+				conductoresRegistrados2.add(conductor34);
+				conductoresRegistrados2.add(conductor35);
+				conductoresRegistrados2.add(conductor36);
+				conductoresRegistrados2.add(conductor37);
+				conductoresRegistrados2.add(conductor38);
+				conductoresRegistrados2.add(conductor39);
+				conductoresRegistrados2.add(conductor40);
 				
 
 

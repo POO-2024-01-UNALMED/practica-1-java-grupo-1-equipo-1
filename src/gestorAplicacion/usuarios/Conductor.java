@@ -292,10 +292,10 @@ public class Conductor extends Persona {
 	 * para que no haya errores en un futuro*/
 	
 	public void reinicioAtributos() {
-		this.horario = null;
+		this.horario = new ArrayList<>();
 		this.diasRestantesContr = 0;
 		this.diasTrabajados = 0;
-		this.historial = null;
+		this.historial = new ArrayList<>();
 	}
 	
 	/**

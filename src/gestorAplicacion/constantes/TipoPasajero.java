@@ -7,7 +7,7 @@ package gestorAplicacion.constantes;
 
 public enum TipoPasajero {
 	
-	ESTUDIANTE(0.35), DISCAPACITADO(0.45), REGULAR(1), VIP(2);
+	ESTUDIANTE(0.5), DISCAPACITADO(0.25), REGULAR(0.1), VIP(0);
 	
 	private double descuento; // Atributo descuento, el cuál hará un descuento al valor del pasaje al pasajero.
 	

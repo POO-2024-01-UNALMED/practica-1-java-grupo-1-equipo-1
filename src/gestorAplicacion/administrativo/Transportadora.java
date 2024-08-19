@@ -127,20 +127,21 @@ public class Transportadora implements Incentivo, Serializable {
 	
 	public String contratarConductor(Conductor conductor) {
 		
-		if (conductor.getExperiencia() >= 365 && conductor.getEstadoLicencia()) {
-			conductor.reinicioAtributos();
-			this.getConductores().add(conductor);
-		}
-		if (conductor.getExperiencia() >= 365) {
-			if (conductor.getEstadoLicencia()) {
-				conductor.reinicioAtributos();
-				this.getConductores().add(conductor);
-				return "Se contrato a " + conductor.getNombre() + " exitosamente.";
-			} else {
-				return "No se pudo contratar a " + conductor.getNombre() + "porque no tiene licencia activa";
-			}
+		if (conductor == null) {
+			return "No se ha encontrado el conductor";
 		} else {
-			return "No se pudo contratar a " + conductor.getNombre() + " porque tiene menos de un año de experiencia";
+			if (conductor.getExperiencia() >= 5) {
+				if (conductor.getEstadoLicencia()) {
+					conductor.reinicioAtributos();
+					this.getConductores().add(conductor);
+					this.getconductoresRegistrados().remove(conductor);
+					return "Se contrato a " + conductor.getNombre() + " exitosamente.";
+				} else {
+					return "No se pudo contratar a " + conductor.getNombre() + "porque no tiene licencia activa";
+				}
+			} else {
+				return "No se pudo contratar a " + conductor.getNombre() + " porque tiene menos de cinco años de experiencia";
+			}
 		}
 		
 	}
@@ -490,7 +491,7 @@ public class Transportadora implements Incentivo, Serializable {
 	public String mostrarConductRegistrados() {
 		String mensaje = "";
 		for (Persona conductor : this.conductoresRegistrados) {
-			mensaje += "Nombre: " + conductor.getNombre()+ "  #Cedula: " + conductor.getId() + "\n";
+			mensaje += "Nombre: " + conductor.getNombre()+ "  #ID: " + conductor.getId() + "\n";
 		}
 		return mensaje;
 	}
@@ -531,7 +532,7 @@ public class Transportadora implements Incentivo, Serializable {
 	public String mostrarConductActivos() {
 		String mensaje = "";
 		for (Conductor conductor : this.conductores) {
-			mensaje += "Nombre: " + conductor.getNombre()+ "  #Cedula: " + conductor.getId() + "\n";
+			mensaje += "Nombre: " + conductor.getNombre()+ "  #ID: " + conductor.getId() + "\n";
 		}
 		return mensaje;
 	}
@@ -645,7 +646,7 @@ public class Transportadora implements Incentivo, Serializable {
 		}
 		
 		for(Conductor conductor:conductoresLibres) {
-			mensaje += "Nombre: " + conductor.getNombre()+ "  #Cedula: " + conductor.getId() + "\n";
+			mensaje += "Nombre: " + conductor.getNombre()+ "  #ID: " + conductor.getId() + "\n";
 		}
 		
 		return mensaje;
@@ -703,14 +704,13 @@ public class Transportadora implements Incentivo, Serializable {
 	public String mostrarViajesDisponibles(int d, TipoVehiculo tipo) {
 		
 		String mensaje = "";
-		int number = 1;
+
 		ArrayList<Viaje> viajesDisponibles = new ArrayList<Viaje>();
 		
 		for (Viaje viaje : getViajesAsignados()) {
 			if ( Math.abs((viaje.getDia().getValue() - d)) >= 1  && (viaje.getVehiculo().getTipo() == tipo)) {
 				viajesDisponibles.add(viaje);
-				mensaje += number + ". " + viaje.detallesViaje();
-				number++;
+				mensaje += viaje.detallesViaje();
 			}
 		}
 		
