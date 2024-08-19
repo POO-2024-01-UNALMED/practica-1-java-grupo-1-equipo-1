@@ -1,5 +1,6 @@
 package uiMain;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Iterator;
 import gestorAplicacion.administrativo.*;
@@ -71,50 +72,63 @@ public class Main_3 {
     
     public static void verTarifas() {
     	
-    	System.out.print("señor administrador, a continuación se le mostrarán las transportadoras disponibles de su terminal ");
-    	System.out.println(" \nPara que pueda consultar las respectivas tarifas de la transportadora que desee");
-    	int i = 1;
+    	try {
+    		
+    		System.out.print("señor administrador, a continuación se le mostrarán las transportadoras disponibles de su terminal ");
+        	System.out.println(" \nPara que pueda consultar las respectivas tarifas de la transportadora que desee");
+        	int i = 1;
+        	
+        	if (!(Terminal.getTransportadoras().isEmpty())) {
+        		
+        		for (Transportadora t: Terminal.getTransportadoras()) {
+            		
+            		System.out.println(i +". " + t.getNombre() );
+            		i++;
+            		
+            	}
+        		
+        		System.out.println("Seleccione la transportadora a la cual quiere ver dicha tarifa de viajes");
+            	int scanner = Main_Principal.readInt();
+            	
+            	while (scanner > Terminal.getTransportadoras().size() || scanner <= 0) {
+            		
+            		System.out.println("Ingrese nuevamente su número, ingresó un numero incorrecto ");
+                	scanner = Main_Principal.readInt();
+         	
+            	}
+            	
+            		Transportadora transportadoraSeleccionada = Terminal.getTransportadoras().get(scanner - 1);
+            		
+            		if (!(transportadoraSeleccionada.getViajesAsignados().isEmpty())) {
+                        
+                        System.out.println("\nTarifas de viajes para " + transportadoraSeleccionada.getNombre());
+                        System.out.println("------------------------------------------------------");
+                        System.out.printf("%-5s %-20s %-20s %-10s%n", "No.", "Salida", "Llegada", "Tarifa");
+                        System.out.println("------------------------------------------------------");
+                        
+                        int j = 1;
+                
+                		for (Viaje v: transportadoraSeleccionada.getViajesAsignados()) {
+                			
+                			 System.out.printf("%-5d %-20s %-20s $%-10.2f%n", j, v.getSalida().name(), v.getLlegada().name(), v.getTarifa());
+                    		j++;
+                    	
+                    	}
+                        
+                	}else { System.out.println("No hay viajes asignados a esta transportadora");}
+                     			
+        	}else { System.out.println("No hay transportadoras disponibles");}
+    		
+    		
+    	}catch(InputMismatchException e) {
+    		
+    		System.out.println("Entrada inválida. Debe ingresar un número entero.");
+          
+    		
+    	}
     	
-    	if (!(Terminal.getTransportadoras().isEmpty())) {
-    		
-    		for (Transportadora t: Terminal.getTransportadoras()) {
-        		
-        		System.out.println(i +". " + t.getNombre() );
-        		i++;
-        		
-        	}
-    		
-    		System.out.println("Seleccione la transportadora a la cual quiere ver dicha tarifa de viajes");
-        	int scanner = Main_Principal.readInt();
-        	
-        	while (scanner > Terminal.getTransportadoras().size() || scanner <= 0) {
-        		
-        		System.out.println("Ingrese nuevamente su número, ingresó un numero incorrecto ");
-            	scanner = Main_Principal.readInt();
-     	
-        	}
-        	
-        		Transportadora transportadoraSeleccionada = Terminal.getTransportadoras().get(scanner - 1);
-        		
-        		if (!(transportadoraSeleccionada.getViajesAsignados().isEmpty())) {
-                    
-                    System.out.println("\nTarifas de viajes para " + transportadoraSeleccionada.getNombre());
-                    System.out.println("------------------------------------------------------");
-                    System.out.printf("%-5s %-20s %-20s %-10s%n", "No.", "Salida", "Llegada", "Tarifa");
-                    System.out.println("------------------------------------------------------");
-                    
-                    int j = 1;
-            
-            		for (Viaje v: transportadoraSeleccionada.getViajesAsignados()) {
-            			
-            			 System.out.printf("%-5d %-20s %-20s $%-10.2f%n", j, v.getSalida().name(), v.getLlegada().name(), v.getTarifa());
-                		j++;
-                	
-                	}
-                    
-            	}else { System.out.println("No hay viajes asignados a esta transportadora");}
-                 			
-    	}else { System.out.println("No hay transportadoras disponibles");}
+    	
+
     	
     }
     
@@ -148,7 +162,8 @@ public class Main_3 {
         		if (t.verificarPagoTerminal()) {
         			
         			t.descuento(); // Este método hace el respectivo pago implícitamente a la terminal
-        			Factura factura = new Factura(t.RetornarValorAPagarTerminal(), t.getTerminal()); // Modificar
+        			Factura factura = Factura.crearFacturatransportadora(t.RetornarValorAPagarTerminal(), t.getTerminal()); 
+        			Factura.getFacturasCreadas().add(factura);
         			t.getDueño().getFacturas().add(factura); // Se le pasa la factura al dueño de la transportadora
         			Terminal.getFacturas().add(factura);
         			
@@ -184,7 +199,8 @@ public class Main_3 {
         	            	
         	                Conductor c= iterator.next();
         	                c.aumentarDinero(liquidacionConductores);
-        	                Factura factura =new Factura(liquidacionConductores, c.getTransportadora(), c.getVehiculo()); // Modificar
+        	                Factura factura = Factura.crearFacturaConductor(liquidacionConductores, c.getTransportadora(), c.getVehiculo()); // Modificar
+        	                Factura.getFacturasCreadas().add(factura);
         	                c.getFacturas().add(factura);
         	                Terminal.getFacturas().add(factura);// Llevar seguimiento de las facturas
         	                iterator.remove(); // Elimina el conductor de la lista
@@ -339,7 +355,7 @@ public class Main_3 {
     	                  c.getId(), 
     	                  800000);
     			
-    			Factura f = new Factura(800000,c.getTransportadora(), c.getVehiculo()); // Modificar
+    			Factura f = Factura.crearFacturaConductor(800000,c.getTransportadora(), c.getVehiculo()); // Modificar
     			c.getFacturas().add(f);
     			
     		}
@@ -352,7 +368,8 @@ public class Main_3 {
     					
     					
     					c.getTransportadora().pagarConductor(c); 
-            			Factura f = new Factura(800000,c.getTransportadora(), c.getVehiculo());
+            			Factura f = Factura.crearFacturaConductor(800000,c.getTransportadora(), c.getVehiculo());
+            			Factura.getFacturasCreadas().add(f);
             			c.getTransportadora().setDinero(c.getTransportadora().getDinero()-800000); // Ya que se acordó que a cada transportador se le pagará este monto
     					
     				}else {
@@ -410,7 +427,8 @@ public class Main_3 {
                     System.out.println("---------------------------------------------------");
 
                     // Generar la factura y agregarla al historial del pasajero
-                    Factura factura = new Factura(valorApagar, (Pasajero)p, v.getTerminal(), v.getConductor(), v, v.getVehiculo(), v.getTransportadora());
+                    Factura factura = Factura.crearFacturaPasajero(valorApagar, (Pasajero)p, v.getTerminal(), v.getConductor(), v, v.getVehiculo(), v.getTransportadora());
+                    Factura.getFacturasCreadas().add(factura);
                     p.getFacturas().add(factura);
                     Terminal.getFacturas().add(factura); // Llevar seguimiento de las facturas en la terminal
                     System.out.println("Señor usuario se le mostrará a continuación los deatalles de su factura");

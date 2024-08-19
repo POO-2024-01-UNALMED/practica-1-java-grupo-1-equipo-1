@@ -120,6 +120,25 @@ import java.util.ArrayList;
 			
 	}
 	
+	public static Factura crearFacturaPasajero(double total, Pasajero pasajero, Terminal terminal, Conductor conductor, Viaje viaje, Vehiculo vehiculo, Transportadora transportadora) {
+		
+		return new Factura(total, pasajero, terminal, conductor, viaje, vehiculo, transportadora);
+		
+	}
+	
+	public static Factura crearFacturaConductor(double total, Transportadora transportadora, Vehiculo vehiculo) {
+		
+		return new Factura(total, transportadora, vehiculo);
+		
+	}
+	
+	public static Factura crearFacturatransportadora(double total, Terminal terminal) {
+		
+		return new Factura(total, terminal);
+		
+	}
+	
+	
 	
 	// METODOS GETTERS Y SETTERS
 	

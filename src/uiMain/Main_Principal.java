@@ -51,7 +51,7 @@ public class Main_Principal {
                     break;
                 case 3:
                 	
-                	//facturacionYFinanzas();
+                	Main_3.facturacionYFinanzas();
                     break;
                 case 4:
                 	Main_4.ejecutar();
