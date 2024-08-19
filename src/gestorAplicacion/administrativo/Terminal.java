@@ -1,6 +1,8 @@
 package gestorAplicacion.administrativo;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -174,6 +176,30 @@ public class Terminal implements Serializable{
 	    }
 		
 		return viajeMasRapido;
+	}
+	
+	public static Viaje obtenerViajeMasProximo(ArrayList<Viaje> listaViajes) {
+	    if (listaViajes == null || listaViajes.isEmpty()) {
+	        return null;
+	    }
+
+	    Viaje viajeMasProximo = listaViajes.get(0);
+
+	    for (Viaje viaje : listaViajes) {
+	        int comparacionFecha = viaje.getFecha().compareTo(viajeMasProximo.getFecha());
+	        if (comparacionFecha == 0) {
+	            // Si las fechas son iguales, compara la hora de salida
+	            int comparacionHora = viaje.getHora().compareTo(viajeMasProximo.getHora());
+	            if (comparacionHora > 0) {
+	                viajeMasProximo = viaje;
+	            }
+	        } else if (comparacionFecha > 0) {
+	            // Si la fecha del viaje actual es mayor que la fecha del viaje más próximo actual
+	            viajeMasProximo = viaje;
+	        }
+	    }
+
+	    return viajeMasProximo;
 	}
 	
 	public static Viaje masEconomico(Destino destinoDeseado, ArrayList<Viaje> viajes){

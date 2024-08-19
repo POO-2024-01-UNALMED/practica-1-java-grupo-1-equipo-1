@@ -11,16 +11,17 @@ import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.constantes.TipoPasajero;
 import gestorAplicacion.constantes.TipoVehiculo;
 import gestorAplicacion.usuarios.Pasajero;
+import gestorAplicacion.usuarios.Persona;
 
 public class Main_1 {
 	
-public static void main(String[] args) {
+	public static void main(String[] args) {
 	    
-		Serializador.objetosBase();
+	    Serializador.objetosBase();
 	    
 	    String nombre = "";
 	    TipoPasajero tipo = null;
-	    String destino;
+
 	    Destino destinoDeseado = null;
 	    Scanner scanner = new Scanner(System.in);
 	    int cantidad = 0;
@@ -62,15 +63,23 @@ public static void main(String[] args) {
 	                    
 	                    while (!tipoPasajeroValido) {
 	                        System.out.println("\nIngrese el nombre del destino\n");
-	                        destino = scanner.nextLine().toUpperCase();
+	                        ArrayList<Destino> destinos = new ArrayList<>();
+	                        for (Destino destino : Destino.values()) {
+	                            destinos.add(destino);
+	                        }
 	                        
-	                        if (Terminal.esDestinoValido(destino)) {
-	                            destinoDeseado = Destino.valueOf(destino);
-	                            System.out.println("Destino seleccionado: " + destinoDeseado + "\n");
-	                        } else {
-	                            System.out.println("Destino no válido. Por favor, ingresa uno de los valores permitidos.");
+	                        Tablas.tablaDestinos(destinos); // Llamado al formato de las tablas
+	                        
+	                        System.out.println("Elige el destino por su número:");
+	                        int destinoSeleccionado = scanner.nextInt();
+	                        
+	                        if (destinoSeleccionado < 1 || destinoSeleccionado > destinos.size()) {
+	                            System.out.println("Opción no válida. Por favor, elige un número del 1 al " + destinos.size());
 	                            continue;
 	                        }
+	                        
+	                        destinoDeseado = destinos.get(destinoSeleccionado);  // Destino como parametro para el constructor ma adelante
+	                        System.out.println("Has elegido el destino: " + destinoDeseado.name());
 	                        
 	                        boolean tipoPasajeroSeleccionado = false;
 	                        while (!tipoPasajeroSeleccionado) {
@@ -85,11 +94,11 @@ public static void main(String[] args) {
 	                            scanner.nextLine();
 	                            
 	                            if(tipoPasajero == 2) {
-	                            	tipo=TipoPasajero.DISCAPACITADO;
+	                                tipo=TipoPasajero.DISCAPACITADO;
 	                            }else if(tipoPasajero == 3) {
-	                            	tipo=TipoPasajero.REGULAR;
+	                                tipo=TipoPasajero.REGULAR;
 	                            }else if(tipoPasajero == 4) {
-	                            	tipo=TipoPasajero.VIP;
+	                                tipo=TipoPasajero.VIP;
 	                            }
 	                            
 	                            if (tipoPasajero >= 1 && tipoPasajero <= 4) {
@@ -134,7 +143,7 @@ public static void main(String[] args) {
 	                                boolean modalidadValida = false;
 	                                
 	                                while (!modalidadValida) {
-	                                	if(viajesDisponibles.isEmpty()) {viajesDisponibles = Terminal.getViajes();}
+	                                    if(viajesDisponibles.isEmpty()) {viajesDisponibles = Terminal.getViajes();}
 	                                    System.out.println("\nElegir viaje por...\n" +
 	                                            "1. mayor velocidad\n" +
 	                                            "2. salida con mayor antelación\n" +
@@ -150,146 +159,156 @@ public static void main(String[] args) {
 	                                                viajeSeleccionado = Terminal.masRapido(destinoDeseado, viajesDisponibles);
 	                                                break;
 	                                            case 2:
-	                                                // Implementar lógica para seleccionar viaje con salida más pronta
+	                                                viajeSeleccionado = Terminal.obtenerViajeMasProximo(viajesDisponibles);
 	                                                break;
 	                                            case 3:
 	                                                viajeSeleccionado = Terminal.masEconomico(destinoDeseado, viajesDisponibles);
 	                                                break;
 	                                            case 4:
-	                                            	if (viajesDisponibles.isEmpty()) {
-	                                            	    System.out.println("No hay viajes disponibles");
-	                                            	    break;
-	                                            	} else {
-	                                            		if(tipo == TipoPasajero.VIP) {
-	                                            			System.out.println("\nElija el tipo de vehículo en el que quiere viajar\n" +
-	                                            	                       "1. Bus\n" +
-	                                            	                       "2. Vans\n" +
-	                                            	                       "3. Taxi");
+	                                                if (viajesDisponibles.isEmpty()) {
+	                                                    System.out.println("No hay viajes disponibles");
+	                                                    break;
+	                                                } else {
+	                                                    if(tipo == TipoPasajero.VIP) {
+	                                                        System.out.println("\nElija el tipo de vehículo en el que quiere viajar\n" +
+	                                                                       "1. Bus\n" +
+	                                                                       "2. Vans\n" +
+	                                                                       "3. Taxi");
 
-	                                            	    	indiceV = scanner.nextInt();
-	                                            	    	scanner.nextLine();
+	                                                        indiceV = scanner.nextInt();
+	                                                        scanner.nextLine();
 
-	                                            	    // Asignar el tipo de vehículo basado en la selección
-	                                            	    	switch (indiceV) {
-	                                            	        	case 1:
-	                                            	            	vehiculo = TipoVehiculo.BUS;
-	                                            	            	break;
-	                                            	        	case 2:
-	                                            	            	vehiculo = TipoVehiculo.VANS;
-	                                            	            	break;
-	                                            	        	case 3:
-	                                            	            	vehiculo = TipoVehiculo.TAXI;
-	                                            	            	break;
-	                                            	        	default:
-	                                            	            	System.out.println("\nTipo de vehículo no válido.");
-	                                            	            	continue;
-	                                            	    	}
+	                                                    // Asignar el tipo de vehículo basado en la selección
+	                                                        switch (indiceV) {
+	                                                            case 1:
+	                                                                vehiculo = TipoVehiculo.BUS;
+	                                                                break;
+	                                                            case 2:
+	                                                                vehiculo = TipoVehiculo.VANS;
+	                                                                break;
+	                                                            case 3:
+	                                                                vehiculo = TipoVehiculo.TAXI;
+	                                                                break;
+	                                                            default:
+	                                                                System.out.println("\nTipo de vehículo no válido.");
+	                                                                continue;
+	                                                        }
 
-	                                            	    // Filtrar los viajes disponibles según el tipo de vehículo seleccionado
-	                                            	    	viajesDisponibles = Terminal.viajesParaVips(cantidad, destinoDeseado, vehiculo);
+	                                                    // Filtrar los viajes disponibles según el tipo de vehículo seleccionado
+	                                                        viajesDisponibles = Terminal.viajesParaVips(cantidad, destinoDeseado, vehiculo);
 
-	                                            	    	if (viajesDisponibles.isEmpty()) {
-	                                            	        	System.out.println("No hay viajes disponibles para el tipo de vehículo seleccionado.");
-	                                            	        	break;
-	                                            	    	} else {
-	                                            	        // Mostrar transportadoras con estrellas
-	                                            	        	Tablas.transportadorasConEstrellas(viajesDisponibles);
+	                                                        if (viajesDisponibles.isEmpty()) {
+	                                                            System.out.println("No hay viajes disponibles para el tipo de vehículo seleccionado.");
+	                                                            break;
+	                                                        } else {
+	                                                            boolean transportadoraSeleccionadaValida = false;
+	                                                            while (!transportadoraSeleccionadaValida) {
+	                                                                // Mostrar transportadoras con estrellas
+	                                                                Tablas.transportadorasConEstrellas(viajesDisponibles);
 
-	                                            	        	System.out.println("\nElija una transportadora por su índice\n");
-	                                            	        	indiceT = scanner.nextInt();
-	                                            	        	scanner.nextLine();
+	                                                                System.out.println("\nElija una transportadora por su índice\n");
+	                                                                indiceT = scanner.nextInt();
+	                                                                scanner.nextLine();
 
-	                                            	        // Verificar que el índice está dentro del rango válido
-	                                            	        	ArrayList<Transportadora> transportadorasDisponibles = Terminal.obtenerTransportadorasUnicas(viajesDisponibles);
-	                                            	        	if (indiceT >= 0 && indiceT < transportadorasDisponibles.size()) {
-	                                            	            	transportadoraSeleccionada = transportadorasDisponibles.get(indiceT);
+	                                                                // Verificar que el índice está dentro del rango válido
+	                                                                ArrayList<Transportadora> transportadorasDisponibles = Terminal.obtenerTransportadorasUnicas(viajesDisponibles);
+	                                                                if (indiceT >= 0 && indiceT < transportadorasDisponibles.size()) {
+	                                                                    transportadoraSeleccionada = transportadorasDisponibles.get(indiceT);
 
-	                                            	            // Encontrar el viaje asociado con la transportadora seleccionada
-	                                            	            	boolean viajeEncontrado = false;
-	                                            	            	for (Viaje viaje : viajesDisponibles) {
-	                                            	                	if (viaje.getLlegada() == destinoDeseado && viaje.getVehiculo().getTransportadora().equals(transportadoraSeleccionada)) {
-	                                            	                    	viajeSeleccionado = viaje;
-	                                            	                    	viajeEncontrado = true;
-	                                            	                    	break;
-	                                            	                	}
-	                                            	            	}
+	                                                                    // Encontrar el viaje asociado con la transportadora seleccionada
+	                                                                    boolean viajeEncontrado = false;
+	                                                                    for (Viaje viaje : viajesDisponibles) {
+	                                                                        if (viaje.getLlegada() == destinoDeseado && viaje.getVehiculo().getTransportadora().equals(transportadoraSeleccionada)) {
+	                                                                            viajeSeleccionado = viaje;
+	                                                                            viajeEncontrado = true;
+	                                                                            break;
+	                                                                        }
+	                                                                    }
 
-	                                            	            	if (!viajeEncontrado) {
-	                                            	            		System.out.println("No se encontró un viaje con la transportadora seleccionada.");
-	                                            	            	}
-	                                            	        	} else {
-	                                            	        		System.out.println("Índice no válido. Por favor, elija un índice válido.");
-	                                            	        	}
-	                                            	    	}
-	                                            		} else if(tipo == TipoPasajero.DISCAPACITADO||tipo == TipoPasajero.REGULAR){
-	                                            			System.out.println("\nElija el tipo de vehículo en el que quiere viajar\n" +
-                                         	                       "1. Bus\n" +
-                                         	                       "2. Vans\n" +
-                                         	                       "3. Taxi\n"+
-                                         	                       "4. Escalera");
+	                                                                    if (viajeEncontrado) {
+	                                                                        transportadoraSeleccionadaValida = true;
+	                                                                    } else {
+	                                                                        System.out.println("No se encontró un viaje con la transportadora seleccionada. Por favor, elija otra.");
+	                                                                    }
+	                                                                } else {
+	                                                                    System.out.println("Índice no válido. Por favor, elija un índice válido.");
+	                                                                }
+	                                                            }
+	                                                        }
+	                                                    } else if(tipo == TipoPasajero.DISCAPACITADO || tipo == TipoPasajero.REGULAR){
+	                                                        System.out.println("\nElija el tipo de vehículo en el que quiere viajar\n" +
+	                                                               "1. Bus\n" +
+	                                                               "2. Vans\n" +
+	                                                               "3. Taxi\n"+
+	                                                               "4. Escalera");
 
-                                         	    	indiceV = scanner.nextInt();
-                                         	    	scanner.nextLine();
+	                                                        indiceV = scanner.nextInt();
+	                                                        scanner.nextLine();
 
-                                         	    // Asignar el tipo de vehículo basado en la selección
-                                         	    	switch (indiceV) {
-                                         	        	case 1:
-                                         	            	vehiculo = TipoVehiculo.BUS;
-                                         	            	break;
-                                         	        	case 2:
-                                         	            	vehiculo = TipoVehiculo.VANS;
-                                         	            	break;
-                                         	        	case 3:
-                                         	            	vehiculo = TipoVehiculo.TAXI;
-                                         	            	break;
-                                         	            
-                                         	        	case 4:
-                                         	            	vehiculo = TipoVehiculo.ESCALERA;
-                                         	            	break;
-                                         	            	
-                                         	        	default:
-                                         	            	System.out.println("Tipo de vehículo no válido.\nElegir nuevamente");
-                                         	            	continue;
-                                         	    	}
+	                                                    // Asignar el tipo de vehículo basado en la selección
+	                                                        switch (indiceV) {
+	                                                            case 1:
+	                                                                vehiculo = TipoVehiculo.BUS;
+	                                                                break;
+	                                                            case 2:
+	                                                                vehiculo = TipoVehiculo.VANS;
+	                                                                break;
+	                                                            case 3:
+	                                                                vehiculo = TipoVehiculo.TAXI;
+	                                                                break;
+	                                                            
+	                                                            case 4:
+	                                                                vehiculo = TipoVehiculo.ESCALERA;
+	                                                                break;
+	                                                                
+	                                                            default:
+	                                                                System.out.println("Tipo de vehículo no válido.\nElegir nuevamente");
+	                                                                continue;
+	                                                        }
 
-                                         	    // Filtrar los viajes disponibles según el tipo de vehículo seleccionado
-                                         	    	viajesDisponibles = Terminal.viajesParaRegularesYDiscapacitados(cantidad,destinoDeseado, vehiculo);
+	                                                    // Filtrar los viajes disponibles según el tipo de vehículo seleccionado
+	                                                        viajesDisponibles = Terminal.viajesParaRegularesYDiscapacitados(cantidad,destinoDeseado, vehiculo);
 
-                                         	    	if (viajesDisponibles.isEmpty()) {
-                                         	        	System.out.println("No hay viajes disponibles para el tipo de vehículo seleccionado.");
-                                         	        	break;
-                                         	    	} else {
-                                         	        // Mostrar transportadoras con estrellas
-                                         	        	Tablas.transportadorasConEstrellas(viajesDisponibles);
+	                                                        if (viajesDisponibles.isEmpty()) {
+	                                                            System.out.println("No hay viajes disponibles para el tipo de vehículo seleccionado.");
+	                                                            break;
+	                                                        } else {
+	                                                            boolean transportadoraSeleccionadaValida = false;
+	                                                            while (!transportadoraSeleccionadaValida) {
+	                                                                // Mostrar transportadoras con estrellas
+	                                                                Tablas.transportadorasConEstrellas(viajesDisponibles);
 
-                                         	        	System.out.println("\nElija una transportadora por su índice\n");
-                                         	        	indiceT = scanner.nextInt();
-                                         	        	scanner.nextLine();
+	                                                                System.out.println("\nElija una transportadora por su índice\n");
+	                                                                indiceT = scanner.nextInt();
+	                                                                scanner.nextLine();
 
-                                         	        // Verificar que el índice está dentro del rango válido
-                                         	        	ArrayList<Transportadora> transportadorasDisponibles = Terminal.obtenerTransportadorasUnicas(viajesDisponibles);
-                                         	        	if (indiceT >= 0 && indiceT < transportadorasDisponibles.size()) {
-                                         	            	transportadoraSeleccionada = transportadorasDisponibles.get(indiceT);
+	                                                                // Verificar que el índice está dentro del rango válido
+	                                                                ArrayList<Transportadora> transportadorasDisponibles = Terminal.obtenerTransportadorasUnicas(viajesDisponibles);
+	                                                                if (indiceT >= 0 && indiceT < transportadorasDisponibles.size()) {
+	                                                                    transportadoraSeleccionada = transportadorasDisponibles.get(indiceT);
 
-                                         	            // Encontrar el viaje asociado con la transportadora seleccionada
-                                         	            	boolean viajeEncontrado = false;
-                                         	            	for (Viaje viaje : viajesDisponibles) {
-                                         	                	if (viaje.getLlegada() == destinoDeseado && viaje.getVehiculo().getTransportadora().equals(transportadoraSeleccionada)) {
-                                         	                    	viajeSeleccionado = viaje;
-                                         	                    	viajeEncontrado = true;
-                                         	                    	break;
-                                         	                	}
-                                         	            	}
+	                                                                    // Encontrar el viaje asociado con la transportadora seleccionada
+	                                                                    boolean viajeEncontrado = false;
+	                                                                    for (Viaje viaje : viajesDisponibles) {
+	                                                                        if (viaje.getLlegada() == destinoDeseado && viaje.getVehiculo().getTransportadora().equals(transportadoraSeleccionada)) {
+	                                                                            viajeSeleccionado = viaje;
+	                                                                            viajeEncontrado = true;
+	                                                                            break;
+	                                                                        }
+	                                                                    }
 
-                                         	            	if (!viajeEncontrado) {
-                                         	            		System.out.println("No se encontró un viaje con la transportadora seleccionada.");
-                                         	            	}
-                                         	        	} else {
-                                         	        		System.out.println("Índice no válido. Por favor, elija un índice válido.");
-                                         	        	}
-                                         	    	}
-	                                            		}
-	                                            	}
+	                                                                    if (viajeEncontrado) {
+	                                                                        transportadoraSeleccionadaValida = true;
+	                                                                    } else {
+	                                                                        System.out.println("No se encontró un viaje con la transportadora seleccionada. Por favor, elija otra.");
+	                                                                    }
+	                                                                } else {
+	                                                                    System.out.println("Índice no válido. Por favor, elija un índice válido.");
+	                                                                }
+	                                                            }
+	                                                        }
+	                                                    }
+	                                                }
 	                                                break;
 	                                                
 	                                            default:
@@ -315,11 +334,10 @@ public static void main(String[] args) {
 	                                    }
 	                                }
 	                            } else {
-	                            	tipo = TipoPasajero.ESTUDIANTE;
+	                                tipo = TipoPasajero.ESTUDIANTE;
 	                                boolean viajeEstudianteEncontrado = false;
 	                                while (!viajeEstudianteEncontrado) {
-	                                    System.out.println("\nElija el tipo de vehículo en el que quiere viajar\n" +
-	                                            "1. Bus\n" +
+	                                    System.out.println("\nElija el tipo de vehículo en el que quiere viajar\n" +"1. Bus\n" +
 	                                            "2. Escalera\n" +
 	                                            "3. Vans\n");
 	                                    
@@ -333,7 +351,7 @@ public static void main(String[] args) {
 	                                    } else if (indiceV == 3){
 	                                        vehiculo = TipoVehiculo.VANS;
 	                                    }else {System.out.println("\ntipo de vehiculo no valido\n");
-	                                    	continue;}
+	                                        continue;}
 	                                    
 	                                    viajesDisponibles = Terminal.viajesParaEstudiantes(destinoDeseado, vehiculo);
 
@@ -344,15 +362,23 @@ public static void main(String[] args) {
 	                                            System.out.println("¿Desea elegir otro destino? (S/N)");
 	                                            respuesta = scanner.nextLine();
 	                                            if (respuesta.equalsIgnoreCase("S")) {
-	                                                System.out.println("\nIngrese el nuevo destino\n");
-	                                                destino = scanner.nextLine().toUpperCase();
-	                                                if (Terminal.esDestinoValido(destino)) {
-	                                                    destinoDeseado = Destino.valueOf(destino);
-	                                                    System.out.println("Nuevo destino seleccionado: " + destinoDeseado + "\n");
-	                                                } else {
-	                                                    System.out.println("Destino no válido. Volviendo al menú principal.");
-	                                                    break;
+	                                            	destinos = new ArrayList<>();
+	                                                for (Destino destino : Destino.values()) {
+	                                                    destinos.add(destino);
 	                                                }
+	                                                
+	                                                Tablas.tablaDestinos(destinos); // Llamado al formato de las tablas
+	                                                
+	                                                System.out.println("Elige el destino por su número:");
+	                                                destinoSeleccionado = scanner.nextInt();
+	                                                
+	                                                if (destinoSeleccionado < 1 || destinoSeleccionado > destinos.size()) {
+	                                                    System.out.println("Opción no válida. Por favor, elige un número del 1 al " + destinos.size());
+	                                                    continue;
+	                                                }
+	                                                
+	                                                destinoDeseado = destinos.get(destinoSeleccionado - 1);  // Destino como parametro para el constructor ma adelante
+	                                                System.out.println("Has elegido el destino: " + destinoDeseado.name());
 	                                            } else {
 	                                                System.out.println("No hay opciones disponibles. Volviendo al menú principal.");
 	                                                break;
@@ -364,25 +390,38 @@ public static void main(String[] args) {
 	                                
 
 	                                if (viajeEstudianteEncontrado) {
-	                                    Tablas.transportadorasSinEstrellas(viajesDisponibles);
-	                                    System.out.println("\nElija una transportadora por su índice\n");
-	                                    indiceT = scanner.nextInt();
-	                                    scanner.nextLine();
-	                                    transportadoraSeleccionada = Terminal.obtenerTransportadorasUnicas(viajesDisponibles).get(indiceT);
-	                                    for (Viaje viaje : viajesDisponibles) {
-	                                        if (viaje.getLlegada() == destinoDeseado && viaje.getVehiculo().getTransportadora() == transportadoraSeleccionada) {
-	                                            viajeSeleccionado = viaje;
-	                                            break;
+	                                    boolean transportadoraSeleccionadaValida = false;
+	                                    while (!transportadoraSeleccionadaValida) {
+	                                        Tablas.transportadorasSinEstrellas(viajesDisponibles);
+	                                        System.out.println("\nElija una transportadora por su índice\n");
+	                                        indiceT = scanner.nextInt();
+	                                        scanner.nextLine();
+	                                        
+	                                        ArrayList<Transportadora> transportadorasDisponibles = Terminal.obtenerTransportadorasUnicas(viajesDisponibles);
+	                                        if (indiceT >= 0 && indiceT < transportadorasDisponibles.size()) {
+	                                            transportadoraSeleccionada = transportadorasDisponibles.get(indiceT);
+	                                            for (Viaje viaje : viajesDisponibles) {
+	                                                if (viaje.getLlegada() == destinoDeseado && viaje.getVehiculo().getTransportadora() == transportadoraSeleccionada) {
+	                                                    viajeSeleccionado = viaje;
+	                                                    transportadoraSeleccionadaValida = true;
+	                                                    break;
+	                                                }
+	                                            }
+	                                            if (!transportadoraSeleccionadaValida) {
+	                                                System.out.println("No se encontró un viaje con la transportadora seleccionada. Por favor, elija otra.");
+	                                            }
+	                                        } else {
+	                                            System.out.println("Índice no válido. Por favor, elija un índice válido.");
 	                                        }
 	                                    }
 	                                }
 	                            }
 	                            break;
-                                
+	                                
 	                            }
 	                            
 	                            if (viajeSeleccionado != null) {
-	                                Tablas.tablaInformacionViaje(viajeSeleccionado);
+	                                Tablas.tablaInformacionViaje(viajeSeleccionado, tipo);
 	                                System.out.println("¿Está seguro de vender este viaje? (S/N)");
 	                                String confirmar = scanner.nextLine();
 	                                if (confirmar.equalsIgnoreCase("S")) {
@@ -414,29 +453,29 @@ public static void main(String[] args) {
 	                int edad = scanner.nextInt();
 	                System.out.println("\nIngrese su género");
 	                char genero = scanner.next().charAt(0);
-	                double valorTotal = viajeSeleccionado.getTarifa()*cantidad;
+	                Pasajero pasajero = Pasajero.nuevoPasajero(tipo, id, edad, nombre, genero);
+	                pasajero.descuento();
+	                double valorTotal = pasajero.getDinero()*cantidad;
 	                System.out.println("\nValor a pagar: "+ valorTotal);
 	                System.out.println("\nIngrese su dinero");
 	                double dinero = scanner.nextDouble();
 	                scanner.nextLine();
 	                if (dinero>=valorTotal) {
-	                	
-	                	Pasajero pasajero = Pasajero.nuevoPasajero(tipo, id, edad, nombre, genero, valorTotal);
-	                	
-	                	Tablas.tablaFactura(viajeSeleccionado, pasajero, cantidad, nombre);
-	                	double cambio = dinero-valorTotal;
-	                	System.out.println("Su Cambio:" + cambio);
-		                System.out.println("Venta realizada");
-		                //Pasajero.verificarVenta(viajeSeleccionado,pasajero);
-		                viajeSeleccionado = null;
-		                regresar2 = true;
-		                
-	            	}else {
-	            		System.out.println("Valor entregado: " + dinero);
-	            		System.out.println("Valor insuficiente, regresando...");
-	            		regresar2 = false;
+	                                  
+	                    Tablas.tablaFactura(viajeSeleccionado, pasajero, cantidad);
+	                    double cambio = dinero-valorTotal;
+	                    System.out.println("Su Cambio:" + cambio);
+	                    System.out.println("Venta realizada");
+	                    //Terminal.verificarVentaTicket(viajeSeleccionado,pasajero);
+	                    viajeSeleccionado = null;
+	                    regresar2 = true;
+	                    
+	                }else {
+	                    System.out.println("Valor entregado: " + dinero);
+	                    System.out.println("Valor insuficiente, regresando...");
+	                    regresar2 = false;
 
-	            		}
+	                    }
 	                
 	            }
 	        }

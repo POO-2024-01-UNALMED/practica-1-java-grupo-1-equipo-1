@@ -7,6 +7,7 @@ import gestorAplicacion.administrativo.Terminal;
 import gestorAplicacion.administrativo.Transportadora;
 import gestorAplicacion.administrativo.Viaje;
 import gestorAplicacion.constantes.Destino;
+import gestorAplicacion.constantes.TipoPasajero;
 import gestorAplicacion.constantes.TipoVehiculo;
 import gestorAplicacion.usuarios.*;
 import java.util.Formatter;
@@ -141,7 +142,7 @@ public interface Tablas {
         }
     }
     
-    public static void tablaFactura(Viaje viaje, Pasajero pasajero, int cantidad, String nombre) {
+    public static void tablaFactura(Viaje viaje, Pasajero pasajero, int cantidad) {
         // Calcular el total
         double total = viaje.getTarifa() * cantidad;
         
@@ -177,7 +178,7 @@ public interface Tablas {
         System.out.println("+" + "-".repeat(ANCHO + 2) + "+");
     }
     
-    public static void tablaInformacionViaje(Viaje viaje) {
+    public static void tablaInformacionViaje(Viaje viaje,TipoPasajero tipo) {
     	
         System.out.println("Detalles del Viaje:");
         System.out.println("-------------------");
@@ -191,7 +192,7 @@ public interface Tablas {
         System.out.println("Hora:                " + viaje.getHora());
         System.out.println("-------------------");
         
-        System.out.println("Tarifa:              $" + String.format("%.2f", viaje.getTarifa()));
+        System.out.println("Tarifa:              $" + String.format("%.2f", viaje.getTarifa()-viaje.getTarifa()*tipo.getDescuento()));
         System.out.println("-------------------");
         
         System.out.println("Placa del Vehículo:  " + viaje.getVehiculo().getPlaca());
@@ -254,11 +255,10 @@ public interface Tablas {
         System.out.println("-".repeat(tablaAncho));
         
         // Imprimir los destinos con su distancia
-        int i = 1;
-        for (Destino destino : destinos) {
+        for (int i = 1; i < destinos.size(); i++) {
+            Destino destino = destinos.get(i);
             int distancia = (int) Viaje.calcularDistancia(Destino.MEDELLIN, destino);
             System.out.printf("| %-" + 10 + "d | %-" + maxNombre + "s | %" + maxDistancia + "d |\n", i, destino.name(), distancia);
-            i++;
         }
         
         System.out.println("-".repeat(tablaAncho));

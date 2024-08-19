@@ -68,8 +68,8 @@ public class Pasajero extends Persona{
 	 */
 	
 	
-	public static Pasajero nuevoPasajero(TipoPasajero tipo, int id, int edad, String nombre, char genero, double dinero) {
-		return new Pasajero(tipo, id, edad, nombre, genero, dinero);
+	public static Pasajero nuevoPasajero(TipoPasajero tipo, int id, int edad, String nombre, char genero) {
+		return new Pasajero(tipo, id, edad, nombre, genero);
 	}
 
 	@Override
@@ -123,9 +123,9 @@ public class Pasajero extends Persona{
 	@Override
 	public void descuento() {
 	
-		double dineroTransportadora = this.getViaje().getTransportadora().getDinero();
+		double dineroTransportadora = this.getViaje().getVehiculo().getTransportadora().getDinero();
 		 double descuento = (this.viaje.getTarifa()-(viaje.getTarifa() * this.getTipo().getDescuento()));
-		 this.getViaje().getTransportadora().setDinero(dineroTransportadora - (viaje.getTarifa() * this.getTipo().getDescuento()));
+		 this.getViaje().getVehiculo().getTransportadora().setDinero(dineroTransportadora - (viaje.getTarifa() * this.getTipo().getDescuento()));
 		 this.setDinero(this.getDinero()- descuento);
 		 
 	}
