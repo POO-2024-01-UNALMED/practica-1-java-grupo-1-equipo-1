@@ -77,7 +77,7 @@ public class Main_Principal {
                     System.out.println("Opción no válida, Marque de 1,6");
             }
         }
-        scanner.close();
+       
         
         
     }
@@ -430,7 +430,7 @@ public static void facturacionYFinanzas() {
             
         }while (!regresar);
         
-        scanner.close();
+        
     }
     
     public static void verTarifas() {
@@ -528,11 +528,10 @@ public static void facturacionYFinanzas() {
             			Factura.getFacturasCreadas().add(factura);
             			transportadora.getDueño().getFacturas().add(factura); // Se le pasa la factura al dueño de la transportadora
             			Terminal.getFacturas().add(factura);
-            			
+            		
             		}else {
-            			
-            			transportadorasQueNoHanPagado.add(transportadora);
-          		
+           
+            			transportadorasQueNoHanPagado.add(transportadora);	
         	}
             		
         		}
@@ -587,7 +586,7 @@ public static void facturacionYFinanzas() {
     		                    b++;
     			            }
     					
-    					}else {System.out.println("No hay conductores para liquidar en la transportadora " + transportadora.getNombre());}
+    					}else {System.out.println("No hay conductores para liquidar en " + transportadora.getNombre());}
     							
     					}
     				
@@ -620,17 +619,13 @@ public static void facturacionYFinanzas() {
             		
             		System.out.println("La transportadora " + t.getNombre() + " no ha cancelado el monto.");
             		System.out.println("¿Desea ver los conductores que ya no pertenecen a la terminal? ingrese si o no");
-            		String entrada = Main_Principal.readString();
+            		Scanner scanner = new Scanner(System.in);
+            		String escan = scanner.nextLine();
             		
-            		if (entrada.equalsIgnoreCase("si")) {
+            		if (escan.equalsIgnoreCase("si")) {
             			
             			int k = 1;
-            			
-            			 System.out.println("---------------------------------------------------");
-                         System.out.printf("%-5s %-30s %-20s %-15s%n", "No.", "Conductor", "Liquidación", "Fecha de Pago");
-                         System.out.println("---------------------------------------------------");
-                         
-            			
+           
             			for (Conductor c: t.getConductoresDespedidos()) {
             				
             				int numConductores = t.getConductores().size();
@@ -639,22 +634,26 @@ public static void facturacionYFinanzas() {
             				
             				if (numConductores > 0) {
             					
+            					System.out.println("---------------------------------------------------");
+                                System.out.printf("%-5s %-30s %-20s %-15s%n", "No.", "Conductor", "Liquidación", "Fecha de Pago");
+                                System.out.println("---------------------------------------------------");
+            					
             					double liquidacionConductores = dineroTransportadora / numConductores;
             					
             					System.out.printf("%-5d %-30s $%-20.2f %-15s%n", k, c.getNombre(), liquidacionConductores, t.getFechaPago());
                                 System.out.println("El conductor " + c.getNombre() + " ya no pertenece a la terminal.");
                			     	k++;
             				}
-            				
-            				System.out.println("No hay conductores para liquidar en la transportadora " + t.getNombre());
-            				 
+            			 
             			}	
             			
-            		}
+            			System.out.println("No hay conductores para liquidar en la transportadora " + t.getNombre());
+            			
+            		}else System.out.println("Ha decidido no ver a los conductores que ya no pertenecen a la terminal");
             			
             		
             	}
-    	
+            	
     	}catch(InputMismatchException e) {
     		
     		System.out.println("Entrada inválida. ingrese un número entero");
@@ -739,7 +738,7 @@ public static void facturacionYFinanzas() {
     			System.out.printf("Conductor: %s (ID: %d), ha recibido de monto: $%,.2f%n", 
     	                  c.getNombre(), 
     	                  c.getId(), 
-    	                  800000);
+    	                  800000.0);
     			
     			Factura f = Factura.crearFacturaConductor(800000,c.getTransportadora(), c.getVehiculo()); 
     			c.getFacturas().add(f);

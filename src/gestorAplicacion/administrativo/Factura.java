@@ -28,7 +28,7 @@ import java.util.ArrayList;
 	private Taller taller; // Taller asociado a la factura
 	private String fecha; // Fecha en la que adquirió la factura
 	public String trayecto; // Trayecto asociado a un pasajero, muestra el lugar de salida y el lugar de llegada del pasajero
-	private static ArrayList <Factura> facturasCreadas;
+	private static ArrayList <Factura> facturasCreadas = new ArrayList<>();
 	private int facturasTransportadora = 0;
 	private int facturasPasajeros = 0;
 	private int facturasConductores = 0;

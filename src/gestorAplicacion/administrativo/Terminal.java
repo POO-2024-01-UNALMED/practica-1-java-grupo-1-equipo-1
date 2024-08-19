@@ -39,7 +39,7 @@ public class Terminal implements Serializable{
 	private Destino ubicacion; // ubicación de la terminal 
 	private Persona administrador; // Administrador de la terminal
 	private static ArrayList <Terminal> listaTerminales = new ArrayList <Terminal> ();
-	private static ArrayList <Factura> facturas; // Facturas asociadas a la terminal, tener en cuenta quu solo hay una
+	private static ArrayList <Factura> facturas = new ArrayList<>(); // Facturas asociadas a la terminal, tener en cuenta quu solo hay una
 	
 	public Terminal() {
 		
