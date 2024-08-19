@@ -72,6 +72,7 @@ public class Conductor extends Persona {
 		this.transportadora = transportadora;
 		this.horario = horario;
 		this.numeroDePagosRecibidos = this.getFacturas().size();
+		Conductor.conductores.add(this);
 	}
 	
 	

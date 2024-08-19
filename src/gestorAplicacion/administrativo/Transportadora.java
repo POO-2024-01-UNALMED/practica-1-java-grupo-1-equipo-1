@@ -36,6 +36,8 @@ public class Transportadora implements Incentivo, Serializable {
 	private static ArrayList <Transportadora> transportadoras = new ArrayList <Transportadora>();
 	private String fechaPago; // Fecha en la cual la transportadora le paga a la termina
 	private int numeropagosRealizados; 
+	private ArrayList <Conductor> conductoresDespedidos = new ArrayList<>(); // Lista de conductores registrados de la transportadora
+
 	
 	//Constructor con todos los parámetros
 	
@@ -1028,6 +1030,14 @@ public class Transportadora implements Incentivo, Serializable {
 		
 		return numeropagosRealizados;
 	}
+	
+	public ArrayList <Conductor> getConductoresDespedidos(){
+		
+		return this.conductoresDespedidos;
+		
+		
+	}
+
 	
 	
 }
