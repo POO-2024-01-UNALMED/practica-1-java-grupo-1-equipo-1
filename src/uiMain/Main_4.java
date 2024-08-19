@@ -932,7 +932,7 @@ public class Main_4 {
     	return (vehiculos);
     }
     
-    public static void main (String [] args) {
+   /** public static void main (String [] args) {
     	Persona admin = new Pasajero (TipoPasajero.VIP);
     	Terminal terminal = new Terminal("terminal norte", 100000, 10, 0, 1, new ArrayList <Transportadora> (), new ArrayList <Viaje> (), new ArrayList <Viaje> (), new ArrayList <Destino> (), 10, Destino.MEDELLIN, admin);
     	Transportadora transportadora1 = new Transportadora ("Cootratan", 1000, new ArrayList<Conductor> (),new ArrayList<Pasajero> (), new ArrayList<Vehiculo> (), new ArrayList<Viaje> (), Destino.MEDELLIN, terminal, new ArrayList <Destino> (), new ArrayList<Viaje> (), admin, 3);
@@ -941,7 +941,7 @@ public class Main_4 {
     	
     	System.out.println(terminal.getCapacidadVehiculos());
     	ejecutar ();
-    }
+    }**/
     
 }
 

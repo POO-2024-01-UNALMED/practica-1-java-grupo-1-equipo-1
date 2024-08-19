@@ -49,6 +49,19 @@ public class Mecanico extends Persona{
 		mecanicos.add(this);
 		this.experiencia = 1;
 	}
+	
+	public Mecanico(int id, int edad, String nombre, char genero, ArrayList <Viaje> historial, int experiencia,
+			double dinero, ArrayList <Factura> facturas, Taller taller, Vehiculo vehiculoAsignado, boolean estado, int diasRestantesContr, int diasTrabajados) {
+		
+		super(id, edad, nombre, genero, historial, experiencia, dinero, facturas, diasRestantesContr, diasTrabajados);
+		this.taller = taller;
+		this.estado = true;
+		this.historialReparados = new ArrayList<Vehiculo>();
+		this.vehiculosReparando = new ArrayList <Vehiculo> ();
+		taller.agregarMecanico(this);
+		mecanicos.add(this);
+		this.experiencia = 1;
+	}
 
 	
 	
@@ -218,7 +231,7 @@ public class Mecanico extends Persona{
 	public static void agregarMecanico (Mecanico mecanico ) {
 		
 		mecanicos.add(mecanico);
-	}
+	} 
 	
 	public static void removerMecanico (Mecanico mecanico) {
 		
