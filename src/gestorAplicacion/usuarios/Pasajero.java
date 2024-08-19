@@ -23,8 +23,14 @@ public class Pasajero extends Persona{
 	
 	private static final long serialVersionUID = 1L;
 	private TipoPasajero tipo; // Tipo de pasajero asociado al pasajero
-	private static int idStatic = 0;
 	private Viaje viaje;
+	
+	public Pasajero(TipoPasajero tipo, int id, int edad, String nombre, char genero, double dinero) { // falta Inicializar varios de los atributos que hereda de persona
+		super(id, edad, nombre, genero, dinero);
+		
+		this.tipo = tipo;
+		
+	}
 	
 	public Pasajero(TipoPasajero tipo, int id, int edad, String nombre, char genero) { // falta Inicializar varios de los atributos que hereda de persona
 		super(id, edad, nombre, genero);
@@ -62,8 +68,8 @@ public class Pasajero extends Persona{
 	 */
 	
 	
-	public static Pasajero nuevoPasajero(TipoPasajero tipo, int id, int edad, String nombre, char genero) {
-		return new Pasajero(tipo);
+	public static Pasajero nuevoPasajero(TipoPasajero tipo, int id, int edad, String nombre, char genero, double dinero) {
+		return new Pasajero(tipo, id, edad, nombre, genero, dinero);
 	}
 
 	@Override
@@ -280,12 +286,6 @@ public class Pasajero extends Persona{
 	public void setViaje(Viaje viaje) {
 		
 		this.viaje = viaje;
-		
-	}
-
-	public static int getIdStatic() {
-		
-		return idStatic++;
 		
 	}
 

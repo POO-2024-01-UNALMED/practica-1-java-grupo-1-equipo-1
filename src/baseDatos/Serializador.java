@@ -780,26 +780,25 @@ public class Serializador {
 				mecanicos6.add(mecanico137);
 				
 				//Viajes
-				new Viaje(terminal, "8:0", "2/1/2024", vehiculo1, conductor1, Destino.ANGELOPOLIS, Destino.MEDELLIN);
-				new Viaje(terminal, "10:0", "2/1/2024", vehiculo2, conductor2, Destino.BARRANQUILLA, Destino.MEDELLIN);
-				new Viaje(terminal, "12:0", "3/1/2024", vehiculo3, conductor3, Destino.CALI, Destino.MEDELLIN);
-				new Viaje(terminal, "14:0", "14/1/2024", vehiculo4, conductor4, Destino.BARBOSA, Destino.MEDELLIN);
-				
-				
-				new Viaje(terminal, "8:30", "4/2/2024", vehiculo11, conductor21, Destino.GUARNE, Destino.MEDELLIN);
-				new Viaje(terminal, "10:30", "5/2/2024", vehiculo12, conductor22, Destino.MARINILLA, Destino.MEDELLIN);
-				new Viaje(terminal, "12:30", "7/1/2024", vehiculo14, conductor24, Destino.RIONEGRO, Destino.MEDELLIN);
-				new Viaje(terminal, "14:30", "18/1/2024", conductor42.getVehiculo() , conductor42, Destino.LAPINTADA, Destino.MEDELLIN);
-				
-				
-				new Viaje(terminal, "9:0", "1/3/2024", vehiculo21, conductor41, Destino.COOPACABANA, Destino.MEDELLIN);
-				
-				new Viaje(terminal, "11:0", "1/4/2024", vehiculo31, conductor62, Destino.ANGELOPOLIS, Destino.MEDELLIN);
-				
-				new Viaje(terminal, "13:0", "1/9/2024", vehiculo41, conductor81, Destino.ANGELOPOLIS, Destino.MEDELLIN);
-			
-				new Viaje(terminal, "15:0", "1/10/2024", conductor101.getVehiculo() , conductor101, Destino.ANGELOPOLIS, Destino.MEDELLIN);
-						
+				ArrayList<Viaje> lista = new ArrayList<>();
+
+				lista.add(new Viaje(terminal, "8:0", "2/1/2024", vehiculo1, conductor1, Destino.ANGELOPOLIS, Destino.MEDELLIN));
+				lista.add(new Viaje(terminal, "10:0", "2/1/2024", vehiculo2, conductor2, Destino.BARRANQUILLA, Destino.MEDELLIN));
+				lista.add(new Viaje(terminal, "12:0", "3/1/2024", vehiculo3, conductor3, Destino.CALI, Destino.MEDELLIN));
+				lista.add(new Viaje(terminal, "14:0", "14/1/2024", vehiculo4, conductor4, Destino.BARBOSA, Destino.MEDELLIN));
+
+				lista.add(new Viaje(terminal, "8:30", "4/2/2024", vehiculo11, conductor21, Destino.GUARNE, Destino.MEDELLIN));
+				lista.add(new Viaje(terminal, "10:30", "5/2/2024", vehiculo12, conductor22, Destino.MARINILLA, Destino.MEDELLIN));
+				lista.add(new Viaje(terminal, "12:30", "7/1/2024", vehiculo14, conductor24, Destino.RIONEGRO, Destino.MEDELLIN));
+				lista.add(new Viaje(terminal, "14:30", "18/1/2024", conductor26.getVehiculo(), conductor26, Destino.LAPINTADA, Destino.MEDELLIN));
+
+				lista.add(new Viaje(terminal, "9:0", "1/3/2024", vehiculo21, conductor41, Destino.COOPACABANA, Destino.MEDELLIN));
+
+				lista.add(new Viaje(terminal, "11:0", "1/4/2024", vehiculo31, conductor62, Destino.ANGELOPOLIS, Destino.MEDELLIN));
+
+				lista.add(new Viaje(terminal, "13:0", "1/9/2024", vehiculo41, conductor81, Destino.ANGELOPOLIS, Destino.MEDELLIN));
+					
+				Terminal.setViajes(lista);
 				
 				transportadoraRapida.setconductoresRegistrados(conductoresRegistrados1);
 				transportadoraEficiente.setconductoresRegistrados(conductoresRegistrados2);

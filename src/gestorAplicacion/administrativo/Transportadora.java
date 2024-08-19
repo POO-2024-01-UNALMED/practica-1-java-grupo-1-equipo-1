@@ -82,6 +82,18 @@ public class Transportadora implements Incentivo, Serializable {
 		this.estrellas = 1;		
 		transportadoras.add(this);
 	}
+	
+	
+	public Viaje elegirViajeTransportadora(ArrayList<Viaje> viajes) {
+		
+		for (Viaje viaje: viajes) {
+			if(viaje.getVehiculo().getTransportadora()==this) {
+				
+				return viaje;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Método que nos sirve para mostrar un String con la información de una factura que esté asociada 

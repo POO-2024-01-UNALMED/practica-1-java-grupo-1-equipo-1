@@ -71,6 +71,15 @@ public abstract class Persona implements Incentivo, Serializable {
 	     * @param genero, genero de la persona
 	     */
 
+		public Persona(int id, int edad, String nombre, char genero, double dinero) {
+			this.id = id;
+			this.edad = edad;
+			this.nombre = nombre;
+			this.genero = genero;
+			this.dinero = dinero;
+			Persona.serializarPersonas.add(this);
+		}
+		
 		public Persona(int id, int edad, String nombre, char genero) {
 			this.id = id;
 			this.edad = edad;

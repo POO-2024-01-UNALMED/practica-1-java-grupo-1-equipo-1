@@ -10,44 +10,50 @@ import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.constantes.TipoVehiculo;
 import gestorAplicacion.usuarios.*;
 import java.util.Formatter;
+import java.util.HashSet;
+import java.util.Set;
 
 public interface Tablas {
 	
     /**
-     * con este metodo se muestran las transportadoras sin sus respectivas estrellas
-     * para para que los estudiantes elijan
+     * Con este método se muestran las transportadoras sin sus respectivas estrellas
+     * para que los estudiantes elijan.
      * @param destino
      * @param viajes
      */
-	
-	public static void transportadorasSinEstrellas(Destino destino, TipoVehiculo vehiculo,ArrayList<Viaje> viajes) {
+	public static void transportadorasSinEstrellas(ArrayList<Viaje> viajes) {
+	    int anchoNombre = 25;
 
-        int anchoNombre = 25;
+	    // Utilizamos un Set para evitar duplicados
+	    Set<Transportadora> transportadorasMostradas = new HashSet<>();
 
-        System.out.println("\n" + "_".repeat(anchoNombre));
-        System.out.println(String.format("%-" + anchoNombre + "s", "Transportadora"));
-        System.out.println("-".repeat(anchoNombre));
+	    // Alternativa para String.repeat si estás usando una versión anterior de Java
+	    String separador = new String(new char[anchoNombre + 5]).replace("\0", "_");
 
-        for (Transportadora transportadora : Terminal.transportadorasViajeDisponible(destino, 1, viajes)) {
-        	
-            boolean transportadoraMostrada = false;
-            
-            for (Viaje viaje : transportadora.getViajesAsignados()) {
-                    if (!transportadoraMostrada) {
-                        // Imprimir el nombre de la transportadora en una fila formateada
-                        System.out.println(String.format("%-" + anchoNombre + "s", transportadora.getNombre()));
-                        transportadoraMostrada = true;
-                    }
-                    
-                    break;
-                
-            }
-            
-        }
+	    System.out.println("\n" + separador);
+	    System.out.println(String.format("%-5s%-" + anchoNombre + "s", "Índice", "Transportadora"));
+	    System.out.println(new String(new char[5]).replace("\0", "-") + new String(new char[anchoNombre]).replace("\0", "-"));
 
-        System.out.println("_".repeat(anchoNombre));
-        
-    }
+	    int index = 0; // Índice para las transportadoras
+
+	    // Iterar sobre cada viaje
+	    for (Viaje viaje : viajes) {
+	        // Obtener la transportadora del viaje
+	        Transportadora transportadora = viaje.getVehiculo().getTransportadora();
+
+	        // Verificar si la transportadora no es nula
+	        if (transportadora != null) {
+	            // Si la transportadora no ha sido mostrada antes
+	            if (!transportadorasMostradas.contains(transportadora)) {
+	                System.out.printf("%-5d%-" + anchoNombre + "s\n", index, transportadora.getNombre());
+	                transportadorasMostradas.add(transportadora);
+	                index++; // Incrementar el índice
+	            }
+	        }
+	    }
+
+	    System.out.println(separador);
+	}
 	
     /**
      * con este metodo se muestran las transportadoras con sus respectivas estrellas
@@ -56,28 +62,40 @@ public interface Tablas {
      * @param viajes
      */
     
-    public static void transportadorasConEstrellas(Destino destino, ArrayList<Viaje> viajes, int cantidad) {
-        
-        ArrayList<Transportadora> transportadoras = Terminal.transportadorasViajeDisponible(destino, cantidad, viajes);
-        
-        int anchoNombre = 30; // Ajusta el ancho según sea necesario
-        int anchoEstrellas = 10; // Ajusta el ancho según sea necesario
-        
-        System.out.println("\n" + "-".repeat(anchoNombre + anchoEstrellas + 7));
-        System.out.printf("| %-"+anchoNombre+"s | %-"+anchoEstrellas+"s |\n", "Nombre", "Estrellas");
-        System.out.println("-".repeat(anchoNombre + anchoEstrellas + 7));
-        
-        int i = 1;
-        
-        for (Transportadora transportadora : transportadoras) {
-        	
-        	System.out.printf("| %-4d | %-"+anchoNombre+"s | %-"+anchoEstrellas+"d |\n", i, transportadora.getNombre(), transportadora.getEstrellas());
-            i++;  
-        }
-        
-        System.out.println("-".repeat(anchoNombre + anchoEstrellas + 7));
-        
-    }
+	public static void transportadorasConEstrellas(ArrayList<Viaje> viajesDisponibles) {
+	    int anchoNombre = 30; // Ajusta el ancho según sea necesario
+	    int anchoEstrellas = 10; // Ajusta el ancho según sea necesario
+
+	    // Utilizamos un Set para evitar duplicados
+	    Set<Transportadora> transportadorasMostradas = new HashSet<>();
+	    
+	    // Alternativa para String.repeat si estás usando una versión anterior de Java
+	    String separador = new String(new char[anchoNombre + anchoEstrellas + 7]).replace("\0", "-");
+
+	    System.out.println("\n" + separador);
+	    System.out.printf("| %-5s | %-"+anchoNombre+"s | %-"+anchoEstrellas+"s |\n", "Índice", "Nombre", "Estrellas");
+	    System.out.println(separador);
+
+	    int i = 0; // Índice para las transportadoras
+
+	    // Iterar sobre cada viaje
+	    for (Viaje viaje : viajesDisponibles) {
+	        // Obtener la transportadora del viaje
+	        Transportadora transportadora = viaje.getVehiculo().getTransportadora();
+	        
+	        // Verificar si la transportadora no es nula
+	        if (transportadora != null) {
+	            // Si la transportadora no ha sido mostrada antes
+	            if (!transportadorasMostradas.contains(transportadora)) {
+	                System.out.printf("| %-4d | %-"+anchoNombre+"s | %-"+anchoEstrellas+".2f |\n", i, transportadora.getNombre(), transportadora.getEstrellas());
+	                transportadorasMostradas.add(transportadora);
+	                i++; // Incrementar el índice
+	            }
+	        }
+	    }
+
+	    System.out.println(separador);
+	}
     
     public static void tablaViajesTransportadora(Transportadora transportadora, ArrayList<Viaje> viajes) {
         // Definimos los anchos de las columnas
@@ -123,6 +141,42 @@ public interface Tablas {
         }
     }
     
+    public static void tablaFactura(Viaje viaje, Pasajero pasajero, int cantidad, String nombre) {
+        // Calcular el total
+        double total = viaje.getTarifa() * cantidad;
+        
+        // Definir el ancho de las columnas
+        final int ANCHO = 50;
+
+        // Imprimir encabezado
+        System.out.println("+" + "-".repeat(ANCHO + 2) + "+");
+        System.out.println("|" + " ".repeat(ANCHO + 2) + "|");
+        System.out.printf("| %-"+ ANCHO +"s |\n", "FACTURA");
+        System.out.println("|" + " ".repeat(ANCHO + 2) + "|");
+        System.out.println("+" + "-".repeat(ANCHO + 2) + "+");
+
+        // Imprimir detalles del viaje
+        System.out.printf("| %-"+ ANCHO +"s |\n", "ID Viaje: " + viaje.getId());
+        System.out.printf("| %-"+ ANCHO +"s |\n", "Destino: " + viaje.getLlegada());
+        System.out.printf("| %-"+ ANCHO +"s |\n", "Asientos " + cantidad);
+        System.out.printf("| %-"+ ANCHO +"s |\n", "Tipo vehiculo " + viaje.getVehiculo().getTipo());
+        System.out.printf("| %-"+ ANCHO +"s |\n", "Hora: " + viaje.getHora());
+        System.out.printf("| %-"+ ANCHO +"s |\n", "Tarifa Total: $" + String.format("%.2f", total));
+        System.out.printf("| %-"+ ANCHO +"s |\n", "Fecha: " + viaje.getFecha());
+        System.out.printf("| %-"+ ANCHO +"s |\n", "Transportadora: " + viaje.getVehiculo().getTransportadora().getNombre());
+
+        // Separador entre viaje y pasajero
+        System.out.println("+" + "-".repeat(ANCHO + 2) + "+");
+
+        // Imprimir detalles del pasajero
+        System.out.printf("| %-"+ ANCHO +"s |\n", "Nombre: " + pasajero.getNombre());
+        System.out.printf("| %-"+ ANCHO +"s |\n", "ID Pasajero: " + pasajero.getId());
+        System.out.printf("| %-"+ ANCHO +"s |\n", "Tipo: " + pasajero.getTipo());
+
+        // Imprimir pie de factura
+        System.out.println("+" + "-".repeat(ANCHO + 2) + "+");
+    }
+    
     public static void tablaInformacionViaje(Viaje viaje) {
     	
         System.out.println("Detalles del Viaje:");
@@ -146,7 +200,7 @@ public interface Tablas {
         System.out.println("Fecha:               " + viaje.getFecha());
         System.out.println("-------------------");
         
-        System.out.println("Transportadora:      " + viaje.getTransportadora());
+        System.out.println("Transportadora:      " + viaje.getVehiculo().getTransportadora().getNombre());
         System.out.println("-------------------");
     }
 

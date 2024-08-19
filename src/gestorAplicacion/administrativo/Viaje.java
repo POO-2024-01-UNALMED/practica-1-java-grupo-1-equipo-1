@@ -47,6 +47,7 @@ public class Viaje implements Serializable {
     // Constructor de la clase Viaje
     public Viaje(Terminal terminal, String hora, String fecha, Vehiculo vehiculo, Conductor conductor, Destino llegada, Destino salida) {
         this.terminal = terminal;
+        this.transportadora = transportadora;
     	this.id = Viaje.totalViajes;
         this.hora = hora;
         this.fecha = fecha;
@@ -174,30 +175,30 @@ public class Viaje implements Serializable {
 	 * @return int, dependiendo las condiciones establecidas: duración y tipo de vehiculo.
 	 */
     public double calcularTarifa() {
-    	int costoPorMinuto = 0;
-    	double total = 0;  
-            // Establecer el costo por minuto según el tipo de vehículo.
-            switch (vehiculo.getTipo()) {
-                case TAXI:
-                    costoPorMinuto = 400;
-                    break;
-                case VANS:
-                    costoPorMinuto = 300;
-                    break;
-                case ESCALERA:
-                    costoPorMinuto = 200;
-                    break;
-                case BUS:
-                    total = vehiculo.getTransportadora().getEstrellas()*this.calcularDistancia(getSalida(), getLlegada())*50;
-                    return total;
-                default:
-                    return -1; // Valor de retorno inválido
-            }
-            // Calcular la tarifa total
-            total =  (costoPorMinuto * duracion);
-            
-            return total;
-        
+        int costoPorMinuto = 0;
+        double total;
+        // Establecer el costo por minuto según el tipo de vehículo.
+        switch (this.getVehiculo().getTipo()) {
+            case TAXI:
+                costoPorMinuto = 200;
+                break;
+            case VANS:
+                costoPorMinuto = 170;
+                break;
+            case ESCALERA:
+                costoPorMinuto = 66;
+                break;
+            case BUS:
+                costoPorMinuto = 88;
+                break;
+            default:
+                System.out.println("Tipo de vehículo no válido.");
+                return -1; // Valor de retorno inválido
+        }
+        // Calcular la tarifa total
+        total = this.getVehiculo().getTransportadora().getEstrellas()*0.0005*(int)this.getDistancia();  // Falta agregar el factor de la distancia // Método calcularDistancia
+        total *=  (costoPorMinuto * (this.duracion*60));
+        return total;
     }
     
     /**

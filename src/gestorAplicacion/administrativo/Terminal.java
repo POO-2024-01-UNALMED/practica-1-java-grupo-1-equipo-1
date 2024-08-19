@@ -1,6 +1,8 @@
 package gestorAplicacion.administrativo;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.constantes.TipoVehiculo;
@@ -97,14 +99,13 @@ public class Terminal implements Serializable{
 	 * @return ArrayList<Transportadora>, transporatadoras con disponibilidad.
 	 */
 	
-	public static ArrayList<Transportadora> transportadorasViajeDisponible(Destino destinoDeseado, int asientos, ArrayList<Viaje> listaViajes) {
+	public static ArrayList<Transportadora> transportadorasViajeDisponible(Destino destinoDeseado, ArrayList<Viaje> listaViajes) {
 		ArrayList <Transportadora> transportadorasConDestino = new ArrayList<>();
 	    for (Viaje viaje : listaViajes) {
 	        if (viaje != null
 	        		
 	        		&& viaje.getTransportadora() != null
-	        		&& viaje.getLlegada().name().equals(destinoDeseado)
-	        		&& viaje.verificarAsientos()>=asientos) {
+	        		&& viaje.getLlegada().name().equals(destinoDeseado)) {
 	        	
 	            Transportadora transportadora = viaje.getTransportadora();
 	            
@@ -115,6 +116,29 @@ public class Terminal implements Serializable{
 	    }
 	    
 	    return transportadorasConDestino;
+	}
+	
+	public static ArrayList<Transportadora> obtenerTransportadorasUnicas(ArrayList<Viaje> viajes) {
+	    // Utilizamos un Set para evitar duplicados
+	    Set<Transportadora> transportadorasUnicas = new HashSet<>();
+	    ArrayList<Transportadora> transportadorasSeleccionadas = new ArrayList<>();
+
+	    // Iterar sobre cada viaje
+	    for (Viaje viaje : viajes) {
+	        // Obtener la transportadora del viaje
+	        Transportadora transportadora = viaje.getVehiculo().getTransportadora();
+
+	        // Verificar si la transportadora no es nula
+	        if (transportadora != null) {
+	            // Si la transportadora no ha sido mostrada antes
+	            if (!transportadorasUnicas.contains(transportadora)) {
+	                transportadorasUnicas.add(transportadora);
+	                transportadorasSeleccionadas.add(transportadora); // Añadir a la lista
+	            }
+	        }
+	    }
+
+	    return transportadorasSeleccionadas; // Devolver la lista de transportadoras
 	}
 	
 	public static ArrayList<Transportadora> transportadorasViajeDisponible(Destino destinoSeleccionado) {
@@ -131,7 +155,7 @@ public class Terminal implements Serializable{
 		return new ArrayList<>();
 	}
 	
-	public static Viaje masRapido(Destino destinoDeseado, int cantidad, ArrayList<Viaje> viajes) {
+	public static Viaje masRapido(Destino destinoDeseado, ArrayList<Viaje> viajes) {
 		//El tercer parametro son los viajes a los que puede acceder
 		Viaje viajeMasRapido = null;
 		
@@ -152,9 +176,9 @@ public class Terminal implements Serializable{
 		return viajeMasRapido;
 	}
 	
-	public static Viaje masEconomico(Destino destinoDeseado, int cantidad, ArrayList<Viaje> viajes){
+	public static Viaje masEconomico(Destino destinoDeseado, ArrayList<Viaje> viajes){
 		//el ultimo se refiere a los viajes a los que puede acceder desde el tipoPasajero
-	
+		
 		Viaje viajeMasBarato = null;
 
 	   	//Suponiendo que "viajes" es una arrayList con los viajes que se 
@@ -182,7 +206,29 @@ public class Terminal implements Serializable{
 	 * @return ArrayList con los viajes que se le pueden vender.
 	 */
 	
-	static public ArrayList<Viaje> viajesParaRegularesYDiscapacitados(int cantidad, Destino destino, TipoVehiculo vehiculo){
+	public static ArrayList<Viaje> viajesParaRegularesYDiscapacitados(int cantidad, Destino destino, TipoVehiculo vehiculo){
+		
+		ArrayList <Viaje> viajes = new ArrayList<>();
+		
+		for (Viaje viaje : Terminal.getViajes()) {
+
+			if(viaje==null) {
+				continue;
+			}
+			
+			if (viaje.getAsientosDisponibles()>=cantidad && viaje.getLlegada()==destino
+					&& viaje.getVehiculo().getTipo()==vehiculo&&!viaje.getEstado()) {
+				viajes.add(viaje);
+			}
+		}
+		
+		return viajes;
+		
+	}
+	
+	//Sobrecargado
+	
+	public static ArrayList<Viaje> viajesParaRegularesYDiscapacitados(int cantidad, Destino destino){
 		
 		ArrayList <Viaje> viajes = new ArrayList<>();
 		
@@ -193,7 +239,7 @@ public class Terminal implements Serializable{
 			}
 			
 			if (viaje.verificarAsientos()>=cantidad && viaje.getLlegada()==destino
-					&& viaje.getVehiculo().getTipo()==vehiculo&&!viaje.getEstado()) {
+					&&!viaje.getEstado()) {
 				viajes.add(viaje);
 			}
 		}
@@ -209,7 +255,7 @@ public class Terminal implements Serializable{
 	 * @return ArrayList con los viajes que se le pueden vender.
 	 */
 	
-	static public ArrayList<Viaje> viajesParaVips(int cantidad, Destino destino, TipoVehiculo vehiculo){
+	public static  ArrayList<Viaje> viajesParaVips(int cantidad, Destino destino, TipoVehiculo vehiculo){
 		
 		ArrayList <Viaje> viajes = new ArrayList<>(cantidad);
 		
@@ -221,6 +267,30 @@ public class Terminal implements Serializable{
 			
 			if (viaje.verificarAsientos()>=cantidad && viaje.getVehiculo().getTipo()==vehiculo
 					&&viaje.getLlegada()==destino && vehiculo != TipoVehiculo.ESCALERA&&!viaje.getEstado()) {
+				viajes.add(viaje);
+			}
+		}
+		
+		return viajes;
+		
+	}
+	
+	
+	//Sobrecargado
+	
+	public static  ArrayList<Viaje> viajesParaVips(int cantidad, Destino destino){
+		
+		ArrayList <Viaje> viajes = new ArrayList<>(cantidad);
+		
+		for (Viaje viaje : Terminal.getViajes()) {
+
+			if(viaje==null) {
+				continue;
+			}
+			
+			if (viaje.verificarAsientos()>=cantidad&&
+				viaje.getLlegada()==destino && viaje.getVehiculo().getTipo()!=TipoVehiculo.ESCALERA&&
+				!viaje.getEstado()) {
 				viajes.add(viaje);
 			}
 		}
@@ -244,9 +314,9 @@ public class Terminal implements Serializable{
 	 * @return ArrayList con los viajes que se le pueden vender.
 	 */
 	
-	static public ArrayList<Viaje> viajesParaEstudiantes(Destino destino, TipoVehiculo vehiculo){
+	public static ArrayList<Viaje> viajesParaEstudiantes(Destino destino){
 		
-		ArrayList <Viaje> viajes = new ArrayList<>();
+		ArrayList <Viaje> viajes1 = new ArrayList<>();
 		
 		for (Viaje viaje : Terminal.getViajes()) {
 			
@@ -254,16 +324,39 @@ public class Terminal implements Serializable{
 				continue;
 			}
 			
-			if (viaje.verificarAsientos()>=1 && viaje.getVehiculo().getTipo()==vehiculo
-				&&viaje.getLlegada()==destino && vehiculo!=TipoVehiculo.TAXI&&!viaje.getEstado()) {
-				viajes.add(viaje);
+			if (viaje.getAsientosDisponibles()>=1 && viaje.getVehiculo().getTipo()!=TipoVehiculo.TAXI
+				&&viaje.getLlegada()==destino &&!viaje.getEstado()) {
+				viajes1.add(viaje);
 				
 			}
 			
 
 		}
 		
-		return viajes;
+		return viajes1;
+		
+	}
+	
+	public static ArrayList<Viaje> viajesParaEstudiantes(Destino destino,TipoVehiculo vehiculo){
+				
+		ArrayList <Viaje> viajes1 = new ArrayList<>();
+		
+		for (Viaje viaje : Terminal.getViajes()) {
+			
+			if(viaje==null) {
+				continue;
+			}
+			
+			if (viaje.getAsientosDisponibles()>=1 && viaje.getVehiculo().getTipo()==vehiculo
+				&&viaje.getLlegada()==destino &&!viaje.getEstado()) {
+				viajes1.add(viaje);
+				
+			}
+			
+
+		}
+		
+		return viajes1;
 		
 	}
 	
@@ -299,6 +392,7 @@ public class Terminal implements Serializable{
 		return null; // No hay ese destino
 	}
 	
+	
 	// Programacion por Conductor ()
 	
 	public static Viaje programarViaje(Destino llegada, Conductor conductor, TipoVehiculo tipoVehiculo, String fecha, String hora, Destino salida) {
@@ -330,7 +424,6 @@ public class Terminal implements Serializable{
 	    return null;
 	}
 
-	
 	
 	
 	public void cancelarViaje(Viaje viaje) {  // Puede devolver un String con una retroalimentacion de la operacion que se realizo
