@@ -142,7 +142,7 @@ public class Main_Principal {
 	                            continue;
 	                        }
 	                        
-	                        destinoDeseado = destinos.get(destinoSeleccionado - 1);
+	                        destinoDeseado = destinos.get(destinoSeleccionado);
 	                        System.out.println("Has elegido el destino: " + destinoDeseado.name());
 	                        
 	                        boolean tipoPasajeroSeleccionado = false;
