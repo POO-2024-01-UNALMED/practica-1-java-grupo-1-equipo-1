@@ -92,12 +92,12 @@ public class Serializador {
 		ArrayList<Conductor> conductoresRegistrados6 = new ArrayList<>();
 		
 
-		Transportadora transportadoraRapida = new Transportadora("Transportadora Rapida", 196000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, new ArrayList<>(), new ArrayList<>(), null, 4.5);
-		Transportadora transportadoraEficiente = new Transportadora("Transportadora Eficiente", 189000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, new ArrayList<>(), new ArrayList<>(), null, 4.0);
-		Transportadora transportadoraExpress = new Transportadora("Transportadora Express", 223000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, new ArrayList<>(), new ArrayList<>(), null, 3.5);
-		Transportadora transportadoraSegura = new Transportadora("Transportadora Segura", 204000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, new ArrayList<>(), new ArrayList<>(), null, 5.0);
-		Transportadora transportadoraGlobal = new Transportadora("Transportadora Global", 305000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, new ArrayList<>(), new ArrayList<>(), null, 2.5);
-		Transportadora transportadoraLocal = new Transportadora("Transportadora Local", 250000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, new ArrayList<>(), new ArrayList<>(), null, 4.7);
+		Transportadora transportadoraRapida = new Transportadora("Transportadora Rapida", 196000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, terminal, null, new ArrayList<>(), new ArrayList<>(), null, 4.5);
+		Transportadora transportadoraEficiente = new Transportadora("Transportadora Eficiente", 189000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, terminal, null, new ArrayList<>(), new ArrayList<>(), null, 4.0);
+		Transportadora transportadoraExpress = new Transportadora("Transportadora Express", 223000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, terminal, null, new ArrayList<>(), new ArrayList<>(), null, 3.5);
+		Transportadora transportadoraSegura = new Transportadora("Transportadora Segura", 204000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, terminal, null, new ArrayList<>(), new ArrayList<>(), null, 5.0);
+		Transportadora transportadoraGlobal = new Transportadora("Transportadora Global", 305000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, terminal, null, new ArrayList<>(), new ArrayList<>(), null, 2.5);
+		Transportadora transportadoraLocal = new Transportadora("Transportadora Local", 250000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, terminal, null, new ArrayList<>(), new ArrayList<>(), null, 4.7);
 				                       
 		
 

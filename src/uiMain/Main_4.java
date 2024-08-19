@@ -2,6 +2,7 @@ package uiMain;
 import gestorAplicacion.constantes.Destino;
 import gestorAplicacion.constantes.TipoPasajero;
 import gestorAplicacion.constantes.TipoVehiculo;
+import gestorAplicacion.tiempo.Tiempo;
 import gestorAplicacion.administrativo.*;
 import gestorAplicacion.usuarios.*;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class Main_4 {
     private static int opcion;
     private static Vehiculo vehiculo;
 	
-	public static void ejecutar() {
+	public static void ejecutar4() {
 		
 		int opcion1;
 		int opcion2;
@@ -41,7 +42,7 @@ public class Main_4 {
 
 	        while (!regresar) {
 	        	
-	        	try {
+	        	//try {
 	        		
 	        		while (true) {
 	        	
@@ -122,7 +123,9 @@ public class Main_4 {
 				        	        	System.out.println("1. Verificar integridad");
 				        	        	System.out.println("2. Reparar vehiculo");
 				        	        	System.out.println("3. Administrar disponibilidad");
-				        	        	System.out.println("4. Cancelar");
+				        	        	System.out.println("4. Ver vehiculos reparandose o vendiendose");
+				        	        	System.out.println("5. Vender o desechar vehiculo");
+				        	        	System.out.println("6. Cancelar");
 				        				opcion2 = scanner.nextInt();
 				        				break;
 		        					}
@@ -151,12 +154,10 @@ public class Main_4 {
 			        					while (true) {
 			        						
 			        						try {
-					        					System.out.println("Que accion desea realizar");
-					            	        	System.out.println("1. Eliminar vehiculo de la transportadora");
-					            	        	System.out.println("2. Agregar vehiculo a la lista de vehiculos disponibles");
-					            	        	System.out.println("3. Quitar vehiculo de la lista de vehiculos disponibles");
-					            	        	System.out.println("4. Ver lista de vehiculos disponibles para viajar");
-					            	        	System.out.println("5. Cancelar");
+					            	        	System.out.println("1. Agregar vehiculo a la lista de vehiculos disponibles");
+					            	        	System.out.println("2. Quitar vehiculo de la lista de vehiculos disponibles");
+					            	        	System.out.println("3. Ver lista de vehiculos disponibles para viajar");
+					            	        	System.out.println("4. Cancelar");
 					        					opcion3 = scanner.nextInt();
 					        					break;
 			        						}
@@ -171,12 +172,8 @@ public class Main_4 {
 			        					
 			        					switch (opcion3) {
 			        					
+				        						
 				        					case 1:
-				        						
-				        						quitarVehiculo(vehiculo);
-				        						break;
-				        						
-				        					case 2:
 				        						
 				        						if (vehiculo.getTransportadora().getTaller().getVehiculosEnReparacion().contains(vehiculo) || vehiculo.getTransportadora().getTaller().getVehiculosEnVenta().contains(vehiculo) || vehiculo.getIntegridad() == 0 || !vehiculo.disponibilidad()) {
 				        							
@@ -189,23 +186,30 @@ public class Main_4 {
 				        						
 				        						else {
 				        							
-				        							vehiculo.setEstado(true);
-				        							System.out.println ("Vehiculo agregado a la lista de disponiblidad");
+				        							if (vehiculo.getConductores().size() == 0) {
+				        								
+				        								System.out.println("El vehiculo no tiene un conductor asignado. No se puede agregar a la lista");
+				        							}
 				        							
-				        							//continue;
+				        							else {
+				        								
+				        								vehiculo.setEstado(true);
+					        							System.out.println ("Vehiculo agregado a la lista de disponiblidad");
+				        								
+				        							}
 				        							
 				        							
 				        						}
 				        						
 				        						break;
 				        					
-				        					case 3:
+				        					case 2:
 				        						
 				        						vehiculo.setEstado(false);
 				        						System.out.println("Vehiculo eliminado de la lista de disponiblidad");
 				        						break;
 		
-				        					case 4:
+				        					case 3:
 				        						
 				        						ArrayList <Vehiculo> vehiculos = vehiculosDisponibles(transportadora);
 				        						
@@ -221,7 +225,7 @@ public class Main_4 {
 				        						
 				        						
 				        						
-				        					case 5:
+				        					case 4:
 				        						
 				        						regresar2 = true;
 				        						break;
@@ -237,6 +241,25 @@ public class Main_4 {
 			        				break;	
 			        					
 			        				case 4:
+			        					
+			        					vehiculosReparandoVendiendo(transportadora);
+			        					
+			        					break;
+			        					
+			        				case 5:
+			        					
+		        						if (vehiculo.getTransportadora().getTaller().getVehiculosEnReparacion().contains(vehiculo) || vehiculo.getTransportadora().getTaller().getVehiculosEnVenta().contains(vehiculo)) {
+		        							
+		        							System.out.println("No es posible eliminar al vehiculo en este momento pues esta siendo vendido o reparado");
+		        						}
+		        						
+		        						else {
+		        							
+		        							quitarVehiculo(vehiculo);
+		        						}
+			        					break;
+			        					
+			        				case 6:
 			        					
 			        					regresar2 = true;
 			        					break;
@@ -381,13 +404,13 @@ public class Main_4 {
 		        			
 		        			System.out.println("Opcion no valida");
 		        	}
-	        	}
+	        	//}
 	        	
-	        	catch (Exception e) {
+	        	/**catch (Exception e) {
 	        		
 	        		System.out.println("Accion no valida");
 	        		scanner.nextLine();
-	        	}
+	        	}**/
 	        	       	
 	        }
 	        
@@ -395,50 +418,32 @@ public class Main_4 {
 	       
 		}
        
-            /**System.out.println("Ejecutando Funcionalidad 4");
-            // Lógica específica para Funcionalidad 4
-            
-            System.out.println("Seleccione una acción:");
-            System.out.println("1. Accion 1");
-            System.out.println("2. Accion 2");
-            System.out.println("3. Accion 3");
-            System.out.println("4. Accion 4");
-            System.out.println("5. Accion 5");
-            System.out.println("6. Regresar al menú Principal\n");
 
-            opcion = scanner.nextInt();
-
-            switch (opcion) {
-                case 1:
-                    // Poner los metodos a ejecutar para cada accion.
-                	ejemplo();
-                    break;
-                case 2:
-                    // Poner los metodos a ejecutar para cada accion.
-                    break;
-                case 3:
-                    // Poner los metodos a ejecutar para cada accion.
-                    break;
-                case 4:
-                    // Poner los metodos a ejecutar para cada accion.
-                    break;
-                case 5:
-                    // Poner los metodos a ejecutar para cada accion.
-                    break;
-                case 6:
-                    regresar = true;
-                    System.out.println("Regresando al Menú Principal");
-                    break;
-                default:
-                    System.out.println("Opción no válida");
-            }
-        }**/
     }
     
     // Desarrollar los metodos a partir de aqui
-    public static void ejemplo() {
-    	System.out.println("Ejemplo Funcionalidad 4"); 
-    }
+	public static void vehiculosReparandoVendiendo (Transportadora transportadora) {
+		
+		System.out.println("Vehiculos en reparacion:");
+		System.out.println("");
+		
+		for (Vehiculo vehiculo : transportadora.getTaller().getVehiculosEnReparacion()) {
+			
+			System.out.println((transportadora.getTaller().getVehiculosEnReparacion().indexOf(vehiculo)+1) + ". Placa: " + vehiculo.getPlaca() + "; Modelo: " + vehiculo.getModelo() + "; Tiempo restante: " + (vehiculo.getFechaHoraReparacion() - Tiempo.getFechaHora()));
+			
+		}
+		
+		System.out.println("");
+		System.out.println("Vehiculos en venta:");
+		System.out.println("");
+		
+		for (Vehiculo vehiculo : transportadora.getTaller().getVehiculosEnVenta()) {
+			
+			System.out.println((transportadora.getTaller().getVehiculosEnVenta().indexOf(vehiculo)+1) + ". Placa: " + vehiculo.getPlaca() + "; Modelo: " + vehiculo.getModelo() + "; Precio de venta: " + vehiculo.getPrecio());
+			
+		}
+		
+	}
 
 
     public static void cambiarTaller (Transportadora transportadora) {
@@ -531,11 +536,31 @@ public class Main_4 {
 				System.out.println("Nombre");
 				scanner.nextLine();
 				nombre = scanner.nextLine();
-				System.out.println("Sexo (m,f):");
-				genero = scanner.next().charAt(0);
+				
+				while (true) {
+					
+					System.out.println("Sexo (m,f):");
+					genero = scanner.next().toUpperCase().charAt(0);
+					
+					if (genero == 'M' || genero == 'F') {
+						
+						break;
+					}
+				}
+				
 				historial = new ArrayList <Viaje> ();
-				System.out.println("Experiencia (0-20):");
-				experiencia = scanner.nextInt();
+				
+				while (true) {
+					
+					System.out.println("Experiencia (0-20):");
+					experiencia = scanner.nextInt();
+					
+					if ( experiencia <=20 && experiencia >= 0 ) {
+						
+						break;
+					}
+				}
+				
 				dinero = 2000;
 				factura = new ArrayList <Factura> ();
 				taller = transportadora.getTaller();
@@ -726,7 +751,7 @@ public class Main_4 {
     	
     		case 1:
     			
-    			transportadora.getTaller().venderVehiculo(transportadora.getVehiculos().get(num));
+    			vehiculo.getTransportadora().getTaller().agregarVehiculoVenta(vehiculo);
     			break;
     			
     			
@@ -814,19 +839,7 @@ public class Main_4 {
     	
     }
     
-    
-    /**public static Transportadora elegirTransportadora () {
-    	
-    	System.out.println ("Escoja una transportadora");
-    	
-    	for (Transportadora transportadora : Transportadora.getTransportadoras()) {
-    		
-    		System.out.println((Transportadora.getTransportadoras().indexOf(transportadora)+1) + ". " + transportadora.getNombre());
-    		
-    	}
-    	
-    	return (Transportadora.getTransportadoras().get(scanner.nextInt()-1));
-    }**/
+
     
     
     public static boolean verificarIntegridad (Vehiculo vehiculo) {
