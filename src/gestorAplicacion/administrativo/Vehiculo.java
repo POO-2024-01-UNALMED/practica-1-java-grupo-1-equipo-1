@@ -26,12 +26,12 @@ public class Vehiculo implements Serializable {
     private double velocidadPromedio; // Velocidad promedio del vehículo
     private TipoVehiculo tipo; // Tipo de vehículo 
     private int capacidad; // Capacidad pasajeros del vehículo
-    private ArrayList<Conductor> conductores; // Lista de conductores asociados al vehículo
+    private ArrayList<Conductor> conductores = new ArrayList <Conductor> (); // Lista de conductores asociados al vehículo
     private Transportadora transportadora; // Transportadora asociada al vehículo
     private Mecanico mecanicoAsociado; // Mecanico que reparara el vehiculo
     private int fechaHoraReparacion; // Fecha en la que terminara la reparacion}private static ArrayList <Vehiculo> listaVehiculos = new ArrayList <Vehiculo> (); // Se almacenan los vehiculos cuando se crean, se utiliza para el serializado. 
     private static ArrayList <Vehiculo> listaVehiculos = new ArrayList <Vehiculo> (); // Se almacenan los vehiculos cuando se crean, se utiliza para el serializado. 
-
+    private boolean reparando = false;
 
 
     
@@ -46,7 +46,7 @@ public class Vehiculo implements Serializable {
      * @param transportadora, la transportadora asociada al vehículo.
      */
     public Vehiculo(String placa, String modelo, double precio, double velocidadPromedio, TipoVehiculo tipo, Transportadora transportadora) {
-        this.integridad = 100;
+        this.integridad = 90;
         this.placa = placa;
         this.modelo = modelo;
         this.precio = precio;
@@ -114,6 +114,7 @@ public class Vehiculo implements Serializable {
 		if (new Random().nextInt(100) <= 5) {
 			
 			this.integridad = 0;
+			this.estado = false;
 			this.vehiculoDestruido();
 		}
  		
@@ -343,6 +344,20 @@ public class Vehiculo implements Serializable {
 		// Método setter para establecer la lista de vehículos
 		public static void setListaVehiculos(ArrayList<Vehiculo> nuevaLista) {
 		    Vehiculo.listaVehiculos = nuevaLista;
+		}
+		
+		/**
+		 * @return the reparando
+		 */
+		public boolean isReparando() {
+			return reparando;
+		}
+
+		/**
+		 * @param reparando the reparando to set
+		 */
+		public void setReparando(boolean reparando) {
+			this.reparando = reparando;
 		}
 
 

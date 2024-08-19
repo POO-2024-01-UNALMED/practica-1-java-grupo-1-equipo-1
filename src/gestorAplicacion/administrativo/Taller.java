@@ -32,17 +32,34 @@ public class Taller implements Serializable {
 	public Taller () {
 		
 		listaTalleres.add(this);
+		this.mecanicos = new ArrayList<Mecanico> ();
+		this.vehiculosEnReparacion = new ArrayList <Vehiculo> ();
+		this.vehiculosEnVenta = new ArrayList <Vehiculo> ();
 		
 	}
 	
 	public Taller (Transportadora transportadora, Destino ubicacion, String nombre, int capacidad) {
 		
 		this.transportadora = transportadora;
+		transportadora.setTaller(this);
 		this.ubicacion = ubicacion;
 		this.nombre = nombre;
 		this.capacidad = capacidad;
 		this.transportadora.setTaller(this);
+		this.mecanicos = new ArrayList <Mecanico> ();
+		this.vehiculosEnReparacion = new ArrayList <Vehiculo> ();
+		this.vehiculosEnVenta = new ArrayList <Vehiculo> ();
 		listaTalleres.add(this);
+	}
+	
+	public void agregarMecanico (Mecanico mecanico) {
+		
+		mecanicos.add(mecanico);
+	}
+	
+	public void removerMecanico (Mecanico mecanico) {
+	
+		this.mecanicos.remove(this.mecanicos.indexOf(mecanico));
 	}
 	
 	public void agregarVehiculoReparacion (Vehiculo vehiculo) {
@@ -58,6 +75,8 @@ public class Taller implements Serializable {
 				vehiculo.setMecanicoAsociado(i);
 				this.vehiculosEnReparacion.add(vehiculo);
 				vehiculo.setEstado(false);
+				vehiculo.setReparando(true);
+				vehiculo.getMecanicoAsociado().setEstado(false);
 				return;
 			}
 		
@@ -83,10 +102,12 @@ public class Taller implements Serializable {
 		}
 		
 		mecanico.agregarVehiculoCola(vehiculo);
-		vehiculo.setFechaHoraReparacion(Tiempo.getFechaHora() + 1440 - Math.round(mecanico.getExperiencia()*1440/100));
+		vehiculo.setFechaHoraReparacion(mecanico.getVehiculosReparando().get(-1).getFechaHoraReparacion() + 1440 - Math.round(mecanico.getExperiencia()*1440/100));
 		vehiculo.setMecanicoAsociado(mecanico);
 		this.vehiculosEnReparacion.add(vehiculo);
 		vehiculo.setEstado(false);
+		vehiculo.setReparando(true);
+		vehiculo.getMecanicoAsociado().setEstado(false);
 		return;
 		
 		
@@ -105,11 +126,55 @@ public class Taller implements Serializable {
 		
 	}
 	
-	public int generarCotizacion (Vehiculo vehiculo) {
+	public ArrayList <String> generarCotizacion (Vehiculo vehiculo) {
 		
-		// Implementación pendiente
+		ArrayList <String> cotizacion = new ArrayList <String> ();
+		Mecanico mecanico = null;
+		int tiempo = 0;
+		boolean count = true;
 		
-		return 0;
+
+		
+		for (Mecanico i : this.mecanicos) {
+			
+			if (i.getEstado() == true) {
+				
+				mecanico = i;
+				tiempo =  1440 - Math.round(i.getExperiencia()*1440/100);
+				
+				count = false;
+			}
+		
+		}
+		
+		if (count) {
+			
+			for (int i = 0; i < mecanicos.size(); i++) {
+				
+				
+				
+				if (i == 0) {
+					
+					mecanico = mecanicos.get(i);
+						
+				}
+				
+				if (mecanicos.get(i).getVehiculosReparando().get(-1).getFechaHoraReparacion() <= mecanico.getVehiculosReparando().get(-1).getFechaHoraReparacion()) {
+					
+					
+					mecanico = mecanicos.get(i);
+				}
+				
+			}
+			
+			tiempo = (mecanico.getVehiculosReparando().get(-1).getFechaHoraReparacion() + 1440 - Math.round(mecanico.getExperiencia()*1440/100)) - Tiempo.getFechaHora();
+		}
+		
+		long precio = Math.round((vehiculo.getPrecio() - (vehiculo.getPrecio()*vehiculo.getIntegridad()/100))/2);
+		long precioFinal = Math.round(precio + (mecanico.getExperiencia() * precio/200));
+		cotizacion.add(Long.toString(precioFinal));
+		cotizacion.add(String.valueOf(tiempo));
+		return cotizacion;
 		
 	}
 	
@@ -135,7 +200,7 @@ public class Taller implements Serializable {
 		this.vehiculosEnVenta.add(vehiculo);
 		vehiculo.setPrecio(this.calcularValor(vehiculo));
 		vehiculo.setFechaHoraReparacion((int)Math.round(1440 + (1440 * Math.random())));
-		
+		vehiculo.setReparando(true);
 		
 	}
 	
@@ -224,6 +289,7 @@ public class Taller implements Serializable {
 	public void setTransportadora(Transportadora transportadora) {
 		
 	    this.transportadora = transportadora;
+	    transportadora.setTaller(this);
 	}
 
 	/**

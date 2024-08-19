@@ -39,7 +39,9 @@ public class Terminal implements Serializable{
 	private static ArrayList <Terminal> listaTerminales = new ArrayList <Terminal> ();
 	private static ArrayList <Factura> facturas; // Facturas asociadas a la terminal, tener en cuenta quu solo hay una
 	
-	public Terminal() { 
+	public Terminal() {
+		
+		
 		this.comision = 0;
 		
 	}
@@ -480,7 +482,7 @@ public class Terminal implements Serializable{
 	
 	public void removerVehiculoTerminal (Vehiculo vehiculo) {
 		
-		this.vehiculosTerminal.remove(vehiculosTerminal.indexOf(vehiculo));
+		this.vehiculosTerminal.remove(vehiculo);
 	}
 	
 	/**
@@ -596,7 +598,7 @@ public class Terminal implements Serializable{
 	
 	public void setCapacidadVehiculos(int capacidadVehiculos) {
 		
-		this.cantidadVehiculos = capacidadVehiculos;
+		this.capacidadVehiculos = capacidadVehiculos;
 			
 	}
 	

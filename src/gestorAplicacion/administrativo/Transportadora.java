@@ -39,7 +39,7 @@ public class Transportadora implements Incentivo, Serializable {
 	
 	//Constructor con todos los parámetros
 	
-	public Transportadora(String nombre, double dinero, ArrayList<Conductor> conductores, ArrayList<Pasajero> pasajeros, ArrayList<Vehiculo> vehiculos, ArrayList<Viaje> viajesAsignados, Destino destinoAsignado, Terminal terminal, Taller taller,
+	public Transportadora(String nombre, double dinero, ArrayList<Conductor> conductores, ArrayList<Pasajero> pasajeros, ArrayList<Vehiculo> vehiculos, ArrayList<Viaje> viajesAsignados, Destino destinoAsignado, Terminal terminal,
 						  ArrayList<Destino> destinos, ArrayList<Viaje> viajesTerminados,Persona dueño, double estrellas) {
 		
 		this.nombre = nombre;
@@ -50,7 +50,6 @@ public class Transportadora implements Incentivo, Serializable {
 		this.viajesAsignados = viajesAsignados;
 		this.destinoAsignado = destinoAsignado;
 		this.terminal = terminal;
-		this.taller = taller;
 		this.destinos = destinos;
 		this.viajesTerminados = viajesTerminados;
 		this.estrellas = estrellas;
@@ -232,7 +231,7 @@ public class Transportadora implements Incentivo, Serializable {
 	
 	public void removerVehiculo(Vehiculo vehiculo) {
 			
-		vehiculos.remove(vehiculos.indexOf(vehiculo));
+		vehiculos.remove(vehiculo);
 		this.terminal.removerVehiculoTerminal(vehiculo);
 		
 	}
