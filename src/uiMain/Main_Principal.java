@@ -89,7 +89,6 @@ public class Main_Principal {
 	    
 	    String nombre = "";
 	    TipoPasajero tipo = null;
-
 	    Destino destinoDeseado = null;
 	    Scanner scanner = new Scanner(System.in);
 	    int cantidad = 0;
@@ -402,7 +401,7 @@ public class Main_Principal {
 	                                        }
 	                                        
 	                                        if (viajeSeleccionado == null) {
-	                                            System.out.println("No hay viajes disponibles para esta modalidad. ¿Desea cambiar la modalidad? (S/N)");
+	                                            System.out.println("No hay viajes disponibles ¿Desea cambiar la modalidad? (S/N)");
 	               
 	                                            String respuesta = scanner.nextLine();
 	                                            if (respuesta.equalsIgnoreCase("N")) {
@@ -462,7 +461,7 @@ public class Main_Principal {
 	                                                    continue;
 	                                                }
 	                                                
-	                                                destinoDeseado = destinos.get(destinoSeleccionado - 1);  // Destino como parametro para el constructor ma adelante
+	                                                destinoDeseado = destinos.get(destinoSeleccionado);  // Destino como parametro para el constructor ma adelante
 	                                                System.out.println("Has elegido el destino: " + destinoDeseado.name());
 	                                            } else {
 	                                                System.out.println("No hay opciones disponibles. Volviendo al menú principal.");
@@ -541,13 +540,14 @@ public class Main_Principal {
 	                char genero = scanner.next().charAt(0);
 	                Pasajero pasajero = Pasajero.nuevoPasajero(tipo, id, edad, nombre, genero);
 	                double valorTotal = viajeSeleccionado.getTarifa()*cantidad;
+	                pasajero.setViaje(viajeSeleccionado);
 	                pasajero.setDinero(valorTotal);
-	                pasajero.descuento();//solo se esta pasando a la transportadora el dinero de un pasaje
+	                pasajero.descuento(cantidad);//solo se esta pasando a la transportadora el dinero de un pasaje
 	                
 	                System.out.println("\nValor a pagar: "+ valorTotal);
 	                System.out.println("\nIngrese su dinero");
 	                
-	                pasajero.setViaje(viajeSeleccionado);
+	                
 	                double dinero = scanner.nextDouble();
 	                scanner.nextLine();
 	                if (dinero>=valorTotal) {
