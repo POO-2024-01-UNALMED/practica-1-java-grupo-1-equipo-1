@@ -1,7 +1,5 @@
 package gestorAplicacion.constantes;
 
-import gestorAplicacion.administrativo.Viaje;
-
 public interface Incentivo {
 	
 	double incentivoBase = 25000; //incentivo asociado a las distintas bonificaciones que pueden tener las clases que implementen la interfaz

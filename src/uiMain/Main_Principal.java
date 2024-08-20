@@ -913,7 +913,7 @@ public static void facturacionYFinanzas() {
                     
                 case 5:
                 	
-                   //verificarCompraTiquetes(); Arreglar
+                   verificarCompraTiquetes();
                     break;
                     
                 case 6:
@@ -1275,91 +1275,162 @@ public static void facturacionYFinanzas() {
     		
     	}
     
-    public static void verificarCompraTiquetes(Persona p, Viaje v) {
+    public static void verificarCompraTiquetes() {
     	
+    	 Scanner sn = new Scanner(System.in);
+         int ingreso = 0;
+         Pasajero p = null;
+         Viaje viaje = null;
+    	 ArrayList<Pasajero> pasajeros = Terminal.getPasajerosSinViajes();
+    	 ArrayList <Viaje> viajes = Terminal.getViajes();
+          
+      
+          int contador = 1;
+          
+          if (!pasajeros.isEmpty()) {
+        	  
+        	// Imprime el encabezado de la tabla
+              System.out.printf("+----------------+--------------------------+%n");
+              System.out.printf("| Nº Pasajero    | Nombre                   |%n");
+              System.out.printf("+----------------+--------------------------+%n");
+        	  
+        	  for (Pasajero pasajero : pasajeros) {
+                  String nombre = pasajero.getNombre();
+                  
+                  System.out.printf("| %-14d | %-24s |%n", contador, nombre);
+                  contador++;
+              }
+              
+             
+              System.out.printf("+----------------+--------------------------+%n");
+              System.out.println("Ingrese el pasajero a elegir: ");
+              
+              ingreso = sn.nextInt();
+              p = Terminal.getPasajerosSinViajes().get(ingreso-1);
+              
+              int cont = 1;
+              
+              if (!viajes.isEmpty()) {
+            	  
+            	  for (Viaje v : viajes) {
+                      String llegada = v.getLlegada().name();
+                      
+                      System.out.printf("| %-14d | %-24s |%n", cont, llegada);
+                      contador++;
+                  }
+                  
+                 
+                  System.out.printf("+----------------+--------------------------+%n");
+                    
+              }System.out.println("No se han encontrado viajes: ");
+             
+              System.out.println("Ingrese el viaje a elegir: ");
+              Scanner sca = new Scanner(System.in);
+              int entrada = sca.nextInt();
+              
+               viaje = Terminal.getViajes().get(entrada-1);
+                
+          }System.out.println("No se encontraron pasajeros en la terminal");
+            
     	try {
     		
-    	      System.out.println("---------------------------------------------------");
-    	        System.out.println("Señor usuario, se está haciendo la respectiva validación de la compra de su ticket...");
-    	        System.out.println("---------------------------------------------------");
+    	      if(viaje != null || p != null) {
+    	    	  
+    	    	  System.out.println("---------------------------------------------------");
+      	        System.out.println("Señor usuario, se está haciendo la respectiva validación de la compra de su ticket...");
+      	        System.out.println("---------------------------------------------------");
 
-    	        double valorApagar = v.getTarifa();
-    	        
-    	        if (v.getEstado() == false) { // Ya que el viaje no está en curso
-    	        	
-    	        	 // Verificar si el pasajero tiene suficiente dinero
-    	            if (p.getDinero() >= valorApagar) {
-    	                System.out.println("¡Felicidades! Usted cuenta con suficiente dinero para cancelar el ticket.");
-    	                System.out.println("---------------------------------------------------");
+      	        double valorApagar = viaje.getTarifa();
+      	        
+      	        if (viaje.getEstado() == false) { // Ya que el viaje no está en curso
+      	        	
+      	        	 // Verificar si el pasajero tiene suficiente dinero
+      	            if (p.getDinero() >= valorApagar) {
+      	                System.out.println("¡Felicidades! Usted cuenta con suficiente dinero para cancelar el ticket.");
+      	                System.out.println("---------------------------------------------------");
 
-    	                // Confirmación de compra
-    	                System.out.println("¿Desea proceder con la compra del ticket? (si/no)");
-    	                String respuesta = Main_Principal.readString();
+      	                // Confirmación de compra
+      	                System.out.println("¿Desea proceder con la compra del ticket? (si/no)");
+      	                String respuesta = Main_Principal.readString();
 
-    	                if (respuesta.equalsIgnoreCase("si")) {
-    	                	
-    	                    // Simulación de proceso de pago
-    	                    System.out.println("Procesando el pago...");
-    	                    try {
-    	                        Thread.sleep(2000); 
-    	                    } catch (InterruptedException e) {
-    	                        System.out.println("Error en el procesamiento del pago.");
-    	                    }
+      	                if (respuesta.equalsIgnoreCase("si")) {
+      	                	
+      	                    // Simulación de proceso de pago
+      	                    System.out.println("Procesando el pago...");
+      	                    try {
+      	                        Thread.sleep(2000); 
+      	                    } catch (InterruptedException e) {
+      	                        System.out.println("Error en el procesamiento del pago.");
+      	                    }
 
-    	                    // Descontar el dinero del pasajero
-    	                    p.descuento();
-    	                    System.out.println("---------------------------------------------------");
-    	                    System.out.printf("Se ha descontado %.2f de su cuenta. Su saldo actual es: %.2f%n",((Pasajero) p).obtenerValorDescontado(), p.getDinero());
-    	                    System.out.println("---------------------------------------------------");
+      	                    // Descontar el dinero del pasajero
+      	                    p.descuento();
+      	                    System.out.println("---------------------------------------------------");
+      	                    System.out.printf("Se ha descontado %.2f de su cuenta. Su saldo actual es: %.2f%n",((Pasajero) p).obtenerValorDescontado(), p.getDinero());
+      	                    System.out.println("---------------------------------------------------");
 
-    	                    // Generar la factura y agregarla al historial del pasajero
-    	                    Factura factura = Factura.crearFacturaPasajero(valorApagar, (Pasajero)p, v.getTerminal(), v.getConductor(), v, v.getVehiculo(), v.getTransportadora());
-    	                    Factura.getFacturasCreadas().add(factura);
-    	                    p.getFacturas().add(factura);
-    	                    Terminal.getFacturas().add(factura); // Llevar seguimiento de las facturas en la terminal
-    	                    System.out.println("Señor usuario se le mostrará a continuación los deatalles de su factura");
-    	                    Tablas.imprimirDetallesFactura(factura);
-    	                    // Actualizar el registro de viajes del pasajero
-    	                    p.getHistorial().add(v);
-    	                    
-    	                    
-    	                    for (Viaje viaje : p.getHistorial()) {
-    	                    	
-    	                    	if (viaje.getId() == v.getId()) {
-    	                    		
-    	                    		v.getTransportadora().getPasajeros().add((Pasajero)p);
-    	                   	
-    	                    	}
-    	             
-    	                    }
-    	                    // Notificar al pasajero sobre los detalles del viaje
-    	                    System.out.println("---------------------------------------------------");
-    	                    System.out.println("La compra del ticket ha sido exitosa.");
-    	                    System.out.println("Detalles del viaje:");
-    	                    System.out.println("Destino: " + v.getLlegada());
-    	                    System.out.println("Fecha y hora de salida: " + v.getFecha());
-    	                    System.out.println("---------------------------------------------------");
-    	                    System.out.printf("Su saldo actual es: %.2f%n", p.getDinero());
-    	                    System.out.println("---------------------------------------------------");
+      	                    // Generar la factura y agregarla al historial del pasajero
+      	                    Factura factura = Factura.crearFacturaPasajero(valorApagar, (Pasajero)p, viaje.getTerminal(), viaje.getConductor(), viaje, viaje.getVehiculo(), viaje.getTransportadora());
+      	                    Factura.getFacturasCreadas().add(factura);
+      	                    p.getFacturas().add(factura);
+      	                    Terminal.getFacturas().add(factura); // Llevar seguimiento de las facturas en la terminal
+      	                    System.out.println("Señor usuario se le mostrará a continuación los deatalles de su factura");
+      	                    Tablas.imprimirDetallesFactura(factura);
+      	                    // Actualizar el registro de viajes del pasajero
+      	                    p.getHistorial().add(viaje);
+      	                    
+      	                    
+      	                    for (Viaje v : p.getHistorial()) {
+      	                    	
+      	                    	if (viaje.getId() == v.getId()) {
+      	                    		
+      	                    		v.getTransportadora().getPasajeros().add((Pasajero)p);
+      	                   	
+      	                    	}
+      	             
+      	                    }
+      	                    
+      	                    System.out.println("¿Por algún motivo desea usted cancelar la compra del viaje?. Ingrese si o no");
+      	                    Scanner scan = new Scanner(System.in);
+      	                    String cancel = scan.nextLine();
+      	                    
+      	                    if (cancel.equalsIgnoreCase("si")) {
+      	                    	
+      	                    	Main_Principal.cancelarViaje(p, viaje);
+      	                    	
+      	                    }
+      	                    
+      	                    // Notificar al pasajero sobre los detalles del viaje
+      	                    System.out.println("---------------------------------------------------");
+      	                    System.out.println("La compra del ticket ha sido exitosa.");
+      	                    System.out.println("Detalles del viaje:");
+      	                    System.out.println("Destino: " + viaje.getLlegada());
+      	                    System.out.println("Fecha y hora de salida: " + viaje.getFecha());
+      	                    System.out.println("---------------------------------------------------");
+      	                    System.out.printf("Su saldo actual es: %.2f%n", p.getDinero());
+      	                    System.out.println("---------------------------------------------------");
 
-    	                } else {
-    	                    System.out.println("La compra del ticket ha sido cancelada.");
-    	                }
-    	                
-    	            } else {
-    	                System.out.println("---------------------------------------------------");
-    	                System.out.println("Lo sentimos, usted no cuenta con suficiente dinero para cancelar el ticket.");
-    	                System.out.println("Su saldo actual es: " + p.getDinero());
-    	                System.out.println("La tarifa del viaje es: " + valorApagar);
-    	                System.out.println("---------------------------------------------------");
-    	          
-    	            }
-    	            
-    	        }
+      	                } else {
+      	                    System.out.println("La compra del ticket ha sido cancelada.");
+      	                }
+      	                
+      	            } else {
+      	                System.out.println("---------------------------------------------------");
+      	                System.out.println("Lo sentimos, usted no cuenta con suficiente dinero para cancelar el ticket.");
+      	                System.out.println("Su saldo actual es: " + p.getDinero());
+      	                System.out.println("La tarifa del viaje es: " + valorApagar);
+      	                System.out.println("---------------------------------------------------");
+      	          
+      	            }
+      	            
+      	        }
+    	    	  
+    	      } else {System.out.println("Error, pasajero o viaje es null.");}
+    	      
     	}catch(InputMismatchException e) {
     		
     		System.out.println("Entrada inválida. ingrese si o no");
-    		//verificarCompraTiquetes(persona p, viaje v); Arreglar
+    		verificarCompraTiquetes();
         
     	}
         	

@@ -42,6 +42,7 @@ public class Terminal implements Serializable{
 	private Persona administrador; // Administrador de la terminal
 	private static ArrayList <Terminal> listaTerminales = new ArrayList <Terminal> ();
 	private static ArrayList <Factura> facturas = new ArrayList<>(); // Facturas asociadas a la terminal, tener en cuenta quu solo hay una
+	private static ArrayList <Pasajero> pasajeros = new ArrayList<>();
 	
 	public Terminal() {
 		
@@ -1050,6 +1051,12 @@ public static void setHistorial(ArrayList <Viaje> historial) {
 
 		return Terminal.listaTerminales;
 
+	}
+	
+	public static ArrayList<Pasajero> getPasajerosSinViajes(){
+		
+		return Terminal.pasajeros;
+		
 	}
 	
 }
