@@ -165,7 +165,7 @@ public class Tiempo implements Serializable{
 	}
 
     public void iniciar() { // Programar una tarea que se ejecute cada cierto intervalo de tiempo
-        timer.scheduleAtFixedRate(new TareaPeriodica(), 0, 1); // Tiempo de Iteraciones 1 Segundo = 1000 Milisegundos
+        timer.scheduleAtFixedRate(new TareaPeriodica(), 0, 100); // Tiempo de Iteraciones 1 Segundo = 1000 Milisegundos
     }
 
     private class TareaPeriodica extends TimerTask {
@@ -185,13 +185,13 @@ public class Tiempo implements Serializable{
     		// Comprobaciones y actualizaciones
             
             // Viaje
-        	//comprobarViajes(); // Verifica el momento de salida de los viajes
-        	//comprobarViajesEnCurso(); // Verifica el momento de llegada de los viajes
+        	comprobarViajes(); // Verifica el momento de salida de los viajes
+        	comprobarViajesEnCurso(); // Verifica el momento de llegada de los viajes
         	
         	// Taller
-        	//mecanicosDisponibles(); // Define que mecanicos tienen vehiculos  por reparar
-        	//verificarVehiculos(); // Verifica si la hora de la reparacion ya paso
-        	//verificarVehiculosVenta(); //Verifica si ya paso la hora de venta de los vehiculos
+        	mecanicosDisponibles(); // Define que mecanicos tienen vehiculos  por reparar
+        	verificarVehiculos(); // Verifica si la hora de la reparacion ya paso
+        	verificarVehiculosVenta(); //Verifica si ya paso la hora de venta de los vehiculos
 
         }
     	
