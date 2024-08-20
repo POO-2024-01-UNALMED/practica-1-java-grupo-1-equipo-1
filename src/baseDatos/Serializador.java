@@ -571,6 +571,8 @@ public class Serializador {
 			            						conductores6.add(conductor108);
 			            						conductores6.add(conductor109);
 			            						conductores6.add(conductor110);
+			            						
+			            						transportadoraLocal.setConductores(conductores6);
 
 			            		
 			            		//Listas de conductores que se agregaran a las transportadoras como registrados(no contratados)
