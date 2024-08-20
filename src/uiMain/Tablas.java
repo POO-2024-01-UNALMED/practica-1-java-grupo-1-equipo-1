@@ -383,7 +383,7 @@ public interface Tablas {
         int anchoFecha = 15;
         int anchoHora = 10;
         int anchoDia = 10;
-        int anchoTransportadora = 20;
+        int anchoTransportadora = 25;
         int anchoAsientos = 10;
         int anchoTotal = anchoId + anchoLlegada + anchoFecha + anchoHora + anchoDia + anchoTransportadora + anchoAsientos + 22; 
 
@@ -394,9 +394,8 @@ public interface Tablas {
         
         int i = 0;
         for (Viaje viaje : viajes) {
-            String transportadoraNombre = viaje.getTransportadora() != null ? viaje.getTransportadora().getNombre() : "N/A";
             System.out.printf("| %-"+anchoId+"d | %-"+anchoLlegada+"s | %-"+anchoFecha+"s | %-"+anchoHora+"s | %-"+anchoDia+"s | %-"+anchoTransportadora+"s | %-"+anchoAsientos+"d |\n",
-                    i, viaje.getLlegada(), viaje.getFecha(), viaje.getHora(), viaje.getDia(), transportadoraNombre, viaje.getAsientosDisponibles());
+                    i, viaje.getLlegada(), viaje.getFecha(), viaje.getHora(), viaje.getDia(), viaje.getVehiculo().getTransportadora().getNombre(), viaje.getAsientosDisponibles());
             i++;
         }
 
@@ -436,7 +435,7 @@ public interface Tablas {
         int anchoFecha = 15;
         int anchoHora = 10;
         int anchoDia = 10;
-        int anchoTransportadora = 20;
+        int anchoTransportadora = 25;
         int anchoAsientos = 10;
         int anchoTotal = anchoId + anchoLlegada + anchoFecha + anchoHora + anchoDia + anchoTransportadora + anchoAsientos + 22; // Total width of the table
 
@@ -448,9 +447,8 @@ public interface Tablas {
         
         // Print each viaje
         for (Viaje viaje : viajes) {
-            String transportadoraNombre = viaje.getTransportadora() != null ? viaje.getTransportadora().getNombre() : "N/A";
             System.out.printf("| %-"+anchoId+"d | %-"+anchoLlegada+"s | %-"+anchoFecha+"s | %-"+anchoHora+"s | %-"+anchoDia+"s | %-"+anchoTransportadora+"s | %-"+anchoAsientos+"d |\n",
-                    viaje.getId(), viaje.getLlegada(), viaje.getFecha(), viaje.getHora(), viaje.getDia(), transportadoraNombre, viaje.getAsientosDisponibles());
+                    viaje.getId(), viaje.getLlegada(), viaje.getFecha(), viaje.getHora(), viaje.getDia(), viaje.getVehiculo().getTransportadora().getNombre(), viaje.getAsientosDisponibles());
         }
 
         // Print table footer
