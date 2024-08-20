@@ -62,7 +62,7 @@ public class Main_1 {
 	                    boolean tipoPasajeroValido = false;
 	                    
 	                    while (!tipoPasajeroValido) {
-	                        System.out.println("\nIngrese el nombre del destino\n");
+
 	                        ArrayList<Destino> destinos = new ArrayList<>();
 	                        for (Destino destino : Destino.values()) {
 	                            destinos.add(destino);
@@ -77,9 +77,14 @@ public class Main_1 {
 	                            System.out.println("Opción no válida. Por favor, elige un número del 1 al " + destinos.size());
 	                            continue;
 	                        }
+	                        destinoDeseado = destinos.get(destinoSeleccionado);
 	                        
-	                        destinoDeseado = destinos.get(destinoSeleccionado);  // Destino como parametro para el constructor ma adelante
-	                        System.out.println("Has elegido el destino: " + destinoDeseado.name());
+	                        if (Terminal.viajesDestino(destinoDeseado)){
+		                        System.out.println("Has elegido el destino: " + destinoDeseado.name());
+		                        }else {
+		                        	System.out.println("No hay viajes con ese destino, ingrese otro");
+		                        	break;
+		                        }
 	                        
 	                        boolean tipoPasajeroSeleccionado = false;
 	                        while (!tipoPasajeroSeleccionado) {
@@ -442,6 +447,7 @@ public class Main_1 {
 
 	                default:
 	                    System.out.println("Opción no válida");
+	                    break;
 	            }
 	            
 	            if (!regresar2 && viajeSeleccionado != null) {
