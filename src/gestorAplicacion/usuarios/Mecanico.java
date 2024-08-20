@@ -112,8 +112,9 @@ public class Mecanico extends Persona{
 		
 		vehiculo.reparacion();
 		this.vehiculosReparando.remove(vehiculo);
-		this.taller.removerVehiculoReparacion(vehiculo);
+		vehiculo.getTransportadora().getTaller().removerVehiculoReparacion(vehiculo);
 		this.historialReparados.add(vehiculo);
+		vehiculo.setReparando(false);
 		this.calcularExperiencia();
 		
 	}
@@ -123,9 +124,10 @@ public class Mecanico extends Persona{
 	 */
 	public void calcularExperiencia() {
 		
-		if (this.experiencia < 50 && this.historialReparados.size() % 10 == 0) {}
-		
-		this.experiencia = this.experiencia / 5;
+		if (this.experiencia < 50 && this.historialReparados.size() % 10 == 0) {
+			
+			this.experiencia = this.experiencia / 5;
+		}
 		
 	}
 	

@@ -1743,6 +1743,7 @@ public static void facturacionYFinanzas() {
 		        						else {
 		        							
 		        							quitarVehiculo(vehiculo);
+		        							regresar2 = true;
 		        						}
 			        					break;
 			        					
@@ -2461,7 +2462,7 @@ public static void facturacionYFinanzas() {
 		
 		for (Vehiculo vehiculo : transportadora.getTaller().getVehiculosEnVenta()) {
 			
-			System.out.println((transportadora.getTaller().getVehiculosEnVenta().indexOf(vehiculo)+1) + ". Placa: " + vehiculo.getPlaca() + "; Modelo: " + vehiculo.getModelo() + "; Precio de venta: " + vehiculo.getPrecio());
+			System.out.println((transportadora.getTaller().getVehiculosEnVenta().indexOf(vehiculo)+1) + ". Placa: " + vehiculo.getPlaca() + "; Modelo: " + vehiculo.getModelo() + "; Precio de venta: " + vehiculo.getPrecio()+ "; Tiempo restante: " + (vehiculo.getFechaHoraReparacion() - Tiempo.getFechaHora()));
 			
 		}
 		
@@ -2792,7 +2793,7 @@ public static void facturacionYFinanzas() {
 			
 			if (vehiculo.getTransportadora().getTaller().getVehiculosEnVenta().contains(vehiculo) || vehiculo.getTransportadora().getTaller().getVehiculosEnReparacion().contains(vehiculo)) {
 				
-				System.out.println("No se puede vender el vehiculo pues ya esta siendo vendido o reparado");
+				System.out.println("No se puede desechar el vehiculo pues ya esta siendo vendido o reparado");
 			}
 			
 			else {

@@ -41,6 +41,7 @@ public class Tiempo implements Serializable{
 	public static int meses = 1;
 	public static int año = 2024;
 	public static Dia diaNombre;
+	public static int fechaHora;
 	public static ArrayList<Tiempo> principal = new ArrayList<>();
 	
 	// Atributos para formato de salida
@@ -329,7 +330,9 @@ public class Tiempo implements Serializable{
         	
         	for (Taller taller : Taller.getListaTalleres()) {
         		
-        		for (Vehiculo vehiculo : taller.getVehiculosEnReparacion()) {
+        		ArrayList <Vehiculo> copiaVehiculos = new ArrayList <Vehiculo> (taller.getVehiculosEnReparacion());
+        		
+        		for (Vehiculo vehiculo : copiaVehiculos) {
         			
         			if (vehiculo.getFechaHoraReparacion() <= Tiempo.getFechaHora()) {
         				
@@ -347,18 +350,24 @@ public class Tiempo implements Serializable{
         
         public static void verificarVehiculosVenta () {
         	
+        	
+        	
         	for (Taller taller : Taller.getListaTalleres()) {
         		
-        		for (Vehiculo vehiculo : taller.getVehiculosEnVenta()) {
+        		ArrayList<Vehiculo> vehiculosEnVenta = new ArrayList<>(taller.getVehiculosEnVenta());
+        		
+        		for (Vehiculo vehiculo : vehiculosEnVenta) {
         			
         			if (vehiculo.getFechaHoraReparacion() <= Tiempo.getFechaHora()) {
         				
         				vehiculo.getTransportadora().getTaller().venderVehiculo(vehiculo);
+        				vehiculo.setReparando(false);
         			}
         		}
         	}
         	
         }
+        
     	
     	/**
     	 * Calcula la hora de salida basándose en la hora y minutos actuales.

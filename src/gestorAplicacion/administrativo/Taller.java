@@ -71,7 +71,7 @@ public class Taller implements Serializable {
 			if (i.getEstado() == true) {
 				
 				i.agregarVehiculoCola(vehiculo);
-				vehiculo.setFechaHoraReparacion(Tiempo.getFechaHora() + 1440 - Math.round(i.getExperiencia()*1440/100));
+				vehiculo.setFechaHoraReparacion(Tiempo.getFechaHora() + 700 - Math.round(i.getExperiencia()*700/100));
 				vehiculo.setMecanicoAsociado(i);
 				this.vehiculosEnReparacion.add(vehiculo);
 				vehiculo.setEstado(false);
@@ -102,7 +102,7 @@ public class Taller implements Serializable {
 		}
 		
 		mecanico.agregarVehiculoCola(vehiculo);
-		vehiculo.setFechaHoraReparacion(mecanico.getVehiculosReparando().get(-1).getFechaHoraReparacion() + 1440 - Math.round(mecanico.getExperiencia()*1440/100));
+		vehiculo.setFechaHoraReparacion(mecanico.getVehiculosReparando().get(-1).getFechaHoraReparacion() + 700 - Math.round(mecanico.getExperiencia() * 700/100));
 		vehiculo.setMecanicoAsociado(mecanico);
 		this.vehiculosEnReparacion.add(vehiculo);
 		vehiculo.setEstado(false);
@@ -188,7 +188,7 @@ public class Taller implements Serializable {
 		
 		this.vehiculosEnVenta.add(vehiculo);
 		vehiculo.setPrecio(this.calcularValor(vehiculo));
-		vehiculo.setFechaHoraReparacion((int)Math.round(1440 + (1440 * Math.random())));
+		vehiculo.setFechaHoraReparacion((int)Math.round(Tiempo.getFechaHora() + (1440 * Math.random())));
 		vehiculo.setReparando(true);
 		
 	}
@@ -198,6 +198,7 @@ public class Taller implements Serializable {
 		this.transportadora.aumentarDinero(vehiculo.getPrecio());
 		this.vehiculosEnVenta.remove(vehiculo);
 		this.transportadora.removerVehiculo(vehiculo);
+		vehiculo.setReparando(false);
 		
 		
 	}
