@@ -30,8 +30,8 @@ public class Main_Principal {
 	    }
 	
     static {
-    	Serializador.objetosBase();
-    	//Deserializador.deserializarListas();
+    	//Serializador.objetosBase();
+    	Deserializador.deserializarListas();
     }
     
 	public static void main(String[] args) {
@@ -71,7 +71,7 @@ public class Main_Principal {
                     continuar = false;
                     System.out.println("Saliendo del sistema...");
                     apagarTiempo(); // Fin del Tiempo
-                    //Serializador.serializarListas();;
+                    Serializador.serializarListas();;
                     break;
                 default:
                     System.out.println("Opción no válida, Marque de 1,6");

@@ -1,0 +1,8 @@
+minutos=26
+horas=2
+dias=1
+semana=0
+meses=1
+año=2024
+salidaFecha=1/1/2024
+salidaHora=2:26
