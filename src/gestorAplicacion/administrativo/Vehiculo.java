@@ -138,11 +138,9 @@ public class Vehiculo implements Serializable {
         for (Conductor i : conductores) {
             if (i.getId() == id) { // Se cambia a getId ya que es un identificador único, pueden haber conductores con el mismo nombre
                 conductores.remove(i);
-                System.out.println(i.getNombre() + " ha sido eliminado de los conductores asociados");
                 return;
             }
         }
-        System.out.println("Ningún conductor con ese nombre está asociado al vehículo");
     }
 
     /**

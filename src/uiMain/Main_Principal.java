@@ -683,11 +683,11 @@ public class Main_Principal {
                 				
                 				
                 				if (selectedDriver.getVehiculo() != null) {
-                					if (transportaElegida.mostrarViajesDisponibles(Tiempo.diaNombre.getValue(),selectedDriver.getVehiculo().getTipo()).equals("")){
+                					if (transportaElegida.mostrarViajesDisponibles(Tiempo.diaNombre.getValue(),selectedDriver.getVehiculo().getTipo(),selectedDriver).equals("")){
                     					System.out.println("No hay viajes disponibles que el conductor pueda tomar");
                     				} else {
                     					System.out.println("Digite el id del viaje que desea asignarle al conductor:");
-                        				System.out.println(transportaElegida.mostrarViajesDisponibles(Tiempo.diaNombre.getValue(),selectedDriver.getVehiculo().getTipo()));
+                        				System.out.println(transportaElegida.mostrarViajesDisponibles(Tiempo.diaNombre.getValue(),selectedDriver.getVehiculo().getTipo(),selectedDriver));
                         				
                     					opcion = scanner.nextInt();
                         				
@@ -727,14 +727,14 @@ public class Main_Principal {
                 			
                 			case 1:
                               				
-                				if (transportaElegida.mostrarViajesDisponibles(Tiempo.diaNombre.getValue(),selectedDriver.getVehiculo().getTipo()).equals("")){
+                				if (transportaElegida.mostrarViajesDisponibles(Tiempo.diaNombre.getValue(),selectedDriver.getVehiculo().getTipo(),selectedDriver).equals("")){
                 					
                 					System.out.println("No hay viajes disponibles que el conductor pueda tomar");
                 					
                 				} else {
                 					
                 					System.out.println("Digite el id del viaje que desea asignarle al conductor:");
-                    				System.out.println(transportaElegida.mostrarViajesDisponibles(Tiempo.diaNombre.getValue(),selectedDriver.getVehiculo().getTipo()));
+                    				System.out.println(transportaElegida.mostrarViajesDisponibles(Tiempo.diaNombre.getValue(),selectedDriver.getVehiculo().getTipo(),selectedDriver));
       
                 					opcion = scanner.nextInt();
                     				

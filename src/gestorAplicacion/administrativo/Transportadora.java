@@ -696,7 +696,7 @@ public class Transportadora implements Incentivo, Serializable {
 	 * @return mensaje con la lista de viajes disponibles
 	 * */
 	
-	public String mostrarViajesDisponibles(int d, TipoVehiculo tipo) {
+	public String mostrarViajesDisponibles(int d, TipoVehiculo tipo, Conductor conductor) {
 		
 		String mensaje = "";
 
@@ -704,6 +704,9 @@ public class Transportadora implements Incentivo, Serializable {
 		
 		for (Viaje viaje : getViajesAsignados()) {
 			if ( Math.abs((viaje.getDia().getValue() - d)) >= 1  && (viaje.getVehiculo().getTipo() == tipo)) {
+				if (conductor.getHorario().contains(viaje)) {
+					continue;
+				}
 				viajesDisponibles.add(viaje);
 				mensaje += viaje.detallesViaje();
 			}
