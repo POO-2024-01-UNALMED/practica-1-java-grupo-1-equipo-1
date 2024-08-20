@@ -31,7 +31,7 @@ public class Terminal implements Serializable{
 	public static int cantidadSedes = 0; // cantidad de sedes de la terminal
 	private int cantidadVehiculos; // cantidad de vehículos que hay en la terminal 
 	private static ArrayList <Transportadora> transportadoras = new ArrayList<>(); // transportadoras asociadas a la terminal 
-	private ArrayList <Viaje> reservas = new ArrayList<>(); // reservas de viaje de la terminal
+	private static ArrayList <Viaje> reservas = new ArrayList<>(); // reservas de viaje de la terminal
 	private static ArrayList <Viaje> viajes = new ArrayList<>(); // viajes disponibles en la terminal
 	private static ArrayList <Viaje> historial = new ArrayList<>(); // viajes realizados por la terminal
 	private static ArrayList <Viaje> viajesEnCurso = new ArrayList<>(); // viajes en curso en la terminal
@@ -388,52 +388,41 @@ public class Terminal implements Serializable{
 	
 	// Programación por Vehiculo ()
 	
-	public Viaje programarViaje (Destino llegada, Vehiculo vehiculo, String fecha, String hora, Destino salida) {  // Teniendo en cuenta el tipo de Vehiculo --- Habra otro que tiene en cuenta cierta capacidad y el costo del vaje
-		for (Transportadora t : Terminal.getTransportadoras()) { 		// Verfificar las transportadoras que ofrecen este destino 
-			for (Destino d : t.getDestinos()) {
-				if (d.equals(llegada)) {
-					for (Vehiculo v : t.getVehiculos()) {		    // Verfificar el tipo de vehiculo requerido
-						if(vehiculo.getTipo().equals(v.getTipo()) && v.disponibilidad()) {
-							Conductor conductorSeleccionado = null;  // Se pueden agregar mas condiciones para esta selección 
-							for (Conductor c : v.getConductores()) { // Añadir la verificacion de la lista de horario del conductor para verificar loa disponiblidad Formato String "8:30 4/08/2024"
-								if (c.getEstadoLicencia() ) {  
-									conductorSeleccionado = c;
-									break;  // Selecciona el primer conductor disponible
-								}
-							}
-							
-							if (conductorSeleccionado != null) {
-								Viaje nuevoViaje = new Viaje(t.getTerminal(), hora, fecha, v, conductorSeleccionado, llegada, salida); // Creacion del Viaje // --- plantear la posibilidad de eliminar el dia del constructor y que las transportadoras tengan un destino como ubicacion
-								
-								return nuevoViaje;  //El viaje no se perdera pues este ya tiene apunadores desde la clase Vehiculo, Transportadora, Conductor, Viaje. 
-
-							} else {return null; } // Hay un problema con el conductor asignado --- Volver a programar automaticamente 
-
-						} else {return null; } // No hay del mismo tipo de vehiculo
-					}
-					
-				} else { return null; }  // No hay Transportadoras con ese destino
-			}
-		}
-		return null; // No hay ese destino
+	public static Viaje programarViaje(Destino llegada, TipoVehiculo vehiculo, String fecha, String hora, Destino salida) {
+	    for (Transportadora t : Terminal.getTransportadoras()) { // Iterar sobre todas las transportadoras disponibles
+	        if (t.getDestinos().contains(llegada)) {	        // Verificar si la transportadora ofrece el destino de llegada
+	            for (Vehiculo v : t.getVehiculos()) {	       // Buscar un vehículo que cumpla con el tipo solicitado y que esté disponible
+	                if (v.getTipo().equals(vehiculo) && v.disponibilidad()) { // Buscar un conductor disponible
+	                    Conductor conductorSeleccionado = null;
+	                    for (Conductor c : v.getConductores()) { // Verificar que el conductor tenga la licencia en estado correcto (puede ser ajustado según tus criterios)
+	                        if (c.getEstadoLicencia()) {
+	                            conductorSeleccionado = c;
+	                            break;  // Selecciona el primer conductor disponible
+	                        }
+	                    }
+	                    if (conductorSeleccionado != null) { // Verificar si se encontró un conductor disponible
+	                        Viaje nuevoViaje = new Viaje(t.getTerminal(), hora, fecha, v, conductorSeleccionado, llegada, salida); // Crear y retornar el nuevo viaje
+	                        return nuevoViaje;
+	                    } else {  // No hay conductores disponibles para este vehículo
+	                        return null;
+	                    }
+	                }
+	            }
+	            return null;
+	        }
+	    }
+	    return null;
 	}
-	
 	
 	// Programacion por Conductor ()
 	
 	public static Viaje programarViaje(Destino llegada, Conductor conductor, TipoVehiculo tipoVehiculo, String fecha, String hora, Destino salida) {
-	    // Itera sobre todas las transportadoras disponibles en el terminal
 	    for (Transportadora t : Terminal.getTransportadoras()) {
-	        // Verifica si la transportadora ofrece el destino seleccionado
 	        if (t.getDestinos().contains(llegada)) {
-	            // Verifica si la transportadora tiene vehículos disponibles del tipo solicitado en la fecha y hora dadas
 	            for (Vehiculo v : t.getVehiculos()) {
 	                if (v.getTipo().equals(tipoVehiculo) && v.disponibilidad()) {
-	                    // Verifica la disponibilidad del conductor en la fecha y hora dadas
 	                    if (t.conductoresDisponibles(fecha, tipoVehiculo).contains(conductor)) {
-	                        // Si el conductor tiene licencia válida
 	                        if (conductor.getEstadoLicencia()) {
-	                            // Crea y retorna el nuevo viaje
 	                            Viaje nuevoViaje = new Viaje(t.getTerminal(), hora, fecha, v, conductor, llegada, salida);
 	                            return nuevoViaje;
 	                        } else {
@@ -449,42 +438,59 @@ public class Terminal implements Serializable{
 	    }
 	    return null;
 	}
+	
+	/**
+	 * Cancela un viaje de forma absoluta, lo que implica eliminar el viaje de las listas de reservas y de viajes,
+	 * así como reembolsar a todos los pasajeros que estaban en el viaje.
+	 * 
+	 * @param viaje El viaje que se desea cancelar de forma absoluta.
+	 * @return Un mensaje que indica el resultado de la operación, en este caso, siempre retorna "Viaje cancelado".
+	 */
+	
+	public static String cancelarViajeAbsoluto(Viaje viaje) {
+		String cadena = "El viaje no tenia pasajeros";
+		
+	    ArrayList<Pasajero> pasajeros = viaje.getPasajeros();
+	    
+	    if (!pasajeros.isEmpty()) {
+		    for (Pasajero pasajero : pasajeros) {
+		        pasajero.aumentarDinero((int) viaje.getTarifa());
+		    }
+		    cadena = "Viaje cancelado";
+	    }
 
-	
-	
-	public void cancelarViaje(Viaje viaje) {  // Puede devolver un String con una retroalimentacion de la operacion que se realizo
-		 ArrayList <Pasajero> pasajeros = viaje.getPasajeros(); // Debemos tener en cuenta que el viaje debe ser reprogramado, reubicar sus pasajeros o la devolucion del dinero. 
-		 boolean reubicados = false; // Permitira saber cual proceso fue exitoso 
-		 
-		 for (Viaje v : Terminal.viajes) { //Buscar en la lista de viajes disponibles un viaje que cumpla las caracteristicas para reubicar
-			 if (viaje.isequals(v) == false) { // Primero debemos excluir el viaje que se va a cancelar
-				 if (v.getSalida().equals(viaje.getSalida()) && v.getLlegada().equals(viaje.getLlegada()) &&  viaje.getAsientosDisponibles() <= v.getAsientosDisponibles()) { // Verificar que la salida y la llegada sean las mismas y Verificar la capacidad de los vehiculos 
-					 v.setTarifa(viaje.getTarifa()); // Respeta la tarifa del viaje anterior 
-					 v.getPasajeros().addAll(pasajeros); // Mover los pasajeros al nuevo viaje y elminar
-					 
-					 viaje.programacionAutomatica(); // Ejecutar la autoprogramación para no perder la continuidad y eliminar el viaje
-					 reubicados = true;
-					 break; // Terminar la operacion despues de finalizar el proceso
-				 } 
-			 }
-		 }
-		 
-		 if (reubicados == false) {  // Devolución del dinero debido a que no se encontro un viaje con las condiciones requeridas 
-			 for (Pasajero p : pasajeros) {
-				 p.aumentarDinero((int)viaje.getTarifa()); // DEFINIR EL DINERO COMO DOUBLE O IMPLEMENTAR ALGUNA REGLA PARA DEDONDEAR
-			 }
-			 
-		 }
-		 viaje.programacionAutomatica();
+	    if (Terminal.getReservas().contains(viaje)) {
+	    	Terminal.getReservas().remove(viaje);
+	    }
+	    
+	    Terminal.getViajes().remove(viaje);
+	    
+	    return cadena;
 	}
 	
-	public ArrayList <Viaje> verificarDisponibilidad(){
-		
-		// Implementación pendiente
-		
-		return null;
-		
-		
+	public static String cancelarViaje(Viaje viaje) {
+	    ArrayList<Pasajero> pasajeros = viaje.getPasajeros();
+	    boolean reubicados = false;
+
+	    for (Viaje v : Terminal.viajes) {
+	        if (!v.equals(viaje) && v.getSalida().equals(viaje.getSalida()) && v.getLlegada().equals(viaje.getLlegada()) && v.getAsientosDisponibles() >= pasajeros.size()) {
+	            v.setTarifa(viaje.getTarifa());
+	            v.getPasajeros().addAll(pasajeros);
+	            viaje.programacionAutomatica();
+	            reubicados = true;
+	            break;
+	        }
+	    }
+
+	    if (reubicados) {
+	        return "Los pasajeros han sido reubicados en otro viaje.";
+	    } else {
+	        for (Pasajero p : pasajeros) {
+	            p.aumentarDinero((int) viaje.getTarifa());
+	        }
+	        viaje.programacionAutomatica();
+	        return "Los pasajeros han sido reembolsados.";
+	    }
 	}
 	
 	/**
@@ -508,35 +514,40 @@ public class Terminal implements Serializable{
 	
 	
 	/**
-	 * Deniega una reserva eliminando el viaje asociado y actualizando la lista de reservas.
+	 * Deniega una reserva de un viaje y maneja la reubicación de los pasajeros o el reembolso, según sea necesario.
 	 * 
-	 * @param id El identificador del viaje asociado a la reserva que se desea denegar.
-	 * 
-	 * El método realiza los siguientes pasos:
-	 * 1. Busca el viaje con el identificador especificado en la lista de viajes de la terminal.
-	 * 2. Si el viaje se encuentra, se procede a cancelar el viaje, lo que mantiene la continuidad del viaje y elimina la reserva.
-	 * 3. Luego, se elimina el viaje de la lista de reservas.
-	 * 
+	 * @param viaje El viaje cuya reserva está siendo denegada.
+	 * @return Un mensaje que indica el resultado de la operación:
+	 *         - "Los pasajeros han sido reubicados en otro viaje." si se ha encontrado un viaje adecuado para reubicar a los pasajeros.
+	 *         - "Los pasajeros han sido reembolsados." si no se ha encontrado un viaje adecuado y se ha procedido a reembolsar a los pasajeros.
 	 */
 	
-	public void denegarReserva(int id) { // Nota: Si el viaje no se encuentra, se debe considerar cómo informar al usuario o manejar el error adecuadamente. 
-		Viaje reserva = null;
-		
-		for (Viaje viaje : this.getViajes()) {
-			if (viaje.getId() == id) {
-				reserva = viaje;
-				break;
-			}
-		}
-//		if (reserva == null) {
-//			// Falta cambiar el tipo de retorno del metodo para que permita saber si la reserva no esta en la lista
-//		}
-		this.cancelarViaje(reserva);  // Mantiene la continuidad del viaje y ademas elimina la reserva
-		this.getReservas().remove(reserva); // Lo elimina de la lista de reserva		
-	}
-	
-	
+	public static String denegarReserva(Viaje viaje) {
+	    ArrayList<Pasajero> pasajeros = viaje.getPasajeros();
+	    boolean reubicados = false;
 
+	    // Buscar un nuevo viaje con los mismos detalles de salida y llegada
+		Viaje nuevoViaje = Terminal.programarViaje(viaje.getSalida(), viaje.getVehiculo().getTipo(), viaje.getFecha(), viaje.getHora(), viaje.getLlegada());
+		
+	    if (nuevoViaje != null) {
+	    	nuevoViaje.setTarifa(viaje.getTarifa());
+	    	nuevoViaje.getPasajeros().addAll(pasajeros);
+            reubicados = true;
+	    }
+
+	    if (reubicados) {
+	        Terminal.getReservas().add(nuevoViaje);
+	        Terminal.getReservas().remove(viaje);
+	        viaje.programacionAutomatica();
+	        return "Los pasajeros han sido reubicados en otro viaje.";
+	    } else {
+	        for (Pasajero p : pasajeros) {
+	            p.aumentarDinero((int) viaje.getTarifa());
+	        }
+	        Terminal.getReservas().remove(viaje);
+	        return "Los pasajeros han sido reembolsados no se encontro disponiblidad.";
+	    }
+	}
 	
 	public ArrayList <Factura> obtenerFinanzas(){
 		
@@ -642,7 +653,65 @@ public class Terminal implements Serializable{
 	    	i++;
     	} 
         return fechas;
-}
+	}
+	
+	/**
+	 * Genera una lista de horarios disponibles para una fecha dada.
+	 * 
+	 * La lógica es la siguiente:
+	 * 1. La fecha se descompone en día, mes y año.
+	 * 2. Se determina si el día es par o impar.
+	 * 3. Se determina si el mes es igual al día.
+	 * 4. Se generan horarios disponibles basados en las siguientes reglas:
+	 *    - Si el día es par: horarios cada hora desde las 6:00 hasta las 20:00.
+	 *    - Si el día es impar: horarios cada hora, pero comienza a las 8:30.
+	 *    - Si el mes es igual al día:
+	 *      - Se ajusta la lista para que contenga horarios cada dos horas.
+	 *      - Para días pares, los horarios son cada dos horas desde las 6:00 hasta las 20:00.
+	 *      - Para días impares con mes igual al día, los horarios son cada dos horas comenzando desde las 8:30.
+	 *
+	 * @param fecha La fecha en formato "dd/MM/yyyy" para la cual se desea obtener los horarios disponibles.
+	 * @return Una lista de cadenas que representan los horarios disponibles para la fecha dada.
+	 */
+	
+	public static ArrayList<String> horasDisponibles(String fecha) {
+	    ArrayList<String> horarios = new ArrayList<>();
+
+	    String[] fechaPartes = fecha.split("/");
+
+	    int dia = Integer.parseInt(fechaPartes[0]);
+	    int mes = Integer.parseInt(fechaPartes[1]);
+	    int año = Integer.parseInt(fechaPartes[2]);
+
+	    boolean diaEsPar = dia % 2 == 0;
+	    boolean mesIgualADia = mes == dia;
+
+	    for (int hora = 6; hora <= 20; hora++) { // Iterar sobre las horas de 6 a 20
+	        if (diaEsPar) { // Día par: horarios cada hora
+	            horarios.add(String.format("%02d:00", hora));
+	        } else { // Día impar: horarios cada hora, pero comienza a las 8:30
+	            if (hora >= 8) {
+	                horarios.add(String.format("%02d:30", hora));
+	            }
+	        }
+	    }
+
+	    if (mesIgualADia) {	    // Si el mes es igual al día, ajustar para que sea cada dos horas
+	        ArrayList<String> horariosCadaDosHoras = new ArrayList<>();
+	        for (int hora = 6; hora <= 20; hora += 2) {
+	            if (diaEsPar) {
+	                horariosCadaDosHoras.add(String.format("%02d:00", hora));
+	            } else { 	                // Día impar con mes igual al día: cada dos horas a partir de las 8:30
+	                if (hora >= 8) { 
+	                    horariosCadaDosHoras.add(String.format("%02d:30", hora));
+	                }
+	            }
+	        }
+	        horarios = horariosCadaDosHoras; // Reemplazar la lista original con la lista ajustada cada dos horas
+	    }
+
+	    return horarios;
+	}
 	
 	// METODOS GETTERS Y SETTERS
 	
@@ -803,9 +872,9 @@ public class Terminal implements Serializable{
 	 */
 	
 	
-	public void setReservas(ArrayList <Viaje> reservas) {
+	public static void setReservas(ArrayList <Viaje> reservas) {
 		
-		this.reservas = reservas;
+		Terminal.reservas = reservas;
 		
 	}
 	
@@ -814,9 +883,9 @@ public class Terminal implements Serializable{
 	 * @return lista de las reservas asociadas a la terminal.
 	 */
 	
-	public ArrayList <Viaje> getReservas(){
+	public static ArrayList <Viaje> getReservas(){
 		
-		return reservas;
+		return Terminal.reservas;
 	
 	}
 	

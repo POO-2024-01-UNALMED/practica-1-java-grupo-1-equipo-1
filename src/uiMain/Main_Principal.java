@@ -51,26 +51,26 @@ public class Main_Principal {
 
             switch (opcion) {
                 case 1:
-                    ventaViajes();
+                    ventaViajes(); // Funcionalidad 1
                     break;
                 case 2:
-                	gestionConductores();
+                	gestionConductores(); // Funcionalidad 2
                     break;
                 case 3:
                 	
-                	facturacionYFinanzas();
+                	facturacionYFinanzas(); // Funcionalidad 3
                     break;
                     
                 case 4:
-                	ejecutar4();
+                	ejecutar4(); // Funcionalidad 4
                     break;
                 case 5:
-                	Main_5.ejecutar();
+                	programacionViajes(); // Funcionalidad 5
                     break;
                 case 6:
                     continuar = false;
                     System.out.println("Saliendo del sistema...");
-                    //System.out.println(Tiempo.principal.); // Fin del Tiempo
+                    apagarTiempo(); // Fin del Tiempo
                     //Serializador.serializarListas();;
                     break;
                 default:
@@ -1591,6 +1591,538 @@ public static void facturacionYFinanzas() {
        
 
     }
+	
+	// Funcionalidad 5
+	
+	private static void programacionViajes() {
+		
+		Scanner scanner = new Scanner(System.in);
+
+        boolean programar = true;
+        while (programar) {
+            // SubMenú
+            System.out.println("Tipo de programación:\n");
+            System.out.println("1. Programación de Viajes");
+            System.out.println("2. Administración de Reservas");
+            System.out.println("3. Administración de Viajes");
+            System.out.println("4. Regresar al Menú Principal");
+
+            int opcion = obtenerEntradaValida(scanner, 1, 4);
+
+            switch (opcion) {
+                case 1:
+                	boolean viaje = true;
+                    while (viaje) {
+                        System.out.println("Has decidido programar un nuevo viaje.");
+                        System.out.println("Elige un destino:\n");
+
+                        // Seleccionar Destinos
+                        ArrayList<Destino> destinos = new ArrayList<>();
+                        for (Destino destino : Destino.values()) {
+                            destinos.add(destino);
+                        }
+
+                        if (destinos.isEmpty()) {
+                            System.out.println("No hay destinos disponibles.");
+                            viaje = false; // Regresar al menú de programación
+                            break;
+                        }
+
+                        Tablas.tablaDestinos(destinos); // Llamado al formato de las tablas
+
+                        System.out.println("Elige el destino por su número:");
+                        int destinoSeleccionado = obtenerEntradaValida(scanner, 1, destinos.size());
+
+                        Destino destinoElegido = destinos.get(destinoSeleccionado - 1);
+                        System.out.println("Has elegido el destino: " + destinoElegido.name());
+
+                        // Seleccionar Transportadora
+                        ArrayList<Transportadora> transportadorasPorDestino = Terminal.transportadorasViajeDisponible(destinoElegido);
+
+                        if (transportadorasPorDestino.isEmpty()) {
+                            System.out.println("No hay transportadoras disponibles para el destino seleccionado.");
+                            viaje = false; // Regresar al menú de programación
+                            break;
+                        }
+
+                        System.out.println("Estas son las transportadoras asociadas al destino, " + destinoElegido.name() + ":");
+                        Tablas.tablaTransportadorasporDestino(transportadorasPorDestino);
+                        System.out.println("Elige una transportadora por número:");
+
+                        int transportadoraSeleccionada = obtenerEntradaValida(scanner, 1, transportadorasPorDestino.size());
+
+                        Transportadora transportadoraElegida = transportadorasPorDestino.get(transportadoraSeleccionada - 1);
+                        System.out.println("Has elegido la transportadora: " + transportadoraElegida.getNombre());
+
+                        // FECHA
+                        System.out.println("HORA ACTUAL");
+                        System.out.println(Tiempo.mostrarTiempo());
+                        System.out.println("Fechas Disponibles");
+
+                        ArrayList<String> fechasDisponibles = Terminal.fechasDisponibles();
+
+                        if (fechasDisponibles.isEmpty()) {
+                            System.out.println("No hay fechas disponibles.");
+                            viaje = false; // Regresar al menú de programación
+                            break;
+                        }
+
+                        Tablas.tablaFechasDisponibles(fechasDisponibles);
+
+                        System.out.println("Elige una fecha por número:");
+                        int fechaSeleccionada = obtenerEntradaValida(scanner, 1, fechasDisponibles.size());
+
+                        String fecha = fechasDisponibles.get(fechaSeleccionada - 1); // -1 porque las listas son basadas en cero
+                        System.out.println("Has seleccionado la fecha: " + fecha);
+
+                        // HORA
+                        System.out.println("HORA ACTUAL");
+                        System.out.println(Tiempo.mostrarTiempo());
+                        System.out.println("Horas Disponibles");
+
+                        ArrayList<String> horasDisponibles = Terminal.horasDisponibles(fecha);
+
+                        if (horasDisponibles.isEmpty()) {
+                            System.out.println("No hay horas disponibles.");
+                            viaje = false; // Regresar al menú de programación
+                            break;
+                        }
+
+                        Tablas.tablaHorasDisponibles(horasDisponibles);
+
+                        System.out.println("Elige una hora por número:");
+                        int horaSeleccionada = obtenerEntradaValida(scanner, 1, horasDisponibles.size());
+
+                        String hora = horasDisponibles.get(horaSeleccionada - 1); // -1 porque las listas son basadas en cero
+                        String horaCasteada = Tiempo.convertirHora(hora);
+                        System.out.println("Has seleccionado la hora: " + hora);
+
+                        // Selección del tipo de Vehiculo
+                        System.out.println("Selecciona el tipo de Vehiculo:\n");
+                        int indice = 1;
+                        ArrayList<TipoVehiculo> tiposDisponibles = transportadoraElegida.tiposVehiculosDisponible(); // Obtén la lista de tipos disponibles
+
+                        if (tiposDisponibles.isEmpty()) {
+                            System.out.println("No hay tipos de vehículos disponibles.");
+                            viaje = false; // Regresar al menú de programación
+                            break;
+                        }
+
+                        // Mostrar las opciones de tipos de vehículos disponibles
+                        for (TipoVehiculo tipo : tiposDisponibles) {
+                            System.out.println(indice + " " + tipo.name());
+                            indice++;
+                        }
+
+                        // Leer la selección del usuario
+                        int tipoVehiculoSeleccionado = obtenerEntradaValida(scanner, 1, tiposDisponibles.size());
+
+                        // Obtener el tipo de vehículo seleccionado
+                        TipoVehiculo tipoSeleccionado = tiposDisponibles.get(tipoVehiculoSeleccionado - 1);
+                        System.out.println("Has seleccionado el tipo de vehículo: " + tipoSeleccionado.name());
+
+                        // Elegir Conductor Manualmente
+                        System.out.println("¿Desea seleccionar el Conductor Manualmente?\n" +
+                                "1. Sí\n" +
+                                "2. No");
+
+                        int elegirConductor = obtenerEntradaValida(scanner, 1, 2);
+
+                        if (elegirConductor == 1) {
+                            // Selección manual del conductor
+                            System.out.println("Selecciona el conductor");
+
+                            ArrayList<Conductor> conductoresDisponibles = transportadoraElegida.conductoresDisponibles(fecha, tipoSeleccionado);
+
+                            if (conductoresDisponibles.isEmpty()) {
+                                System.out.println("No hay conductores disponibles.");
+                                viaje = false; // Regresar al menú de programación
+                                break;
+                            }
+
+                            Tablas.tablaConductoresDisponibles(conductoresDisponibles);
+
+                            int conductorSeleccionado = obtenerEntradaValida(scanner, 1, conductoresDisponibles.size());
+
+                            Conductor conductorElegido = conductoresDisponibles.get(conductorSeleccionado - 1);
+                            System.out.println("Has seleccionado el conductor: " + conductorElegido.getNombre() + " con " + conductorElegido.getExperiencia() + " años de experiencia.");
+
+                            Viaje viajeProgramado = Terminal.programarViaje(destinoElegido, conductorElegido, tipoSeleccionado, fecha, horaCasteada, Destino.MEDELLIN);
+                            
+                            if (viajeProgramado != null) {
+                                System.out.println("__________________________");
+                                System.out.println("* PROGRAMACIÓN EXITOSA *");
+                                System.out.println("__________________________\n");
+                                System.out.println(viajeProgramado.estado());
+                                System.out.println("__________________________");
+                            } else {
+                                System.out.println("Programacion en proceso");
+                            }
+
+                        } else if (elegirConductor == 2) {
+                            Viaje viajeProgramado = Terminal.programarViaje(destinoElegido, tipoSeleccionado, fecha, horaCasteada, Destino.MEDELLIN);
+                            if (viajeProgramado != null) {
+                                System.out.println("__________________________");
+                                System.out.println("* PROGRAMACIÓN EXITOSA *");
+                                System.out.println("__________________________\n");
+                                System.out.println(viajeProgramado.estado());
+                                System.out.println("__________________________");
+                            } else {
+                                System.out.println("Programacion en proceso");
+                            }
+                        }
+
+                        System.out.println("¿Deseas programar otro viaje?");
+                        System.out.println("1. Sí");
+                        System.out.println("2. No");
+                        int respuesta = obtenerEntradaValida(scanner, 1, 2);
+
+                        if (respuesta == 2) {
+                            viaje = false; // Termina el bucle de programación de viajes
+                        }
+                    }
+                    break;
+                    
+                    
+                case 2:
+                	
+                	System.out.println("Has decidido administrar las reservas.");
+
+                    System.out.println("1. Ver reservas actuales");
+                    System.out.println("2. Regresar al menú de programación de viajes");
+
+                    int opcionReserva = obtenerEntradaValida(scanner, 1, 2);
+
+                    switch (opcionReserva) {
+                        case 1:
+                            System.out.println("Mostrando reservas actuales...");
+
+                            System.out.println("Viajes en Reserva.");
+                            ArrayList<Viaje> viajesReserva = Terminal.getReservas();
+
+                            Tablas.tablaViajesDisponiblesId(viajesReserva);
+
+                            System.out.println("¿Desea administrar una Reserva?. ");
+                            System.out.println("1. SI");
+                            System.out.println("2. NO");
+
+                            int continuar = obtenerEntradaValida(scanner, 1, 2);
+
+                            switch (continuar) {
+                                case 1:
+                                    System.out.println("Selecciona el N° de la reserva: ");
+
+                                    int seleccion = obtenerEntradaValida(scanner, 0, viajesReserva.size());
+
+                                    Viaje reservaAjuste = viajesReserva.get(seleccion);
+                                    Tablas.viajeIndividual(reservaAjuste);
+
+                                    System.out.println("Qué acción deseas realizar: ");
+
+                                    System.out.println("1. Ver detalles");
+                                    System.out.println("2. Cancelar");
+                                    System.out.println("3. Regresar");
+
+                                    int reserva = obtenerEntradaValida(scanner, 1, 3);
+
+                                    switch (reserva) {
+                                        case 1:
+                                            System.out.println("__________________________");
+                                            System.out.println(reservaAjuste.estado());
+                                            System.out.println("__________________________");
+                                            break;
+                                        case 2:
+                                            System.out.println("Selecciona el Tipo de Cancelación: ");
+                                            System.out.println("1. Absoluta (Elimina el viaje y Reembolsa el Dinero.)");
+                                            System.out.println("2. Relativa (Asigna el Viaje más próximo que cumpla las Características.)");
+                                            System.out.println("3. Regresar");
+
+                                            int tipo = obtenerEntradaValida(scanner, 1, 3);
+
+                                            switch (tipo) {
+                                                case 1:
+                                                    String absoluta = Terminal.cancelarViajeAbsoluto(reservaAjuste);
+                                                    System.out.println("__________________________");
+                                                    System.out.println("Reserva Cancelada");
+                                                    System.out.println(absoluta);
+                                                    System.out.println("__________________________");
+                                                    break;
+                                                case 2:
+                                                    String relativa = Terminal.denegarReserva(reservaAjuste);
+                                                    System.out.println("__________________________");
+                                                    System.out.println("Reserva Cancelada");
+                                                    System.out.println(relativa);
+                                                    System.out.println("__________________________");
+                                                    break;
+                                                case 3:
+                                                    System.out.println("Regresando...");
+                                                    break;
+                                                default:
+                                                    System.out.println("Opción no válida. Regresando...");
+                                                    break;
+                                            }
+                                            break;
+                                        case 3:
+                                            System.out.println("Regresando...");
+                                            break;
+                                        default:
+                                            System.out.println("Opción no válida. Regresando...");
+                                            break;
+                                    }
+                                    break;
+
+                                case 2:
+                                    System.out.println("Regresando...");
+                                    break;
+
+                                default:
+                                    System.out.println("Opción no válida. Regresando...");
+                                    break;
+                            }
+                            break;
+                        case 2:
+                            System.out.println("Regresando al menú de programación de viajes");
+                            break;
+                        default:
+                            System.out.println("Opción no válida. Por favor, marque números enteros del 1 al 2.");
+                            break;
+                    }
+                    
+                    break;
+                    
+                    
+                    
+                case 3:
+                	System.out.println("Has decidido administrar los Viajes.");
+
+                    System.out.println("1. Viajes Disponibles");
+                    System.out.println("2. Historial de Viajes");
+                    System.out.println("3. Regresar");
+
+                    int administrar = obtenerEntradaValida(scanner, 1, 3);
+
+                    switch (administrar) {
+                        case 1:
+                            System.out.println(Tiempo.mostrarTiempo());
+                            System.out.println("Viajes Disponibles --- Sin Salir");
+                            ArrayList<Viaje> viajesDisponibles = Terminal.getViajes();
+
+                            Tablas.tablaViajesDisponibles(viajesDisponibles);
+
+                            System.out.println("Qué acción deseas Realizar: ");
+                            System.out.println("1. Ver detalles");
+                            System.out.println("2. Cancelar");
+                            System.out.println("3. Regresar");
+
+                            int modificar = obtenerEntradaValida(scanner, 1, 3);
+
+                            switch (modificar) {
+                                case 1:
+                                    Tablas.tablaViajesDisponiblesId(viajesDisponibles);
+                                    System.out.println("Detalles del Viaje: ");
+                                    
+                                    System.out.println("Selecciona el viaje a inspeccionar: ");
+                                    int detalles = obtenerEntradaValida(scanner, 0, viajesDisponibles.size());
+
+                                    Viaje viajeDetalles = viajesDisponibles.get(detalles); 
+                                    Tablas.viajeIndividual(viajeDetalles);
+                                    System.out.println("__________________________");
+                                    System.out.println(viajeDetalles.estado());
+                                    System.out.println("__________________________");
+                                    System.out.println(" ");
+
+                                    System.out.println("1. Ver lista de pasajeros.");
+                                    System.out.println("2. Regresar.");
+
+                                    int pasajeros = obtenerEntradaValida(scanner, 1, 2);
+
+                                    switch (pasajeros) {
+                                        case 1:
+                                            ArrayList<Pasajero> listaPersonas = viajeDetalles.getPasajeros();
+                                            int i = 0;
+                                            if (listaPersonas != null) {
+                                                System.out.println("__________________________");
+                                                for (Pasajero p : listaPersonas) {
+                                                    System.out.println(i + ". " + p.getNombre());
+                                                    i++;
+                                                }
+                                                System.out.println("__________________________");
+                                            } else {
+                                                System.out.println("El viaje no tuvo pasajeros");
+                                            }
+                                            break;
+
+                                        case 2:
+                                            System.out.println("Regresando...");
+                                            break;
+                                    }
+                                    break;
+
+                                case 2:
+                                    Tablas.tablaViajesDisponiblesId(viajesDisponibles);
+                                    System.out.println("Ingrese el número del Viaje a cancelar: ");
+
+                                    int cancelar = obtenerEntradaValida(scanner, 1, viajesDisponibles.size());
+
+                                    Viaje viajeCancelar = viajesDisponibles.get(cancelar); 
+
+                                    System.out.println("¿Estás seguro de cancelar el viaje?");
+                                    Tablas.viajeIndividual(viajeCancelar);
+                                    System.out.println("1. SI");
+                                    System.out.println("2. NO");
+
+                                    int delete = obtenerEntradaValida(scanner, 1, 2);
+
+                                    switch (delete) {
+                                        case 1:
+                                            System.out.println("__________________________");
+                                            System.out.println("Resultado de la Operación: ");
+                                            System.out.println(Terminal.cancelarViaje(viajeCancelar));
+                                            System.out.println("__________________________");
+                                            System.out.println("Regresando...");
+                                            break;
+
+                                        case 2:
+                                            System.out.println("Regresando...");
+                                            break;
+
+                                        default:
+                                            System.out.println("Opción no válida. Por favor, marque números enteros del 1 al 2.");
+                                    }
+                                    break;
+
+                                case 3:
+                                    System.out.println("Regresando al menú de programación de viajes");
+                                    break;
+
+                                default:
+                                    System.out.println("Opción no válida. Por favor, marque números enteros del 1 al 3.");
+                            }
+                            break;
+
+                        case 2:
+                            System.out.println("Historial de Viajes: " + Terminal.getHistorial());
+                            ArrayList<Viaje> historialViaje = Terminal.getHistorial();
+                            Tablas.tablaViajesDisponiblesId(historialViaje);
+
+                            System.out.println("Desea interactuar con un viaje: ");
+                            System.out.println("1. SI");
+                            System.out.println("2: NO ");
+
+                            int decision = obtenerEntradaValida(scanner, 1, 2);
+
+                            if (decision == 2) {
+                                System.out.println("Regresando...");
+                                break;
+                            }
+
+                            if (decision == 1) {
+                                System.out.println("Introduce el N° del viaje: ");
+
+                                int reprogramar = obtenerEntradaValida(scanner, 0, historialViaje.size() - 1); // 0 al tamaño - 1
+
+                                Viaje viajeReprogramar = historialViaje.get(reprogramar);
+                                Tablas.viajeIndividual(viajeReprogramar);
+
+                                boolean permanencia = true;
+
+                                while (permanencia) {
+                                    System.out.println("Qué acción deseas Realizar: ");
+                                    System.out.println("1. Reprogramar el Viaje");
+                                    System.out.println("2. Consultar Facturación");
+                                    System.out.println("3. Ver lista de Pasajeros");
+                                    System.out.println("4. Regresar");
+
+                                    int historial = obtenerEntradaValida(scanner, 1, 4);
+
+                                    switch (historial) {
+                                        case 1:
+                                            System.out.println("Detalles: ");
+                                            Tablas.viajeIndividual(viajeReprogramar);
+                                            System.out.println("Se reprogramará un viaje con las condiciones del viaje seleccionado: ");
+
+                                            boolean permanencia1 = true;
+
+                                            while (permanencia1) {
+                                                // Selección nueva Fecha
+                                                System.out.println(Tiempo.mostrarTiempo());
+                                                ArrayList<String> fechasDisponibles = Terminal.fechasDisponibles();
+
+                                                System.out.println("Ingresa la Nueva fecha: ");
+                                                Tablas.tablaFechasDisponibles(fechasDisponibles);
+
+                                                System.out.println("Elige una fecha por número:");
+                                                int nuevafecha = obtenerEntradaValida(scanner, 1, fechasDisponibles.size());
+
+                                                String fechaNueva = fechasDisponibles.get(nuevafecha - 1); // -1 para ajustar al índice base cero
+                                                System.out.println("Has seleccionado la fecha: " + fechaNueva);
+
+                                                // Selección nueva Hora
+                                                System.out.println(Tiempo.mostrarTiempo());
+                                                System.out.println("Horas Disponibles");
+
+                                                ArrayList<String> horasDisponibles = Terminal.horasDisponibles(fechaNueva);
+
+                                                Tablas.tablaHorasDisponibles(horasDisponibles);
+
+                                                System.out.println("Elige una hora por número:");
+                                                int horaSeleccionada = obtenerEntradaValida(scanner, 1, horasDisponibles.size());
+
+                                                String hora = horasDisponibles.get(horaSeleccionada - 1); // -1 para ajustar al índice base cero
+                                                String horaCasteada = Tiempo.convertirHora(hora);
+                                                System.out.println("Has seleccionado la hora: " + hora);
+
+                                                Viaje a = Terminal.programarViaje(viajeReprogramar.getLlegada(), viajeReprogramar.getVehiculo().getTipo(), fechaNueva, horaCasteada, Destino.MEDELLIN);
+                                                if (a != null) {
+                                                    System.out.println("__________________________");
+                                                    System.out.println("* PROGRAMACIÓN EXITOSA *");
+                                                    System.out.println("__________________________\n");
+                                                    System.out.println(a.estado());
+                                                    System.out.println("__________________________");
+                                                    break;
+                                                } else {
+                                                    System.out.println("En el momento no se cuenta con Disponibilidad.");
+                                                    break;
+                                                }
+                                            }
+                                            break;
+                                        case 2:
+                                            System.out.print(viajeReprogramar.estado());
+                                            break;
+                                        case 3:
+                                            ArrayList<Pasajero> listaPersonasHistorial = viajeReprogramar.getPasajeros();
+                                            int j = 0;
+                                            if (listaPersonasHistorial != null) {
+                                                for (Pasajero p : listaPersonasHistorial) {
+                                                    System.out.println(j + ". " + p.getNombre());
+                                                    j++;
+                                                }
+                                            } else {
+                                                System.out.println("El viaje no tuvo pasajeros");
+                                            }
+                                            break;
+                                        case 4:
+                                            System.out.println("Regresando...");
+                                            permanencia = false;
+                                            break;
+                                        default:
+                                            System.out.println("Opción no válida. Por favor, elige un número del 1 al 4.");
+                                    }
+                                }
+                            }
+                    break;
+                    }
+                case 4:
+                    System.out.println("Regresando...");
+                    programar = false;
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+                    break;
+            }
+        }
+    }
+	
     
     // Desarrollar los metodos a partir de aqui
 	public static void vehiculosReparandoVendiendo (Transportadora transportadora) {
@@ -2204,6 +2736,30 @@ public static void facturacionYFinanzas() {
 			conductor.setVehiculo(vehiculos.get(option3-1));
 			System.out.println("Se ha vinculado el vehiculo con placa "+vehiculos.get(option3-1).getPlaca() +" al conductor "+conductor.getNombre());
     	}
-    } 
-	
+    }
+    
+    private static int obtenerEntradaValida(Scanner scanner, int min, int max) {
+        int opcion = -1;
+        while (opcion < min || opcion > max) {
+            try {
+                opcion = scanner.nextInt();
+                if (opcion < min || opcion > max) {
+                    System.out.println("Opción no válida. Por favor, elige un número del " + min + " al " + max);
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                scanner.next(); // Limpiar el buffer del scanner
+            }
+        }
+        return opcion;
+    }
+    
+	 private static void apagarTiempo() {
+		 for (Tiempo i : Tiempo.principal) {
+			 if (i != null) {
+				 System.out.println(i.cancel());
+			 }
+		 }
+	 }
+    
 }

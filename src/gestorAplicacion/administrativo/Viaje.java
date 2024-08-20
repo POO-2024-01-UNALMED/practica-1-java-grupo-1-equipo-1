@@ -219,23 +219,16 @@ public class Viaje implements Serializable {
           * @return Un "String" mensaje que permite validar el estado.
      */
     
-    public String validacion(Viaje viaje, ArrayList<Viaje> viajesEnCurso,  ArrayList<Viaje> viajes) {
-    	String cadena;
-    	if (Terminal.getViajes().contains(this)) {
-    		Terminal.getViajesEnCurso().add(this);
-    		this.setEstado(true);
-    		if (Terminal.getViajesEnCurso().contains(viaje)) {
-    			cadena = ("El viaje está en curso.");
-    			Terminal.getViajes().remove(this);
-    			return cadena;
-            } else {
-            	cadena = ("Viaje perdido");
-                return cadena;
-                }
+    public synchronized String validacion() {
+        if (!Terminal.getViajesEnCurso().contains(this)) {
+            Terminal.getViajesEnCurso().add(this);
+            this.setEstado(true);
+            this.getVehiculo().viaje((int)this.getDistancia());
+            Terminal.getViajes().remove(this);
+            return "El viaje está en curso.";
         } else {
-        	cadena = ("El viaje no está en curso.");
-            return cadena;
-            }
+            return "El viaje ya está en curso.";
+        }
     }
     
     /**
@@ -293,10 +286,10 @@ public class Viaje implements Serializable {
     	dia += dias;
 
     	if (dia > 30) {
-    		dia = 0;
+    		dia = 1;
     		mes++;
     		if (mes > 12) {
-    			mes = 0;
+    			mes = 1;
     			año++;
     		}
     		
@@ -338,7 +331,8 @@ public class Viaje implements Serializable {
 	       			 "Detalles del Viaje:\n" +
 	       			 "Salida: " + this.getSalida().name() + "\n" +
 	       			 "Llegada: " + this.getLlegada().name() + "\n" +
-	       			 "Fecha de salida: " + this.getFecha() + "\n" +
+	       			 "Fecha de Salida: " + this.getFecha() + "\n" +
+	       			 "Hora de Salida:: " + this.getHora() + "\n" + 
 	       			 "Vehiculo: " + this.getVehiculo().getModelo() + "\n" + 
 	       			 "Placa: " + this.getVehiculo().getPlaca() + "\n" +
 	       			 "Conductor: " + this.getConductor().getNombre() +  "\n" + 

@@ -131,7 +131,6 @@ public class Tiempo implements Serializable{
         return diasSemana[indiceDia];
     }
 	
-	
 	/**
 	 * 
 	 * @return fecha y hora en minutos
@@ -141,16 +140,33 @@ public class Tiempo implements Serializable{
 		return ((525600 * año) + (43800 * meses) + (10950 * semana) + (1440 + dias) + (60 * horas));
 	}
 	
+	/**
+	 * Convierte una hora en formato "HH:mm" a un formato en el que los minutos se redondean a la decena más cercana.
+	 *
+	 * La lógica es la siguiente:
+	 * 1. La hora se descompone en horas y minutos.
+	 * 2. Si los minutos son múltiplos de 10, se mantiene el valor original.
+	 * 3. Si los minutos no son múltiplos de 10, se redondea a la decena más cercana.
+	 *
+	 * @param hora La hora en formato "HH:mm" que se desea convertir.
+	 * @return La hora convertida en formato "HH:mm", redondeada a la decena más cercana de minutos.
+	 */
+	
+	public static String convertirHora(String hora) {
+        String[] partes = hora.split(":");
+        int horas = Integer.parseInt(partes[0]);
+        int minutos = Integer.parseInt(partes[1]);
+
+        return String.format("%d:%d", horas, minutos % 10 == 0 ? minutos / 10 : minutos);
+    }
+	
 	public String cancel() {  // Metodo necesario para frenar el tiempo al salir del programa
 		timer.cancel();
 		return "Fin del Tiempo";
 	}
 
-    public void iniciar() {
-        // Programar una tarea que se ejecute cada cierto intervalo de tiempo
+    public void iniciar() { // Programar una tarea que se ejecute cada cierto intervalo de tiempo
         timer.scheduleAtFixedRate(new TareaPeriodica(), 0, 1); // Tiempo de Iteraciones 1 Segundo = 1000 Milisegundos
-        
-        System.out.println("Inicio del Tiempo"); // -- -- --  --  -- Activar para saber si esta coriendo el Tiempo, o si se activo otra linea (Hilo). 
     }
 
     private class TareaPeriodica extends TimerTask {
@@ -168,18 +184,15 @@ public class Tiempo implements Serializable{
             //comprobarUbicacion(); // Solo para pruebas 
     		
     		// Comprobaciones y actualizaciones
-        	//comprobarViajes(Terminal.getViajes()); // Verifica el momento de salida de los viajes
-        	//comprobarViajesEnCurso(Terminal.getViajesEnCurso()); // Verifica el momento de llegada de los viajes
-    		//comprobarHora();
             
-//            mecanicosDisponibles(); // Define que mecanicos tienen vehiculos  por reparar
-//            verificarVehiculos(); // Verifica si la hora de la reparacion ya paso
-//            verificarVehiculosVenta(); //Verifica si ya paso la hora de venta de los vehiculos
-    		
-            
-        	//comprobarViajes(Terminal.viajes); // Verifica el momento de salida de los viajes
-        	//comprobarViajesEnCurso(Terminal.viajesEnCurso);
-         
+            // Viaje
+        	//comprobarViajes(); // Verifica el momento de salida de los viajes
+        	//comprobarViajesEnCurso(); // Verifica el momento de llegada de los viajes
+        	
+        	// Taller
+        	//mecanicosDisponibles(); // Define que mecanicos tienen vehiculos  por reparar
+        	//verificarVehiculos(); // Verifica si la hora de la reparacion ya paso
+        	//verificarVehiculosVenta(); //Verifica si ya paso la hora de venta de los vehiculos
 
         }
     	
@@ -246,29 +259,23 @@ public class Tiempo implements Serializable{
     	        }
     	    }
     	}
-	
-    	/**
-    	 * Revisa una lista de viajes y verifica si alguno de ellos coincide con la fecha y hora actuales.
-    	 * 
-    	 * Este método recorre la lista de viajes proporcionada y realiza las siguientes acciones:
-    	 * - Verifica si el viaje tiene la misma fecha que la fecha actual almacenada en `Tiempo.salidaFecha`.
-    	 * - Si la fecha coincide, también verifica si la hora del viaje coincide con la hora actual en `Tiempo.salidaHora`.
-    	 * - Si ambos coinciden, se considera que el viaje está próximo a salir,
-    	 *   y se llama al método `validacion` del viaje para realizar las acciones necesarias.
-    	 * 
-    	 * @param viajes Lista de objetos `Viaje` que se revisarán para encontrar viajes próximos a salir.
-    	 */
     	
-    	public static void comprobarViajes(ArrayList<Viaje> viajes) {
-            if (viajes != null) {
-            	for (int i = 0; i < viajes.size(); i++) {
-            		Viaje viaje = viajes.get(i);
-            		// System.out.println(viaje.getHora() + viaje.getFecha());
+    	/**
+    	 * Revisa todos los viajes programados en la terminal y valida aquellos que coincidan con la fecha y hora actuales.
+    	 *
+    	 * La lógica es la siguiente:
+    	 * 1. Se obtiene la lista de viajes desde la terminal.
+    	 * 2. Si la lista de viajes no es nula, se itera sobre cada viaje.
+    	 * 3. Para cada viaje, se compara la fecha y la hora del viaje con la fecha y hora actuales.
+    	 * 4. Si el viaje coincide con la fecha y hora actuales, se llama al método `validacion()` del viaje.
+    	 */
+    	public static void comprobarViajes() {
+            if (Terminal.getViajes() != null) {
+            	for (int i = 0; i < Terminal.getViajes().size(); i++) {
+            		Viaje viaje = Terminal.getViajes().get(i);
             		if (viaje.getFecha().equals(Tiempo.salidaFecha)) {
-            			//System.out.println("Viaje Próximo a Salir: " + viaje.getId());
             			if (viaje.getHora().equals(Tiempo.salidaHora)) {
-            				//System.out.println("\nEl viaje " + viaje.getId()+ " Salio a la: " + Tiempo.salidaHora);
-            				viaje.validacion(viaje, Terminal.getViajesEnCurso(), viajes);
+            				viaje.validacion();
             			}
             		}
             	}
@@ -276,26 +283,21 @@ public class Tiempo implements Serializable{
     	}
     	
     	/**
-    	 * Revisa una lista de viajes en curso para determinar si alguno ha llegado a su destino en la fecha y hora actuales.
-    	 * 
-    	 * Este método recorre la lista de viajes proporcionada y realiza las siguientes acciones:
-    	 * - Verifica si el viaje tiene la misma fecha que la fecha actual almacenada en `Tiempo.salidaFecha`.
-    	 * - Si la fecha coincide, también verifica si la hora de llegada del viaje coincide con la hora actual en `Tiempo.salidaHora`.
-    	 * - Si ambos coinciden, se considera que el viaje ha llegado a su destino, se imprime un mensaje en la consola 
-    	 *   y se llama al método `programacionAutomatica` del viaje para realizar las acciones necesarias de actualización.
-    	 * 
-    	 * @param viajes Lista de objetos `Viaje` que se revisarán para encontrar viajes que hayan llegado a su destino.
+    	 * Revisa todos los viajes en curso en la terminal y ejecuta la programación automática para aquellos que llegan a la hora actual.
+    	 *
+    	 * La lógica es la siguiente:
+    	 * 1. Se obtiene la lista de viajes en curso desde la terminal.
+    	 * 2. Si la lista de viajes en curso no es nula, se itera sobre cada viaje.
+    	 * 3. Para cada viaje, se compara la fecha y la hora de llegada del viaje con la fecha y hora actuales.
+    	 * 4. Si el viaje coincide con la fecha y hora actuales, se llama al método `programacionAutomatica()` del viaje.
     	 */
     	
-    	public static void comprobarViajesEnCurso(ArrayList<Viaje> viajes) {
-            if (viajes != null) {
-            	for (int i = 0; i < viajes.size(); i++) {
-            		Viaje viaje = viajes.get(i);
-            		// System.out.println(viaje.getHora() + viaje.getFecha());
+    	public static void comprobarViajesEnCurso() {
+            if (Terminal.getViajesEnCurso() != null) {
+            	for (int i = 0; i < Terminal.getViajesEnCurso().size(); i++) {
+            		Viaje viaje = Terminal.getViajesEnCurso().get(i);
             		if (viaje.getFecha().equals(Tiempo.salidaFecha)) {
-            			//System.out.println("Viaje Próximo a Salir: " + viaje.getId());
             			if (viaje.getHoraLlegada().equals(Tiempo.salidaHora)) {
-            				//System.out.println("\nEl viaje " + viaje.getId()+ "Llego a la: " + Tiempo.salidaHora);
             				viaje.programacionAutomatica();
             			}
             		}
@@ -364,7 +366,7 @@ public class Tiempo implements Serializable{
     	 * 
     	 */
     	private static void calcularSalidaHora(){
-    		Tiempo.salidaHora = (Tiempo.horas + ":" + (Tiempo.minutos+1));
+    		Tiempo.salidaHora = (Tiempo.horas + ":" + (Tiempo.minutos));
     	}
     	/**
     	 * Calcula la fecha de salida basándose en la hora y minutos actuales.

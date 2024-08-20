@@ -355,6 +355,106 @@ public interface Tablas {
         // Imprimir el borde inferior de la tabla
         System.out.println("-".repeat(tablaAncho));
     }
-    	
+    
+    public static void tablaHorasDisponibles(ArrayList <String> fechas) {    
+        int anchoOpcion = 10; // Ancho reservado para la columna de opciones
+        int anchoFecha = 15;  // Ancho reservado para la columna de fechas
+        int anchoTotal = anchoOpcion + anchoFecha + 7; // Ancho total de la tabla 
+
+        // Imprimir cabecera de la tabla
+        System.out.println("-".repeat(anchoTotal));
+        System.out.printf("| %-"+anchoOpcion+"s | %-"+anchoFecha+"s |\n", "OPCION", "HORA");
+        System.out.println("-".repeat(anchoTotal));
+        
+        // Imprimir fechas con numeración
+        int i = 1;
+        for (String fecha : fechas) {
+            System.out.printf("| %-"+anchoOpcion+"d | %-"+anchoFecha+"s |\n", i, fecha);
+            i++;
+        }
+
+        // Imprimir línea final de la tabla
+        System.out.println("-".repeat(anchoTotal));
+    }
+    
+    public static void tablaViajesDisponiblesId(ArrayList<Viaje> viajes) {
+        int anchoId = 5;
+        int anchoLlegada = 15;
+        int anchoFecha = 15;
+        int anchoHora = 10;
+        int anchoDia = 10;
+        int anchoTransportadora = 20;
+        int anchoAsientos = 10;
+        int anchoTotal = anchoId + anchoLlegada + anchoFecha + anchoHora + anchoDia + anchoTransportadora + anchoAsientos + 22; 
+
+        System.out.println("-".repeat(anchoTotal));
+        System.out.printf("| %-"+anchoId+"s | %-"+anchoLlegada+"s | %-"+anchoFecha+"s | %-"+anchoHora+"s | %-"+anchoDia+"s | %-"+anchoTransportadora+"s | %-"+anchoAsientos+"s |\n",
+                "N°", "LLEGADA", "FECHA", "HORA", "DIA", "TRANSPORTADORA", "ASIENTOS");
+        System.out.println("-".repeat(anchoTotal));
+        
+        int i = 0;
+        for (Viaje viaje : viajes) {
+            String transportadoraNombre = viaje.getTransportadora() != null ? viaje.getTransportadora().getNombre() : "N/A";
+            System.out.printf("| %-"+anchoId+"d | %-"+anchoLlegada+"s | %-"+anchoFecha+"s | %-"+anchoHora+"s | %-"+anchoDia+"s | %-"+anchoTransportadora+"s | %-"+anchoAsientos+"d |\n",
+                    i, viaje.getLlegada(), viaje.getFecha(), viaje.getHora(), viaje.getDia(), transportadoraNombre, viaje.getAsientosDisponibles());
+            i++;
+        }
+
+        System.out.println("-".repeat(anchoTotal));
+    }
+    
+    public static void viajeIndividual(Viaje viaje) {
+        int anchoId = 5;
+        int anchoLlegada = 15;
+        int anchoFecha = 15;
+        int anchoHora = 10;
+        int anchoDia = 10;
+        int anchoTransportadora = 20;
+        int anchoAsientos = 10;
+        int anchoTotal = anchoId + anchoLlegada + anchoFecha + anchoHora + anchoDia + anchoTransportadora + anchoAsientos + 22; // Total width of the table
+
+        // Print table header
+        System.out.println("-".repeat(anchoTotal));
+        System.out.printf("| %-"+anchoId+"s | %-"+anchoLlegada+"s | %-"+anchoFecha+"s | %-"+anchoHora+"s | %-"+anchoDia+"s | %-"+anchoTransportadora+"s | %-"+anchoAsientos+"s |\n",
+                "ID", "LLEGADA", "FECHA", "HORA", "DIA", "TRANSPORTADORA", "ASIENTOS");
+        System.out.println("-".repeat(anchoTotal));
+
+        String transportadoraNombre = viaje.getTransportadora() != null ? viaje.getTransportadora().getNombre() : "N/A";
+        System.out.printf("| %-"+anchoId+"d | %-"+anchoLlegada+"s | %-"+anchoFecha+"s | %-"+anchoHora+"s | %-"+anchoDia+"s | %-"+anchoTransportadora+"s | %-"+anchoAsientos+"d |\n",
+        viaje.getId(), viaje.getLlegada(), viaje.getFecha(), viaje.getHora(), viaje.getDia(), transportadoraNombre, viaje.getAsientosDisponibles());
+
+
+        // Print table footer
+        System.out.println("-".repeat(anchoTotal));
+    }
+    
+    // Tabla Viajes disponibles
+    
+    public static void tablaViajesDisponibles(ArrayList<Viaje> viajes) {
+        int anchoId = 5;
+        int anchoLlegada = 15;
+        int anchoFecha = 15;
+        int anchoHora = 10;
+        int anchoDia = 10;
+        int anchoTransportadora = 20;
+        int anchoAsientos = 10;
+        int anchoTotal = anchoId + anchoLlegada + anchoFecha + anchoHora + anchoDia + anchoTransportadora + anchoAsientos + 22; // Total width of the table
+
+        // Print table header
+        System.out.println("-".repeat(anchoTotal));
+        System.out.printf("| %-"+anchoId+"s | %-"+anchoLlegada+"s | %-"+anchoFecha+"s | %-"+anchoHora+"s | %-"+anchoDia+"s | %-"+anchoTransportadora+"s | %-"+anchoAsientos+"s |\n",
+                "ID", "LLEGADA", "FECHA", "HORA", "DIA", "TRANSPORTADORA", "ASIENTOS");
+        System.out.println("-".repeat(anchoTotal));
+        
+        // Print each viaje
+        for (Viaje viaje : viajes) {
+            String transportadoraNombre = viaje.getTransportadora() != null ? viaje.getTransportadora().getNombre() : "N/A";
+            System.out.printf("| %-"+anchoId+"d | %-"+anchoLlegada+"s | %-"+anchoFecha+"s | %-"+anchoHora+"s | %-"+anchoDia+"s | %-"+anchoTransportadora+"s | %-"+anchoAsientos+"d |\n",
+                    viaje.getId(), viaje.getLlegada(), viaje.getFecha(), viaje.getHora(), viaje.getDia(), transportadoraNombre, viaje.getAsientosDisponibles());
+        }
+
+        // Print table footer
+        System.out.println("-".repeat(anchoTotal));
+    }
     
 }
