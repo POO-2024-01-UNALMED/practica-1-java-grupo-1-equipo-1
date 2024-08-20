@@ -166,7 +166,7 @@ public class Tiempo implements Serializable{
 	}
 
     public void iniciar() { // Programar una tarea que se ejecute cada cierto intervalo de tiempo
-        timer.scheduleAtFixedRate(new TareaPeriodica(), 0, 100); // Tiempo de Iteraciones 1 Segundo = 1000 Milisegundos
+        timer.scheduleAtFixedRate(new TareaPeriodica(), 0, 10); // Tiempo de Iteraciones 1 Segundo = 1000 Milisegundos
     }
 
     private class TareaPeriodica extends TimerTask {
@@ -274,6 +274,9 @@ public class Tiempo implements Serializable{
             	for (int i = 0; i < Terminal.getViajes().size(); i++) {
             		Viaje viaje = Terminal.getViajes().get(i);
             		if (viaje.getFecha().equals(Tiempo.salidaFecha)) {
+        				if (viaje.getPasajeros().isEmpty()) {
+        					viaje.asignarPasajerosAViaje(Terminal.getPasajerosSinViajes());
+        				}
             			if (viaje.getHora().equals(Tiempo.salidaHora)) {
             				viaje.validacion();
             			}

@@ -52,6 +52,7 @@ public class Deserializador {
 		Deserializador.deserializar(Terminal.getViajes(), "viajesDisponibles");        // VIAJES SIN SALIR - DISPONIBLES
 		Deserializador.deserializar(Terminal.getReservas(), "reservas");              // VIAJES EN RESERVA
 		Deserializador.deserializar(Terminal.getFacturas(), "facturas");              // FACTURAS ASOCIADAS
+		Deserializador.deserializar(Terminal.getPasajerosSinViajes(), "pasajeros");  // PASAJEROS
 		Deserializador.deserializar(Tiempo.principal, "tiempoObjetos");              // OBJETOS TIEMPO - PERMITE GUARDAR EL PROGRESO DEL TIEMPO
 		Deserializador.deserializar(Persona.getSerializarPersonas(), "personas");   // OBJETOS TIPO PERSONA
 		Deserializador.deserializar(Factura.getFacturasCreadas(), "facturas");     // OBJETOS TIPO FACTURA

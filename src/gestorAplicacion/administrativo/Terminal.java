@@ -1059,4 +1059,10 @@ public static void setHistorial(ArrayList <Viaje> historial) {
 		
 	}
 	
+	public static void setPasajerosSinViajes(ArrayList <Pasajero> pasajero) {
+
+		Terminal.pasajeros = pasajero;
+
+	}
+	
 }

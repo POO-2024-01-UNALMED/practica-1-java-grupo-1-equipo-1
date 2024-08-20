@@ -2364,6 +2364,7 @@ public static void facturacionYFinanzas() {
                                                     System.out.println(j + ". " + p.getNombre());
                                                     j++;
                                                 }
+                                                System.out.println("__________________________\n");
                                             } else {
                                                 System.out.println("El viaje no tuvo pasajeros");
                                             }

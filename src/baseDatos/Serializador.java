@@ -51,6 +51,7 @@ public class Serializador {
 	    Serializador.serializar(Terminal.getViajes(), "viajesDisponibles");             // VIAJES SIN SALIR - DISPONIBLES
 	    Serializador.serializar(Terminal.getReservas(), "reservas");                   // VIAJES EN RESERVA
 	    Serializador.serializar(Terminal.getFacturas(), "facturas");               // FACTURAS ASOCIADAS
+	    Serializador.serializar(Terminal.getPasajerosSinViajes(), "pasajeros");    // PASAJEROS
 	    Serializador.serializar(Tiempo.principal, "tiempoObjetos");               // OBJETOS TIEMPO - PERMITE GUARDAR EL PROGRESO DEL TIEMPO
 	    Serializador.serializar(Persona.getSerializarPersonas(), "personas");    // OBJETOS TIPO PERSONA
 	    Serializador.serializar(Factura.getFacturasCreadas(), "facturas");      // OBJETOS TIPO FACTURA
@@ -958,11 +959,15 @@ public class Serializador {
 				
 				
 				//pasajeros tipo VIP(80)
-				new Pasajero(TipoPasajero.VIP, 100001, 34, "Luis Martinez", 'M');
-				new Pasajero(TipoPasajero.VIP, 100002, 45, "Ana Gomez", 'F');
-				new Pasajero(TipoPasajero.VIP, 100003, 29, "Carlos Perez", 'M');
-				new Pasajero(TipoPasajero.VIP, 100004, 53, "Maria Lopez", 'F');
-				new Pasajero(TipoPasajero.VIP, 100005, 38, "Juan Fernandez", 'M');
+        						
+        		ArrayList<Pasajero> listaPasajeros = new ArrayList<>();
+        						
+        						
+				Pasajero a4 = new Pasajero(TipoPasajero.VIP, 100001, 34, "Luis Martinez", 'M');
+				Pasajero b4 =new Pasajero(TipoPasajero.VIP, 100002, 45, "Ana Gomez", 'F');
+				Pasajero c4 =new Pasajero(TipoPasajero.VIP, 100003, 29, "Carlos Perez", 'M');
+				Pasajero d4 =new Pasajero(TipoPasajero.VIP, 100004, 53, "Maria Lopez", 'F');
+				Pasajero e4 =new Pasajero(TipoPasajero.VIP, 100005, 38, "Juan Fernandez", 'M');
 				new Pasajero(TipoPasajero.VIP, 100006, 42, "Laura Sanchez", 'F');
 				new Pasajero(TipoPasajero.VIP, 100007, 26, "Andres Ramirez", 'M');
 				new Pasajero(TipoPasajero.VIP, 100008, 49, "Carmen Castro", 'F');
@@ -1041,11 +1046,11 @@ public class Serializador {
 				
 				// Estudiante
 
-				new Pasajero(TipoPasajero.ESTUDIANTE, 200005, 22, "Laura Rodríguez", 'F');
-				new Pasajero(TipoPasajero.ESTUDIANTE, 200006, 23, "Javier Fernández", 'M');
-				new Pasajero(TipoPasajero.ESTUDIANTE, 200007, 24, "Isabel Fernández", 'F');
-				new Pasajero(TipoPasajero.ESTUDIANTE, 200008, 25, "Pedro Gómez", 'M');
-				new Pasajero(TipoPasajero.ESTUDIANTE, 200009, 26, "Sofía Martínez", 'F');
+				Pasajero a1 = new Pasajero(TipoPasajero.ESTUDIANTE, 200005, 22, "Laura Rodríguez", 'F');
+				Pasajero b1= new Pasajero(TipoPasajero.ESTUDIANTE, 200006, 23, "Javier Fernández", 'M');
+				Pasajero c1= new Pasajero(TipoPasajero.ESTUDIANTE, 200007, 24, "Isabel Fernández", 'F');
+				Pasajero d1= new Pasajero(TipoPasajero.ESTUDIANTE, 200008, 25, "Pedro Gómez", 'M');
+				Pasajero e1= new Pasajero(TipoPasajero.ESTUDIANTE, 200009, 26, "Sofía Martínez", 'F');
 				new Pasajero(TipoPasajero.ESTUDIANTE, 200010, 27, "Alejandro Torres", 'M');
 				new Pasajero(TipoPasajero.ESTUDIANTE, 200011, 28, "Elena Moreno", 'F');
 				new Pasajero(TipoPasajero.ESTUDIANTE, 200012, 29, "Francisco García", 'M');
@@ -1127,11 +1132,11 @@ public class Serializador {
 
 				// Pasajero regular
 
-				new Pasajero(TipoPasajero.REGULAR, 300301, 25, "Luis Fernández", 'M');
-				new Pasajero(TipoPasajero.REGULAR, 300302, 26, "Valeria Gómez", 'F');
-				new Pasajero(TipoPasajero.REGULAR, 300303, 27, "Alejandro Pérez", 'M');
-				new Pasajero(TipoPasajero.REGULAR, 300304, 28, "Catalina Ruiz", 'F');
-				new Pasajero(TipoPasajero.REGULAR, 300305, 29, "Ricardo Martínez", 'M');
+				Pasajero a2 = new Pasajero(TipoPasajero.REGULAR, 300301, 25, "Luis Fernández", 'M');
+				Pasajero b2 = new Pasajero(TipoPasajero.REGULAR, 300302, 26, "Valeria Gómez", 'F');
+				Pasajero c2 = new Pasajero(TipoPasajero.REGULAR, 300303, 27, "Alejandro Pérez", 'M');
+				Pasajero d2 = new Pasajero(TipoPasajero.REGULAR, 300304, 28, "Catalina Ruiz", 'F');
+				Pasajero e2 = new Pasajero(TipoPasajero.REGULAR, 300305, 29, "Ricardo Martínez", 'M');
 				new Pasajero(TipoPasajero.REGULAR, 300306, 30, "Laura Ramírez", 'F');
 				new Pasajero(TipoPasajero.REGULAR, 300307, 31, "Jorge López", 'M');
 				new Pasajero(TipoPasajero.REGULAR, 300308, 32, "Gabriela Torres", 'F');
@@ -1217,11 +1222,11 @@ public class Serializador {
 
 				// Pasajeros discapacitados 
 
-				new Pasajero(TipoPasajero.DISCAPACITADO, 400218, 47, "Laura Fernández", 'F');
-				new Pasajero(TipoPasajero.DISCAPACITADO, 400219, 48, "Óscar Pérez", 'M');
-				new Pasajero(TipoPasajero.DISCAPACITADO, 400220, 49, "Sofía Gómez", 'F');
-				new Pasajero(TipoPasajero.DISCAPACITADO, 400221, 50, "Santiago Ramírez", 'M');
-				new Pasajero(TipoPasajero.DISCAPACITADO, 400222, 51, "María José", 'F');
+				Pasajero a3 = new Pasajero(TipoPasajero.DISCAPACITADO, 400218, 47, "Laura Fernández", 'F');
+				Pasajero b3 = new Pasajero(TipoPasajero.DISCAPACITADO, 400219, 48, "Óscar Pérez", 'M');
+				Pasajero c3 = new Pasajero(TipoPasajero.DISCAPACITADO, 400220, 49, "Sofía Gómez", 'F');
+				Pasajero d3 = new Pasajero(TipoPasajero.DISCAPACITADO, 400221, 50, "Santiago Ramírez", 'M');
+				Pasajero e3 = new Pasajero(TipoPasajero.DISCAPACITADO, 400222, 51, "María José", 'F');
 				new Pasajero(TipoPasajero.DISCAPACITADO, 400223, 52, "Felipe Ruiz", 'M');
 				new Pasajero(TipoPasajero.DISCAPACITADO, 400224, 53, "Diana Morales", 'F');
 				new Pasajero(TipoPasajero.DISCAPACITADO, 400225, 54, "Mateo Martínez", 'M');
@@ -1291,6 +1296,29 @@ public class Serializador {
 				new Pasajero(TipoPasajero.DISCAPACITADO, 400289, 118, "Sofía Ramírez", 'F');
 				new Pasajero(TipoPasajero.DISCAPACITADO, 400290, 119, "Óscar González", 'M');
 				new Pasajero(TipoPasajero.DISCAPACITADO, 400291, 120, "Gabriela Ramírez", 'F');
+				
+				listaPasajeros.add(a4);
+				listaPasajeros.add(b4);
+				listaPasajeros.add(c4);
+				listaPasajeros.add(d4);
+				listaPasajeros.add(e4);
+				listaPasajeros.add(a1);
+				listaPasajeros.add(b1);
+				listaPasajeros.add(c1);
+				listaPasajeros.add(d1);
+				listaPasajeros.add(e1);
+				listaPasajeros.add(a2);
+				listaPasajeros.add(b2);
+				listaPasajeros.add(c2);
+				listaPasajeros.add(d2);
+				listaPasajeros.add(e2);
+				listaPasajeros.add(a3);
+				listaPasajeros.add(b3);
+				listaPasajeros.add(c3);
+				listaPasajeros.add(d3);
+				listaPasajeros.add(e3);
+				
+				Terminal.setPasajerosSinViajes(listaPasajeros);
 				
 				
 				//Viajes
