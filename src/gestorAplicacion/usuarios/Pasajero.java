@@ -132,7 +132,7 @@ public class Pasajero extends Persona{
 		 double dineroTransportadora = this.getViaje().getVehiculo().getTransportadora().getDinero();
 		 double descuento = cantidad*(this.getViaje().getTarifa()-(this.getViaje().getTarifa() * this.getTipo().getDescuento()));
 		 this.getViaje().getVehiculo().getTransportadora().setDinero(dineroTransportadora - (this.getViaje().getTarifa() * this.getTipo().getDescuento()));
-		 this.setDinero(this.getDinero()- descuento);	 
+		 this.setDinero(this.getDinero()-descuento);	 
 	}
 	
 	public double obtenerValorDescontado() {
