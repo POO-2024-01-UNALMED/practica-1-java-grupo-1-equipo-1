@@ -544,11 +544,13 @@ public class Main_Principal {
 	                double valorTotal = pasajero.getDinero()*cantidad;
 	                System.out.println("\nValor a pagar: "+ valorTotal);
 	                System.out.println("\nIngrese su dinero");
+	                pasajero.setDinero(valorTotal);
+	                pasajero.setViaje(viajeSeleccionado);
 	                double dinero = scanner.nextDouble();
 	                scanner.nextLine();
 	                if (dinero>=valorTotal) {
 	                	
-	                	pasajero.descuento(viajeSeleccionado);
+	                	pasajero.descuento();
 	                	
 	                	for (int i = 0; i<cantidad;i++) {
 	                		viajeSeleccionado.getPasajeros().add(pasajero);

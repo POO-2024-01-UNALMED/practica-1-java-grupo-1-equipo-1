@@ -83,10 +83,10 @@ public class Viaje implements Serializable {
     }
     
     /**
-     * Método para asignarle pasajeros a un viaje aleatoria mente
+     * Método para asignarle pasajeros a un viaje aleatoriamente 
      * @param pasajeros
      */
-    
+
     public void asignarPasajerosAViaje(ArrayList<Pasajero> pasajeros) {
         Random random = new Random();
         double dineroTotal = 0;
