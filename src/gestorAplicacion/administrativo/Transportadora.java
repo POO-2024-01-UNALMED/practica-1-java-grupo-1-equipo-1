@@ -708,7 +708,7 @@ public class Transportadora implements Incentivo, Serializable {
 					continue;
 				}
 				viajesDisponibles.add(viaje);
-				mensaje += viaje.detallesViaje();
+				mensaje += "\n" + viaje.detallesViaje();
 			}
 		}
 		
