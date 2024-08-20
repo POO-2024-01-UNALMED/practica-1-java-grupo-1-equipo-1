@@ -103,22 +103,22 @@ public class Terminal implements Serializable{
 	
 	public static ArrayList<Transportadora> transportadorasViajeDisponible(Destino destinoDeseado, ArrayList<Viaje> listaViajes) {
 		ArrayList <Transportadora> transportadorasConDestino = new ArrayList<>();
-	    for (Viaje viaje : listaViajes) {
-	        if (viaje != null
-	        		
-	        		&& viaje.getTransportadora() != null
-	        		&& viaje.getLlegada().name().equals(destinoDeseado)) {
-	        	
-	            Transportadora transportadora = viaje.getTransportadora();
-	            
-	            if (!transportadorasConDestino.contains(transportadora)) {
-	            	transportadorasConDestino.add(transportadora);
-	            }
-	        }
-	    }
-	    
-	    return transportadorasConDestino;
-	}
+	for (Viaje viaje : listaViajes) {
+		if (viaje != null
+		
+		&& viaje.getTransportadora() != null
+		&& viaje.getLlegada().name().equals(destinoDeseado)) {
+			
+	Transportadora transportadora = viaje.getTransportadora();
+			
+	if (!transportadorasConDestino.contains(transportadora)) {
+		transportadorasConDestino.add(transportadora);
+		}
+		}
+		}
+	
+		return transportadorasConDestino;
+		}
 	
 	public static ArrayList<Transportadora> obtenerTransportadorasUnicas(ArrayList<Viaje> viajes) {
 	    // Utilizamos un Set para evitar duplicados

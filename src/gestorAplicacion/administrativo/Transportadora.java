@@ -63,10 +63,10 @@ public class Transportadora implements Incentivo, Serializable {
 	}
 	
 	public Transportadora(String nombre, double dinero, ArrayList<Conductor> conductores, ArrayList<Pasajero> pasajeros, ArrayList<Vehiculo> vehiculos, ArrayList<Viaje> viajesAsignados, Destino destinoAsignado, Terminal terminal, Taller taller,
-			  ArrayList<Destino> destinos, ArrayList<Viaje> viajesTerminados,Persona dueño, double estrellas) {
 		
+		ArrayList<Destino> destinos, ArrayList<Viaje> viajesTerminados,Persona dueño, double estrellas) {
 		this (nombre, dinero, conductores, pasajeros, vehiculos, viajesAsignados, destinoAsignado, terminal, destinos, viajesTerminados, dueño, estrellas);
-				  
+				
 
 
 

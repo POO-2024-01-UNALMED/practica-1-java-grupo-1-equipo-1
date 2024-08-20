@@ -75,9 +75,7 @@ public class Pasajero extends Persona{
 	@Override
 	public String identificarse() {
 		
-		// Implementación pendiente
-		
-		return null;
+		return "mi nombre es " + this.getNombre() + " Soy un pasajero de tipo : " + this.getTipo() + " y estoy en el viaje con id: " + this.getViaje().getId();
 	}
 	
 	

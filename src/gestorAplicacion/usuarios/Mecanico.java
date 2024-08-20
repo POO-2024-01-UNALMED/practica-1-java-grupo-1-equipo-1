@@ -89,11 +89,8 @@ public class Mecanico extends Persona{
 	@Override
 	public String identificarse() {
 		
-		// Implementación pendiente
-		
-		
-		
-		return null;
+
+		return "Soy un mecánico, mi nombre es " + this.getNombre() + " , estoy asociado al taller " + this.getTaller().getNombre() + " mi estado es " + this.getEstado();
 	
 	}
 	

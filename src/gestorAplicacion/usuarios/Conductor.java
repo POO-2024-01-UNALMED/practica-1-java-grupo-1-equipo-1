@@ -195,10 +195,8 @@ public class Conductor extends Persona {
 	
 	@Override
 	public String identificarse() {
-		
-		// Implementación pendiente
-		
-		return null;
+	
+		return "Soy un conductor, mi nombre es " + this.getNombre() + " mi estado de licencia es " + this.getEstadoLicencia() + " y estoy asociado a la transportadora " + this.getTransportadora().getNombre();
 	}
 	
 	
