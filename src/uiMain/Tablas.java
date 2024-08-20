@@ -144,7 +144,7 @@ public interface Tablas {
     
     public static void tablaFactura(Viaje viaje, Pasajero pasajero, int cantidad) {
         // Calcular el total
-        double total = viaje.getTarifa() * cantidad;
+        double total = pasajero.getDinero();
         
         // Definir el ancho de las columnas
         final int ANCHO = 50;
@@ -160,7 +160,7 @@ public interface Tablas {
         System.out.printf("| %-"+ ANCHO +"s |\n", "ID Viaje: " + viaje.getId());
         System.out.printf("| %-"+ ANCHO +"s |\n", "Destino: " + viaje.getLlegada());
         System.out.printf("| %-"+ ANCHO +"s |\n", "Asientos " + cantidad);
-        System.out.printf("| %-"+ ANCHO +"s |\n", "Tipo vehiculo " + viaje.getVehiculo().getTipo());
+        System.out.printf("| %-"+ ANCHO +"s |\n", "Tipo vehiculo " + viaje.getVehiculo().getTipo().name());
         System.out.printf("| %-"+ ANCHO +"s |\n", "Hora: " + viaje.getHora());
         System.out.printf("| %-"+ ANCHO +"s |\n", "Tarifa Total: $" + String.format("%.2f", total));
         System.out.printf("| %-"+ ANCHO +"s |\n", "Fecha: " + viaje.getFecha());

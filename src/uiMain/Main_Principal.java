@@ -540,11 +540,13 @@ public class Main_Principal {
 	                System.out.println("\nIngrese su género");
 	                char genero = scanner.next().charAt(0);
 	                Pasajero pasajero = Pasajero.nuevoPasajero(tipo, id, edad, nombre, genero);
+	                double valorTotal = viajeSeleccionado.getTarifa()*cantidad;
+	                pasajero.setDinero(valorTotal);
+	                pasajero.descuento();//solo se esta pasando a la transportadora el dinero de un pasaje
 	                
-	                double valorTotal = pasajero.getDinero()*cantidad;
 	                System.out.println("\nValor a pagar: "+ valorTotal);
 	                System.out.println("\nIngrese su dinero");
-	                pasajero.setDinero(valorTotal);
+	                
 	                pasajero.setViaje(viajeSeleccionado);
 	                double dinero = scanner.nextDouble();
 	                scanner.nextLine();

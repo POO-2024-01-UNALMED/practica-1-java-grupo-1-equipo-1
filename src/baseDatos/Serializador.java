@@ -1296,60 +1296,60 @@ public class Serializador {
 
 
 				//Transportadora1
-								lista.add(new Viaje(terminal, "8:0", "3/1/2024", vehiculo1, conductor1, Destino.CARTAGENA, Destino.MEDELLIN));
-								lista.add(new Viaje(terminal, "10:0", "5/1/2024", vehiculo2, conductor3, Destino.BARRANQUILLA, Destino.MEDELLIN));
-								lista.add(new Viaje(terminal, "12:0", "7/1/2024", vehiculo3, conductor7, Destino.BELLO, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "8:0", "3/1/2024", conductor1.getVehiculo(), conductor1, Destino.CARTAGENA, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "10:0", "5/1/2024", conductor3.getVehiculo(), conductor3, Destino.BARRANQUILLA, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "12:0", "7/1/2024", conductor7.getVehiculo(), conductor7, Destino.BELLO, Destino.MEDELLIN));
 
-								Viaje a = new Viaje(terminal, "14:0", "14/1/2024", vehiculo4, conductor9, Destino.SANTAMARTA, Destino.MEDELLIN);
+								Viaje a = new Viaje(terminal, "14:0", "14/1/2024", conductor9.getVehiculo(), conductor9, Destino.SANTAMARTA, Destino.MEDELLIN);
 								lista.add(a);
 								reservas.add(a);
 
 
 								//Transportadora2
-								lista.add(new Viaje(terminal, "8:30", "3/1/2024", vehiculo11, conductor21, Destino.GUARNE, Destino.MEDELLIN));
-								lista.add(new Viaje(terminal, "10:30", "5/1/2024", vehiculo12, conductor23, Destino.LAPINTADA, Destino.MEDELLIN));
-								lista.add(new Viaje(terminal, "12:30", "7/1/2024", vehiculo14, conductor27, Destino.GUATAPE, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "8:30", "3/1/2024", conductor21.getVehiculo(), conductor21, Destino.GUARNE, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "10:30", "5/1/2024", conductor23.getVehiculo(), conductor23, Destino.LAPINTADA, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "12:30", "7/1/2024", conductor27.getVehiculo(), conductor27, Destino.GUATAPE, Destino.MEDELLIN));
 
-								Viaje b = new Viaje(terminal, "14:30", "18/1/2024", conductor26.getVehiculo(), conductor29, Destino.BARBOSA, Destino.MEDELLIN);
+								Viaje b = new Viaje(terminal, "14:30", "18/1/2024", conductor29.getVehiculo(), conductor29, Destino.BARBOSA, Destino.MEDELLIN);
 								lista.add(b);
 								reservas.add(b);
 
 								//Transportadora3
-								lista.add(new Viaje(terminal, "19:0", "12/1/2024", vehiculo21, conductor41, Destino.CALI, Destino.MEDELLIN));
-								lista.add(new Viaje(terminal, "10:0", "15/1/2024", vehiculo21, conductor43, Destino.ITAGUI, Destino.MEDELLIN));
-								lista.add(new Viaje(terminal, "13:0", "16/1/2024", vehiculo21, conductor45, Destino.ENVIGADO, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "19:0", "12/1/2024", conductor41.getVehiculo(), conductor41, Destino.CALI, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "10:0", "15/1/2024", conductor43.getVehiculo(), conductor43, Destino.ITAGUI, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "13:0", "16/1/2024", conductor45.getVehiculo(), conductor45, Destino.ENVIGADO, Destino.MEDELLIN));
 
-								Viaje c = new Viaje(terminal, "9:0", "1/2/2024", vehiculo21, conductor47, Destino.MARINILLA, Destino.MEDELLIN);
+								Viaje c = new Viaje(terminal, "9:0", "1/2/2024", conductor47.getVehiculo(), conductor47, Destino.MARINILLA, Destino.MEDELLIN);
 								lista.add(c);
 								reservas.add(c);
 
 
 
 								//Transportadora4
-								lista.add(new Viaje(terminal, "11:0", "1/2/2024", vehiculo31, conductor61, Destino.GIRARDOTA, Destino.MEDELLIN));
-								lista.add(new Viaje(terminal, "9:0", "1/2/2024", vehiculo21, conductor63, Destino.RIONEGRO, Destino.MEDELLIN));
-								lista.add(new Viaje(terminal, "9:0", "1/3/2024", vehiculo21, conductor65, Destino.BOGOTA, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "11:0", "1/2/2024", conductor61.getVehiculo(), conductor61, Destino.GIRARDOTA, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "9:0", "1/2/2024", conductor63.getVehiculo(), conductor63, Destino.RIONEGRO, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "9:0", "1/3/2024", conductor65.getVehiculo(), conductor65, Destino.BOGOTA, Destino.MEDELLIN));
 
-								Viaje d = new Viaje(terminal, "9:0", "1/3/2024", vehiculo21, conductor69, Destino.LAESTRELLA, Destino.MEDELLIN);
+								Viaje d = new Viaje(terminal, "9:0", "1/3/2024", conductor69.getVehiculo(), conductor69, Destino.LAESTRELLA, Destino.MEDELLIN);
 								lista.add(d);
 								reservas.add(d);
 
 
 								//Transportadora5
-								lista.add(new Viaje(terminal, "13:0", "1/3/2024", vehiculo41, conductor81, Destino.BUENAVENTURA, Destino.MEDELLIN));
-								lista.add(new Viaje(terminal, "9:25", "12/3/2024", vehiculo21, conductor83, Destino.BUCARAMANGA, Destino.MEDELLIN));
-								lista.add(new Viaje(terminal, "9:30", "2/3/2024", vehiculo21, conductor85, Destino.ANGELOPOLIS, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "13:0", "1/3/2024", conductor81.getVehiculo(), conductor81, Destino.BUENAVENTURA, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "9:25", "12/3/2024", conductor83.getVehiculo(), conductor83, Destino.BUCARAMANGA, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "9:30", "2/3/2024", conductor85.getVehiculo(), conductor85, Destino.ANGELOPOLIS, Destino.MEDELLIN));
 
-								Viaje e = new Viaje(terminal, "10:0", "10/4/2024", vehiculo21, conductor87, Destino.COOPACABANA, Destino.MEDELLIN);
+								Viaje e = new Viaje(terminal, "10:0", "10/4/2024", conductor87.getVehiculo(), conductor87, Destino.COOPACABANA, Destino.MEDELLIN);
 								lista.add(e);
 								reservas.add(e);
 
 								//Transportadora6
-								lista.add(new Viaje(terminal, "19:0", "1/4/2024", vehiculo21, conductor101, Destino.SANTAMARTA, Destino.MEDELLIN));
-								lista.add(new Viaje(terminal, "20:0", "10/5/2024", vehiculo21, conductor103, Destino.BARRANQUILLA, Destino.MEDELLIN));
-								lista.add(new Viaje(terminal, "14:0", "14/4/2024", vehiculo21, conductor107, Destino.CALI, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "19:0", "1/4/2024", conductor101.getVehiculo(), conductor101, Destino.SANTAMARTA, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "20:0", "10/5/2024", conductor103.getVehiculo(), conductor103, Destino.BARRANQUILLA, Destino.MEDELLIN));
+								lista.add(new Viaje(terminal, "14:0", "14/4/2024", conductor107.getVehiculo(), conductor107, Destino.CALI, Destino.MEDELLIN));
 
-								Viaje f = new Viaje(terminal, "17:0", "11/5/2024", vehiculo21, conductor109, Destino.LAPINTADA, Destino.MEDELLIN);
+								Viaje f = new Viaje(terminal, "17:0", "11/5/2024", conductor109.getVehiculo(), conductor109, Destino.LAPINTADA, Destino.MEDELLIN);
 								lista.add(f);
 								reservas.add(f);
 
