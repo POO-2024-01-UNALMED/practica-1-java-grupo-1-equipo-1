@@ -50,6 +50,22 @@ public class Mecanico extends Persona{
 		this.experiencia = 1;
 	}
 	
+	/**
+	 * Constructor sobreCargado para crear objetos deffault
+	 * @param id
+	 * @param edad
+	 * @param nombre
+	 * @param genero
+	 * @param historial
+	 * @param experiencia
+	 * @param dinero
+	 * @param facturas
+	 * @param taller
+	 * @param vehiculoAsignado
+	 * @param estado
+	 * @param diasRestantesContr
+	 * @param diasTrabajados
+	 */
 	public Mecanico(int id, int edad, String nombre, char genero, ArrayList <Viaje> historial, int experiencia,
 			double dinero, ArrayList <Factura> facturas, Taller taller, Vehiculo vehiculoAsignado, boolean estado, int diasRestantesContr, int diasTrabajados) {
 		
@@ -81,12 +97,20 @@ public class Mecanico extends Persona{
 	
 	}
 	
+	/**
+	 * Agrega el vehiculo a la lista de vehiculos siendo reparados por el mecanico
+	 * @param vehiculo
+	 */
 	public void agregarVehiculoCola (Vehiculo vehiculo) {
 		
 		this.vehiculosReparando.add(vehiculo);
 	}
 	
 	
+	/**
+	 * Repara el vehiculo y ejecuta la acciones que esto implica
+	 * @param vehiculo
+	 */
 	public void repararVehiculo(Vehiculo vehiculo) {
 		
 		vehiculo.reparacion();
@@ -97,6 +121,9 @@ public class Mecanico extends Persona{
 		
 	}
 	
+	/**
+	 * Calcula la experiencia del mecanico en base a los vehiculos reparados
+	 */
 	public void calcularExperiencia() {
 		
 		if (this.experiencia < 50 && this.historialReparados.size() % 10 == 0) {}
@@ -105,9 +132,13 @@ public class Mecanico extends Persona{
 		
 	}
 	
+	/**
+	 * Define los dias restantes del contrato del mecanico
+	 */
 	@Override
 	public void renovarContrato (int dias) {
 		
+		this.diasRestantesContr = dias;
 	}
 	
 	/**
@@ -233,11 +264,19 @@ public class Mecanico extends Persona{
 		this.vehiculosReparando = vehiculosReparando;
 	}
 	
+	/**
+	 * Agrega el mecanico a la lista de todos los mecanicos creados
+	 * @param mecanico
+	 */
 	public static void agregarMecanico (Mecanico mecanico ) {
 		
 		mecanicos.add(mecanico);
 	} 
 	
+	/**
+	 * Remueve un mecanico de la lista de mecanicos global
+	 * @param mecanico
+	 */
 	public static void removerMecanico (Mecanico mecanico) {
 		
 		mecanicos.remove(mecanico);

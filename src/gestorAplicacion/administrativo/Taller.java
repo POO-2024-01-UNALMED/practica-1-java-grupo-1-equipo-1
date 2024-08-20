@@ -120,12 +120,6 @@ public class Taller implements Serializable {
 	}
 	
 	
-	public void agregarVehiculoVenta () {
-		
-		// Implementación pendiente
-		
-	}
-	
 	public ArrayList <String> generarCotizacion (Vehiculo vehiculo) {
 		
 		ArrayList <String> cotizacion = new ArrayList <String> ();
@@ -189,11 +183,6 @@ public class Taller implements Serializable {
 		
 	}
 	
-	public void regresarVehiculo (Vehiculo vehiculo) {
-		
-		// Implementación pendiente
-		
-	}
 	
 	public void agregarVehiculoVenta (Vehiculo vehiculo) {
 		
@@ -372,12 +361,19 @@ public class Taller implements Serializable {
 		
 	    return capacidad;
 	}
-	
+	/**
+	 * Permite definir la lista de talleres de la clase
+	 * @param talleres
+	 */
 	public static void setListaTalleres (ArrayList<Taller> talleres) {
 		
 		listaTalleres = talleres;
 	}
 	
+	/**
+	 * 
+	 * @return Lista de todos los talleres creados
+	 */
 	public static ArrayList<Taller> getListaTalleres () {
 		
 		return (listaTalleres);

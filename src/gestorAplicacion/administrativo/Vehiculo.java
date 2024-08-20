@@ -99,11 +99,6 @@ public class Vehiculo implements Serializable {
 	 * @return
 	 */
 	
-	public String vehiculoDestruido () {
-		
-		return("El vehiculo ha quedado inutilizado");
-		
-	}
 	
 	/**
 	 * Basandose en un random calcula si el vehiculo sufrira un accidente o no en alguna parte del viaje
@@ -115,7 +110,6 @@ public class Vehiculo implements Serializable {
 			
 			this.integridad = 0;
 			this.estado = false;
-			this.vehiculoDestruido();
 		}
  		
 	}
@@ -304,19 +298,35 @@ public class Vehiculo implements Serializable {
         return transportadora;
     }
     
+    /**
+     * 
+     * @return estado del vehiculo
+     */
     public boolean getEstado () {
     	return (this.estado);
     }
     
+    /**
+     * Define el estado del vehiculo
+     * @param estado
+     */
     public void setEstado (boolean estado) {
     	this.estado = estado;
     }
     
+    /**
+     * Asigna el mecanico que reparara el vehiculo
+     * @param mecanico
+     */
     public void setMecanicoAsociado (Mecanico mecanico) {
     	
     	this.mecanicoAsociado = mecanico;
     }
     
+    /**
+     *
+     * @return Mecanico que esta reparando el vehiculo
+     */
     public Mecanico getMecanicoAsociado () {
     	
     	return (this.mecanicoAsociado);
@@ -361,17 +371,5 @@ public class Vehiculo implements Serializable {
 		}
 
 
-  //Testeos
-  	/*public static void main (String[] Args) {
-  		
-  		Vehiculo v = new Vehiculo();
-  		
-  		v.setIntegridad(100);
-  		
-  		v.reduccionIntegridad(70);
-  		
-  		System.out.println(v.getIntegridad());
-  		
-  	}*/
 
 }
