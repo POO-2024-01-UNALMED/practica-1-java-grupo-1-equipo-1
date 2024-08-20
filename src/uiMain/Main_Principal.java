@@ -182,8 +182,8 @@ public class Main_Principal {
 	                                        cantidad = scanner.nextInt();
 	                                        scanner.nextLine();
 	                                        if (tipoPasajero == 2 || tipoPasajero == 3 || tipoPasajero == 4) {
-	                                            if (cantidad >= 50) {
-	                                                System.out.println("\nIngrese una cantidad inferior a 50");
+	                                            if (cantidad >= 43) {
+	                                                System.out.println("\nIngrese una cantidad inferior a 43");
 	                                            } else {
 	                                                cantidadValida = true;
 	                                            }
@@ -540,13 +540,19 @@ public class Main_Principal {
 	                System.out.println("\nIngrese su género");
 	                char genero = scanner.next().charAt(0);
 	                Pasajero pasajero = Pasajero.nuevoPasajero(tipo, id, edad, nombre, genero);
-	                pasajero.descuento();
+	                
 	                double valorTotal = pasajero.getDinero()*cantidad;
 	                System.out.println("\nValor a pagar: "+ valorTotal);
 	                System.out.println("\nIngrese su dinero");
 	                double dinero = scanner.nextDouble();
 	                scanner.nextLine();
 	                if (dinero>=valorTotal) {
+	                	
+	                	pasajero.descuento(viajeSeleccionado);
+	                	
+	                	for (int i = 0; i<cantidad;i++) {
+	                		viajeSeleccionado.getPasajeros().add(pasajero);
+	                	}
 	                                  
 	                    Tablas.tablaFactura(viajeSeleccionado, pasajero, cantidad);
 	                    double cambio = dinero-valorTotal;

@@ -82,24 +82,31 @@ public class Viaje implements Serializable {
     	return distancia;
     }
     
-    public static double asignarPasajerosAViaje(ArrayList<Pasajero> listaPasajeros, Viaje viaje, TipoPasajero tipo) {
+    /**
+     * Método para asignarle pasajeros a un viaje aleatoria mente
+     * @param pasajeros
+     */
+    
+    public void asignarPasajerosAViaje(ArrayList<Pasajero> pasajeros) {
         Random random = new Random();
-        double dineroTotal;
+        double dineroTotal = 0;
 
-        int capacidad = viaje.getVehiculo().getTipo().getCapacidad();
-        int cantidad = Math.min(random.nextInt(capacidad / 2) + 1, listaPasajeros.size());
+        
+        int cantidadPasajeros = (this.getVehiculo().getTipo().getCapacidad() / 2) + 1;
 
-        for (int i = 0; i < cantidad; i++) {
-
-            int indiceAleatorio = random.nextInt(listaPasajeros.size());
-            Pasajero pasajeroAleatorio = listaPasajeros.get(indiceAleatorio);
-            pasajeroAleatorio.setViaje(viaje);
-            viaje.getPasajeros().add(pasajeroAleatorio);
+        for (int i = 0; i < cantidadPasajeros; i++) {
             
+            int indiceAleatorio = random.nextInt(pasajeros.size());
+            Pasajero pasajeroAleatorio = pasajeros.get(indiceAleatorio);
+
             
-        }
-        dineroTotal=cantidad*(viaje.getTarifa()*(1+tipo.getDescuento()));
-        return dineroTotal;
+            this.getPasajeros().add(pasajeroAleatorio);
+
+            dineroTotal += this.getTarifa() * pasajeroAleatorio.getTipo().getDescuento();
+        
+    	}
+
+        this.getVehiculo().getTransportadora().setDinero(this.getVehiculo().getTransportadora().getDinero() + dineroTotal);
     }
         
 	/**
