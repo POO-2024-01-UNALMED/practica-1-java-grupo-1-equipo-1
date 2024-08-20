@@ -576,26 +576,6 @@ public class Transportadora implements Incentivo, Serializable {
 		ArrayList<Conductor> conductoresLibres= new ArrayList<>();
 		String mensaje = "";
 		
-		/*for (Conductor conductor: conductores) {
-			
-			for (Conductor driver: conductor.getVehiculo().getConductores()) {
-				for (Viaje trip: driver.getHorario()) {
-					if (trip.getDia() == v.getDia()) {
-						return mensaje;
-					} else {
-						if (conductor.getHorario() == null) {
-							conductoresLibres.add(conductor);
-						}
-						for (Viaje viaje: conductor.getHorario()) {
-							if ( Math.abs((viaje.getDia().getValue() - v.getDia().getValue())) >= 1  ) {
-								conductoresLibres.add(conductor);
-							}	
-						}
-					}
-				}
-					
-			}
-		}*/
 		
 		for (Conductor conductor : conductores) {
 			boolean value = false;

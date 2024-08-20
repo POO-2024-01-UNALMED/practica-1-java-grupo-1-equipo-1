@@ -753,12 +753,12 @@ public class Main_Principal {
                 				
                 			case 2:
                 				
-                				System.out.println("Seleccione el viaje que quiere desvincular:");
+                				System.out.println("Digite el id del viaje que quiere desvincular:");
                 				System.out.println(selectedDriver.mostrarViajes());
-                				int selectedTrip = check(1,selectedDriver.getHorario().size());
+                				int selectedTrip = check(0,selectedDriver.getHorario().size());
                 			
                 				System.out.println("Digite el id del conductor que tomara el viaje:");
-                				System.out.println(transportaElegida.conductoresDisponibles(selectedDriver.getHorario().get(selectedTrip-1)));
+                				System.out.println(transportaElegida.conductoresDisponibles(selectedDriver.getHorario().get(selectedTrip)));
                 				opcion = scanner.nextInt();
                 			
                 				if (transportaElegida.encontrarConductor(opcion) == null) {
@@ -767,7 +767,7 @@ public class Main_Principal {
                 					
                 				} else {
                 					
-                					selectedDriver.desvincularYVincular(transportaElegida.encontrarConductor(opcion), selectedDriver.getHorario().get(selectedTrip-1));
+                					selectedDriver.desvincularYVincular(transportaElegida.encontrarConductor(opcion), selectedDriver.getHorario().get(selectedTrip));
                 		            System.out.print("Se asignado el viaje al conductor " + transportaElegida.encontrarConductor(opcion).getNombre() + "\n\n");
                 		            
                 				}

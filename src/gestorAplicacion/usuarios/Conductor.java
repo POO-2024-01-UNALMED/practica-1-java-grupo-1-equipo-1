@@ -313,10 +313,9 @@ public class Conductor extends Persona {
 	
 	public String mostrarViajes() {
 		String mensaje = "";
-		int number = 1;
 		for (Viaje viaje : getHorario()) {
-			mensaje += number + ". " + viaje.detallesViaje();
-			number++;
+			mensaje += viaje.detallesViaje();
+
 		}
 		return mensaje;
 	}
