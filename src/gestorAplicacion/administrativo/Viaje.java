@@ -3,12 +3,9 @@ import java.io.Serializable;
 import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Random;
-
-import gestorAplicacion.constantes.Destino;
+import gestorAplicacion.constantes.*;
 import gestorAplicacion.usuarios.*;
 import gestorAplicacion.constantes.Dia;
-import gestorAplicacion.constantes.TipoPasajero;
-import gestorAplicacion.constantes.TipoVehiculo;
 import gestorAplicacion.tiempo.Tiempo;
 
 /**

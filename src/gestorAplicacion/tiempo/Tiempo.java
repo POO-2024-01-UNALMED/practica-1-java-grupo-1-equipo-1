@@ -14,8 +14,7 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import baseDatos.Deserializador;
-import baseDatos.Serializador;
+import baseDatos.*;
 import gestorAplicacion.administrativo.Terminal;
 import gestorAplicacion.administrativo.Transportadora;
 import gestorAplicacion.administrativo.Vehiculo;
