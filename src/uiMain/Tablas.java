@@ -419,9 +419,9 @@ public interface Tablas {
                 "ID", "LLEGADA", "FECHA", "HORA", "DIA", "TRANSPORTADORA", "ASIENTOS");
         System.out.println("-".repeat(anchoTotal));
 
-        String transportadoraNombre = viaje.getTransportadora() != null ? viaje.getTransportadora().getNombre() : "N/A";
+        //String transportadoraNombre = viaje.getVehiculo().getTransportadora().getNombre() != null ? viaje.getVehiculo().getTransportadora().getNombre(): "N/A";
         System.out.printf("| %-"+anchoId+"d | %-"+anchoLlegada+"s | %-"+anchoFecha+"s | %-"+anchoHora+"s | %-"+anchoDia+"s | %-"+anchoTransportadora+"s | %-"+anchoAsientos+"d |\n",
-        viaje.getId(), viaje.getLlegada(), viaje.getFecha(), viaje.getHora(), viaje.getDia(), transportadoraNombre, viaje.getAsientosDisponibles());
+        viaje.getId(), viaje.getLlegada(), viaje.getFecha(), viaje.getHora(), viaje.getDia(), viaje.getVehiculo().getTransportadora().getNombre(), viaje.getAsientosDisponibles());
 
 
         // Print table footer

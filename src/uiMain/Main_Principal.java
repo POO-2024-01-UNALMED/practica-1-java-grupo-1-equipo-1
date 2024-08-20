@@ -1876,7 +1876,7 @@ public static void facturacionYFinanzas() {
                         System.out.println("Elige el destino por su número:");
                         int destinoSeleccionado = obtenerEntradaValida(scanner, 1, destinos.size());
 
-                        Destino destinoElegido = destinos.get(destinoSeleccionado - 1);
+                        Destino destinoElegido = destinos.get(destinoSeleccionado);
                         System.out.println("Has elegido el destino: " + destinoElegido.name());
 
                         // Seleccionar Transportadora
@@ -1936,7 +1936,7 @@ public static void facturacionYFinanzas() {
                         System.out.println("Elige una hora por número:");
                         int horaSeleccionada = obtenerEntradaValida(scanner, 1, horasDisponibles.size());
 
-                        String hora = horasDisponibles.get(horaSeleccionada - 1); // -1 porque las listas son basadas en cero
+                        String hora = horasDisponibles.get(horaSeleccionada - 1); 
                         String horaCasteada = Tiempo.convertirHora(hora);
                         System.out.println("Has seleccionado la hora: " + hora);
 
