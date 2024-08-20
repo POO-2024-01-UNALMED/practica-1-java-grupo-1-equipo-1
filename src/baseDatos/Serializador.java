@@ -43,13 +43,14 @@ public class Serializador {
 	}
 	
 	public static void serializarListas(){
-		Serializador.serializar(Transportadora.getTransportadoras(), "transportadora");// OBJETOS DE TRANSPORTADORA
-		Serializador.serializar(Terminal.getListaTerminales(), "terminal");           // OBJETO TERMINAL
-		Serializador.serializar(Terminal.getHistorial(), "historialViajes");         // VIAJES TERMINADOS - HISTORIAL
-	    Serializador.serializar(Terminal.getViajesEnCurso(), "viajesEnCurso");      // VIAJES SIN TERMINAR - EN CURSO
-	    Serializador.serializar(Terminal.getViajes(), "viajesDisponibles");        // VIAJES SIN SALIR - DISPONIBLES
-	    Serializador.serializar(Terminal.getReservas(), "reservas");              // VIAJES EN RESERVA
-	    Serializador.serializar(Terminal.getFacturas(), "facturas");             // FACTURAS ASOCIADAS
+		Serializador.serializar(Transportadora.getTransportadoras(), "transportadora");      // OBJETOS DE TRANSPORTADORA
+		Serializador.serializar(Terminal.getTransportadoras(), "transportadorasAsociadas"); // OBJETOS TRANSPORTAORA ASOCIADOS A LA TERMINAL
+		Serializador.serializar(Terminal.getListaTerminales(), "terminal");                // OBJETO TERMINAL
+		Serializador.serializar(Terminal.getHistorial(), "historialViajes");              // VIAJES TERMINADOS - HISTORIAL
+	    Serializador.serializar(Terminal.getViajesEnCurso(), "viajesEnCurso");           // VIAJES SIN TERMINAR - EN CURSO
+	    Serializador.serializar(Terminal.getViajes(), "viajesDisponibles");             // VIAJES SIN SALIR - DISPONIBLES
+	    Serializador.serializar(Terminal.getReservas(), "reservas");                   // VIAJES EN RESERVA
+	    Serializador.serializar(Terminal.getFacturas(), "facturas");               // FACTURAS ASOCIADAS
 	    Serializador.serializar(Tiempo.principal, "tiempoObjetos");               // OBJETOS TIEMPO - PERMITE GUARDAR EL PROGRESO DEL TIEMPO
 	    Serializador.serializar(Persona.getSerializarPersonas(), "personas");    // OBJETOS TIPO PERSONA
 	    Serializador.serializar(Factura.getFacturasCreadas(), "facturas");      // OBJETOS TIPO FACTURA

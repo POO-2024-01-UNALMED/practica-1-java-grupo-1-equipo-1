@@ -44,7 +44,8 @@ public class Deserializador {
     }
     
     public static void deserializarListas() {
-		Deserializador.deserializar(Transportadora.getTransportadoras(), "transportadora");// OBJETOS DE TRANSPORTADORA
+		Deserializador.deserializar(Transportadora.getTransportadoras(), "transportadora");     // OBJETOS DE TRANSPORTADORA
+		Deserializador.deserializar(Terminal.getTransportadoras(), "transportadorasAsociadas");// OBJETOS DE TRANSPORTADORA ASOCIADOS A LA TERMINAL
 		Deserializador.deserializar(Terminal.getListaTerminales(), "terminal");           // OBJETO TERMINAL
 		Deserializador.deserializar(Terminal.getHistorial(), "historialViajes");         // VIAJES TERMINADOS - HISTORIAL
 		Deserializador.deserializar(Terminal.getViajesEnCurso(), "viajesEnCurso");      // VIAJES SIN TERMINAR - EN CURSO

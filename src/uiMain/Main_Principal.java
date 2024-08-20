@@ -2070,9 +2070,9 @@ public static void facturacionYFinanzas() {
                                 System.out.println("* PROGRAMACIÓN EXITOSA *");
                                 System.out.println("__________________________\n");
                                 System.out.println(viajeProgramado.estado());
-                                System.out.println("__________________________");
+                                System.out.println("__________________________\n");
                             } else {
-                                System.out.println("Programacion en proceso");
+                                System.out.println("Programacion en proceso\n");
                             }
 
                         } else if (elegirConductor == 2) {
@@ -2082,9 +2082,9 @@ public static void facturacionYFinanzas() {
                                 System.out.println("* PROGRAMACIÓN EXITOSA *");
                                 System.out.println("__________________________\n");
                                 System.out.println(viajeProgramado.estado());
-                                System.out.println("__________________________");
+                                System.out.println("__________________________\n");
                             } else {
-                                System.out.println("Programacion en proceso");
+                                System.out.println("Programacion en proceso\n");
                             }
                         }
 
@@ -2143,9 +2143,9 @@ public static void facturacionYFinanzas() {
 
                                     switch (reserva) {
                                         case 1:
-                                            System.out.println("__________________________");
+                                            System.out.println("__________________________\n");
                                             System.out.println(reservaAjuste.estado());
-                                            System.out.println("__________________________");
+                                            System.out.println("__________________________\n");
                                             break;
                                         case 2:
                                             System.out.println("Selecciona el Tipo de Cancelación: ");
@@ -2157,10 +2157,10 @@ public static void facturacionYFinanzas() {
                                             switch (tipo) {
                                                 case 1:
                                                     String absoluta = Terminal.cancelarViajeAbsoluto(reservaAjuste);
-                                                    System.out.println("__________________________");
+                                                    System.out.println("__________________________\n");
                                                     System.out.println("Reserva Cancelada");
                                                     System.out.println(absoluta);
-                                                    System.out.println("__________________________");
+                                                    System.out.println("__________________________\n");
                                                     break;
                                                 case 2:
                                                     System.out.println("Regresando...");
@@ -2215,7 +2215,7 @@ public static void facturacionYFinanzas() {
                             System.out.println("Viajes Disponibles --- Sin Salir");
                             ArrayList<Viaje> viajesDisponibles = Terminal.getViajes();
 
-                            Tablas.tablaViajesDisponibles(viajesDisponibles);
+                            Tablas.tablaViajesDisponiblesId(viajesDisponibles);
 
                             System.out.println("Qué acción deseas Realizar: ");
                             System.out.println("1. Ver detalles");
@@ -2234,9 +2234,9 @@ public static void facturacionYFinanzas() {
 
                                     Viaje viajeDetalles = viajesDisponibles.get(detalles); 
                                     Tablas.viajeIndividual(viajeDetalles);
-                                    System.out.println("__________________________");
+                                    System.out.println("__________________________\n");
                                     System.out.println(viajeDetalles.estado());
-                                    System.out.println("__________________________");
+                                    System.out.println("__________________________\n");
                                     System.out.println(" ");
 
                                     System.out.println("1. Ver lista de pasajeros.");
@@ -2249,16 +2249,16 @@ public static void facturacionYFinanzas() {
                                             ArrayList<Pasajero> listaPersonas = viajeDetalles.getPasajeros();
                                             int i = 0;
                                             if (!listaPersonas.isEmpty()) {
-                                                System.out.println("__________________________");
+                                                System.out.println("__________________________\n");
                                                 for (Pasajero p : listaPersonas) {
                                                     System.out.println(i + ". " + p.getNombre());
                                                     i++;
                                                 }
-                                                System.out.println("__________________________");
+                                                System.out.println("__________________________\n");
                                             } else {
-                                            	System.out.println("__________________________");
+                                            	System.out.println("__________________________\n");
                                                 System.out.println("El viaje no tuvo pasajeros");
-                                                System.out.println("__________________________");
+                                                System.out.println("__________________________\n");
                                             }
                                             break;
 
@@ -2285,10 +2285,10 @@ public static void facturacionYFinanzas() {
 
                                     switch (delete) {
                                         case 1:
-                                            System.out.println("__________________________");
+                                            System.out.println("__________________________\n");
                                             System.out.println("Resultado de la Operación: ");
                                             System.out.println(Terminal.cancelarViaje(viajeCancelar));
-                                            System.out.println("__________________________");
+                                            System.out.println("__________________________\n");
                                             break;
 
                                         case 2:
@@ -2390,7 +2390,7 @@ public static void facturacionYFinanzas() {
 
                                                 Viaje a = Terminal.programarViaje(viajeReprogramar.getLlegada(), viajeReprogramar.getVehiculo().getTipo(), fechaNueva, horaCasteada, Destino.MEDELLIN);
                                                 if (a != null) {
-                                                    System.out.println("__________________________");
+                                                    System.out.println("__________________________\n");
                                                     System.out.println("* PROGRAMACIÓN EXITOSA *");
                                                     System.out.println("__________________________\n");
                                                     System.out.println(a.estado());
@@ -2403,13 +2403,13 @@ public static void facturacionYFinanzas() {
                                             }
                                             break;
                                         case 2:
-                                        	System.out.println("__________________________");
+                                        	System.out.println("__________________________\n");
                                             System.out.print(viajeReprogramar.estado());
-                                            
+                                            System.out.println("__________________________\n");
                                             break;
                                         case 3:
                                         	System.out.println("Lista de Pasajeros: ");
-                                        	System.out.println("__________________________");
+                                        	System.out.println("__________________________\n");
                                             ArrayList<Pasajero> listaPersonasHistorial = viajeReprogramar.getPasajeros();
                                             int j = 0;
                                             if (listaPersonasHistorial != null) {

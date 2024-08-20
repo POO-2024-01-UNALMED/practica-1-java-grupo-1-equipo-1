@@ -330,12 +330,12 @@ public interface Tablas {
         
         for (Conductor conductor : conductores) {
             int nombreLength = conductor.getNombre().length();
-            int experienciaLength = String.valueOf(conductor.getExperiencia()).length();
+            int experienciaLength = String.valueOf(conductor.getExperiencia()).length() + 4; // +4 para " años"
             maxNombre = Math.max(maxNombre, nombreLength);
             maxExperiencia = Math.max(maxExperiencia, experienciaLength);
         }
         
-        int tablaAncho = 10 + maxNombre + maxExperiencia + 7; // Ancho total de la tabla
+        int tablaAncho =  maxNombre + maxExperiencia + 25; // Ancho total de la tabla
         String tituloCentrado = String.format("%" + ((tablaAncho - 18) / 2) + "s%s%" + ((tablaAncho - 18) / 2) + "s", "", "  CONDUCTORES DISPONIBLES", "");
 
         // Imprimir encabezado de la tabla
@@ -348,7 +348,8 @@ public interface Tablas {
         // Imprimir los datos de los conductores
         int i = 1;
         for (Conductor conductor : conductores) {
-            System.out.printf("| %-" + 10 + "d | %-" + maxNombre + "s | %-" + maxExperiencia + "d |\n", i, conductor.getNombre(), conductor.getExperiencia());
+            String experienciaStr = conductor.getExperiencia() + "     Años";
+            System.out.printf("| %-" + 10 + "d | %-" + maxNombre + "s | %-" + maxExperiencia + "s |\n", i, conductor.getNombre(), experienciaStr);
             i++;
         }
 
