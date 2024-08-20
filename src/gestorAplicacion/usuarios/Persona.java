@@ -137,7 +137,7 @@ public abstract class Persona implements Incentivo, Serializable {
 			return resultado;
 		}
 		
-		return this.nombre + "no ha viajado a ningún lado";
+		return this.getNombre() + " no ha viajado a ningún lado";
 	}
 	
 	/**

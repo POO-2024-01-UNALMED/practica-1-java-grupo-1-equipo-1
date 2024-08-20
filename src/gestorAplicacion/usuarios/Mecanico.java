@@ -281,5 +281,11 @@ public class Mecanico extends Persona{
 		mecanicos.remove(mecanico);
 	}
 
+	public String getNombre(){
+
+		return "Soy el mecánico " + nombre;
+		
+	}
+
 	
 }

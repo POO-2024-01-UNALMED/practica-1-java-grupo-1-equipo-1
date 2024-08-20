@@ -74,7 +74,7 @@ public class Terminal implements Serializable{
 	
 	// Constructor sobrecarga
 	public Terminal(String nombre, double dinero, int capacidadVehiculos, int cantidadSedes, int cantidadVehiculos, ArrayList <Transportadora> transportadoras,
-			       ArrayList <Destino> destinos, double comision, Destino ubicacion) {
+			        ArrayList <Destino> destinos, double comision, Destino ubicacion) {
 		
 		this.nombre = nombre;
 		this.dinero = dinero;

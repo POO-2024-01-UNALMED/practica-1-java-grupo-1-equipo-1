@@ -294,5 +294,11 @@ public class Pasajero extends Persona{
 		
 	}
 
+	public String getNombre(){
+
+		return "Soy el pasajero " + nombre;
+		
+	}
+
 
 }

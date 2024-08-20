@@ -1313,11 +1313,11 @@ public static void facturacionYFinanzas() {
       	                    // Descontar el dinero del pasajero
       	                    p.descuento();
       	                    System.out.println("---------------------------------------------------");
-      	                    System.out.printf("Se ha descontado %.2f de su cuenta. Su saldo actual es: %.2f%n",((Pasajero) p).obtenerValorDescontado(), p.getDinero());
+      	                    System.out.printf("Se ha descontado %.2f de su cuenta. Su saldo actual es: %.2f%n", p.obtenerValorDescontado(), p.getDinero());
       	                    System.out.println("---------------------------------------------------");
 
       	                    // Generar la factura y agregarla al historial del pasajero
-      	                    Factura factura = Factura.crearFacturaPasajero(valorApagar, (Pasajero)p, viaje.getTerminal(), viaje.getConductor(), viaje, viaje.getVehiculo(), viaje.getTransportadora());
+      	                    Factura factura = Factura.crearFacturaPasajero(valorApagar, p, viaje.getTerminal(), viaje.getConductor(), viaje, viaje.getVehiculo(), viaje.getTransportadora());
       	                    Factura.getFacturasCreadas().add(factura);
       	                    p.getFacturas().add(factura);
       	                    Terminal.getFacturas().add(factura); // Llevar seguimiento de las facturas en la terminal
@@ -1331,7 +1331,7 @@ public static void facturacionYFinanzas() {
       	                    	
       	                    	if (viaje.getId() == v.getId()) {
       	                    		
-      	                    		v.getTransportadora().getPasajeros().add((Pasajero)p);
+      	                    		v.getTransportadora().getPasajeros().add(p);
       	                   	
       	                    	}
       	             
@@ -1384,7 +1384,7 @@ public static void facturacionYFinanzas() {
         	
         }
     
-    public static void cancelarViaje(Persona p, Viaje v) {
+    public static void cancelarViaje(Pasajero p, Viaje v) {
     	
        try {
     	   
@@ -1393,7 +1393,7 @@ public static void facturacionYFinanzas() {
 
            System.out.println("¿Está seguro de esta operación? Presione 1 o 0, donde 1 confirma y 0 aborta el proceso");
            opcion = scan.nextInt();
-           scan.close();  // Cierra el Scanner después de su uso
+          
 
            switch (opcion) {
                case 0:
@@ -1403,7 +1403,7 @@ public static void facturacionYFinanzas() {
                case 1:
                    if (v != null) {
                        // Se busca el pasajero en la lista de pasajeros del viaje
-                       double montoRembolso = ((Pasajero)p).obtenerValorDescontado();
+                       double montoRembolso = p.obtenerValorDescontado();
 
                        Iterator<Pasajero> itPasajeros = v.getPasajeros().iterator();
                        while (itPasajeros.hasNext()) {
