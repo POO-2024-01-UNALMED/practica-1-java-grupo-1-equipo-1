@@ -143,6 +143,16 @@ public class Terminal implements Serializable{
 	    return transportadorasSeleccionadas; // Devolver la lista de transportadoras
 	}
 	
+	public static boolean viajesDestino(Destino destino) {
+		for (Viaje viaje : Terminal.getViajes()) {
+			if (viaje.getLlegada()==destino) {
+				return true;
+				
+			}
+		}
+		return false;
+	}
+	
 	public static ArrayList<Transportadora> transportadorasViajeDisponible(Destino destinoSeleccionado) {
 		ArrayList<Transportadora> transportadorasPorDestino = new ArrayList<>();
 		for (Transportadora transportadora : Terminal.getTransportadoras()) {
@@ -177,6 +187,7 @@ public class Terminal implements Serializable{
 		
 		return viajeMasRapido;
 	}
+	
 	
 	public static Viaje obtenerViajeMasProximo(ArrayList<Viaje> listaViajes) {
 	    if (listaViajes == null || listaViajes.isEmpty()) {
