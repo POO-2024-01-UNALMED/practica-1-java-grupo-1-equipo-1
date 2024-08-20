@@ -119,7 +119,7 @@ public class Transportadora implements Incentivo, Serializable {
 	 */
 	
 	public String contratarConductor(Conductor conductor) {
-		
+		Persona conductorRegistrado = conductor;
 		if (conductor == null) {
 			return "No se ha encontrado el conductor";
 		} else {
@@ -128,6 +128,7 @@ public class Transportadora implements Incentivo, Serializable {
 					conductor.reinicioAtributos();
 					this.getConductores().add(conductor);
 					this.getconductoresRegistrados().remove(conductor);
+					conductorRegistrado.bonoBienvenida(conductor.getTransportadora());
 					return "Se contrato a " + conductor.getNombre() + " exitosamente.";
 				} else {
 					return "No se pudo contratar a " + conductor.getNombre() + "porque no tiene licencia activa";

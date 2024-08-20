@@ -113,6 +113,10 @@ public abstract class Persona implements Incentivo, Serializable {
 	 * @return el historial de viajes de la persona.
 	 */
 	
+	public void bonoBienvenida(Transportadora t) {
+		
+	}
+	
 	public String verHistorialViajes() {
 		
 		String resultado = "";

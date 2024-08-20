@@ -135,6 +135,16 @@ public class Conductor extends Persona {
 		
 	}
 	
+	/**
+	 * Metodo que le da un bono de bienvenida al conductor contratado
+	 * @param transportadora a la que se le descontara el dinero*/
+	
+	public void bonoBienvenida(Transportadora t) {
+		this.dinero += 10000.00;
+		t.setDinero(t.getDinero() - 10000.00);
+	}
+	
+	
 	/** 
 	 * Metodo para asociar un conductor al vehiculo que
 	 * va de parametro si el vehiculo tiene menos de 5 conductores.
