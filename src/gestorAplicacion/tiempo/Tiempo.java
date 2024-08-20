@@ -166,7 +166,7 @@ public class Tiempo implements Serializable{
 	}
 
     public void iniciar() { // Programar una tarea que se ejecute cada cierto intervalo de tiempo
-        timer.scheduleAtFixedRate(new TareaPeriodica(), 0, 10); // Tiempo de Iteraciones 1 Segundo = 1000 Milisegundos
+        timer.scheduleAtFixedRate(new TareaPeriodica(), 0, 100); // Tiempo de Iteraciones 1 Segundo = 1000 Milisegundos
     }
 
     private class TareaPeriodica extends TimerTask {
@@ -341,6 +341,11 @@ public class Tiempo implements Serializable{
         				
         				vehiculo.getMecanicoAsociado().repararVehiculo(vehiculo);
         			}
+        			
+        			else if ((vehiculo.getFechaHoraReparacion() - Tiempo.getFechaHora()) >= 1000) {
+        				
+        				vehiculo.getMecanicoAsociado().repararVehiculo(vehiculo);
+        			}
         		}
         	}
         	
@@ -362,6 +367,12 @@ public class Tiempo implements Serializable{
         		for (Vehiculo vehiculo : vehiculosEnVenta) {
         			
         			if (vehiculo.getFechaHoraReparacion() <= Tiempo.getFechaHora()) {
+        				
+        				vehiculo.getTransportadora().getTaller().venderVehiculo(vehiculo);
+        				vehiculo.setReparando(false);
+        			}
+        			
+        			else if ((vehiculo.getFechaHoraReparacion() - Tiempo.getFechaHora()) >= 1000){
         				
         				vehiculo.getTransportadora().getTaller().venderVehiculo(vehiculo);
         				vehiculo.setReparando(false);

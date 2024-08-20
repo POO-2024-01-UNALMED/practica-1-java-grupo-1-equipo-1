@@ -93,7 +93,7 @@ public class Taller implements Serializable {
 					
 			}
 			
-			if (mecanicos.get(i).getVehiculosReparando().get(-1).getFechaHoraReparacion() <= mecanico.getVehiculosReparando().get(-1).getFechaHoraReparacion()) {
+			if (mecanicos.get(i).getVehiculosReparando().get((mecanicos.get(i).getVehiculosReparando().size())-1).getFechaHoraReparacion() <= mecanico.getVehiculosReparando().get(-1).getFechaHoraReparacion()) {
 				
 				
 				mecanico = mecanicos.get(i);

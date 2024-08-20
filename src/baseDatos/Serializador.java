@@ -204,7 +204,7 @@ public class Serializador {
 
 			    //Transportadora6
 
-			    Taller tallerLocal = new Taller(transportadoraLocal, transportadoraLocal.getDestinoAsignado(), "Taller Local", 10);
+			    //Taller tallerLocal = new Taller(transportadoraLocal, transportadoraLocal.getDestinoAsignado(), "Taller Local", 10);
 			    //Mecanicos
 
 
