@@ -49,11 +49,13 @@ public class Deserializador {
 		Deserializador.deserializar(Terminal.getHistorial(), "historialViajes");         // VIAJES TERMINADOS - HISTORIAL
 		Deserializador.deserializar(Terminal.getViajesEnCurso(), "viajesEnCurso");      // VIAJES SIN TERMINAR - EN CURSO
 		Deserializador.deserializar(Terminal.getViajes(), "viajesDisponibles");        // VIAJES SIN SALIR - DISPONIBLES
-		Deserializador.deserializar(Tiempo.principal, "tiempoObjetos");               // OBJETOS TIEMPO - PERMITE GUARDAR EL PROGRESO DEL TIEMPO
-		Deserializador.deserializar(Persona.getSerializarPersonas(), "personas");    // OBJETOS TIPO PERSONA
-		Deserializador.deserializar(Factura.getFacturasCreadas(), "facturas");      // OBJETOS TIPO FACTURA
-		Deserializador.deserializar(Taller.getListaTalleres(), "talleres");        // OBJETOS TIPO TALLER
-		Deserializador.deserializar(Vehiculo.getListaVehiculos(), "vehiculos");   // OBJETOS TIPO VEHICULO
+		Deserializador.deserializar(Terminal.getReservas(), "reservas");              // VIAJES EN RESERVA
+		Deserializador.deserializar(Terminal.getFacturas(), "facturas");              // FACTURAS ASOCIADAS
+		Deserializador.deserializar(Tiempo.principal, "tiempoObjetos");              // OBJETOS TIEMPO - PERMITE GUARDAR EL PROGRESO DEL TIEMPO
+		Deserializador.deserializar(Persona.getSerializarPersonas(), "personas");   // OBJETOS TIPO PERSONA
+		Deserializador.deserializar(Factura.getFacturasCreadas(), "facturas");     // OBJETOS TIPO FACTURA
+		Deserializador.deserializar(Taller.getListaTalleres(), "talleres");       // OBJETOS TIPO TALLER
+		Deserializador.deserializar(Vehiculo.getListaVehiculos(), "vehiculos");  // OBJETOS TIPO VEHICULO
     }
     
     public static void cargarEstado() {

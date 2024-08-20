@@ -2150,8 +2150,7 @@ public static void facturacionYFinanzas() {
                                         case 2:
                                             System.out.println("Selecciona el Tipo de Cancelación: ");
                                             System.out.println("1. Absoluta (Elimina el viaje y Reembolsa el Dinero.)");
-                                            System.out.println("2. Relativa (Asigna el Viaje más próximo que cumpla las Características.)");
-                                            System.out.println("3. Regresar");
+                                            System.out.println("2. Regresar");
 
                                             int tipo = obtenerEntradaValida(scanner, 1, 3);
 
@@ -2164,13 +2163,6 @@ public static void facturacionYFinanzas() {
                                                     System.out.println("__________________________");
                                                     break;
                                                 case 2:
-                                                    String relativa = Terminal.denegarReserva(reservaAjuste);
-                                                    System.out.println("__________________________");
-                                                    System.out.println("Reserva Cancelada");
-                                                    System.out.println(relativa);
-                                                    System.out.println("__________________________");
-                                                    break;
-                                                case 3:
                                                     System.out.println("Regresando...");
                                                     break;
                                                 default:

@@ -48,6 +48,8 @@ public class Serializador {
 		Serializador.serializar(Terminal.getHistorial(), "historialViajes");         // VIAJES TERMINADOS - HISTORIAL
 	    Serializador.serializar(Terminal.getViajesEnCurso(), "viajesEnCurso");      // VIAJES SIN TERMINAR - EN CURSO
 	    Serializador.serializar(Terminal.getViajes(), "viajesDisponibles");        // VIAJES SIN SALIR - DISPONIBLES
+	    Serializador.serializar(Terminal.getReservas(), "reservas");              // VIAJES EN RESERVA
+	    Serializador.serializar(Terminal.getFacturas(), "facturas");             // FACTURAS ASOCIADAS
 	    Serializador.serializar(Tiempo.principal, "tiempoObjetos");               // OBJETOS TIEMPO - PERMITE GUARDAR EL PROGRESO DEL TIEMPO
 	    Serializador.serializar(Persona.getSerializarPersonas(), "personas");    // OBJETOS TIPO PERSONA
 	    Serializador.serializar(Factura.getFacturasCreadas(), "facturas");      // OBJETOS TIPO FACTURA
@@ -173,7 +175,7 @@ public class Serializador {
 			    destinos6.add(Destino.BARBOSA);
 			    destinos6.add(Destino.MARINILLA);
 			    destinos6.add(Destino.BARRANQUILLA);
-			    destinos6.add(Destino.CALI);
+			    destinos6.add(Destino.CALDAS);
 			    destinos6.add(Destino.MEDELLIN);
 			    transportadoraEficiente.setDestinos(destinos6);
 			    
